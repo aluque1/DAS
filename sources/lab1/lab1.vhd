@@ -44,18 +44,17 @@ architecture syn of lab1 is
   
 begin
 
-  opCode  <= btnL & btnR; -- Concatenation of 2 values
+  opCode  <= btnL & btnR;
   leftOp  <= signed(sws(15 downto 8));
   rightOp <= signed(sws(7 downto 0));
 
   ALU:
   with opCode select
-    result <= 
-    resize(leftOp + rightOp, 16) when "00", -- If error change 16 to 15
-    resize(leftOp - rightOp, 16) when "01",
-    resize(not leftOp, 16) when "10",
-    leftOp * rightOp when "11",
-    resize("0", 16) when others;
+   result <= 
+   resize(leftOp + rightOp, 16) when "00",
+   resize(leftOp - rightOp, 16) when "01",
+   resize("00000000" - rightOP, 16) when "10",
+   leftOp * rightOp when "11";
     
   leds  <= std_logic_vector(result);
   digit <= std_logic_vector(result(3 downto 0)); 
@@ -63,6 +62,6 @@ begin
   an_n  <= "1110";
 
   converter : bin2segs
-  port map ( en => '1', bin => digit, dp => '0', segs_n => segs_n); 
+  port map ( en => '1', bin => digit, dp => '0', segs_n => segs_n ); 
     
-end syn;
+end syn;	
