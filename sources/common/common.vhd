@@ -4,14 +4,14 @@
 --    common.vhd  07/09/2023
 --
 --    (c) J.M. Mendias
---    Diseño Automático de Sistemas
---    Facultad de Informática. Universidad Complutense de Madrid
+--    Diseï¿½o Automï¿½tico de Sistemas
+--    Facultad de Informï¿½tica. Universidad Complutense de Madrid
 --
---  Propósito:
+--  Propï¿½sito:
 --    Contiene definiciones de constantes, funciones de utilidad
 --    y componentes reusables
 --
---  Notas de diseño:
+--  Notas de diseï¿½o:
 --
 ---------------------------------------------------------------------
 
@@ -58,6 +58,47 @@ package common is
     );
   end component;
  
+  -- Elimina rebotes de una lÃ­nea binaria
+  component debouncer
+    generic(
+      FREQ_KHZ  : natural;    -- frecuencia de operacion en KHz
+      BOUNCE_MS : natural;    -- tiempo de rebote en ms
+      XPOL      : std_logic   -- polaridad (valor en reposo) de la seÃ±al a la que eliminar rebotes
+    );
+    port (
+      clk  : in  std_logic;   -- reloj del sistema
+      rst  : in  std_logic;   -- reset sÃ­ncrono del sistema
+      x    : in  std_logic;   -- entrada binaria a la que deben eliminarse los rebotes
+      xDeb : out std_logic    -- salida que sique a la entrada pero sin rebotes
+    );
+  end component;
+
+  -- Detecta flancos en una entrada binaria lenta
+  component edgeDetector is
+    generic(
+      XPOL  : std_logic         -- polaridad (valor en reposo) de la seÃ±al a la que eliminar rebotes
+    );
+    port (
+      clk   : in  std_logic;   -- reloj del sistema
+      x     : in  std_logic;   -- entrada binaria con flancos a detectar
+      xFall : out std_logic;   -- se activa durante 1 ciclo cada vez que detecta un flanco de subida en x
+      xRise : out std_logic    -- se activa durante 1 ciclo cada vez que detecta un flanco de bajada en x
+    );
+  end component;
+
+  -- Sincroniza una entrada binaria
+  component synchronizer
+    generic (
+      STAGES  : natural;       -- nÃºmero de biestables del sincronizador
+      XPOL    : std_logic      -- polaridad (valor en reposo) de la seÃ±al a sincronizar
+    );
+    port (
+      clk   : in  std_logic;   -- reloj del sistema
+      x     : in  std_logic;   -- entrada binaria a sincronizar
+      xSync : out std_logic    -- salida sincronizada que sigue a la entrada
+    );
+  end component;
+  
 end package common;
 
 -------------------------------------------------------------------
@@ -96,13 +137,13 @@ package body common is
   end function;    
   
   function ns2cycles(fKHz : in natural; tns: in natural) return natural is
-    constant NORM_NSxKHZ : natural := 1_000_000;  -- Factor de normalización ns * KHz
+    constant NORM_NSxKHZ : natural := 1_000_000;  -- Factor de normalizaciï¿½n ns * KHz
   begin
     return (tns*fKHz)/NORM_NSxKHZ;  
   end function;
   
   function us2cycles(fKHz : in natural; tus: in natural) return natural is
-    constant NORM_USxKHZ : natural := 1_000;  -- Factor de normalización us * KHz
+    constant NORM_USxKHZ : natural := 1_000;  -- Factor de normalizaciï¿½n us * KHz
   begin
     return tus*(fKHz/NORM_USxKHZ);  
   end function;

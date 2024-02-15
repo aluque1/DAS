@@ -53,8 +53,8 @@ begin
    result <= 
    resize(leftOp + rightOp, 16) when "00",
    resize(leftOp - rightOp, 16) when "01",
-   resize("00000000" - rightOP, 16) when "10",
-   leftOp * rightOp when "11";
+   resize(- rightOP, 16) when "10",
+   leftOp * rightOp when others;
     
   leds  <= std_logic_vector(result);
   digit <= std_logic_vector(result(3 downto 0)); 
