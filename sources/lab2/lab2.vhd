@@ -111,14 +111,14 @@ begin
   begin
     if rising_edge(clk) then
       if clearSync='1' then
-        startStopTFF <= ...;
-        lapTFF       <= ...;     
+        startStopTFF <= '0';
+        lapTFF       <= '0';     
       else
-        if ... then
-          startStopTFF <= ...;
+        if startStopRise then
+          startStopTFF <= '1';
         end if;
-        if ... then
-          lapTFF <= ...;
+        if lapRise then
+          lapTFF <= '1'';
         end if;
       end if;
     end if;
@@ -126,7 +126,7 @@ begin
 
   cycleCounter : modCounter 
     generic map ( MAXVAL => ms2cycles(FREQ_KHZ, 100)-1 ) 
-    port map ( clk => clk, rst => clearSync, ce => startStopRise, tc => cycleCntTc, count => open);
+    port map ( clk => clk, rst => clearSync, ce => startStopTFF, tc => cycleCntTc, count => open);
   
   decCounter : modCounter 
     generic map ( MAXVAL => 9 )
@@ -145,20 +145,20 @@ begin
   begin
     if rising_edge(clk) then  
       if clearSync='1' then
-        secLowReg  <= ...;
-        secHighReg <= ...;       
-      elsif ... then
-        secLowReg  <= ...;
-        secHighReg <= ...;        
+        secLowReg  <= '0';
+        secHighReg <= '0'';       
+      elsif lapRise = '1' then
+        secLowReg  <= secLowCnt;
+        secHighReg <= secHighCnt;        
       end if;
     end if;
   end process;
   
   leftMux :
-    secHighMux <= ... when ... else ...;
+    secHighMux <= secHighReg when lapTFF = '1' else secHighCnt;
   
   rigthMux :
-    secLowMux <= ... when ... else ...;
+    secLowMux <= secLowReg when lapTFF = '1' else secLowCnt; 
   
   leds <= ...;
   
