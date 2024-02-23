@@ -50,21 +50,21 @@ begin
   begin
     if rising_edge(clk) then
       if rst='1' then
-        cs <= ...;
-      elsif ... then
-        if ... then
-          cs <= ...;
+        cs <= (others => '0');
+      elsif ce='1' then
+        if cs = MAXVAL then
+          cs <= (others => '0');
         else 
-          cs <= ...;
+          cs <= cs + 1;
         end if;
       end if;
     end if;
   end process;
 
-  count <= ...;
+  count <= std_logic_vector(cs);
   
   tc <= 
-    '1' when ... else
+    '1' when cs = MAXVAL and ce = '1'  else
     '0'; 
 
 end syn;
