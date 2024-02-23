@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# Vivado v2023.1 (64-bit)
+# SW Build 3865809 on Sun May  7 15:04:56 MDT 2023
+# IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+# SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+# Start of session at: Fri Feb 23 13:37:37 2024
+# Process ID: 98626
+# Current directory: /home/jorbis/Documentos/GitHub/DAS/projects/lab2/lab2.runs/synth_1
+# Command line: vivado -log lab2.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source lab2.tcl
+# Log file: /home/jorbis/Documentos/GitHub/DAS/projects/lab2/lab2.runs/synth_1/lab2.vds
+# Journal file: /home/jorbis/Documentos/GitHub/DAS/projects/lab2/lab2.runs/synth_1/vivado.jou
+# Running On: Jorbis-Zenbook, OS: Linux, CPU Frequency: 1723.886 MHz, CPU Physical cores: 16, Host memory: 16136 MB
+#-----------------------------------------------------------
+source lab2.tcl -notrace

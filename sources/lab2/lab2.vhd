@@ -114,11 +114,11 @@ begin
         startStopTFF <= '0';
         lapTFF       <= '0';     
       else
-        if startStopRise then
+        if startStopRise = '1' then
           startStopTFF <= '1';
         end if;
-        if lapRise then
-          lapTFF <= '1'';
+        if lapRise = '1' then
+          lapTFF <= '1';
         end if;
       end if;
     end if;
@@ -145,8 +145,8 @@ begin
   begin
     if rising_edge(clk) then  
       if clearSync='1' then
-        secLowReg  <= '0';
-        secHighReg <= '0'';       
+        secLowReg  <= (others => '0');
+        secHighReg <= (others => '0');       
       elsif lapRise = '1' then
         secLowReg  <= secLowCnt;
         secHighReg <= secHighCnt;        
@@ -155,11 +155,11 @@ begin
   end process;
   
   leftMux :
-    secHighMux <= secHighReg when lapTFF = '1' else secHighCnt;
+    secHighMux <= '0' & secHighReg when lapTFF = '1' else '0' & secHighCnt;
   
   rigthMux :
     secLowMux <= secLowReg when lapTFF = '1' else secLowCnt; 
   
-  leds <= ...;
+  leds <= decCnt(3) & "0000000" & secHighMux & secLowMux;
   
 end syn;

@@ -1,0 +1,88 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
+| Date         : Fri Feb 23 13:38:35 2024
+| Host         : Jorbis-Zenbook running 64-bit Arch Linux
+| Command      : report_control_sets -verbose -file lab2_control_sets_placed.rpt
+| Design       : lab2
+| Device       : xc7a35t
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    10 |
+|    Minimum number of control sets                        |    10 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    32 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    10 |
+| >= 0 to < 4        |     0 |
+| >= 4 to < 6        |     2 |
+| >= 6 to < 8        |     0 |
+| >= 8 to < 10       |     2 |
+| >= 10 to < 12      |     3 |
+| >= 12 to < 14      |     2 |
+| >= 14 to < 16      |     0 |
+| >= 16              |     1 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |              10 |            5 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |               8 |            2 |
+| Yes          | No                    | No                     |               0 |            0 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |              86 |           30 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++----------------+--------------------------------------------+--------------------------------------------+------------------+----------------+--------------+
+|  Clock Signal  |                Enable Signal               |              Set/Reset Signal              | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+--------------------------------------------+--------------------------------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG | decCounter/E[0]                            | clearSynchronizer/Q[0]                     |                3 |              4 |         1.33 |
+|  clk_IBUF_BUFG | cycleCounter/E[0]                          | clearSynchronizer/Q[0]                     |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG |                                            | clearSynchronizer/Q[0]                     |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | lapEdgeDetector/E[0]                       | clearSynchronizer/Q[0]                     |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG |                                            |                                            |                5 |             10 |         2.00 |
+|  clk_IBUF_BUFG | startStopDebouncer/p_2_in                  | startStopDebouncer/timer.count[21]_i_1_n_0 |                5 |             10 |         2.00 |
+|  clk_IBUF_BUFG | lapDebouncer/timer.count[21]_i_2_n_0       | lapDebouncer/timer.count[21]_i_1__0_n_0    |                5 |             10 |         2.00 |
+|  clk_IBUF_BUFG | lapDebouncer/timer.count[22]_i_1_n_0       | clearSynchronizer/Q[0]                     |                4 |             13 |         3.25 |
+|  clk_IBUF_BUFG | startStopDebouncer/timer.count[22]_i_1_n_0 | clearSynchronizer/Q[0]                     |                4 |             13 |         3.25 |
+|  clk_IBUF_BUFG | startStopTFF                               | clearSynchronizer/Q[0]                     |                6 |             24 |         4.00 |
++----------------+--------------------------------------------+--------------------------------------------+------------------+----------------+--------------+
+
+
