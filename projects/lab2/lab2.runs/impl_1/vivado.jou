@@ -3,12 +3,12 @@
 # SW Build 3865809 on Sun May  7 15:04:56 MDT 2023
 # IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
 # SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
-# Start of session at: Fri Feb 23 13:38:14 2024
-# Process ID: 99353
-# Current directory: /home/jorbis/Documentos/GitHub/DAS/projects/lab2/lab2.runs/impl_1
+# Start of session at: Fri Feb 23 14:12:03 2024
+# Process ID: 37386
+# Current directory: /home/alv/dt/uni/DAS/projects/lab2/lab2.runs/impl_1
 # Command line: vivado -log lab2.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source lab2.tcl -notrace
-# Log file: /home/jorbis/Documentos/GitHub/DAS/projects/lab2/lab2.runs/impl_1/lab2.vdi
-# Journal file: /home/jorbis/Documentos/GitHub/DAS/projects/lab2/lab2.runs/impl_1/vivado.jou
-# Running On: Jorbis-Zenbook, OS: Linux, CPU Frequency: 1735.591 MHz, CPU Physical cores: 16, Host memory: 16136 MB
+# Log file: /home/alv/dt/uni/DAS/projects/lab2/lab2.runs/impl_1/lab2.vdi
+# Journal file: /home/alv/dt/uni/DAS/projects/lab2/lab2.runs/impl_1/vivado.jou
+# Running On: alv-zenbookux425, OS: Linux, CPU Frequency: 516.363 MHz, CPU Physical cores: 4, Host memory: 16454 MB
 #-----------------------------------------------------------
 source lab2.tcl -notrace
