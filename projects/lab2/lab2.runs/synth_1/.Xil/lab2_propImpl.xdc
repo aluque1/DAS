@@ -1,4 +1,4 @@
-set_property SRC_FILE_INFO {cfile:/home/jorbis/Documentos/GitHub/DAS/sources/lab2/lab2.xdc rfile:../../../../../sources/lab2/lab2.xdc id:1} [current_design]
+set_property SRC_FILE_INFO {cfile:/home/alv/dt/uni/DAS/sources/lab2/lab2.xdc rfile:../../../../../sources/lab2/lab2.xdc id:1} [current_design]
 set_property src_info {type:XDC file:1 line:26 export:INPUT save:INPUT read:READ} [current_design]
 set_property -dict { PACKAGE_PIN W5 IOSTANDARD LVCMOS33 } [get_ports clk];
 set_property src_info {type:XDC file:1 line:32 export:INPUT save:INPUT read:READ} [current_design]

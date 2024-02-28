@@ -115,10 +115,10 @@ begin
         lapTFF       <= '0';     
       else
         if startStopRise = '1' then
-          startStopTFF <= '1';
+          startStopTFF <= not(startStopTFF);
         end if;
         if lapRise = '1' then
-          lapTFF <= '1';
+          lapTFF <= not(lapTFF);
         end if;
       end if;
     end if;

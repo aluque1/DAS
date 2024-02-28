@@ -17,7 +17,7 @@ proc create_report { reportName command } {
   }
 }
 namespace eval ::optrace {
-  variable script "/home/jorbis/Documentos/GitHub/DAS/projects/lab2/lab2.runs/impl_1/lab2.tcl"
+  variable script "/home/alv/dt/uni/DAS/projects/lab2/lab2.runs/impl_1/lab2.tcl"
   variable category "vivado_impl"
 }
 
@@ -122,24 +122,24 @@ start_step init_design
 set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
-  set_param chipscope.maxJobs 4
-  set_param runs.launchOptions { -jobs 12  }
+  set_param xicom.use_bs_reader 1
+  set_param chipscope.maxJobs 2
+  set_param runs.launchOptions { -jobs 6  }
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7a35tcpg236-1
-  set_property board_part digilentinc.com:basys3:part0:1.2 [current_project]
   set_property design_mode GateLvl [current_fileset]
   set_param project.singleFileAddWarning.threshold 0
 OPTRACE "create in-memory project" END { }
 OPTRACE "set parameters" START { }
-  set_property webtalk.parent_dir /home/jorbis/Documentos/GitHub/DAS/projects/lab2/lab2.cache/wt [current_project]
-  set_property parent.project_path /home/jorbis/Documentos/GitHub/DAS/projects/lab2/lab2.xpr [current_project]
-  set_property ip_output_repo /home/jorbis/Documentos/GitHub/DAS/projects/lab2/lab2.cache/ip [current_project]
+  set_property webtalk.parent_dir /home/alv/dt/uni/DAS/projects/lab2/lab2.cache/wt [current_project]
+  set_property parent.project_path /home/alv/dt/uni/DAS/projects/lab2/lab2.xpr [current_project]
+  set_property ip_output_repo /home/alv/dt/uni/DAS/projects/lab2/lab2.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
-  add_files -quiet /home/jorbis/Documentos/GitHub/DAS/projects/lab2/lab2.runs/synth_1/lab2.dcp
+  add_files -quiet /home/alv/dt/uni/DAS/projects/lab2/lab2.runs/synth_1/lab2.dcp
 OPTRACE "read constraints: implementation" START { }
-  read_xdc /home/jorbis/Documentos/GitHub/DAS/sources/lab2/lab2.xdc
+  read_xdc /home/alv/dt/uni/DAS/sources/lab2/lab2.xdc
 OPTRACE "read constraints: implementation" END { }
 OPTRACE "add files" END { }
 OPTRACE "link_design" START { }
