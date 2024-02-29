@@ -52,6 +52,7 @@ architecture syn of lab3 is
   signal rstSync, rstAux : std_logic;
   signal coinSync, coinDeb, coinRise : std_logic;
   signal goSync, goDeb, goRise       : std_logic;
+  signal eq2, eq3 : std_logic;
 
   signal spin : std_logic_vector(2 downto 0);
   signal decCredit, incCredit, hasCredit : std_logic;
@@ -97,7 +98,9 @@ begin
     generic map(XPOL => '0')
     port map(clk => clk, x => goDeb, xFall => open, xRise => goDeb);
   
-  ------------------  
+  ------------------ 
+
+  -- reel_eq : TODO Pensar como hacerlo de manera combinacional 
  
   fsm:
   process (rstSync, clk, goRise, hasCredit)
