@@ -153,7 +153,6 @@ begin
           end if;
          when reward =>
             state := initial;
-            
       end case;
     end if;
   end process;  
@@ -161,11 +160,16 @@ begin
   cycleCounter :  
   process (clk)
     constant CYCLES : natural := ms2cycles(FREQ_KHZ, 50);
-    variable count  : natural range ... := ...;
+    variable count  : natural range 0 to CYCLES := 0;
   begin
-    ...
+    cycleCntTC <= '0';
     if rising_edge(clk) then
-      ...
+      if count = CYCLES then
+        cycleCntTC <= '1';
+        count := 0;
+      else
+        count := count + 1;
+      end if;
     end if;
   end process;
      
@@ -175,17 +179,21 @@ begin
     process (rstSync, clk)
     begin
       if rstSync='1' then
-        reel(i) <= ...;
+        reel(i) <= (others => '0');
       elsif rising_edge(clk) then
-        if spin(i)='1' then
-          ...
+        if spin(i)= '1' and cycleCntTC = '1' then
+          if reel(i) = "111" then 
+            reel(i) <= "000";
+          else
+            reel(i) <= reel(i) + 1; 
+          end if;
         end if;
       end if;
     end process; 
   end generate;
  
   creditComparator: 
-  hasCredit <= ...;
+  hasCredit <= '1' when credit > "0000";
   
   creditRegister :
   process (rstSync, clk)
@@ -194,16 +202,17 @@ begin
       credit <= (others => '0');    
     elsif rising_edge(clk) then
       if coinRise='1' then
-        ...
+        credit <= credit + "1";
       elsif decCredit='1' then
-        ...
-      elsif incCredit='1' then
-        ...
+        credit <= credit + "1";
+      elsif incCredit='1' and  then
+        credit <= credit + ;
       end if;
    end if; 
   end process; 
   
   displayInterface : segsBankRefresher
-    ... 
+    generic map(FREQ_KHZ => FREQ_KHZ, SIZE => 4)
+    port map(clk => clk, ens => (others => '1'), bins => credit & reel(2) & reel(1) & reel(0), dps => "1000", an_n => an_n, segs_n => segs_n);
 
 end syn;
