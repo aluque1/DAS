@@ -186,8 +186,8 @@ begin
         reel(i) <= (others => '0');
       elsif rising_edge(clk) then
         if spin(i)= '1' and cycleCntTC = '1' then
-          if reel(i) = "111" then 
-            reel(i) <= "000";
+          if reel(i) = "0111" then 
+            reel(i) <= "0000";
           else
             reel(i) <= reel(i) + 1; 
           end if;
@@ -224,7 +224,10 @@ begin
       end if;
    end if; 
   end process; 
-  bins <= (std_logic_vector)credit & (std_logic_vector)reel(0) & (std_logic_vector)reel(1) & (std_logic_vector)reel(2);
+  bins(15 downto 12) <= std_logic_vector(credit);
+  bins(11 downto 8) <= std_logic_vector(reel(0));
+  bins(7 downto 4) <= std_logic_vector(reel(1));
+  bins(3 downto 0) <= std_logic_vector(reel(2));
   displayInterface : segsBankRefresher
     generic map(FREQ_KHZ => FREQ_KHZ, SIZE => 4)
     port map(clk => clk, ens => (others => '1'), bins => bins, dps => "1000", an_n => an_n, segs_n => segs_n);
