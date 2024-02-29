@@ -53,6 +53,7 @@ architecture syn of lab3 is
   signal coinSync, coinDeb, coinRise : std_logic;
   signal goSync, goDeb, goRise       : std_logic;
   signal eq2, eq3 : std_logic;
+  signal bins : std_logic_vector (15 downto 0);
 
   signal spin : std_logic_vector(2 downto 0);
   signal decCredit, incCredit, hasCredit : std_logic;
@@ -195,6 +196,12 @@ begin
     end process; 
   end generate;
  
+  eq3comparator:
+  eq3 <= '1' when reel(0) = reel(1) and reel(1) = reel(2) else '0';
+  
+  eq2comparator:
+  eq2 <= '1' when reel(0) = reel(1) or reel(1) = reel(2) or reel(0) = reel(2) else '0';
+  
   creditComparator: 
   hasCredit <= '1' when credit > "0000";
   
@@ -208,14 +215,18 @@ begin
         credit <= credit + "1";
       elsif decCredit='1' then
         credit <= credit + "1";
-      elsif incCredit='1' and  then
-        credit <= credit + ;
+      elsif incCredit='1' and (eq2 = '1' or eq3 = '1') then
+        if eq3 = '1' then
+            credit <= credit + 3;
+        else
+            credit <= credit + 2;
+        end if;
       end if;
    end if; 
   end process; 
-  
+  bins <= (std_logic_vector)credit & (std_logic_vector)reel(0) & (std_logic_vector)reel(1) & (std_logic_vector)reel(2);
   displayInterface : segsBankRefresher
     generic map(FREQ_KHZ => FREQ_KHZ, SIZE => 4)
-    port map(clk => clk, ens => (others => '1'), bins => credit & reel(2) & reel(1) & reel(0), dps => "1000", an_n => an_n, segs_n => segs_n);
+    port map(clk => clk, ens => (others => '1'), bins => bins, dps => "1000", an_n => an_n, segs_n => segs_n);
 
 end syn;
