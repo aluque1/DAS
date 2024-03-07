@@ -4,13 +4,13 @@
 --    lab4.vhd  12/09/2023
 --
 --    (c) J.M. Mendias
---    Diseño Automático de Sistemas
---    Facultad de Informática. Universidad Complutense de Madrid
+--    Diseï¿½o Automï¿½tico de Sistemas
+--    Facultad de Informï¿½tica. Universidad Complutense de Madrid
 --
---  Propósito:
+--  Propï¿½sito:
 --    Laboratorio 4
 --
---  Notas de diseño:
+--  Notas de diseï¿½o:
 --
 ---------------------------------------------------------------------
 
@@ -44,7 +44,7 @@ architecture syn of lab4 is
   signal code       : std_logic_vector(7 downto 0) := (others => '0');
   signal speakerTFF : std_logic := '0';
   
-  -- Señales
+  -- Seï¿½ales
   
   signal rstSync     : std_logic;
   signal dataRdy     : std_logic;
@@ -53,7 +53,7 @@ architecture syn of lab4 is
   signal data        : std_logic_vector(7 downto 0);
   signal soundEnable : std_logic;
 
-  -- Descomentar para instrumentar el diseño
+  -- Descomentar para instrumentar el diseï¿½o
   -- attribute mark_debug : string;
   -- attribute mark_debug of ps2Clk  : signal is "true";
   -- attribute mark_debug of ps2Data : signal is "true";
@@ -110,7 +110,48 @@ begin
     type states is (S0, S1, S2, S3); 
     variable state: states := S0;
   begin 
-    ...
+    soundEnable <= '0';
+    case state is
+      when S0 =>
+        if dataRdy = '1' and data != X"F0" then
+          ldCode = '1';
+        end if;
+      when S1 =>
+        soundEnable <= '1';
+      when S2 =>
+        soundEnable <= '1';
+      when S3 =>
+        soundEnable <= '0';
+    end case;
+
+    if rising_edge(clk) then
+      if rst = '1' then
+        state := S0;
+      else
+        case state is
+          when S0 =>
+            if dataRdy = '1' and data != X"F0" then
+              state := S1;
+            elsif dataRdy = '1' and data = X"F0" then
+              state := S3;
+            end if;
+          when S1 =>
+            if dataRdy = '1' and data = X"F0" then
+              state := S2;
+            end if;
+          when S2 =>
+            if dataRdy = '1' and data != code then
+              state := S1;
+            elsif dataRdy = '1' and data = code then
+              state := S0;
+            end if;
+          when S3 =>
+            if  dataRdy = '1' them
+              state := S0;
+            end if;
+        end case;
+      end if;
+    end if;
   end process;  
   
   speaker <= 

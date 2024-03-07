@@ -8,9 +8,9 @@
 # 
 
 if [ -z "$PATH" ]; then
-  PATH=/tools/Xilinx/Vivado/2023.1/ids_lite/ISE/bin/lin64:/tools/Xilinx/Vivado/2023.1/bin
+  PATH=/Xilinx/Vivado/2023.1/ids_lite/ISE/bin/lin64:/Xilinx/Vivado/2023.1/bin
 else
-  PATH=/tools/Xilinx/Vivado/2023.1/ids_lite/ISE/bin/lin64:/tools/Xilinx/Vivado/2023.1/bin:$PATH
+  PATH=/Xilinx/Vivado/2023.1/ids_lite/ISE/bin/lin64:/Xilinx/Vivado/2023.1/bin:$PATH
 fi
 export PATH
 
@@ -21,7 +21,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='/home/jorbis/Documentos/GitHub/DAS/projects/lab3/lab3.runs/synth_1'
+HD_PWD='/home/alv/dt/uni/DAS/projects/lab3/lab3.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log
