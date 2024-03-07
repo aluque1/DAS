@@ -113,8 +113,8 @@ begin
     soundEnable <= '0';
     case state is
       when S0 =>
-        if dataRdy = '1' and data != X"F0" then
-          ldCode = '1';
+        if dataRdy = '1' and data = not X"F0" then
+          ldCode <= '1';
         end if;
       when S1 =>
         soundEnable <= '1';
@@ -130,7 +130,7 @@ begin
       else
         case state is
           when S0 =>
-            if dataRdy = '1' and data != X"F0" then
+            if dataRdy = '1' and data = not X"F0" then
               state := S1;
             elsif dataRdy = '1' and data = X"F0" then
               state := S3;
@@ -140,13 +140,13 @@ begin
               state := S2;
             end if;
           when S2 =>
-            if dataRdy = '1' and data != code then
+            if dataRdy = '1' and data = not code then
               state := S1;
             elsif dataRdy = '1' and data = code then
               state := S0;
             end if;
           when S3 =>
-            if  dataRdy = '1' them
+            if  dataRdy = '1' then
               state := S0;
             end if;
         end case;
