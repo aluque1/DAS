@@ -60,7 +60,11 @@ begin
   process (clk)
   begin
     if rising_edge(clk) then
-      ...
+      if (rst or lastBit) = '1' then --puede dar problema ya que puede no ser combinacional
+        data <= (others => '1');
+      elsif ps2DataSync = '1' and ps2ClkFall = '1' then
+       ps2DataShf <= ps2DataShf(9 downto 0) & '0';
+      end if;
     end if;
   end process;
 
@@ -68,9 +72,9 @@ begin
   process(ps2DataShf)
     variable aux : std_logic;
   begin
-    aux := ...;
-    for i in ... loop
-      ...;
+    aux := '0';
+    for i in ps2DataShf(8 downto 1)'range loop
+        aux := ps2DataShf(9) xor ps2DataShf(i);
     end loop;
     parityOK <= aux;
   end process;
@@ -82,7 +86,15 @@ begin
   process (clk)
   begin
     if rising_edge(clk) then
-      ...
+      if rst = '1' then
+        data <= (others => '0');
+        dataRdy <= '0';
+      else
+        if (parityOK and lastBit) = '1' then
+            data <= ps2DataShf(8 downto 1);
+        end if;
+        dataRdy <= parityOK and lastBit;
+      end if;
     end if;
   end process;
     

@@ -82,18 +82,18 @@ begin
   with code select
     halfPeriod <=
       FREQ_HZ/(2*262) when X"1c",  -- A = Do
-      ...             when X"1d",  -- W = Do#
-      ...             when ...  ,  -- S = Re
-      ...             when ...  ,  -- E = Re#
-      ...             when ...  ,  -- D = Mi
-      ...             when ...  ,  -- F = Fa
-      ...             when ...  ,  -- T = Fa#
-      ...             when ...  ,  -- G = Sol
-      ...             when ...  ,  -- Y = Sol#
-      ...             when ...  ,  -- H = La
-      ...             when ...  ,  -- U = La#
-      ...             when ...  ,  -- J = Si
-      ...             when ...  ,  -- K = Do
+      FREQ_HZ/(2*277) when X"1d",  -- W = Do#
+      FREQ_HZ/(2*294) when X"1b",  -- S = Re
+      FREQ_HZ/(2*311) when X"24",  -- E = Re#
+      FREQ_HZ/(2*330) when X"23",  -- D = Mi
+      FREQ_HZ/(2*349) when X"2b",  -- F = Fa
+      FREQ_HZ/(2*370) when X"2c",  -- T = Fa#
+      FREQ_HZ/(2*392) when X"34",  -- G = Sol
+      FREQ_HZ/(2*415) when X"35",  -- Y = Sol#
+      FREQ_HZ/(2*440) when X"33",  -- H = La
+      FREQ_HZ/(2*466) when X"3c",  -- U = La#
+      FREQ_HZ/(2*494) when X"3b",  -- J = Si
+      FREQ_HZ/(2*523) when X"42",  -- K = Do
       0 when others;    
     
   cycleCounter :
