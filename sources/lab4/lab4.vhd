@@ -53,7 +53,7 @@ architecture syn of lab4 is
   signal data        : std_logic_vector(7 downto 0);
   signal soundEnable : std_logic;
   signal bins       : std_logic_vector(15 downto 0);
-  signal CycleCnt : std_logic;
+  signal halfPeriodEq : std_logic;
 
   -- Descomentar para instrumentar el dise�o
   -- attribute mark_debug : string;
@@ -102,7 +102,10 @@ begin
       FREQ_HZ/(2*494) when X"3b",  -- J = Si
       FREQ_HZ/(2*523) when X"42",  -- K = Do
       0 when others;    
-    
+      
+  halfPeriodComparator:    
+  halfPeriodEq <= '1' when halfPeriod = 0 else '0';
+  
   cycleCounter :
   process (clk)
     variable count : natural := 0;
@@ -117,9 +120,9 @@ begin
         count := count;
         --Biestable
         if count = 0 then 
-            CycleCnt <= '1';
+            speakerTFF <= '1';
         else
-            CycleCnt <= '0';
+            speakerTFF <= '0';
         end if;
     end if; 
   end process;
@@ -173,10 +176,9 @@ begin
     end if;
   end process;  
   
-  speakerTFF <= CycleCnt or not soundEnable or ('1' when halfPeriod = 0 else '0');
+  speaker <= speakerTFF or halfPeriodEq or not soundEnable;
   
-  speaker <= 
-    speakerTFF when rising_edge(clk) else '0';
+  --speaker <= speakerTFF when else ;
     
   bins(15 downto 12) <= "0000";
   bins(11 downto 4) <= code;
