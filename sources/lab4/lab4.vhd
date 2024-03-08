@@ -43,7 +43,7 @@ architecture syn of lab4 is
 
   signal code       : std_logic_vector(7 downto 0) := (others => '0');
   signal speakerTFF : std_logic := '0';
-  
+ 
   -- Se�ales
   
   signal rstSync     : std_logic;
@@ -52,6 +52,8 @@ architecture syn of lab4 is
   signal halfPeriod  : natural;
   signal data        : std_logic_vector(7 downto 0);
   signal soundEnable : std_logic;
+  signal bins       : std_logic_vector(15 downto 0);
+  signal CycleCnt : std_logic;
 
   -- Descomentar para instrumentar el dise�o
   -- attribute mark_debug : string;
@@ -105,8 +107,20 @@ begin
   process (clk)
     variable count : natural := 0;
   begin
+    if count = 0 then
+        count := halfPeriod;
+    else
+        count := count - 1;
+    end if;
     if rising_edge(clk) then
-      ...
+        --Reg
+        count := count;
+        --Biestable
+        if count = 0 then 
+            CycleCnt <= '1';
+        else
+            CycleCnt <= '0';
+        end if;
     end if; 
   end process;
   
@@ -159,10 +173,16 @@ begin
     end if;
   end process;  
   
+  speakerTFF <= CycleCnt or not soundEnable or ('1' when halfPeriod = 0 else '0');
+  
   speaker <= 
-    speakerTFF when ... else ...;
-
+    speakerTFF when rising_edge(clk) else '0';
+    
+  bins(15 downto 12) <= "0000";
+  bins(11 downto 4) <= code;
+  bins(3 downto 0) <= "0000";
   displayInterface : segsBankRefresher
-    ...
+    generic map(FREQ_KHZ => FREQ_KHZ, SIZE => 4)
+    port map(clk => clk, ens => "0110", bins => bins, dps => "0000", an_n => an_n, segs_n => segs_n);
   
 end syn;
