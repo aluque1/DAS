@@ -176,9 +176,7 @@ begin
     end if;
   end process;  
   
-  speaker <= speakerTFF or halfPeriodEq or not soundEnable;
-  
-  --speaker <= speakerTFF when else ;
+  speaker <= speakerTFF when halfPeriod = 1 or soundEnable = '1' else '1';
     
   bins(15 downto 12) <= "0000";
   bins(11 downto 4) <= code;

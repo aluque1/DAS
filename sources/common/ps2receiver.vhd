@@ -41,6 +41,7 @@ architecture syn of ps2receiver is
 
   signal ps2ClkSync, ps2DataSync, ps2ClkFall: std_logic;
   signal lastBit, parityOK: std_logic;
+  signal rstAux: std_logic;
 
 begin
 
@@ -56,11 +57,14 @@ begin
     generic map(XPOL => '0')
     port map(clk => clk, x => ps2ClkSync, xFall => ps2ClkFall, xRise => open);
 
+  rstAuxDeclaration:
+  rstAux <= '1' when rst = '1' or lastBit = '1' else '0';
+  
   ps2DataShifter:
   process (clk)
   begin
     if rising_edge(clk) then
-      if (rst or lastBit) = '1' then --puede dar problema ya que puede no ser combinacional
+      if rstAux = '1' then --puede dar problema ya que puede no ser combinacional
         data <= (others => '1');
       elsif ps2DataSync = '1' and ps2ClkFall = '1' then
        ps2DataShf <= ps2DataShf(9 downto 0) & '0';
