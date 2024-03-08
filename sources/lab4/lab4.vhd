@@ -62,19 +62,24 @@ architecture syn of lab4 is
 
 begin
 
-   resetSynchronizer : synchronizer
-    ...
-
- ------------------
+  resetSynchronizer : synchronizer
+  generic map ( STAGES => 2, XPOL => '0' )
+  port map ( clk => clk, x => rst, xSync => rstSync ); 
+   
+    ------------------
  
   ps2KeyboardInterface : ps2receiver
-    ...
-
+  port map(clk => clk, rst => rstSync, dataRdy => dataRdy, data => data, ps2Clk => ps2Clk, ps2Data => ps2Data);
+  
   codeRegister :
   process (clk)
   begin
     if rising_edge(clk) then
-      ...
+      if rst = '1' then
+        code <= (others => '0');
+      elsif ldCode = '1' then
+        code <= data;
+      end if;
     end if; 
   end process;
    
