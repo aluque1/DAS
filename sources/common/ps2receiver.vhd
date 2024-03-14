@@ -58,16 +58,16 @@ begin
     port map(clk => clk, x => ps2ClkSync, xFall => ps2ClkFall, xRise => open);
 
   rstAuxDeclaration:
-  rstAux <= '1' when rst = '1' or lastBit = '1' else '0';
+  rstAux <= '1' when (rst or lastBit) = '1' else '0';
   
   ps2DataShifter:
   process (clk)
   begin
     if rising_edge(clk) then
-      if rstAux = '1' then --puede dar problema ya que puede no ser combinacional
-        data <= (others => '1');
-      elsif ps2DataSync = '1' and ps2ClkFall = '1' then
-       ps2DataShf <= ps2DataShf(9 downto 0) & '0';
+      if rstAux = '1' then
+        ps2DataShf <= (others => '1');
+      elsif ps2ClkFall = '1' then
+       ps2DataShf <= ps2DataSync & ps2DataShf(10 downto 1);
       end if;
     end if;
   end process;
@@ -76,14 +76,14 @@ begin
   process(ps2DataShf)
     variable aux : std_logic;
   begin
-    aux := '0';
+    aux := ps2DataShf(9);
     for i in ps2DataShf(8 downto 1)'range loop
-        aux := ps2DataShf(9) xor ps2DataShf(i);
+        aux := ps2DataShf(i) xor  aux;
     end loop;
     parityOK <= aux;
   end process;
 
-  lastBitCheker :
+  lastBitChecker :
   lastBit <= not ps2DataShf(0);  
    
   outputRegisters :

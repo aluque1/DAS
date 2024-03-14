@@ -56,11 +56,11 @@ architecture syn of lab4 is
   signal halfPeriodEq : std_logic;
 
   -- Descomentar para instrumentar el dise�o
-  -- attribute mark_debug : string;
-  -- attribute mark_debug of ps2Clk  : signal is "true";
-  -- attribute mark_debug of ps2Data : signal is "true";
-  -- attribute mark_debug of dataRdy : signal is "true";
-  -- attribute mark_debug of data    : signal is "true";
+  --attribute mark_debug : string;
+  --attribute mark_debug of ps2Clk  : signal is "true";
+  --attribute mark_debug of ps2Data : signal is "true";
+  --attribute mark_debug of dataRdy : signal is "true";
+  --attribute mark_debug of data    : signal is "true";
 
 begin
 
