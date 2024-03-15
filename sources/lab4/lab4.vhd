@@ -113,10 +113,9 @@ begin
         --Biestable
         if count = 0 then 
             count := halfPeriod;
-            speakerTFF <= '1';
+            speakerTFF <= not speakerTFF;
         else
             count := count - 1;
-            speakerTFF <= '0';
         end if;
     end if; 
   end process;
@@ -127,6 +126,7 @@ begin
     variable state: states := S0;
   begin 
     soundEnable <= '0';
+    ldCode <= '0';
     case state is
       when S0 =>
         if dataRdy = '1' and data = not X"F0" then
@@ -141,7 +141,7 @@ begin
     end case;
 
     if rising_edge(clk) then
-      if rst = '1' then
+      if rstSync = '1' then
         state := S0;
       else
         case state is
@@ -170,7 +170,7 @@ begin
     end if;
   end process;  
   
-  speaker <= speakerTFF when halfPeriod = 1 or soundEnable = '1' else '1';
+  speaker <= speakerTFF when halfPeriod /= 0 and soundEnable = '1' else '1';
     
   bins(15 downto 12) <= "0000";
   bins(11 downto 4) <= code;
