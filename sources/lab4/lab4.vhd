@@ -53,7 +53,6 @@ architecture syn of lab4 is
   signal data        : std_logic_vector(7 downto 0);
   signal soundEnable : std_logic;
   signal bins       : std_logic_vector(15 downto 0);
-  signal halfPeriodEq : std_logic;
 
   -- Descomentar para instrumentar el dise�o
   --attribute mark_debug : string;
@@ -77,7 +76,7 @@ begin
   process (clk)
   begin
     if rising_edge(clk) then
-      if rst = '1' then
+      if rstSync = '1' then
         code <= (others => '0');
       elsif ldCode = '1' then
         code <= data;
@@ -102,26 +101,21 @@ begin
       FREQ_HZ/(2*494) when X"3b",  -- J = Si
       FREQ_HZ/(2*523) when X"42",  -- K = Do
       0 when others;    
-      
-  halfPeriodComparator:    
-  halfPeriodEq <= '1' when halfPeriod = 0 else '0';
   
   cycleCounter :
   process (clk)
     variable count : natural := 0;
   begin
-    if count = 0 then
-        count := halfPeriod;
-    else
-        count := count - 1;
-    end if;
+    --Revisar esto que a lo mejor hay que meterlo todo en el clk
     if rising_edge(clk) then
         --Reg
         count := count;
         --Biestable
         if count = 0 then 
+            count := halfPeriod;
             speakerTFF <= '1';
         else
+            count := count - 1;
             speakerTFF <= '0';
         end if;
     end if; 
