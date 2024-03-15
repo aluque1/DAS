@@ -55,11 +55,11 @@ architecture syn of lab4 is
   signal bins       : std_logic_vector(15 downto 0);
 
   -- Descomentar para instrumentar el dise�o
-  --attribute mark_debug : string;
-  --attribute mark_debug of ps2Clk  : signal is "true";
-  --attribute mark_debug of ps2Data : signal is "true";
-  --attribute mark_debug of dataRdy : signal is "true";
-  --attribute mark_debug of data    : signal is "true";
+  attribute mark_debug : string;
+  attribute mark_debug of ps2Clk  : signal is "true";
+  attribute mark_debug of ps2Data : signal is "true";
+  attribute mark_debug of dataRdy : signal is "true";
+  attribute mark_debug of data    : signal is "true";
 
 begin
 
@@ -146,7 +146,7 @@ begin
       else
         case state is
           when S0 =>
-            if dataRdy = '1' and data = not X"F0" then
+            if dataRdy = '1' and data /= X"F0" then
               state := S1;
             elsif dataRdy = '1' and data = X"F0" then
               state := S3;
@@ -156,7 +156,7 @@ begin
               state := S2;
             end if;
           when S2 =>
-            if dataRdy = '1' and data = not code then
+            if dataRdy = '1' and data /= code then
               state := S1;
             elsif dataRdy = '1' and data = code then
               state := S0;
