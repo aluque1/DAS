@@ -129,9 +129,7 @@ begin
     ldCode <= '0';
     case state is
       when S0 =>
-        if dataRdy = '1' and data = not X"F0" then
-          ldCode <= '1';
-        end if;
+        soundEnable <= '0';
       when S1 =>
         soundEnable <= '1';
       when S2 =>
@@ -147,6 +145,7 @@ begin
         case state is
           when S0 =>
             if dataRdy = '1' and data /= X"F0" then
+              ldCode <= '1';
               state := S1;
             elsif dataRdy = '1' and data = X"F0" then
               state := S3;
