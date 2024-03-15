@@ -153,7 +153,39 @@ component ps2receiver
     ps2Data    : in  std_logic    -- entrada de datos serie del interfaz PS2
   );
 end component;
-  
+
+component rs232transmitter
+  generic (
+    FREQ_KHZ : natural;  -- frecuencia de operacion en KHz
+    BAUDRATE : natural   -- velocidad de comunicacion
+  );
+  port (
+    -- host side
+    clk     : in  std_logic;   -- reloj del sistema
+    rst     : in  std_logic;   -- reset s�ncrono del sistema
+    dataRdy : in  std_logic;   -- se activa durante 1 ciclo cada vez que hay un nuevo dato a transmitir
+    data    : in  std_logic_vector (7 downto 0);   -- dato a transmitir
+    busy    : out std_logic;   -- se activa mientras esta transmitiendo
+    -- RS232 side
+    TxD     : out std_logic    -- salida de datos serie del interfaz RS-232
+  );
+end component;
+
+component rs232receiver
+  generic (
+    FREQ_KHZ : natural;  -- frecuencia de operacion en KHz
+    BAUDRATE : natural   -- velocidad de comunicacion
+  );
+  port (
+    -- host side
+    clk     : in  std_logic;   -- reloj del sistema
+    rst     : in  std_logic;   -- reset s�ncrono del sistema
+    dataRdy : out std_logic;   -- se activa durante 1 ciclo cada vez que hay un nuevo dato recibido
+    data    : out std_logic_vector (7 downto 0);   -- dato recibido
+    -- RS232 side
+    RxD     : in  std_logic    -- entrada de datos serie del interfaz RS-232
+  );
+end component;
 end package common;
 
 -------------------------------------------------------------------
