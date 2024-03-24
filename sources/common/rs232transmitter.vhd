@@ -4,14 +4,14 @@
 --    rs232transmitter.vhd  15/7/2015
 --
 --    (c) J.M. Mendias
---    Diseño Automático de Sistemas
---    Facultad de Informática. Universidad Complutense de Madrid
+--    Diseï¿½o Automï¿½tico de Sistemas
+--    Facultad de Informï¿½tica. Universidad Complutense de Madrid
 --
---  Propósito:
+--  Propï¿½sito:
 --    Conversor elemental de paralelo a una linea serie RS-232 con 
 --    protocolo de strobe
 --
---  Notas de diseño:
+--  Notas de diseï¿½o:
 --    - Parity: NONE
 --    - Num data bits: 8
 --    - Num stop bits: 1
@@ -29,7 +29,7 @@ entity rs232transmitter is
   port (
     -- host side
     clk     : in  std_logic;   -- reloj del sistema
-    rst     : in  std_logic;   -- reset síncrono del sistema
+    rst     : in  std_logic;   -- reset sï¿½ncrono del sistema
     dataRdy : in  std_logic;   -- se activa durante 1 ciclo cada vez que hay un nuevo dato a transmitir
     data    : in  std_logic_vector (7 downto 0);   -- dato a transmitir
     busy    : out std_logic;   -- se activa mientras esta transmitiendo
@@ -56,7 +56,7 @@ begin
     writeTxD <= (count = CYCLES-1);
     if rising_edge(clk) then
       if baudCntCE then
-        ...;
+        count := count + 1; --Puede que se tenga que poner mod
       else
         count := 0;
       end if;
@@ -69,7 +69,7 @@ begin
     variable TxDShf : std_logic_vector(9 downto 0) := (others =>'1');
   begin
     TxD <= TxDShf(0);
-    baudCntCE <= ...;
+    baudCntCE <= false; --No se si esta bien, creo que si
     if baudCntCE then
       busy <= '1';
     else
@@ -87,7 +87,11 @@ begin
               bitPos := 1;
             end if;
           when others =>                         -- Desplaza
-            ...
+            baudCntCE <= true;                   --NO se si esto va aqui
+            if writeTxD then
+              TxDShf := "1" & TxDShf(9 downto 1);
+              bitPos := bitPos + 1;
+            end if;
         end case;
       end if;
     end if;

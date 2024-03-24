@@ -4,14 +4,14 @@
 --    rs232receiver.vhd  12/09/2023
 --
 --    (c) J.M. Mendias
---    Diseño Automático de Sistemas
---    Facultad de Informática. Universidad Complutense de Madrid
+--    Diseï¿½o Automï¿½tico de Sistemas
+--    Facultad de Informï¿½tica. Universidad Complutense de Madrid
 --
---  Propósito:
+--  Propï¿½sito:
 --    Conversor elemental de una linea serie RS-232 a paralelo con 
 --    protocolo de strobe
 --
---  Notas de diseño:
+--  Notas de diseï¿½o:
 --    - Parity: NONE
 --    - Num data bits: 8
 --    - Num stop bits: 1
@@ -29,7 +29,7 @@ entity rs232receiver is
   port (
     -- host side
     clk     : in  std_logic;   -- reloj del sistema
-    rst     : in  std_logic;   -- reset síncrono del sistema
+    rst     : in  std_logic;   -- reset sï¿½ncrono del sistema
     dataRdy : out std_logic;   -- se activa durante 1 ciclo cada vez que hay un nuevo dato recibido
     data    : out std_logic_vector (7 downto 0);   -- dato recibido
     -- RS232 side
@@ -54,34 +54,45 @@ begin
 
   baudCnt:
   process (clk)
-    ...
+    constant CYCLES : natural := (FREQ_KHZ*1000)/BAUDRATE;
+    variable count  : natural range 0 to CYCLES-1 := 0;
   begin
     readRxD <= ( count = CYCLES/2-1 );
     if rising_edge(clk) then
-      ...
+       if baudCntCE then
+         count := count + 1; --Puede que se tenga que poner mod
+       else
+         count := 0;
+       end if;
     end if;
   end process;
   
   fsmd:
   process (clk)
-    ...
+    variable bitPos : natural range 0 to 10 := 0;   
+    variable RxDShf : std_logic_vector(9 downto 0) := (others =>'1');
   begin
-    data      <= ...;
-    baudCntCE <= ...;
+    data      <= RxDShf; -- Nada seguro de esto
+    baudCntCE <= false;
     if rising_edge(clk) then
       if rst='1' then
-        ...
+        RxDShf := (others => '1');
+        bitPos := 0;
       else
         case bitPos is
           when 0 =>                              -- Esperando bit de start
-            dataRdy   <= '0';      
-            ...
+            dataRdy <= '0';      
+            if RxDSync = '0' then
+                bitPos := 1;
+            end if;
           when others =>                         -- Desplaza
+            baudCntCE <= true;
             if readRxD then 
               if bitPos = 10 then
                 dataRdy <= '1';
               end if;
-              ...
+              bitPos := bitPos + 1;
+              RxDShf := RxDSync & RxDShf(9 downto 1);
             end if;
         end case;
       end if;
