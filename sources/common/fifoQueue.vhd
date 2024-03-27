@@ -4,17 +4,17 @@
 --    fifo.vhd  1/10/2015
 --
 --    (c) J.M. Mendias
---    Diseño Automático de Sistemas
---    Facultad de Informática. Universidad Complutense de Madrid
+--    Diseï¿½o Automï¿½tico de Sistemas
+--    Facultad de Informï¿½tica. Universidad Complutense de Madrid
 --
---  Propósito:
+--  Propï¿½sito:
 --    Buffer de tipo FIFO
 --
---  Notas de diseño:
---    - Está implementada como un banco de registros
---    - Si la FIFO está llena, los nuevos datos que se intenten 
+--  Notas de diseï¿½o:
+--    - Estï¿½ implementada como un banco de registros
+--    - Si la FIFO estï¿½ llena, los nuevos datos que se intenten 
 --      almacenar se ignoran
---    - Si la FIFO está vacía, las lecturas devuelven valores no
+--    - Si la FIFO estï¿½ vacï¿½a, las lecturas devuelven valores no
 --      validos
 --
 -------------------------------------------------------------------
@@ -30,7 +30,7 @@ entity fifoQueue is
   );
   port (
     clk     : in  std_logic;   -- reloj del sistema
-    rst     : in  std_logic;   -- reset síncrono del sistema
+    rst     : in  std_logic;   -- reset sï¿½ncrono del sistema
     wrE     : in  std_logic;   -- se activa durante 1 ciclo para escribir un dato en la fifo
     dataIn  : in  std_logic_vector(WL-1 downto 0);   -- dato a escribir
     rdE     : in  std_logic;   -- se activa durante 1 ciclo para leer un dato de la fifo
@@ -55,7 +55,7 @@ architecture syn of fifoQueue is
   signal wrPointer, rdPointer : natural range 0 to DEPTH-1 := 0;
   signal isFull  : std_logic := '0';
   signal isEmpty : std_logic := '1';
-  -- Señales  
+  -- Seï¿½ales  
   signal nextWrPointer, nextRdPointer : natural range 0 to DEPTH-1;
   signal rdFifo  : std_logic;
   signal wrFifo  : std_logic;
@@ -68,16 +68,16 @@ begin
     dataOut <= regFile(rdPointer);
     if rising_edge(clk) then
       if wrFifo='1' then
-        ...;
+        regFileType(wrPointer) <= dataIn;
       end if;
     end if;
   end process;
  
-  wrFifo <= ...;
-  rdFifo <= ...;
+  wrFifo <= '0' when isFull='1' else wrE;   -- No estoy seguro de que esto sea asi
+  rdFifo <= '0' when isEmpty='1' else rdE;  -- No estoy seguro de que esto sea asi
   
-  nextWrPointer <= ...;
-  nextRdPointer <= ...;
+  nextWrPointer <= (nextWrPointer + wrFifo) mod DEPTH;  -- No se si hace falta el MOD
+  nextRdPointer <= (nextRdPointer + rdFifo) mod DEPTH;  -- para que vuelva a cero cuando llegue a DEPTH
     
   fsmd:
   process (clk) 
@@ -90,10 +90,17 @@ begin
         isEmpty   <= '1';
       else
         if wrFifo='1' then
-          ...
+          if isFull='0' then
+            isFull    <= (nextWrPointer=nextRdPointer);
+            wrPointer <= nextWrPointer;
+            isEmpty   <= '0';
+          end if;
         end if;
         if rdFifo='1' then
-          ...
+          if isEmpty='0' then
+            isEmpty   <= (nextWrPointer=nextRdPointer);
+            rdPointer <= nextRdPointer;
+            isFull    <= '0';
         end if;
       end if;
     end if;
@@ -101,7 +108,7 @@ begin
  
   full    <= isFull;
   empty   <= isEmpty;
-  numData <= ...;
+  numData <= nextWrPointer - nextRdPointer;
  
 end syn;
 

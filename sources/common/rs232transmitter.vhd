@@ -56,7 +56,7 @@ begin
     writeTxD <= (count = CYCLES-1);
     if rising_edge(clk) then
       if baudCntCE then
-        count := count + 1; --Puede que se tenga que poner mod
+        count := count + 1; --Puede que se tenga que poner mod (@ Luque seria (count + 1) mod CYCLES-1 ??) 
       else
         count := 0;
       end if;
@@ -87,10 +87,10 @@ begin
               bitPos := 1;
             end if;
           when others =>                         -- Desplaza
-            baudCntCE <= true;                   --NO se si esto va aqui
+            baudCntCE <= true;                   -- NO se si esto va aqui @Luque yo diria que si
             if writeTxD then
               TxDShf := "1" & TxDShf(9 downto 1);
-              bitPos := bitPos + 1;
+              bitPos := (bitPos + 1) mod 11;     -- @Luque Cambiado esto para que tenga el mod y vuelva a 0 cuando quiera pasar a 11
             end if;
         end case;
       end if;

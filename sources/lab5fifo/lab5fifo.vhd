@@ -4,13 +4,13 @@
 --    lab5.vhd  12/09/2023
 --
 --    (c) J.M. Mendias
---    Diseño Automático de Sistemas
---    Facultad de Informática. Universidad Complutense de Madrid
+--    Diseï¿½o Automï¿½tico de Sistemas
+--    Facultad de Informï¿½tica. Universidad Complutense de Madrid
 --
---  Propósito:
+--  Propï¿½sito:
 --    Laboratorio 5: Loopback con FIFO
 --
---  Notas de diseño:
+--  Notas de diseï¿½o:
 --
 ---------------------------------------------------------------------
 
@@ -26,7 +26,7 @@ entity lab5 is
     TxEn   :  in  std_logic;
     leds   : out std_logic_vector(15 downto 0);
     an_n   : out std_logic_vector (3 downto 0);   -- selector de display  
-    segs_n : out std_logic_vector(7 downto 0)     -- código 7 segmentos
+    segs_n : out std_logic_vector(7 downto 0)     -- cï¿½digo 7 segmentos
   );
 END lab5;
 
@@ -38,7 +38,7 @@ use work.common.all;
 architecture syn of lab5 is
 
   constant FREQ_KHZ : natural := 100_000;  -- frecuencia de operacion en KHz
-  constant BAUDRATE : natural := 1200;     -- vaelocidad de transmisión
+  constant BAUDRATE : natural := 1200;     -- vaelocidad de transmisiï¿½n
   
   signal dataRx, dataTx: std_logic_vector (7 downto 0);
   signal dataRdyTx, dataRdyRx, busy, empty, full: std_logic;
@@ -67,7 +67,7 @@ begin
     generic map ( WL => 8, DEPTH => 16 )
     port map ( clk => clk, rst => rstSync, wrE => dataRdyRx, dataIn => dataRx, rdE => dataRdyTx, dataOut => dataTx, numData => numData, full => full, empty => empty );
 
-  dataRdyTx <= ...;
+  dataRdyTx <= dataRdyRx and not full and TxEnSync; -- Esto puede tener fallos
    
   transmitter: rs232transmitter 
     generic map ( FREQ_KHZ => FREQ_KHZ, BAUDRATE => BAUDRATE )
