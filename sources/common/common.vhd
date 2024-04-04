@@ -186,6 +186,24 @@ component rs232receiver
     RxD     : in  std_logic    -- entrada de datos serie del interfaz RS-232
   );
 end component;
+
+component fifoQueue
+  generic (
+    WL    : natural;   -- anchura de la palabra de fifo
+    DEPTH : natural    -- numero de palabras en fifo
+  );
+  port (
+    clk     : in  std_logic;   -- reloj del sistema
+    rst     : in  std_logic;   -- reset s�ncrono del sistema
+    wrE     : in  std_logic;   -- se activa durante 1 ciclo para escribir un dato en la fifo
+    dataIn  : in  std_logic_vector(WL-1 downto 0);   -- dato a escribir
+    rdE     : in  std_logic;   -- se activa durante 1 ciclo para leer un dato de la fifo
+    dataOut : out std_logic_vector(WL-1 downto 0);   -- dato a leer
+    numData : out std_logic_vector(log2(DEPTH)-1 downto 0);   -- numero de datos almacenados
+    full    : out std_logic;   -- indicador de fifo llena
+    empty   : out std_logic    -- indicador de fifo vacia
+  );
+end component;
 end package common;
 
 -------------------------------------------------------------------
