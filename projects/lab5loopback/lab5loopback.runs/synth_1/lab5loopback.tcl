@@ -106,6 +106,8 @@ read_xdc /home/jorbis/Documentos/GitHub/DAS/sources/lab5loopback/lab5loopback.xd
 set_property used_in_implementation false [get_files /home/jorbis/Documentos/GitHub/DAS/sources/lab5loopback/lab5loopback.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
+
+read_checkpoint -auto_incremental -incremental /home/jorbis/Documentos/GitHub/DAS/projects/lab5loopback/lab5loopback.srcs/utils_1/imports/synth_1/lab5loopback.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }

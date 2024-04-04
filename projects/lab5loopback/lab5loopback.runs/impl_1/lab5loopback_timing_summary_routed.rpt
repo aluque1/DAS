@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Thu Apr  4 12:43:51 2024
+| Date         : Thu Apr  4 15:18:13 2024
 | Host         : Jorbis-Zenbook running 64-bit unknown
 | Command      : report_timing_summary -max_paths 10 -report_unconstrained -file lab5loopback_timing_summary_routed.rpt -pb lab5loopback_timing_summary_routed.pb -rpx lab5loopback_timing_summary_routed.rpx -warn_on_violation
 | Design       : lab5loopback
@@ -141,7 +141,7 @@ Table of Contents
 
     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-      5.036        0.000                      0                  148        0.109        0.000                      0                  148        4.500        0.000                       0                    68  
+      2.972        0.000                      0                  148        0.174        0.000                      0                  148        4.500        0.000                       0                    68  
 
 
 All user specified timing constraints are met.
@@ -164,7 +164,7 @@ sysClk  {0.000 5.000}      10.000          100.000
 
 Clock             WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
 -----             -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-sysClk              5.036        0.000                      0                  148        0.109        0.000                      0                  148        4.500        0.000                       0                    68  
+sysClk              2.972        0.000                      0                  148        0.174        0.000                      0                  148        4.500        0.000                       0                    68  
 
 
 ------------------------------------------------------------------------------------------------
@@ -215,28 +215,28 @@ Path Group    From Clock    To Clock
 From Clock:  sysClk
   To Clock:  sysClk
 
-Setup :            0  Failing Endpoints,  Worst Slack        5.036ns,  Total Violation        0.000ns
-Hold  :            0  Failing Endpoints,  Worst Slack        0.109ns,  Total Violation        0.000ns
+Setup :            0  Failing Endpoints,  Worst Slack        2.972ns,  Total Violation        0.000ns
+Hold  :            0  Failing Endpoints,  Worst Slack        0.174ns,  Total Violation        0.000ns
 PW    :            0  Failing Endpoints,  Worst Slack        4.500ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
 
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             5.036ns  (required time - arrival time)
-  Source:                 transmitter/fsmd.bitPos_reg[3]/C
+Slack (MET) :             2.972ns  (required time - arrival time)
+  Source:                 transmitter/baudCnt.count_reg[2]/C
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            transmitter/fsmd.TxDShf_reg[4]/S
-                            (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            transmitter/baudCnt.count_reg[3]/D
+                            (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             sysClk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (sysClk rise@10.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        4.367ns  (logic 1.196ns (27.388%)  route 3.171ns (72.612%))
-  Logic Levels:           3  (LUT2=1 LUT4=1 LUT6=1)
-  Clock Path Skew:        -0.038ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.024ns = ( 15.024 - 10.000 ) 
-    Source Clock Delay      (SCD):    5.329ns
-    Clock Pessimism Removal (CPR):    0.267ns
+  Data Path Delay:        6.996ns  (logic 4.115ns (58.818%)  route 2.881ns (41.182%))
+  Logic Levels:           10  (CARRY4=7 LUT1=2 LUT3=1)
+  Clock Path Skew:        -0.025ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.849ns = ( 14.849 - 10.000 ) 
+    Source Clock Delay      (SCD):    5.146ns
+    Clock Pessimism Removal (CPR):    0.272ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
     Total Input Jitter      (TIJ):    0.000ns
@@ -251,18 +251,39 @@ Slack (MET) :             5.036ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.458     1.458 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.967     3.425    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.521 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.808     5.329    transmitter/clk_IBUF_BUFG
-    SLICE_X5Y105         FDRE                                         r  transmitter/fsmd.bitPos_reg[3]/C
+                         net (fo=67, routed)          1.625     5.146    transmitter/clk_IBUF_BUFG
+    SLICE_X3Y91          FDRE                                         r  transmitter/baudCnt.count_reg[2]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X5Y105         FDRE (Prop_fdre_C_Q)         0.419     5.748 r  transmitter/fsmd.bitPos_reg[3]/Q
-                         net (fo=16, routed)          1.077     6.825    transmitter/fsmd.bitPos_reg_n_0_[3]
-    SLICE_X3Y105         LUT4 (Prop_lut4_I3_O)        0.327     7.152 f  transmitter/fsmd.TxDShf[7]_i_4/O
-                         net (fo=2, routed)           0.848     8.000    transmitter/fsmd.TxDShf[7]_i_4_n_0
-    SLICE_X2Y104         LUT6 (Prop_lut6_I0_O)        0.326     8.326 r  transmitter/fsmd.TxDShf[7]_i_2/O
-                         net (fo=10, routed)          0.707     9.033    transmitter/fsmd.TxDShf[7]_i_2_n_0
-    SLICE_X3Y107         LUT2 (Prop_lut2_I1_O)        0.124     9.157 r  transmitter/fsmd.TxDShf[7]_i_1/O
-                         net (fo=7, routed)           0.539     9.696    transmitter/fsmd.TxDShf[7]_i_1_n_0
-    SLICE_X2Y106         FDSE                                         r  transmitter/fsmd.TxDShf_reg[4]/S
+    SLICE_X3Y91          FDRE (Prop_fdre_C_Q)         0.419     5.565 r  transmitter/baudCnt.count_reg[2]/Q
+                         net (fo=2, routed)           0.483     6.048    transmitter/baudCnt.count_reg_n_0_[2]
+    SLICE_X4Y91          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.849     6.897 r  transmitter/count1_carry/CO[3]
+                         net (fo=1, routed)           0.000     6.897    transmitter/count1_carry_n_0
+    SLICE_X4Y92          CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222     7.119 f  transmitter/count1_carry__0/O[0]
+                         net (fo=2, routed)           0.639     7.759    transmitter/count1_carry__0_n_7
+    SLICE_X5Y92          LUT1 (Prop_lut1_I0_O)        0.299     8.058 r  transmitter/count0_carry__0_i_3__0/O
+                         net (fo=1, routed)           0.000     8.058    transmitter/count0_carry__0_i_3__0_n_0
+    SLICE_X5Y92          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     8.608 r  transmitter/count0_carry__0/CO[3]
+                         net (fo=1, routed)           0.000     8.608    transmitter/count0_carry__0_n_0
+    SLICE_X5Y93          CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.334     8.942 f  transmitter/count0_carry__1/O[1]
+                         net (fo=2, routed)           0.599     9.540    transmitter/count0_carry__1_n_6
+    SLICE_X2Y93          LUT1 (Prop_lut1_I0_O)        0.303     9.843 r  transmitter/count0__33_carry__1_i_2__0/O
+                         net (fo=1, routed)           0.000     9.843    transmitter/count0__33_carry__1_i_2__0_n_0
+    SLICE_X2Y93          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    10.376 r  transmitter/count0__33_carry__1/CO[3]
+                         net (fo=1, routed)           0.000    10.376    transmitter/count0__33_carry__1_n_0
+    SLICE_X2Y94          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    10.493 r  transmitter/count0__33_carry__2/CO[3]
+                         net (fo=1, routed)           0.000    10.493    transmitter/count0__33_carry__2_n_0
+    SLICE_X2Y95          CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.157    10.650 r  transmitter/count0__33_carry__3/CO[1]
+                         net (fo=17, routed)          1.160    11.810    transmitter/count0__33_carry__3_n_2
+    SLICE_X3Y92          LUT3 (Prop_lut3_I1_O)        0.332    12.142 r  transmitter/baudCnt.count[3]_i_1__0/O
+                         net (fo=1, routed)           0.000    12.142    transmitter/baudCnt.count[3]_i_1__0_n_0
+    SLICE_X3Y92          FDRE                                         r  transmitter/baudCnt.count_reg[3]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)    10.000    10.000 r  
@@ -271,31 +292,31 @@ Slack (MET) :             5.036ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.388    11.388 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.862    13.250    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    13.341 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.683    15.024    transmitter/clk_IBUF_BUFG
-    SLICE_X2Y106         FDSE                                         r  transmitter/fsmd.TxDShf_reg[4]/C
-                         clock pessimism              0.267    15.291    
-                         clock uncertainty           -0.035    15.256    
-    SLICE_X2Y106         FDSE (Setup_fdse_C_S)       -0.524    14.732    transmitter/fsmd.TxDShf_reg[4]
+                         net (fo=67, routed)          1.508    14.849    transmitter/clk_IBUF_BUFG
+    SLICE_X3Y92          FDRE                                         r  transmitter/baudCnt.count_reg[3]/C
+                         clock pessimism              0.272    15.121    
+                         clock uncertainty           -0.035    15.086    
+    SLICE_X3Y92          FDRE (Setup_fdre_C_D)        0.029    15.115    transmitter/baudCnt.count_reg[3]
   -------------------------------------------------------------------
-                         required time                         14.732    
-                         arrival time                          -9.696    
+                         required time                         15.115    
+                         arrival time                         -12.142    
   -------------------------------------------------------------------
-                         slack                                  5.036    
+                         slack                                  2.972    
 
-Slack (MET) :             5.036ns  (required time - arrival time)
-  Source:                 transmitter/fsmd.bitPos_reg[3]/C
+Slack (MET) :             2.990ns  (required time - arrival time)
+  Source:                 transmitter/baudCnt.count_reg[2]/C
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            transmitter/fsmd.TxDShf_reg[5]/S
-                            (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            transmitter/baudCnt.count_reg[4]/D
+                            (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             sysClk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (sysClk rise@10.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        4.367ns  (logic 1.196ns (27.388%)  route 3.171ns (72.612%))
-  Logic Levels:           3  (LUT2=1 LUT4=1 LUT6=1)
-  Clock Path Skew:        -0.038ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.024ns = ( 15.024 - 10.000 ) 
-    Source Clock Delay      (SCD):    5.329ns
-    Clock Pessimism Removal (CPR):    0.267ns
+  Data Path Delay:        7.024ns  (logic 4.143ns (58.982%)  route 2.881ns (41.018%))
+  Logic Levels:           10  (CARRY4=7 LUT1=2 LUT3=1)
+  Clock Path Skew:        -0.025ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.849ns = ( 14.849 - 10.000 ) 
+    Source Clock Delay      (SCD):    5.146ns
+    Clock Pessimism Removal (CPR):    0.272ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
     Total Input Jitter      (TIJ):    0.000ns
@@ -310,18 +331,39 @@ Slack (MET) :             5.036ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.458     1.458 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.967     3.425    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.521 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.808     5.329    transmitter/clk_IBUF_BUFG
-    SLICE_X5Y105         FDRE                                         r  transmitter/fsmd.bitPos_reg[3]/C
+                         net (fo=67, routed)          1.625     5.146    transmitter/clk_IBUF_BUFG
+    SLICE_X3Y91          FDRE                                         r  transmitter/baudCnt.count_reg[2]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X5Y105         FDRE (Prop_fdre_C_Q)         0.419     5.748 r  transmitter/fsmd.bitPos_reg[3]/Q
-                         net (fo=16, routed)          1.077     6.825    transmitter/fsmd.bitPos_reg_n_0_[3]
-    SLICE_X3Y105         LUT4 (Prop_lut4_I3_O)        0.327     7.152 f  transmitter/fsmd.TxDShf[7]_i_4/O
-                         net (fo=2, routed)           0.848     8.000    transmitter/fsmd.TxDShf[7]_i_4_n_0
-    SLICE_X2Y104         LUT6 (Prop_lut6_I0_O)        0.326     8.326 r  transmitter/fsmd.TxDShf[7]_i_2/O
-                         net (fo=10, routed)          0.707     9.033    transmitter/fsmd.TxDShf[7]_i_2_n_0
-    SLICE_X3Y107         LUT2 (Prop_lut2_I1_O)        0.124     9.157 r  transmitter/fsmd.TxDShf[7]_i_1/O
-                         net (fo=7, routed)           0.539     9.696    transmitter/fsmd.TxDShf[7]_i_1_n_0
-    SLICE_X2Y106         FDSE                                         r  transmitter/fsmd.TxDShf_reg[5]/S
+    SLICE_X3Y91          FDRE (Prop_fdre_C_Q)         0.419     5.565 r  transmitter/baudCnt.count_reg[2]/Q
+                         net (fo=2, routed)           0.483     6.048    transmitter/baudCnt.count_reg_n_0_[2]
+    SLICE_X4Y91          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.849     6.897 r  transmitter/count1_carry/CO[3]
+                         net (fo=1, routed)           0.000     6.897    transmitter/count1_carry_n_0
+    SLICE_X4Y92          CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222     7.119 f  transmitter/count1_carry__0/O[0]
+                         net (fo=2, routed)           0.639     7.759    transmitter/count1_carry__0_n_7
+    SLICE_X5Y92          LUT1 (Prop_lut1_I0_O)        0.299     8.058 r  transmitter/count0_carry__0_i_3__0/O
+                         net (fo=1, routed)           0.000     8.058    transmitter/count0_carry__0_i_3__0_n_0
+    SLICE_X5Y92          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     8.608 r  transmitter/count0_carry__0/CO[3]
+                         net (fo=1, routed)           0.000     8.608    transmitter/count0_carry__0_n_0
+    SLICE_X5Y93          CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.334     8.942 f  transmitter/count0_carry__1/O[1]
+                         net (fo=2, routed)           0.599     9.540    transmitter/count0_carry__1_n_6
+    SLICE_X2Y93          LUT1 (Prop_lut1_I0_O)        0.303     9.843 r  transmitter/count0__33_carry__1_i_2__0/O
+                         net (fo=1, routed)           0.000     9.843    transmitter/count0__33_carry__1_i_2__0_n_0
+    SLICE_X2Y93          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    10.376 r  transmitter/count0__33_carry__1/CO[3]
+                         net (fo=1, routed)           0.000    10.376    transmitter/count0__33_carry__1_n_0
+    SLICE_X2Y94          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    10.493 r  transmitter/count0__33_carry__2/CO[3]
+                         net (fo=1, routed)           0.000    10.493    transmitter/count0__33_carry__2_n_0
+    SLICE_X2Y95          CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.157    10.650 r  transmitter/count0__33_carry__3/CO[1]
+                         net (fo=17, routed)          1.160    11.810    transmitter/count0__33_carry__3_n_2
+    SLICE_X3Y92          LUT3 (Prop_lut3_I1_O)        0.360    12.170 r  transmitter/baudCnt.count[4]_i_1__0/O
+                         net (fo=1, routed)           0.000    12.170    transmitter/baudCnt.count[4]_i_1__0_n_0
+    SLICE_X3Y92          FDRE                                         r  transmitter/baudCnt.count_reg[4]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)    10.000    10.000 r  
@@ -330,31 +372,31 @@ Slack (MET) :             5.036ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.388    11.388 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.862    13.250    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    13.341 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.683    15.024    transmitter/clk_IBUF_BUFG
-    SLICE_X2Y106         FDSE                                         r  transmitter/fsmd.TxDShf_reg[5]/C
-                         clock pessimism              0.267    15.291    
-                         clock uncertainty           -0.035    15.256    
-    SLICE_X2Y106         FDSE (Setup_fdse_C_S)       -0.524    14.732    transmitter/fsmd.TxDShf_reg[5]
+                         net (fo=67, routed)          1.508    14.849    transmitter/clk_IBUF_BUFG
+    SLICE_X3Y92          FDRE                                         r  transmitter/baudCnt.count_reg[4]/C
+                         clock pessimism              0.272    15.121    
+                         clock uncertainty           -0.035    15.086    
+    SLICE_X3Y92          FDRE (Setup_fdre_C_D)        0.075    15.161    transmitter/baudCnt.count_reg[4]
   -------------------------------------------------------------------
-                         required time                         14.732    
-                         arrival time                          -9.696    
+                         required time                         15.161    
+                         arrival time                         -12.170    
   -------------------------------------------------------------------
-                         slack                                  5.036    
+                         slack                                  2.990    
 
-Slack (MET) :             5.036ns  (required time - arrival time)
-  Source:                 transmitter/fsmd.bitPos_reg[3]/C
+Slack (MET) :             3.124ns  (required time - arrival time)
+  Source:                 receiver/baudCnt.count_reg[0]/C
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            transmitter/fsmd.TxDShf_reg[6]/S
-                            (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            receiver/baudCnt.count_reg[0]/D
+                            (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             sysClk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (sysClk rise@10.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        4.367ns  (logic 1.196ns (27.388%)  route 3.171ns (72.612%))
-  Logic Levels:           3  (LUT2=1 LUT4=1 LUT6=1)
-  Clock Path Skew:        -0.038ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.024ns = ( 15.024 - 10.000 ) 
-    Source Clock Delay      (SCD):    5.329ns
-    Clock Pessimism Removal (CPR):    0.267ns
+  Data Path Delay:        6.872ns  (logic 3.755ns (54.642%)  route 3.117ns (45.358%))
+  Logic Levels:           10  (CARRY4=7 LUT1=2 LUT3=1)
+  Clock Path Skew:        0.000ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.781ns = ( 14.781 - 10.000 ) 
+    Source Clock Delay      (SCD):    5.077ns
+    Clock Pessimism Removal (CPR):    0.296ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
     Total Input Jitter      (TIJ):    0.000ns
@@ -369,18 +411,39 @@ Slack (MET) :             5.036ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.458     1.458 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.967     3.425    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.521 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.808     5.329    transmitter/clk_IBUF_BUFG
-    SLICE_X5Y105         FDRE                                         r  transmitter/fsmd.bitPos_reg[3]/C
+                         net (fo=67, routed)          1.556     5.077    receiver/clk_IBUF_BUFG
+    SLICE_X11Y92         FDRE                                         r  receiver/baudCnt.count_reg[0]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X5Y105         FDRE (Prop_fdre_C_Q)         0.419     5.748 r  transmitter/fsmd.bitPos_reg[3]/Q
-                         net (fo=16, routed)          1.077     6.825    transmitter/fsmd.bitPos_reg_n_0_[3]
-    SLICE_X3Y105         LUT4 (Prop_lut4_I3_O)        0.327     7.152 f  transmitter/fsmd.TxDShf[7]_i_4/O
-                         net (fo=2, routed)           0.848     8.000    transmitter/fsmd.TxDShf[7]_i_4_n_0
-    SLICE_X2Y104         LUT6 (Prop_lut6_I0_O)        0.326     8.326 r  transmitter/fsmd.TxDShf[7]_i_2/O
-                         net (fo=10, routed)          0.707     9.033    transmitter/fsmd.TxDShf[7]_i_2_n_0
-    SLICE_X3Y107         LUT2 (Prop_lut2_I1_O)        0.124     9.157 r  transmitter/fsmd.TxDShf[7]_i_1/O
-                         net (fo=7, routed)           0.539     9.696    transmitter/fsmd.TxDShf[7]_i_1_n_0
-    SLICE_X2Y106         FDSE                                         r  transmitter/fsmd.TxDShf_reg[6]/S
+    SLICE_X11Y92         FDRE (Prop_fdre_C_Q)         0.456     5.533 r  receiver/baudCnt.count_reg[0]/Q
+                         net (fo=4, routed)           0.644     6.177    receiver/count[0]
+    SLICE_X8Y92          CARRY4 (Prop_carry4_CYINIT_CO[3])
+                                                      0.595     6.772 r  receiver/count1_carry/CO[3]
+                         net (fo=1, routed)           0.000     6.772    receiver/count1_carry_n_0
+    SLICE_X8Y93          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.889 r  receiver/count1_carry__0/CO[3]
+                         net (fo=1, routed)           0.000     6.889    receiver/count1_carry__0_n_0
+    SLICE_X8Y94          CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.219     7.108 f  receiver/count1_carry__1/O[0]
+                         net (fo=2, routed)           0.706     7.814    receiver/count1[9]
+    SLICE_X9Y94          LUT1 (Prop_lut1_I0_O)        0.295     8.109 r  receiver/count0_carry__1_i_3/O
+                         net (fo=1, routed)           0.000     8.109    receiver/count0_carry__1_i_3_n_0
+    SLICE_X9Y94          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     8.659 r  receiver/count0_carry__1/CO[3]
+                         net (fo=1, routed)           0.000     8.659    receiver/count0_carry__1_n_0
+    SLICE_X9Y95          CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222     8.881 f  receiver/count0_carry__2/O[0]
+                         net (fo=2, routed)           0.612     9.493    receiver/count0_carry__2_n_7
+    SLICE_X10Y95         LUT1 (Prop_lut1_I0_O)        0.299     9.792 r  receiver/count0__33_carry__2_i_3/O
+                         net (fo=1, routed)           0.000     9.792    receiver/count0__33_carry__2_i_3_n_0
+    SLICE_X10Y95         CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.513    10.305 r  receiver/count0__33_carry__2/CO[3]
+                         net (fo=1, routed)           0.000    10.305    receiver/count0__33_carry__2_n_0
+    SLICE_X10Y96         CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.157    10.462 r  receiver/count0__33_carry__3/CO[1]
+                         net (fo=17, routed)          1.155    11.617    receiver/count0__33_carry__3_n_2
+    SLICE_X11Y92         LUT3 (Prop_lut3_I1_O)        0.332    11.949 r  receiver/baudCnt.count[0]_i_1/O
+                         net (fo=1, routed)           0.000    11.949    receiver/p_1_in[0]
+    SLICE_X11Y92         FDRE                                         r  receiver/baudCnt.count_reg[0]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)    10.000    10.000 r  
@@ -389,31 +452,31 @@ Slack (MET) :             5.036ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.388    11.388 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.862    13.250    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    13.341 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.683    15.024    transmitter/clk_IBUF_BUFG
-    SLICE_X2Y106         FDSE                                         r  transmitter/fsmd.TxDShf_reg[6]/C
-                         clock pessimism              0.267    15.291    
-                         clock uncertainty           -0.035    15.256    
-    SLICE_X2Y106         FDSE (Setup_fdse_C_S)       -0.524    14.732    transmitter/fsmd.TxDShf_reg[6]
+                         net (fo=67, routed)          1.440    14.781    receiver/clk_IBUF_BUFG
+    SLICE_X11Y92         FDRE                                         r  receiver/baudCnt.count_reg[0]/C
+                         clock pessimism              0.296    15.077    
+                         clock uncertainty           -0.035    15.042    
+    SLICE_X11Y92         FDRE (Setup_fdre_C_D)        0.031    15.073    receiver/baudCnt.count_reg[0]
   -------------------------------------------------------------------
-                         required time                         14.732    
-                         arrival time                          -9.696    
+                         required time                         15.073    
+                         arrival time                         -11.949    
   -------------------------------------------------------------------
-                         slack                                  5.036    
+                         slack                                  3.124    
 
-Slack (MET) :             5.036ns  (required time - arrival time)
-  Source:                 transmitter/fsmd.bitPos_reg[3]/C
+Slack (MET) :             3.212ns  (required time - arrival time)
+  Source:                 transmitter/baudCnt.count_reg[2]/C
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            transmitter/fsmd.TxDShf_reg[7]/S
-                            (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            transmitter/baudCnt.count_reg[7]/D
+                            (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             sysClk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (sysClk rise@10.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        4.367ns  (logic 1.196ns (27.388%)  route 3.171ns (72.612%))
-  Logic Levels:           3  (LUT2=1 LUT4=1 LUT6=1)
-  Clock Path Skew:        -0.038ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.024ns = ( 15.024 - 10.000 ) 
-    Source Clock Delay      (SCD):    5.329ns
-    Clock Pessimism Removal (CPR):    0.267ns
+  Data Path Delay:        6.758ns  (logic 4.115ns (60.891%)  route 2.643ns (39.109%))
+  Logic Levels:           10  (CARRY4=7 LUT1=2 LUT3=1)
+  Clock Path Skew:        -0.024ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.850ns = ( 14.850 - 10.000 ) 
+    Source Clock Delay      (SCD):    5.146ns
+    Clock Pessimism Removal (CPR):    0.272ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
     Total Input Jitter      (TIJ):    0.000ns
@@ -428,18 +491,39 @@ Slack (MET) :             5.036ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.458     1.458 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.967     3.425    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.521 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.808     5.329    transmitter/clk_IBUF_BUFG
-    SLICE_X5Y105         FDRE                                         r  transmitter/fsmd.bitPos_reg[3]/C
+                         net (fo=67, routed)          1.625     5.146    transmitter/clk_IBUF_BUFG
+    SLICE_X3Y91          FDRE                                         r  transmitter/baudCnt.count_reg[2]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X5Y105         FDRE (Prop_fdre_C_Q)         0.419     5.748 r  transmitter/fsmd.bitPos_reg[3]/Q
-                         net (fo=16, routed)          1.077     6.825    transmitter/fsmd.bitPos_reg_n_0_[3]
-    SLICE_X3Y105         LUT4 (Prop_lut4_I3_O)        0.327     7.152 f  transmitter/fsmd.TxDShf[7]_i_4/O
-                         net (fo=2, routed)           0.848     8.000    transmitter/fsmd.TxDShf[7]_i_4_n_0
-    SLICE_X2Y104         LUT6 (Prop_lut6_I0_O)        0.326     8.326 r  transmitter/fsmd.TxDShf[7]_i_2/O
-                         net (fo=10, routed)          0.707     9.033    transmitter/fsmd.TxDShf[7]_i_2_n_0
-    SLICE_X3Y107         LUT2 (Prop_lut2_I1_O)        0.124     9.157 r  transmitter/fsmd.TxDShf[7]_i_1/O
-                         net (fo=7, routed)           0.539     9.696    transmitter/fsmd.TxDShf[7]_i_1_n_0
-    SLICE_X2Y106         FDSE                                         r  transmitter/fsmd.TxDShf_reg[7]/S
+    SLICE_X3Y91          FDRE (Prop_fdre_C_Q)         0.419     5.565 r  transmitter/baudCnt.count_reg[2]/Q
+                         net (fo=2, routed)           0.483     6.048    transmitter/baudCnt.count_reg_n_0_[2]
+    SLICE_X4Y91          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.849     6.897 r  transmitter/count1_carry/CO[3]
+                         net (fo=1, routed)           0.000     6.897    transmitter/count1_carry_n_0
+    SLICE_X4Y92          CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222     7.119 f  transmitter/count1_carry__0/O[0]
+                         net (fo=2, routed)           0.639     7.759    transmitter/count1_carry__0_n_7
+    SLICE_X5Y92          LUT1 (Prop_lut1_I0_O)        0.299     8.058 r  transmitter/count0_carry__0_i_3__0/O
+                         net (fo=1, routed)           0.000     8.058    transmitter/count0_carry__0_i_3__0_n_0
+    SLICE_X5Y92          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     8.608 r  transmitter/count0_carry__0/CO[3]
+                         net (fo=1, routed)           0.000     8.608    transmitter/count0_carry__0_n_0
+    SLICE_X5Y93          CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.334     8.942 f  transmitter/count0_carry__1/O[1]
+                         net (fo=2, routed)           0.599     9.540    transmitter/count0_carry__1_n_6
+    SLICE_X2Y93          LUT1 (Prop_lut1_I0_O)        0.303     9.843 r  transmitter/count0__33_carry__1_i_2__0/O
+                         net (fo=1, routed)           0.000     9.843    transmitter/count0__33_carry__1_i_2__0_n_0
+    SLICE_X2Y93          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    10.376 r  transmitter/count0__33_carry__1/CO[3]
+                         net (fo=1, routed)           0.000    10.376    transmitter/count0__33_carry__1_n_0
+    SLICE_X2Y94          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    10.493 r  transmitter/count0__33_carry__2/CO[3]
+                         net (fo=1, routed)           0.000    10.493    transmitter/count0__33_carry__2_n_0
+    SLICE_X2Y95          CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.157    10.650 r  transmitter/count0__33_carry__3/CO[1]
+                         net (fo=17, routed)          0.921    11.572    transmitter/count0__33_carry__3_n_2
+    SLICE_X1Y93          LUT3 (Prop_lut3_I1_O)        0.332    11.904 r  transmitter/baudCnt.count[7]_i_1__0/O
+                         net (fo=1, routed)           0.000    11.904    transmitter/baudCnt.count[7]_i_1__0_n_0
+    SLICE_X1Y93          FDRE                                         r  transmitter/baudCnt.count_reg[7]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)    10.000    10.000 r  
@@ -448,31 +532,31 @@ Slack (MET) :             5.036ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.388    11.388 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.862    13.250    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    13.341 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.683    15.024    transmitter/clk_IBUF_BUFG
-    SLICE_X2Y106         FDSE                                         r  transmitter/fsmd.TxDShf_reg[7]/C
-                         clock pessimism              0.267    15.291    
-                         clock uncertainty           -0.035    15.256    
-    SLICE_X2Y106         FDSE (Setup_fdse_C_S)       -0.524    14.732    transmitter/fsmd.TxDShf_reg[7]
+                         net (fo=67, routed)          1.509    14.850    transmitter/clk_IBUF_BUFG
+    SLICE_X1Y93          FDRE                                         r  transmitter/baudCnt.count_reg[7]/C
+                         clock pessimism              0.272    15.122    
+                         clock uncertainty           -0.035    15.087    
+    SLICE_X1Y93          FDRE (Setup_fdre_C_D)        0.029    15.116    transmitter/baudCnt.count_reg[7]
   -------------------------------------------------------------------
-                         required time                         14.732    
-                         arrival time                          -9.696    
+                         required time                         15.116    
+                         arrival time                         -11.904    
   -------------------------------------------------------------------
-                         slack                                  5.036    
+                         slack                                  3.212    
 
-Slack (MET) :             5.270ns  (required time - arrival time)
-  Source:                 transmitter/fsmd.bitPos_reg[3]/C
+Slack (MET) :             3.232ns  (required time - arrival time)
+  Source:                 transmitter/baudCnt.count_reg[2]/C
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            transmitter/fsmd.TxDShf_reg[1]/S
-                            (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            transmitter/baudCnt.count_reg[8]/D
+                            (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             sysClk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (sysClk rise@10.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        4.227ns  (logic 1.196ns (28.294%)  route 3.031ns (71.706%))
-  Logic Levels:           3  (LUT2=1 LUT4=1 LUT6=1)
-  Clock Path Skew:        -0.039ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.023ns = ( 15.023 - 10.000 ) 
-    Source Clock Delay      (SCD):    5.329ns
-    Clock Pessimism Removal (CPR):    0.267ns
+  Data Path Delay:        6.784ns  (logic 4.141ns (61.041%)  route 2.643ns (38.959%))
+  Logic Levels:           10  (CARRY4=7 LUT1=2 LUT3=1)
+  Clock Path Skew:        -0.024ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.850ns = ( 14.850 - 10.000 ) 
+    Source Clock Delay      (SCD):    5.146ns
+    Clock Pessimism Removal (CPR):    0.272ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
     Total Input Jitter      (TIJ):    0.000ns
@@ -487,18 +571,39 @@ Slack (MET) :             5.270ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.458     1.458 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.967     3.425    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.521 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.808     5.329    transmitter/clk_IBUF_BUFG
-    SLICE_X5Y105         FDRE                                         r  transmitter/fsmd.bitPos_reg[3]/C
+                         net (fo=67, routed)          1.625     5.146    transmitter/clk_IBUF_BUFG
+    SLICE_X3Y91          FDRE                                         r  transmitter/baudCnt.count_reg[2]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X5Y105         FDRE (Prop_fdre_C_Q)         0.419     5.748 r  transmitter/fsmd.bitPos_reg[3]/Q
-                         net (fo=16, routed)          1.077     6.825    transmitter/fsmd.bitPos_reg_n_0_[3]
-    SLICE_X3Y105         LUT4 (Prop_lut4_I3_O)        0.327     7.152 f  transmitter/fsmd.TxDShf[7]_i_4/O
-                         net (fo=2, routed)           0.848     8.000    transmitter/fsmd.TxDShf[7]_i_4_n_0
-    SLICE_X2Y104         LUT6 (Prop_lut6_I0_O)        0.326     8.326 r  transmitter/fsmd.TxDShf[7]_i_2/O
-                         net (fo=10, routed)          0.707     9.033    transmitter/fsmd.TxDShf[7]_i_2_n_0
-    SLICE_X3Y107         LUT2 (Prop_lut2_I1_O)        0.124     9.157 r  transmitter/fsmd.TxDShf[7]_i_1/O
-                         net (fo=7, routed)           0.399     9.556    transmitter/fsmd.TxDShf[7]_i_1_n_0
-    SLICE_X3Y107         FDSE                                         r  transmitter/fsmd.TxDShf_reg[1]/S
+    SLICE_X3Y91          FDRE (Prop_fdre_C_Q)         0.419     5.565 r  transmitter/baudCnt.count_reg[2]/Q
+                         net (fo=2, routed)           0.483     6.048    transmitter/baudCnt.count_reg_n_0_[2]
+    SLICE_X4Y91          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.849     6.897 r  transmitter/count1_carry/CO[3]
+                         net (fo=1, routed)           0.000     6.897    transmitter/count1_carry_n_0
+    SLICE_X4Y92          CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222     7.119 f  transmitter/count1_carry__0/O[0]
+                         net (fo=2, routed)           0.639     7.759    transmitter/count1_carry__0_n_7
+    SLICE_X5Y92          LUT1 (Prop_lut1_I0_O)        0.299     8.058 r  transmitter/count0_carry__0_i_3__0/O
+                         net (fo=1, routed)           0.000     8.058    transmitter/count0_carry__0_i_3__0_n_0
+    SLICE_X5Y92          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     8.608 r  transmitter/count0_carry__0/CO[3]
+                         net (fo=1, routed)           0.000     8.608    transmitter/count0_carry__0_n_0
+    SLICE_X5Y93          CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.334     8.942 f  transmitter/count0_carry__1/O[1]
+                         net (fo=2, routed)           0.599     9.540    transmitter/count0_carry__1_n_6
+    SLICE_X2Y93          LUT1 (Prop_lut1_I0_O)        0.303     9.843 r  transmitter/count0__33_carry__1_i_2__0/O
+                         net (fo=1, routed)           0.000     9.843    transmitter/count0__33_carry__1_i_2__0_n_0
+    SLICE_X2Y93          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    10.376 r  transmitter/count0__33_carry__1/CO[3]
+                         net (fo=1, routed)           0.000    10.376    transmitter/count0__33_carry__1_n_0
+    SLICE_X2Y94          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    10.493 r  transmitter/count0__33_carry__2/CO[3]
+                         net (fo=1, routed)           0.000    10.493    transmitter/count0__33_carry__2_n_0
+    SLICE_X2Y95          CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.157    10.650 r  transmitter/count0__33_carry__3/CO[1]
+                         net (fo=17, routed)          0.921    11.572    transmitter/count0__33_carry__3_n_2
+    SLICE_X1Y93          LUT3 (Prop_lut3_I1_O)        0.358    11.930 r  transmitter/baudCnt.count[8]_i_1__0/O
+                         net (fo=1, routed)           0.000    11.930    transmitter/baudCnt.count[8]_i_1__0_n_0
+    SLICE_X1Y93          FDRE                                         r  transmitter/baudCnt.count_reg[8]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)    10.000    10.000 r  
@@ -507,31 +612,31 @@ Slack (MET) :             5.270ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.388    11.388 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.862    13.250    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    13.341 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.682    15.023    transmitter/clk_IBUF_BUFG
-    SLICE_X3Y107         FDSE                                         r  transmitter/fsmd.TxDShf_reg[1]/C
-                         clock pessimism              0.267    15.290    
-                         clock uncertainty           -0.035    15.255    
-    SLICE_X3Y107         FDSE (Setup_fdse_C_S)       -0.429    14.826    transmitter/fsmd.TxDShf_reg[1]
+                         net (fo=67, routed)          1.509    14.850    transmitter/clk_IBUF_BUFG
+    SLICE_X1Y93          FDRE                                         r  transmitter/baudCnt.count_reg[8]/C
+                         clock pessimism              0.272    15.122    
+                         clock uncertainty           -0.035    15.087    
+    SLICE_X1Y93          FDRE (Setup_fdre_C_D)        0.075    15.162    transmitter/baudCnt.count_reg[8]
   -------------------------------------------------------------------
-                         required time                         14.826    
-                         arrival time                          -9.556    
+                         required time                         15.162    
+                         arrival time                         -11.930    
   -------------------------------------------------------------------
-                         slack                                  5.270    
+                         slack                                  3.232    
 
-Slack (MET) :             5.270ns  (required time - arrival time)
-  Source:                 transmitter/fsmd.bitPos_reg[3]/C
+Slack (MET) :             3.252ns  (required time - arrival time)
+  Source:                 receiver/baudCnt.count_reg[0]/C
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            transmitter/fsmd.TxDShf_reg[2]/S
-                            (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            receiver/baudCnt.count_reg[7]/D
+                            (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             sysClk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (sysClk rise@10.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        4.227ns  (logic 1.196ns (28.294%)  route 3.031ns (71.706%))
-  Logic Levels:           3  (LUT2=1 LUT4=1 LUT6=1)
-  Clock Path Skew:        -0.039ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.023ns = ( 15.023 - 10.000 ) 
-    Source Clock Delay      (SCD):    5.329ns
-    Clock Pessimism Removal (CPR):    0.267ns
+  Data Path Delay:        6.720ns  (logic 3.755ns (55.880%)  route 2.965ns (44.120%))
+  Logic Levels:           10  (CARRY4=7 LUT1=2 LUT3=1)
+  Clock Path Skew:        -0.024ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.782ns = ( 14.782 - 10.000 ) 
+    Source Clock Delay      (SCD):    5.077ns
+    Clock Pessimism Removal (CPR):    0.271ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
     Total Input Jitter      (TIJ):    0.000ns
@@ -546,18 +651,39 @@ Slack (MET) :             5.270ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.458     1.458 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.967     3.425    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.521 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.808     5.329    transmitter/clk_IBUF_BUFG
-    SLICE_X5Y105         FDRE                                         r  transmitter/fsmd.bitPos_reg[3]/C
+                         net (fo=67, routed)          1.556     5.077    receiver/clk_IBUF_BUFG
+    SLICE_X11Y92         FDRE                                         r  receiver/baudCnt.count_reg[0]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X5Y105         FDRE (Prop_fdre_C_Q)         0.419     5.748 r  transmitter/fsmd.bitPos_reg[3]/Q
-                         net (fo=16, routed)          1.077     6.825    transmitter/fsmd.bitPos_reg_n_0_[3]
-    SLICE_X3Y105         LUT4 (Prop_lut4_I3_O)        0.327     7.152 f  transmitter/fsmd.TxDShf[7]_i_4/O
-                         net (fo=2, routed)           0.848     8.000    transmitter/fsmd.TxDShf[7]_i_4_n_0
-    SLICE_X2Y104         LUT6 (Prop_lut6_I0_O)        0.326     8.326 r  transmitter/fsmd.TxDShf[7]_i_2/O
-                         net (fo=10, routed)          0.707     9.033    transmitter/fsmd.TxDShf[7]_i_2_n_0
-    SLICE_X3Y107         LUT2 (Prop_lut2_I1_O)        0.124     9.157 r  transmitter/fsmd.TxDShf[7]_i_1/O
-                         net (fo=7, routed)           0.399     9.556    transmitter/fsmd.TxDShf[7]_i_1_n_0
-    SLICE_X3Y107         FDSE                                         r  transmitter/fsmd.TxDShf_reg[2]/S
+    SLICE_X11Y92         FDRE (Prop_fdre_C_Q)         0.456     5.533 r  receiver/baudCnt.count_reg[0]/Q
+                         net (fo=4, routed)           0.644     6.177    receiver/count[0]
+    SLICE_X8Y92          CARRY4 (Prop_carry4_CYINIT_CO[3])
+                                                      0.595     6.772 r  receiver/count1_carry/CO[3]
+                         net (fo=1, routed)           0.000     6.772    receiver/count1_carry_n_0
+    SLICE_X8Y93          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.889 r  receiver/count1_carry__0/CO[3]
+                         net (fo=1, routed)           0.000     6.889    receiver/count1_carry__0_n_0
+    SLICE_X8Y94          CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.219     7.108 f  receiver/count1_carry__1/O[0]
+                         net (fo=2, routed)           0.706     7.814    receiver/count1[9]
+    SLICE_X9Y94          LUT1 (Prop_lut1_I0_O)        0.295     8.109 r  receiver/count0_carry__1_i_3/O
+                         net (fo=1, routed)           0.000     8.109    receiver/count0_carry__1_i_3_n_0
+    SLICE_X9Y94          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     8.659 r  receiver/count0_carry__1/CO[3]
+                         net (fo=1, routed)           0.000     8.659    receiver/count0_carry__1_n_0
+    SLICE_X9Y95          CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222     8.881 f  receiver/count0_carry__2/O[0]
+                         net (fo=2, routed)           0.612     9.493    receiver/count0_carry__2_n_7
+    SLICE_X10Y95         LUT1 (Prop_lut1_I0_O)        0.299     9.792 r  receiver/count0__33_carry__2_i_3/O
+                         net (fo=1, routed)           0.000     9.792    receiver/count0__33_carry__2_i_3_n_0
+    SLICE_X10Y95         CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.513    10.305 r  receiver/count0__33_carry__2/CO[3]
+                         net (fo=1, routed)           0.000    10.305    receiver/count0__33_carry__2_n_0
+    SLICE_X10Y96         CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.157    10.462 r  receiver/count0__33_carry__3/CO[1]
+                         net (fo=17, routed)          1.003    11.465    receiver/count0__33_carry__3_n_2
+    SLICE_X11Y93         LUT3 (Prop_lut3_I1_O)        0.332    11.797 r  receiver/baudCnt.count[7]_i_1/O
+                         net (fo=1, routed)           0.000    11.797    receiver/p_1_in[7]
+    SLICE_X11Y93         FDRE                                         r  receiver/baudCnt.count_reg[7]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)    10.000    10.000 r  
@@ -566,31 +692,31 @@ Slack (MET) :             5.270ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.388    11.388 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.862    13.250    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    13.341 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.682    15.023    transmitter/clk_IBUF_BUFG
-    SLICE_X3Y107         FDSE                                         r  transmitter/fsmd.TxDShf_reg[2]/C
-                         clock pessimism              0.267    15.290    
-                         clock uncertainty           -0.035    15.255    
-    SLICE_X3Y107         FDSE (Setup_fdse_C_S)       -0.429    14.826    transmitter/fsmd.TxDShf_reg[2]
+                         net (fo=67, routed)          1.441    14.782    receiver/clk_IBUF_BUFG
+    SLICE_X11Y93         FDRE                                         r  receiver/baudCnt.count_reg[7]/C
+                         clock pessimism              0.271    15.053    
+                         clock uncertainty           -0.035    15.018    
+    SLICE_X11Y93         FDRE (Setup_fdre_C_D)        0.031    15.049    receiver/baudCnt.count_reg[7]
   -------------------------------------------------------------------
-                         required time                         14.826    
-                         arrival time                          -9.556    
+                         required time                         15.049    
+                         arrival time                         -11.797    
   -------------------------------------------------------------------
-                         slack                                  5.270    
+                         slack                                  3.252    
 
-Slack (MET) :             5.270ns  (required time - arrival time)
-  Source:                 transmitter/fsmd.bitPos_reg[3]/C
+Slack (MET) :             3.254ns  (required time - arrival time)
+  Source:                 transmitter/baudCnt.count_reg[2]/C
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            transmitter/fsmd.TxDShf_reg[3]/S
-                            (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            transmitter/baudCnt.count_reg[0]/D
+                            (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             sysClk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (sysClk rise@10.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        4.227ns  (logic 1.196ns (28.294%)  route 3.031ns (71.706%))
-  Logic Levels:           3  (LUT2=1 LUT4=1 LUT6=1)
-  Clock Path Skew:        -0.039ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.023ns = ( 15.023 - 10.000 ) 
-    Source Clock Delay      (SCD):    5.329ns
-    Clock Pessimism Removal (CPR):    0.267ns
+  Data Path Delay:        6.742ns  (logic 4.115ns (61.035%)  route 2.627ns (38.965%))
+  Logic Levels:           10  (CARRY4=7 LUT1=2 LUT3=1)
+  Clock Path Skew:        0.000ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.849ns = ( 14.849 - 10.000 ) 
+    Source Clock Delay      (SCD):    5.146ns
+    Clock Pessimism Removal (CPR):    0.297ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
     Total Input Jitter      (TIJ):    0.000ns
@@ -605,18 +731,39 @@ Slack (MET) :             5.270ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.458     1.458 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.967     3.425    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.521 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.808     5.329    transmitter/clk_IBUF_BUFG
-    SLICE_X5Y105         FDRE                                         r  transmitter/fsmd.bitPos_reg[3]/C
+                         net (fo=67, routed)          1.625     5.146    transmitter/clk_IBUF_BUFG
+    SLICE_X3Y91          FDRE                                         r  transmitter/baudCnt.count_reg[2]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X5Y105         FDRE (Prop_fdre_C_Q)         0.419     5.748 r  transmitter/fsmd.bitPos_reg[3]/Q
-                         net (fo=16, routed)          1.077     6.825    transmitter/fsmd.bitPos_reg_n_0_[3]
-    SLICE_X3Y105         LUT4 (Prop_lut4_I3_O)        0.327     7.152 f  transmitter/fsmd.TxDShf[7]_i_4/O
-                         net (fo=2, routed)           0.848     8.000    transmitter/fsmd.TxDShf[7]_i_4_n_0
-    SLICE_X2Y104         LUT6 (Prop_lut6_I0_O)        0.326     8.326 r  transmitter/fsmd.TxDShf[7]_i_2/O
-                         net (fo=10, routed)          0.707     9.033    transmitter/fsmd.TxDShf[7]_i_2_n_0
-    SLICE_X3Y107         LUT2 (Prop_lut2_I1_O)        0.124     9.157 r  transmitter/fsmd.TxDShf[7]_i_1/O
-                         net (fo=7, routed)           0.399     9.556    transmitter/fsmd.TxDShf[7]_i_1_n_0
-    SLICE_X3Y107         FDSE                                         r  transmitter/fsmd.TxDShf_reg[3]/S
+    SLICE_X3Y91          FDRE (Prop_fdre_C_Q)         0.419     5.565 r  transmitter/baudCnt.count_reg[2]/Q
+                         net (fo=2, routed)           0.483     6.048    transmitter/baudCnt.count_reg_n_0_[2]
+    SLICE_X4Y91          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.849     6.897 r  transmitter/count1_carry/CO[3]
+                         net (fo=1, routed)           0.000     6.897    transmitter/count1_carry_n_0
+    SLICE_X4Y92          CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222     7.119 f  transmitter/count1_carry__0/O[0]
+                         net (fo=2, routed)           0.639     7.759    transmitter/count1_carry__0_n_7
+    SLICE_X5Y92          LUT1 (Prop_lut1_I0_O)        0.299     8.058 r  transmitter/count0_carry__0_i_3__0/O
+                         net (fo=1, routed)           0.000     8.058    transmitter/count0_carry__0_i_3__0_n_0
+    SLICE_X5Y92          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     8.608 r  transmitter/count0_carry__0/CO[3]
+                         net (fo=1, routed)           0.000     8.608    transmitter/count0_carry__0_n_0
+    SLICE_X5Y93          CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.334     8.942 f  transmitter/count0_carry__1/O[1]
+                         net (fo=2, routed)           0.599     9.540    transmitter/count0_carry__1_n_6
+    SLICE_X2Y93          LUT1 (Prop_lut1_I0_O)        0.303     9.843 r  transmitter/count0__33_carry__1_i_2__0/O
+                         net (fo=1, routed)           0.000     9.843    transmitter/count0__33_carry__1_i_2__0_n_0
+    SLICE_X2Y93          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    10.376 r  transmitter/count0__33_carry__1/CO[3]
+                         net (fo=1, routed)           0.000    10.376    transmitter/count0__33_carry__1_n_0
+    SLICE_X2Y94          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    10.493 r  transmitter/count0__33_carry__2/CO[3]
+                         net (fo=1, routed)           0.000    10.493    transmitter/count0__33_carry__2_n_0
+    SLICE_X2Y95          CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.157    10.650 r  transmitter/count0__33_carry__3/CO[1]
+                         net (fo=17, routed)          0.905    11.556    transmitter/count0__33_carry__3_n_2
+    SLICE_X3Y91          LUT3 (Prop_lut3_I1_O)        0.332    11.888 r  transmitter/baudCnt.count[0]_i_1__0/O
+                         net (fo=1, routed)           0.000    11.888    transmitter/baudCnt.count[0]_i_1__0_n_0
+    SLICE_X3Y91          FDRE                                         r  transmitter/baudCnt.count_reg[0]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)    10.000    10.000 r  
@@ -625,31 +772,31 @@ Slack (MET) :             5.270ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.388    11.388 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.862    13.250    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    13.341 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.682    15.023    transmitter/clk_IBUF_BUFG
-    SLICE_X3Y107         FDSE                                         r  transmitter/fsmd.TxDShf_reg[3]/C
-                         clock pessimism              0.267    15.290    
-                         clock uncertainty           -0.035    15.255    
-    SLICE_X3Y107         FDSE (Setup_fdse_C_S)       -0.429    14.826    transmitter/fsmd.TxDShf_reg[3]
+                         net (fo=67, routed)          1.508    14.849    transmitter/clk_IBUF_BUFG
+    SLICE_X3Y91          FDRE                                         r  transmitter/baudCnt.count_reg[0]/C
+                         clock pessimism              0.297    15.146    
+                         clock uncertainty           -0.035    15.111    
+    SLICE_X3Y91          FDRE (Setup_fdre_C_D)        0.031    15.142    transmitter/baudCnt.count_reg[0]
   -------------------------------------------------------------------
-                         required time                         14.826    
-                         arrival time                          -9.556    
+                         required time                         15.142    
+                         arrival time                         -11.888    
   -------------------------------------------------------------------
-                         slack                                  5.270    
+                         slack                                  3.254    
 
-Slack (MET) :             5.507ns  (required time - arrival time)
-  Source:                 receiver/baudCnt.count_reg[13]/C
+Slack (MET) :             3.256ns  (required time - arrival time)
+  Source:                 transmitter/baudCnt.count_reg[2]/C
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            receiver/fsmd.bitPos_reg[0]/CE
+  Destination:            transmitter/baudCnt.count_reg[1]/D
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             sysClk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (sysClk rise@10.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        4.019ns  (logic 0.853ns (21.226%)  route 3.166ns (78.774%))
-  Logic Levels:           3  (LUT5=1 LUT6=2)
-  Clock Path Skew:        -0.026ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.022ns = ( 15.022 - 10.000 ) 
-    Source Clock Delay      (SCD):    5.329ns
-    Clock Pessimism Removal (CPR):    0.281ns
+  Data Path Delay:        6.738ns  (logic 4.115ns (61.071%)  route 2.623ns (38.929%))
+  Logic Levels:           10  (CARRY4=7 LUT1=2 LUT3=1)
+  Clock Path Skew:        0.000ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.849ns = ( 14.849 - 10.000 ) 
+    Source Clock Delay      (SCD):    5.146ns
+    Clock Pessimism Removal (CPR):    0.297ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
     Total Input Jitter      (TIJ):    0.000ns
@@ -664,18 +811,39 @@ Slack (MET) :             5.507ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.458     1.458 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.967     3.425    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.521 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.808     5.329    receiver/clk_IBUF_BUFG
-    SLICE_X4Y105         FDRE                                         r  receiver/baudCnt.count_reg[13]/C
+                         net (fo=67, routed)          1.625     5.146    transmitter/clk_IBUF_BUFG
+    SLICE_X3Y91          FDRE                                         r  transmitter/baudCnt.count_reg[2]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X4Y105         FDRE (Prop_fdre_C_Q)         0.456     5.785 r  receiver/baudCnt.count_reg[13]/Q
-                         net (fo=2, routed)           0.813     6.598    receiver/baudCnt.count_reg[13]
-    SLICE_X5Y103         LUT6 (Prop_lut6_I1_O)        0.124     6.722 r  receiver/fsmd.bitPos[3]_i_4/O
-                         net (fo=1, routed)           0.634     7.357    receiver/fsmd.bitPos[3]_i_4_n_0
-    SLICE_X5Y104         LUT6 (Prop_lut6_I0_O)        0.124     7.481 r  receiver/fsmd.bitPos[3]_i_3/O
-                         net (fo=3, routed)           1.100     8.580    receiver/fsmd.bitPos[3]_i_3_n_0
-    SLICE_X5Y107         LUT5 (Prop_lut5_I4_O)        0.149     8.729 r  receiver/fsmd.bitPos[3]_i_1/O
-                         net (fo=4, routed)           0.618     9.348    receiver/fsmd.bitPos[3]_i_1_n_0
-    SLICE_X5Y107         FDRE                                         r  receiver/fsmd.bitPos_reg[0]/CE
+    SLICE_X3Y91          FDRE (Prop_fdre_C_Q)         0.419     5.565 r  transmitter/baudCnt.count_reg[2]/Q
+                         net (fo=2, routed)           0.483     6.048    transmitter/baudCnt.count_reg_n_0_[2]
+    SLICE_X4Y91          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.849     6.897 r  transmitter/count1_carry/CO[3]
+                         net (fo=1, routed)           0.000     6.897    transmitter/count1_carry_n_0
+    SLICE_X4Y92          CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222     7.119 f  transmitter/count1_carry__0/O[0]
+                         net (fo=2, routed)           0.639     7.759    transmitter/count1_carry__0_n_7
+    SLICE_X5Y92          LUT1 (Prop_lut1_I0_O)        0.299     8.058 r  transmitter/count0_carry__0_i_3__0/O
+                         net (fo=1, routed)           0.000     8.058    transmitter/count0_carry__0_i_3__0_n_0
+    SLICE_X5Y92          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     8.608 r  transmitter/count0_carry__0/CO[3]
+                         net (fo=1, routed)           0.000     8.608    transmitter/count0_carry__0_n_0
+    SLICE_X5Y93          CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.334     8.942 f  transmitter/count0_carry__1/O[1]
+                         net (fo=2, routed)           0.599     9.540    transmitter/count0_carry__1_n_6
+    SLICE_X2Y93          LUT1 (Prop_lut1_I0_O)        0.303     9.843 r  transmitter/count0__33_carry__1_i_2__0/O
+                         net (fo=1, routed)           0.000     9.843    transmitter/count0__33_carry__1_i_2__0_n_0
+    SLICE_X2Y93          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    10.376 r  transmitter/count0__33_carry__1/CO[3]
+                         net (fo=1, routed)           0.000    10.376    transmitter/count0__33_carry__1_n_0
+    SLICE_X2Y94          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    10.493 r  transmitter/count0__33_carry__2/CO[3]
+                         net (fo=1, routed)           0.000    10.493    transmitter/count0__33_carry__2_n_0
+    SLICE_X2Y95          CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.157    10.650 r  transmitter/count0__33_carry__3/CO[1]
+                         net (fo=17, routed)          0.901    11.552    transmitter/count0__33_carry__3_n_2
+    SLICE_X3Y91          LUT3 (Prop_lut3_I1_O)        0.332    11.884 r  transmitter/baudCnt.count[1]_i_1__0/O
+                         net (fo=1, routed)           0.000    11.884    transmitter/baudCnt.count[1]_i_1__0_n_0
+    SLICE_X3Y91          FDRE                                         r  transmitter/baudCnt.count_reg[1]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)    10.000    10.000 r  
@@ -684,31 +852,31 @@ Slack (MET) :             5.507ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.388    11.388 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.862    13.250    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    13.341 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.681    15.022    receiver/clk_IBUF_BUFG
-    SLICE_X5Y107         FDRE                                         r  receiver/fsmd.bitPos_reg[0]/C
-                         clock pessimism              0.281    15.303    
-                         clock uncertainty           -0.035    15.268    
-    SLICE_X5Y107         FDRE (Setup_fdre_C_CE)      -0.413    14.855    receiver/fsmd.bitPos_reg[0]
+                         net (fo=67, routed)          1.508    14.849    transmitter/clk_IBUF_BUFG
+    SLICE_X3Y91          FDRE                                         r  transmitter/baudCnt.count_reg[1]/C
+                         clock pessimism              0.297    15.146    
+                         clock uncertainty           -0.035    15.111    
+    SLICE_X3Y91          FDRE (Setup_fdre_C_D)        0.029    15.140    transmitter/baudCnt.count_reg[1]
   -------------------------------------------------------------------
-                         required time                         14.855    
-                         arrival time                          -9.348    
+                         required time                         15.140    
+                         arrival time                         -11.884    
   -------------------------------------------------------------------
-                         slack                                  5.507    
+                         slack                                  3.256    
 
-Slack (MET) :             5.507ns  (required time - arrival time)
-  Source:                 receiver/baudCnt.count_reg[13]/C
+Slack (MET) :             3.268ns  (required time - arrival time)
+  Source:                 receiver/baudCnt.count_reg[0]/C
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            receiver/fsmd.bitPos_reg[1]/CE
+  Destination:            receiver/baudCnt.count_reg[8]/D
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             sysClk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (sysClk rise@10.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        4.019ns  (logic 0.853ns (21.226%)  route 3.166ns (78.774%))
-  Logic Levels:           3  (LUT5=1 LUT6=2)
-  Clock Path Skew:        -0.026ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.022ns = ( 15.022 - 10.000 ) 
-    Source Clock Delay      (SCD):    5.329ns
-    Clock Pessimism Removal (CPR):    0.281ns
+  Data Path Delay:        6.748ns  (logic 3.783ns (56.064%)  route 2.965ns (43.936%))
+  Logic Levels:           10  (CARRY4=7 LUT1=2 LUT3=1)
+  Clock Path Skew:        -0.024ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.782ns = ( 14.782 - 10.000 ) 
+    Source Clock Delay      (SCD):    5.077ns
+    Clock Pessimism Removal (CPR):    0.271ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
     Total Input Jitter      (TIJ):    0.000ns
@@ -723,18 +891,39 @@ Slack (MET) :             5.507ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.458     1.458 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.967     3.425    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.521 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.808     5.329    receiver/clk_IBUF_BUFG
-    SLICE_X4Y105         FDRE                                         r  receiver/baudCnt.count_reg[13]/C
+                         net (fo=67, routed)          1.556     5.077    receiver/clk_IBUF_BUFG
+    SLICE_X11Y92         FDRE                                         r  receiver/baudCnt.count_reg[0]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X4Y105         FDRE (Prop_fdre_C_Q)         0.456     5.785 r  receiver/baudCnt.count_reg[13]/Q
-                         net (fo=2, routed)           0.813     6.598    receiver/baudCnt.count_reg[13]
-    SLICE_X5Y103         LUT6 (Prop_lut6_I1_O)        0.124     6.722 r  receiver/fsmd.bitPos[3]_i_4/O
-                         net (fo=1, routed)           0.634     7.357    receiver/fsmd.bitPos[3]_i_4_n_0
-    SLICE_X5Y104         LUT6 (Prop_lut6_I0_O)        0.124     7.481 r  receiver/fsmd.bitPos[3]_i_3/O
-                         net (fo=3, routed)           1.100     8.580    receiver/fsmd.bitPos[3]_i_3_n_0
-    SLICE_X5Y107         LUT5 (Prop_lut5_I4_O)        0.149     8.729 r  receiver/fsmd.bitPos[3]_i_1/O
-                         net (fo=4, routed)           0.618     9.348    receiver/fsmd.bitPos[3]_i_1_n_0
-    SLICE_X5Y107         FDRE                                         r  receiver/fsmd.bitPos_reg[1]/CE
+    SLICE_X11Y92         FDRE (Prop_fdre_C_Q)         0.456     5.533 r  receiver/baudCnt.count_reg[0]/Q
+                         net (fo=4, routed)           0.644     6.177    receiver/count[0]
+    SLICE_X8Y92          CARRY4 (Prop_carry4_CYINIT_CO[3])
+                                                      0.595     6.772 r  receiver/count1_carry/CO[3]
+                         net (fo=1, routed)           0.000     6.772    receiver/count1_carry_n_0
+    SLICE_X8Y93          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.889 r  receiver/count1_carry__0/CO[3]
+                         net (fo=1, routed)           0.000     6.889    receiver/count1_carry__0_n_0
+    SLICE_X8Y94          CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.219     7.108 f  receiver/count1_carry__1/O[0]
+                         net (fo=2, routed)           0.706     7.814    receiver/count1[9]
+    SLICE_X9Y94          LUT1 (Prop_lut1_I0_O)        0.295     8.109 r  receiver/count0_carry__1_i_3/O
+                         net (fo=1, routed)           0.000     8.109    receiver/count0_carry__1_i_3_n_0
+    SLICE_X9Y94          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     8.659 r  receiver/count0_carry__1/CO[3]
+                         net (fo=1, routed)           0.000     8.659    receiver/count0_carry__1_n_0
+    SLICE_X9Y95          CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222     8.881 f  receiver/count0_carry__2/O[0]
+                         net (fo=2, routed)           0.612     9.493    receiver/count0_carry__2_n_7
+    SLICE_X10Y95         LUT1 (Prop_lut1_I0_O)        0.299     9.792 r  receiver/count0__33_carry__2_i_3/O
+                         net (fo=1, routed)           0.000     9.792    receiver/count0__33_carry__2_i_3_n_0
+    SLICE_X10Y95         CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.513    10.305 r  receiver/count0__33_carry__2/CO[3]
+                         net (fo=1, routed)           0.000    10.305    receiver/count0__33_carry__2_n_0
+    SLICE_X10Y96         CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.157    10.462 r  receiver/count0__33_carry__3/CO[1]
+                         net (fo=17, routed)          1.003    11.465    receiver/count0__33_carry__3_n_2
+    SLICE_X11Y93         LUT3 (Prop_lut3_I1_O)        0.360    11.825 r  receiver/baudCnt.count[8]_i_1/O
+                         net (fo=1, routed)           0.000    11.825    receiver/p_1_in[8]
+    SLICE_X11Y93         FDRE                                         r  receiver/baudCnt.count_reg[8]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)    10.000    10.000 r  
@@ -743,31 +932,31 @@ Slack (MET) :             5.507ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.388    11.388 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.862    13.250    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    13.341 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.681    15.022    receiver/clk_IBUF_BUFG
-    SLICE_X5Y107         FDRE                                         r  receiver/fsmd.bitPos_reg[1]/C
-                         clock pessimism              0.281    15.303    
-                         clock uncertainty           -0.035    15.268    
-    SLICE_X5Y107         FDRE (Setup_fdre_C_CE)      -0.413    14.855    receiver/fsmd.bitPos_reg[1]
+                         net (fo=67, routed)          1.441    14.782    receiver/clk_IBUF_BUFG
+    SLICE_X11Y93         FDRE                                         r  receiver/baudCnt.count_reg[8]/C
+                         clock pessimism              0.271    15.053    
+                         clock uncertainty           -0.035    15.018    
+    SLICE_X11Y93         FDRE (Setup_fdre_C_D)        0.075    15.093    receiver/baudCnt.count_reg[8]
   -------------------------------------------------------------------
-                         required time                         14.855    
-                         arrival time                          -9.348    
+                         required time                         15.093    
+                         arrival time                         -11.825    
   -------------------------------------------------------------------
-                         slack                                  5.507    
+                         slack                                  3.268    
 
-Slack (MET) :             5.507ns  (required time - arrival time)
-  Source:                 receiver/baudCnt.count_reg[13]/C
+Slack (MET) :             3.278ns  (required time - arrival time)
+  Source:                 transmitter/baudCnt.count_reg[2]/C
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            receiver/fsmd.bitPos_reg[2]/CE
+  Destination:            transmitter/baudCnt.count_reg[14]/D
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             sysClk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (sysClk rise@10.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        4.019ns  (logic 0.853ns (21.226%)  route 3.166ns (78.774%))
-  Logic Levels:           3  (LUT5=1 LUT6=2)
-  Clock Path Skew:        -0.026ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.022ns = ( 15.022 - 10.000 ) 
-    Source Clock Delay      (SCD):    5.329ns
-    Clock Pessimism Removal (CPR):    0.281ns
+  Data Path Delay:        6.694ns  (logic 4.115ns (61.475%)  route 2.579ns (38.525%))
+  Logic Levels:           10  (CARRY4=7 LUT1=2 LUT3=1)
+  Clock Path Skew:        -0.024ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.850ns = ( 14.850 - 10.000 ) 
+    Source Clock Delay      (SCD):    5.146ns
+    Clock Pessimism Removal (CPR):    0.272ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
     Total Input Jitter      (TIJ):    0.000ns
@@ -782,18 +971,39 @@ Slack (MET) :             5.507ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.458     1.458 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.967     3.425    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.521 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.808     5.329    receiver/clk_IBUF_BUFG
-    SLICE_X4Y105         FDRE                                         r  receiver/baudCnt.count_reg[13]/C
+                         net (fo=67, routed)          1.625     5.146    transmitter/clk_IBUF_BUFG
+    SLICE_X3Y91          FDRE                                         r  transmitter/baudCnt.count_reg[2]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X4Y105         FDRE (Prop_fdre_C_Q)         0.456     5.785 r  receiver/baudCnt.count_reg[13]/Q
-                         net (fo=2, routed)           0.813     6.598    receiver/baudCnt.count_reg[13]
-    SLICE_X5Y103         LUT6 (Prop_lut6_I1_O)        0.124     6.722 r  receiver/fsmd.bitPos[3]_i_4/O
-                         net (fo=1, routed)           0.634     7.357    receiver/fsmd.bitPos[3]_i_4_n_0
-    SLICE_X5Y104         LUT6 (Prop_lut6_I0_O)        0.124     7.481 r  receiver/fsmd.bitPos[3]_i_3/O
-                         net (fo=3, routed)           1.100     8.580    receiver/fsmd.bitPos[3]_i_3_n_0
-    SLICE_X5Y107         LUT5 (Prop_lut5_I4_O)        0.149     8.729 r  receiver/fsmd.bitPos[3]_i_1/O
-                         net (fo=4, routed)           0.618     9.348    receiver/fsmd.bitPos[3]_i_1_n_0
-    SLICE_X5Y107         FDRE                                         r  receiver/fsmd.bitPos_reg[2]/CE
+    SLICE_X3Y91          FDRE (Prop_fdre_C_Q)         0.419     5.565 r  transmitter/baudCnt.count_reg[2]/Q
+                         net (fo=2, routed)           0.483     6.048    transmitter/baudCnt.count_reg_n_0_[2]
+    SLICE_X4Y91          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.849     6.897 r  transmitter/count1_carry/CO[3]
+                         net (fo=1, routed)           0.000     6.897    transmitter/count1_carry_n_0
+    SLICE_X4Y92          CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.222     7.119 f  transmitter/count1_carry__0/O[0]
+                         net (fo=2, routed)           0.639     7.759    transmitter/count1_carry__0_n_7
+    SLICE_X5Y92          LUT1 (Prop_lut1_I0_O)        0.299     8.058 r  transmitter/count0_carry__0_i_3__0/O
+                         net (fo=1, routed)           0.000     8.058    transmitter/count0_carry__0_i_3__0_n_0
+    SLICE_X5Y92          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     8.608 r  transmitter/count0_carry__0/CO[3]
+                         net (fo=1, routed)           0.000     8.608    transmitter/count0_carry__0_n_0
+    SLICE_X5Y93          CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.334     8.942 f  transmitter/count0_carry__1/O[1]
+                         net (fo=2, routed)           0.599     9.540    transmitter/count0_carry__1_n_6
+    SLICE_X2Y93          LUT1 (Prop_lut1_I0_O)        0.303     9.843 r  transmitter/count0__33_carry__1_i_2__0/O
+                         net (fo=1, routed)           0.000     9.843    transmitter/count0__33_carry__1_i_2__0_n_0
+    SLICE_X2Y93          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    10.376 r  transmitter/count0__33_carry__1/CO[3]
+                         net (fo=1, routed)           0.000    10.376    transmitter/count0__33_carry__1_n_0
+    SLICE_X2Y94          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    10.493 r  transmitter/count0__33_carry__2/CO[3]
+                         net (fo=1, routed)           0.000    10.493    transmitter/count0__33_carry__2_n_0
+    SLICE_X2Y95          CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.157    10.650 r  transmitter/count0__33_carry__3/CO[1]
+                         net (fo=17, routed)          0.857    11.508    transmitter/count0__33_carry__3_n_2
+    SLICE_X3Y94          LUT3 (Prop_lut3_I1_O)        0.332    11.840 r  transmitter/baudCnt.count[14]_i_1__0/O
+                         net (fo=1, routed)           0.000    11.840    transmitter/baudCnt.count[14]_i_1__0_n_0
+    SLICE_X3Y94          FDRE                                         r  transmitter/baudCnt.count_reg[14]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)    10.000    10.000 r  
@@ -802,16 +1012,16 @@ Slack (MET) :             5.507ns  (required time - arrival time)
     W5                   IBUF (Prop_ibuf_I_O)         1.388    11.388 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.862    13.250    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    13.341 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.681    15.022    receiver/clk_IBUF_BUFG
-    SLICE_X5Y107         FDRE                                         r  receiver/fsmd.bitPos_reg[2]/C
-                         clock pessimism              0.281    15.303    
-                         clock uncertainty           -0.035    15.268    
-    SLICE_X5Y107         FDRE (Setup_fdre_C_CE)      -0.413    14.855    receiver/fsmd.bitPos_reg[2]
+                         net (fo=67, routed)          1.509    14.850    transmitter/clk_IBUF_BUFG
+    SLICE_X3Y94          FDRE                                         r  transmitter/baudCnt.count_reg[14]/C
+                         clock pessimism              0.272    15.122    
+                         clock uncertainty           -0.035    15.087    
+    SLICE_X3Y94          FDRE (Setup_fdre_C_D)        0.031    15.118    transmitter/baudCnt.count_reg[14]
   -------------------------------------------------------------------
-                         required time                         14.855    
-                         arrival time                          -9.348    
+                         required time                         15.118    
+                         arrival time                         -11.840    
   -------------------------------------------------------------------
-                         slack                                  5.507    
+                         slack                                  3.278    
 
 
 
@@ -819,7 +1029,54 @@ Slack (MET) :             5.507ns  (required time - arrival time)
 
 Min Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             0.109ns  (arrival time - required time)
+Slack (MET) :             0.174ns  (arrival time - required time)
+  Source:                 receiver/RxDSynchronizer/aux_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            receiver/RxDSynchronizer/aux_reg[1]/D
+                            (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             sysClk
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (sysClk rise@0.000ns - sysClk rise@0.000ns)
+  Data Path Delay:        0.260ns  (logic 0.141ns (54.139%)  route 0.119ns (45.861%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.016ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.990ns
+    Source Clock Delay      (SCD):    1.475ns
+    Clock Pessimism Removal (CPR):    0.499ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sysClk rise edge)     0.000     0.000 r  
+    W5                                                0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    W5                   IBUF (Prop_ibuf_I_O)         0.226     0.226 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.631     0.858    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     0.884 r  clk_IBUF_BUFG_inst/O
+                         net (fo=67, routed)          0.592     1.475    receiver/RxDSynchronizer/clk_IBUF_BUFG
+    SLICE_X4Y98          FDRE                                         r  receiver/RxDSynchronizer/aux_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X4Y98          FDRE (Prop_fdre_C_Q)         0.141     1.616 r  receiver/RxDSynchronizer/aux_reg[0]/Q
+                         net (fo=1, routed)           0.119     1.736    receiver/RxDSynchronizer/p_0_out__0[1]
+    SLICE_X4Y97          FDRE                                         r  receiver/RxDSynchronizer/aux_reg[1]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sysClk rise edge)     0.000     0.000 r  
+    W5                                                0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    W5                   IBUF (Prop_ibuf_I_O)         0.414     0.414 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.685     1.099    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.128 r  clk_IBUF_BUFG_inst/O
+                         net (fo=67, routed)          0.863     1.990    receiver/RxDSynchronizer/clk_IBUF_BUFG
+    SLICE_X4Y97          FDRE                                         r  receiver/RxDSynchronizer/aux_reg[1]/C
+                         clock pessimism             -0.499     1.491    
+    SLICE_X4Y97          FDRE (Hold_fdre_C_D)         0.070     1.561    receiver/RxDSynchronizer/aux_reg[1]
+  -------------------------------------------------------------------
+                         required time                         -1.561    
+                         arrival time                           1.736    
+  -------------------------------------------------------------------
+                         slack                                  0.174    
+
+Slack (MET) :             0.185ns  (arrival time - required time)
   Source:                 transmitter/fsmd.TxDShf_reg[1]/C
                             (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Destination:            transmitter/fsmd.TxDShf_reg[0]/D
@@ -827,12 +1084,12 @@ Slack (MET) :             0.109ns  (arrival time - required time)
   Path Group:             sysClk
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (sysClk rise@0.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        0.242ns  (logic 0.186ns (76.827%)  route 0.056ns (23.174%))
+  Data Path Delay:        0.293ns  (logic 0.186ns (63.444%)  route 0.107ns (36.556%))
   Logic Levels:           1  (LUT6=1)
-  Clock Path Skew:        0.013ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.077ns
-    Source Clock Delay      (SCD):    1.558ns
-    Clock Pessimism Removal (CPR):    0.506ns
+  Clock Path Skew:        0.017ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.989ns
+    Source Clock Delay      (SCD):    1.473ns
+    Clock Pessimism Removal (CPR):    0.499ns
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
@@ -842,14 +1099,14 @@ Slack (MET) :             0.109ns  (arrival time - required time)
     W5                   IBUF (Prop_ibuf_I_O)         0.226     0.226 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.631     0.858    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     0.884 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.674     1.558    transmitter/clk_IBUF_BUFG
-    SLICE_X3Y107         FDSE                                         r  transmitter/fsmd.TxDShf_reg[1]/C
+                         net (fo=67, routed)          0.590     1.473    transmitter/clk_IBUF_BUFG
+    SLICE_X7Y92          FDSE                                         r  transmitter/fsmd.TxDShf_reg[1]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X3Y107         FDSE (Prop_fdse_C_Q)         0.141     1.699 r  transmitter/fsmd.TxDShf_reg[1]/Q
-                         net (fo=1, routed)           0.056     1.755    transmitter/TxDShf[1]
-    SLICE_X2Y107         LUT6 (Prop_lut6_I1_O)        0.045     1.800 r  transmitter/fsmd.TxDShf[0]_i_1/O
-                         net (fo=1, routed)           0.000     1.800    transmitter/fsmd.TxDShf[0]_i_1_n_0
-    SLICE_X2Y107         FDSE                                         r  transmitter/fsmd.TxDShf_reg[0]/D
+    SLICE_X7Y92          FDSE (Prop_fdse_C_Q)         0.141     1.614 r  transmitter/fsmd.TxDShf_reg[1]/Q
+                         net (fo=1, routed)           0.107     1.721    transmitter/TxDShf[1]
+    SLICE_X7Y93          LUT6 (Prop_lut6_I1_O)        0.045     1.766 r  transmitter/fsmd.TxDShf[0]_i_1/O
+                         net (fo=1, routed)           0.000     1.766    transmitter/fsmd.TxDShf[0]_i_1_n_0
+    SLICE_X7Y93          FDSE                                         r  transmitter/fsmd.TxDShf_reg[0]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)     0.000     0.000 r  
@@ -858,79 +1115,30 @@ Slack (MET) :             0.109ns  (arrival time - required time)
     W5                   IBUF (Prop_ibuf_I_O)         0.414     0.414 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.685     1.099    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.128 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.949     2.077    transmitter/clk_IBUF_BUFG
-    SLICE_X2Y107         FDSE                                         r  transmitter/fsmd.TxDShf_reg[0]/C
-                         clock pessimism             -0.506     1.571    
-    SLICE_X2Y107         FDSE (Hold_fdse_C_D)         0.120     1.691    transmitter/fsmd.TxDShf_reg[0]
+                         net (fo=67, routed)          0.861     1.989    transmitter/clk_IBUF_BUFG
+    SLICE_X7Y93          FDSE                                         r  transmitter/fsmd.TxDShf_reg[0]/C
+                         clock pessimism             -0.499     1.490    
+    SLICE_X7Y93          FDSE (Hold_fdse_C_D)         0.091     1.581    transmitter/fsmd.TxDShf_reg[0]
   -------------------------------------------------------------------
-                         required time                         -1.691    
-                         arrival time                           1.800    
+                         required time                         -1.581    
+                         arrival time                           1.766    
   -------------------------------------------------------------------
-                         slack                                  0.109    
+                         slack                                  0.185    
 
-Slack (MET) :             0.191ns  (arrival time - required time)
-  Source:                 transmitter/fsmd.TxDShf_reg[8]/C
+Slack (MET) :             0.185ns  (arrival time - required time)
+  Source:                 receiver/RxDSynchronizer/aux_reg[1]/C
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            transmitter/fsmd.TxDShf_reg[7]/D
+  Destination:            receiver/fsmd.RxDShf_reg[9]/D
                             (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             sysClk
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (sysClk rise@0.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        0.328ns  (logic 0.209ns (63.666%)  route 0.119ns (36.334%))
-  Logic Levels:           1  (LUT6=1)
-  Clock Path Skew:        0.016ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.078ns
-    Source Clock Delay      (SCD):    1.559ns
-    Clock Pessimism Removal (CPR):    0.503ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sysClk rise edge)     0.000     0.000 r  
-    W5                                                0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    W5                   IBUF (Prop_ibuf_I_O)         0.226     0.226 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.631     0.858    clk_IBUF
-    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     0.884 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.675     1.559    transmitter/clk_IBUF_BUFG
-    SLICE_X2Y105         FDRE                                         r  transmitter/fsmd.TxDShf_reg[8]/C
-  -------------------------------------------------------------------    -------------------
-    SLICE_X2Y105         FDRE (Prop_fdre_C_Q)         0.164     1.723 r  transmitter/fsmd.TxDShf_reg[8]/Q
-                         net (fo=2, routed)           0.119     1.842    transmitter/TxDShf[8]
-    SLICE_X2Y106         LUT6 (Prop_lut6_I5_O)        0.045     1.887 r  transmitter/fsmd.TxDShf[7]_i_3/O
-                         net (fo=1, routed)           0.000     1.887    transmitter/fsmd.TxDShf[7]_i_3_n_0
-    SLICE_X2Y106         FDSE                                         r  transmitter/fsmd.TxDShf_reg[7]/D
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sysClk rise edge)     0.000     0.000 r  
-    W5                                                0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    W5                   IBUF (Prop_ibuf_I_O)         0.414     0.414 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.685     1.099    clk_IBUF
-    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.128 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.950     2.078    transmitter/clk_IBUF_BUFG
-    SLICE_X2Y106         FDSE                                         r  transmitter/fsmd.TxDShf_reg[7]/C
-                         clock pessimism             -0.503     1.575    
-    SLICE_X2Y106         FDSE (Hold_fdse_C_D)         0.121     1.696    transmitter/fsmd.TxDShf_reg[7]
-  -------------------------------------------------------------------
-                         required time                         -1.696    
-                         arrival time                           1.887    
-  -------------------------------------------------------------------
-                         slack                                  0.191    
-
-Slack (MET) :             0.210ns  (arrival time - required time)
-  Source:                 receiver/fsmd.RxDShf_reg[4]/C
-                            (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            receiver/fsmd.RxDShf_reg[3]/D
-                            (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Path Group:             sysClk
-  Path Type:              Hold (Min at Fast Process Corner)
-  Requirement:            0.000ns  (sysClk rise@0.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        0.257ns  (logic 0.141ns (54.805%)  route 0.116ns (45.195%))
+  Data Path Delay:        0.270ns  (logic 0.141ns (52.161%)  route 0.129ns (47.839%))
   Logic Levels:           0  
-  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.078ns
-    Source Clock Delay      (SCD):    1.559ns
-    Clock Pessimism Removal (CPR):    0.519ns
+  Clock Path Skew:        0.015ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.989ns
+    Source Clock Delay      (SCD):    1.475ns
+    Clock Pessimism Removal (CPR):    0.499ns
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
@@ -940,12 +1148,12 @@ Slack (MET) :             0.210ns  (arrival time - required time)
     W5                   IBUF (Prop_ibuf_I_O)         0.226     0.226 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.631     0.858    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     0.884 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.675     1.559    receiver/clk_IBUF_BUFG
-    SLICE_X3Y106         FDSE                                         r  receiver/fsmd.RxDShf_reg[4]/C
+                         net (fo=67, routed)          0.592     1.475    receiver/RxDSynchronizer/clk_IBUF_BUFG
+    SLICE_X4Y97          FDRE                                         r  receiver/RxDSynchronizer/aux_reg[1]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X3Y106         FDSE (Prop_fdse_C_Q)         0.141     1.700 r  receiver/fsmd.RxDShf_reg[4]/Q
-                         net (fo=2, routed)           0.116     1.816    receiver/fsmd.RxDShf_reg[8]_0[3]
-    SLICE_X3Y106         FDSE                                         r  receiver/fsmd.RxDShf_reg[3]/D
+    SLICE_X4Y97          FDRE (Prop_fdre_C_Q)         0.141     1.616 r  receiver/RxDSynchronizer/aux_reg[1]/Q
+                         net (fo=2, routed)           0.129     1.746    receiver/p_1_in0
+    SLICE_X4Y96          FDSE                                         r  receiver/fsmd.RxDShf_reg[9]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)     0.000     0.000 r  
@@ -954,30 +1162,79 @@ Slack (MET) :             0.210ns  (arrival time - required time)
     W5                   IBUF (Prop_ibuf_I_O)         0.414     0.414 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.685     1.099    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.128 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.950     2.078    receiver/clk_IBUF_BUFG
-    SLICE_X3Y106         FDSE                                         r  receiver/fsmd.RxDShf_reg[3]/C
-                         clock pessimism             -0.519     1.559    
-    SLICE_X3Y106         FDSE (Hold_fdse_C_D)         0.047     1.606    receiver/fsmd.RxDShf_reg[3]
+                         net (fo=67, routed)          0.861     1.989    receiver/clk_IBUF_BUFG
+    SLICE_X4Y96          FDSE                                         r  receiver/fsmd.RxDShf_reg[9]/C
+                         clock pessimism             -0.499     1.490    
+    SLICE_X4Y96          FDSE (Hold_fdse_C_D)         0.070     1.560    receiver/fsmd.RxDShf_reg[9]
   -------------------------------------------------------------------
-                         required time                         -1.606    
-                         arrival time                           1.816    
+                         required time                         -1.560    
+                         arrival time                           1.746    
   -------------------------------------------------------------------
-                         slack                                  0.210    
+                         slack                                  0.185    
 
-Slack (MET) :             0.211ns  (arrival time - required time)
-  Source:                 transmitter/fsmd.bitPos_reg[0]/C
+Slack (MET) :             0.190ns  (arrival time - required time)
+  Source:                 receiver/fsmd.RxDShf_reg[6]/C
+                            (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            transmitter/fsmd.TxDShf_reg[6]/D
+                            (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             sysClk
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (sysClk rise@0.000ns - sysClk rise@0.000ns)
+  Data Path Delay:        0.296ns  (logic 0.186ns (62.753%)  route 0.110ns (37.247%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.015ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.988ns
+    Source Clock Delay      (SCD):    1.474ns
+    Clock Pessimism Removal (CPR):    0.499ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sysClk rise edge)     0.000     0.000 r  
+    W5                                                0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    W5                   IBUF (Prop_ibuf_I_O)         0.226     0.226 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.631     0.858    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     0.884 r  clk_IBUF_BUFG_inst/O
+                         net (fo=67, routed)          0.591     1.474    receiver/clk_IBUF_BUFG
+    SLICE_X4Y93          FDSE                                         r  receiver/fsmd.RxDShf_reg[6]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X4Y93          FDSE (Prop_fdse_C_Q)         0.141     1.615 r  receiver/fsmd.RxDShf_reg[6]/Q
+                         net (fo=2, routed)           0.110     1.726    transmitter/fsmd.TxDShf_reg[8]_0[5]
+    SLICE_X7Y92          LUT6 (Prop_lut6_I0_O)        0.045     1.771 r  transmitter/fsmd.TxDShf[6]_i_1/O
+                         net (fo=1, routed)           0.000     1.771    transmitter/fsmd.TxDShf[6]_i_1_n_0
+    SLICE_X7Y92          FDSE                                         r  transmitter/fsmd.TxDShf_reg[6]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sysClk rise edge)     0.000     0.000 r  
+    W5                                                0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    W5                   IBUF (Prop_ibuf_I_O)         0.414     0.414 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.685     1.099    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.128 r  clk_IBUF_BUFG_inst/O
+                         net (fo=67, routed)          0.860     1.988    transmitter/clk_IBUF_BUFG
+    SLICE_X7Y92          FDSE                                         r  transmitter/fsmd.TxDShf_reg[6]/C
+                         clock pessimism             -0.499     1.489    
+    SLICE_X7Y92          FDSE (Hold_fdse_C_D)         0.091     1.580    transmitter/fsmd.TxDShf_reg[6]
+  -------------------------------------------------------------------
+                         required time                         -1.580    
+                         arrival time                           1.771    
+  -------------------------------------------------------------------
+                         slack                                  0.190    
+
+Slack (MET) :             0.212ns  (arrival time - required time)
+  Source:                 transmitter/fsmd.bitPos_reg[2]/C
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            transmitter/baudCntCE_reg_inv/D
+  Destination:            transmitter/fsmd.bitPos_reg[3]/D
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             sysClk
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (sysClk rise@0.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        0.344ns  (logic 0.186ns (54.073%)  route 0.158ns (45.927%))
-  Logic Levels:           1  (LUT5=1)
-  Clock Path Skew:        0.013ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.078ns
-    Source Clock Delay      (SCD):    1.559ns
-    Clock Pessimism Removal (CPR):    0.506ns
+  Data Path Delay:        0.333ns  (logic 0.246ns (73.912%)  route 0.087ns (26.088%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.989ns
+    Source Clock Delay      (SCD):    1.474ns
+    Clock Pessimism Removal (CPR):    0.515ns
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
@@ -987,14 +1244,14 @@ Slack (MET) :             0.211ns  (arrival time - required time)
     W5                   IBUF (Prop_ibuf_I_O)         0.226     0.226 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.631     0.858    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     0.884 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.675     1.559    transmitter/clk_IBUF_BUFG
-    SLICE_X3Y105         FDRE                                         r  transmitter/fsmd.bitPos_reg[0]/C
+                         net (fo=67, routed)          0.591     1.474    transmitter/clk_IBUF_BUFG
+    SLICE_X6Y94          FDRE                                         r  transmitter/fsmd.bitPos_reg[2]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X3Y105         FDRE (Prop_fdre_C_Q)         0.141     1.700 f  transmitter/fsmd.bitPos_reg[0]/Q
-                         net (fo=16, routed)          0.158     1.858    transmitter/fsmd.bitPos_reg_n_0_[0]
-    SLICE_X2Y105         LUT5 (Prop_lut5_I2_O)        0.045     1.903 r  transmitter/baudCntCE_inv_i_1__0/O
-                         net (fo=1, routed)           0.000     1.903    transmitter/baudCntCE_inv_i_1__0_n_0
-    SLICE_X2Y105         FDRE                                         r  transmitter/baudCntCE_reg_inv/D
+    SLICE_X6Y94          FDRE (Prop_fdre_C_Q)         0.148     1.622 r  transmitter/fsmd.bitPos_reg[2]/Q
+                         net (fo=16, routed)          0.087     1.709    transmitter/fsmd.bitPos_reg_n_0_[2]
+    SLICE_X6Y94          LUT4 (Prop_lut4_I1_O)        0.098     1.807 r  transmitter/fsmd.bitPos[3]_i_2__0/O
+                         net (fo=1, routed)           0.000     1.807    transmitter/fsmd.bitPos[3]_i_2__0_n_0
+    SLICE_X6Y94          FDRE                                         r  transmitter/fsmd.bitPos_reg[3]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)     0.000     0.000 r  
@@ -1003,77 +1260,30 @@ Slack (MET) :             0.211ns  (arrival time - required time)
     W5                   IBUF (Prop_ibuf_I_O)         0.414     0.414 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.685     1.099    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.128 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.950     2.078    transmitter/clk_IBUF_BUFG
-    SLICE_X2Y105         FDRE                                         r  transmitter/baudCntCE_reg_inv/C
-                         clock pessimism             -0.506     1.572    
-    SLICE_X2Y105         FDRE (Hold_fdre_C_D)         0.120     1.692    transmitter/baudCntCE_reg_inv
+                         net (fo=67, routed)          0.861     1.989    transmitter/clk_IBUF_BUFG
+    SLICE_X6Y94          FDRE                                         r  transmitter/fsmd.bitPos_reg[3]/C
+                         clock pessimism             -0.515     1.474    
+    SLICE_X6Y94          FDRE (Hold_fdre_C_D)         0.121     1.595    transmitter/fsmd.bitPos_reg[3]
   -------------------------------------------------------------------
-                         required time                         -1.692    
-                         arrival time                           1.903    
+                         required time                         -1.595    
+                         arrival time                           1.807    
   -------------------------------------------------------------------
-                         slack                                  0.211    
+                         slack                                  0.212    
 
 Slack (MET) :             0.215ns  (arrival time - required time)
-  Source:                 receiver/fsmd.RxDShf_reg[8]/C
-                            (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            receiver/fsmd.RxDShf_reg[7]/D
-                            (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Path Group:             sysClk
-  Path Type:              Hold (Min at Fast Process Corner)
-  Requirement:            0.000ns  (sysClk rise@0.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        0.330ns  (logic 0.141ns (42.751%)  route 0.189ns (57.249%))
-  Logic Levels:           0  
-  Clock Path Skew:        0.039ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.078ns
-    Source Clock Delay      (SCD):    1.557ns
-    Clock Pessimism Removal (CPR):    0.482ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sysClk rise edge)     0.000     0.000 r  
-    W5                                                0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    W5                   IBUF (Prop_ibuf_I_O)         0.226     0.226 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.631     0.858    clk_IBUF
-    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     0.884 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.673     1.557    receiver/clk_IBUF_BUFG
-    SLICE_X4Y107         FDSE                                         r  receiver/fsmd.RxDShf_reg[8]/C
-  -------------------------------------------------------------------    -------------------
-    SLICE_X4Y107         FDSE (Prop_fdse_C_Q)         0.141     1.698 r  receiver/fsmd.RxDShf_reg[8]/Q
-                         net (fo=2, routed)           0.189     1.886    receiver/fsmd.RxDShf_reg[8]_0[7]
-    SLICE_X3Y106         FDSE                                         r  receiver/fsmd.RxDShf_reg[7]/D
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sysClk rise edge)     0.000     0.000 r  
-    W5                                                0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    W5                   IBUF (Prop_ibuf_I_O)         0.414     0.414 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.685     1.099    clk_IBUF
-    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.128 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.950     2.078    receiver/clk_IBUF_BUFG
-    SLICE_X3Y106         FDSE                                         r  receiver/fsmd.RxDShf_reg[7]/C
-                         clock pessimism             -0.482     1.596    
-    SLICE_X3Y106         FDSE (Hold_fdse_C_D)         0.076     1.672    receiver/fsmd.RxDShf_reg[7]
-  -------------------------------------------------------------------
-                         required time                         -1.672    
-                         arrival time                           1.886    
-  -------------------------------------------------------------------
-                         slack                                  0.215    
-
-Slack (MET) :             0.220ns  (arrival time - required time)
-  Source:                 transmitter/fsmd.bitPos_reg[3]/C
+  Source:                 transmitter/fsmd.bitPos_reg[0]/C
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Destination:            transmitter/fsmd.bitPos_reg[2]/D
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             sysClk
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (sysClk rise@0.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        0.312ns  (logic 0.227ns (72.760%)  route 0.085ns (27.240%))
+  Data Path Delay:        0.362ns  (logic 0.189ns (52.193%)  route 0.173ns (47.807%))
   Logic Levels:           1  (LUT4=1)
-  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.076ns
-    Source Clock Delay      (SCD):    1.558ns
-    Clock Pessimism Removal (CPR):    0.518ns
+  Clock Path Skew:        0.016ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.989ns
+    Source Clock Delay      (SCD):    1.474ns
+    Clock Pessimism Removal (CPR):    0.499ns
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
@@ -1083,14 +1293,14 @@ Slack (MET) :             0.220ns  (arrival time - required time)
     W5                   IBUF (Prop_ibuf_I_O)         0.226     0.226 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.631     0.858    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     0.884 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.674     1.558    transmitter/clk_IBUF_BUFG
-    SLICE_X5Y105         FDRE                                         r  transmitter/fsmd.bitPos_reg[3]/C
+                         net (fo=67, routed)          0.591     1.474    transmitter/clk_IBUF_BUFG
+    SLICE_X5Y93          FDRE                                         r  transmitter/fsmd.bitPos_reg[0]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X5Y105         FDRE (Prop_fdre_C_Q)         0.128     1.686 f  transmitter/fsmd.bitPos_reg[3]/Q
-                         net (fo=16, routed)          0.085     1.771    transmitter/fsmd.bitPos_reg_n_0_[3]
-    SLICE_X5Y105         LUT4 (Prop_lut4_I3_O)        0.099     1.870 r  transmitter/fsmd.bitPos[2]_i_1__0/O
-                         net (fo=1, routed)           0.000     1.870    transmitter/fsmd.bitPos[2]_i_1__0_n_0
-    SLICE_X5Y105         FDRE                                         r  transmitter/fsmd.bitPos_reg[2]/D
+    SLICE_X5Y93          FDRE (Prop_fdre_C_Q)         0.141     1.615 r  transmitter/fsmd.bitPos_reg[0]/Q
+                         net (fo=16, routed)          0.173     1.788    transmitter/fsmd.bitPos_reg_n_0_[0]
+    SLICE_X6Y94          LUT4 (Prop_lut4_I0_O)        0.048     1.836 r  transmitter/fsmd.bitPos[2]_i_1/O
+                         net (fo=1, routed)           0.000     1.836    transmitter/fsmd.bitPos[2]_i_1_n_0
+    SLICE_X6Y94          FDRE                                         r  transmitter/fsmd.bitPos_reg[2]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)     0.000     0.000 r  
@@ -1099,30 +1309,30 @@ Slack (MET) :             0.220ns  (arrival time - required time)
     W5                   IBUF (Prop_ibuf_I_O)         0.414     0.414 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.685     1.099    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.128 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.948     2.076    transmitter/clk_IBUF_BUFG
-    SLICE_X5Y105         FDRE                                         r  transmitter/fsmd.bitPos_reg[2]/C
-                         clock pessimism             -0.518     1.558    
-    SLICE_X5Y105         FDRE (Hold_fdre_C_D)         0.092     1.650    transmitter/fsmd.bitPos_reg[2]
+                         net (fo=67, routed)          0.861     1.989    transmitter/clk_IBUF_BUFG
+    SLICE_X6Y94          FDRE                                         r  transmitter/fsmd.bitPos_reg[2]/C
+                         clock pessimism             -0.499     1.490    
+    SLICE_X6Y94          FDRE (Hold_fdre_C_D)         0.131     1.621    transmitter/fsmd.bitPos_reg[2]
   -------------------------------------------------------------------
-                         required time                         -1.650    
-                         arrival time                           1.870    
+                         required time                         -1.621    
+                         arrival time                           1.836    
   -------------------------------------------------------------------
-                         slack                                  0.220    
+                         slack                                  0.215    
 
-Slack (MET) :             0.229ns  (arrival time - required time)
-  Source:                 transmitter/fsmd.bitPos_reg[1]/C
+Slack (MET) :             0.216ns  (arrival time - required time)
+  Source:                 receiver/RxDSynchronizer/aux_reg[1]/C
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            transmitter/fsmd.TxDShf_reg[4]/D
-                            (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            receiver/fsmd.bitPos_reg[0]/D
+                            (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             sysClk
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (sysClk rise@0.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        0.387ns  (logic 0.186ns (48.107%)  route 0.201ns (51.893%))
-  Logic Levels:           1  (LUT6=1)
-  Clock Path Skew:        0.038ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.078ns
-    Source Clock Delay      (SCD):    1.558ns
-    Clock Pessimism Removal (CPR):    0.482ns
+  Data Path Delay:        0.352ns  (logic 0.186ns (52.767%)  route 0.166ns (47.233%))
+  Logic Levels:           1  (LUT5=1)
+  Clock Path Skew:        0.015ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.989ns
+    Source Clock Delay      (SCD):    1.475ns
+    Clock Pessimism Removal (CPR):    0.499ns
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
@@ -1132,14 +1342,14 @@ Slack (MET) :             0.229ns  (arrival time - required time)
     W5                   IBUF (Prop_ibuf_I_O)         0.226     0.226 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.631     0.858    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     0.884 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.674     1.558    transmitter/clk_IBUF_BUFG
-    SLICE_X5Y105         FDRE                                         r  transmitter/fsmd.bitPos_reg[1]/C
+                         net (fo=67, routed)          0.592     1.475    receiver/RxDSynchronizer/clk_IBUF_BUFG
+    SLICE_X4Y97          FDRE                                         r  receiver/RxDSynchronizer/aux_reg[1]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X5Y105         FDRE (Prop_fdre_C_Q)         0.141     1.699 r  transmitter/fsmd.bitPos_reg[1]/Q
-                         net (fo=16, routed)          0.201     1.899    transmitter/fsmd.bitPos_reg_n_0_[1]
-    SLICE_X2Y106         LUT6 (Prop_lut6_I1_O)        0.045     1.944 r  transmitter/fsmd.TxDShf[4]_i_1/O
-                         net (fo=1, routed)           0.000     1.944    transmitter/fsmd.TxDShf[4]_i_1_n_0
-    SLICE_X2Y106         FDSE                                         r  transmitter/fsmd.TxDShf_reg[4]/D
+    SLICE_X4Y97          FDRE (Prop_fdre_C_Q)         0.141     1.616 f  receiver/RxDSynchronizer/aux_reg[1]/Q
+                         net (fo=2, routed)           0.166     1.783    receiver/RxDSynchronizer/aux_reg[1]_0[0]
+    SLICE_X6Y96          LUT5 (Prop_lut5_I4_O)        0.045     1.828 r  receiver/RxDSynchronizer/fsmd.bitPos[0]_i_1/O
+                         net (fo=1, routed)           0.000     1.828    receiver/RxDSynchronizer_n_0
+    SLICE_X6Y96          FDRE                                         r  receiver/fsmd.bitPos_reg[0]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)     0.000     0.000 r  
@@ -1148,30 +1358,128 @@ Slack (MET) :             0.229ns  (arrival time - required time)
     W5                   IBUF (Prop_ibuf_I_O)         0.414     0.414 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.685     1.099    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.128 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.950     2.078    transmitter/clk_IBUF_BUFG
-    SLICE_X2Y106         FDSE                                         r  transmitter/fsmd.TxDShf_reg[4]/C
-                         clock pessimism             -0.482     1.596    
-    SLICE_X2Y106         FDSE (Hold_fdse_C_D)         0.120     1.716    transmitter/fsmd.TxDShf_reg[4]
+                         net (fo=67, routed)          0.861     1.989    receiver/clk_IBUF_BUFG
+    SLICE_X6Y96          FDRE                                         r  receiver/fsmd.bitPos_reg[0]/C
+                         clock pessimism             -0.499     1.490    
+    SLICE_X6Y96          FDRE (Hold_fdre_C_D)         0.121     1.611    receiver/fsmd.bitPos_reg[0]
   -------------------------------------------------------------------
-                         required time                         -1.716    
-                         arrival time                           1.944    
+                         required time                         -1.611    
+                         arrival time                           1.828    
   -------------------------------------------------------------------
-                         slack                                  0.229    
+                         slack                                  0.216    
 
-Slack (MET) :             0.230ns  (arrival time - required time)
-  Source:                 transmitter/fsmd.TxDShf_reg[2]/C
+Slack (MET) :             0.221ns  (arrival time - required time)
+  Source:                 transmitter/fsmd.bitPos_reg[1]/C
+                            (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            transmitter/baudCntCE_reg_inv/D
+                            (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             sysClk
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (sysClk rise@0.000ns - sysClk rise@0.000ns)
+  Data Path Delay:        0.325ns  (logic 0.209ns (64.219%)  route 0.116ns (35.781%))
+  Logic Levels:           1  (LUT5=1)
+  Clock Path Skew:        0.013ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.989ns
+    Source Clock Delay      (SCD):    1.474ns
+    Clock Pessimism Removal (CPR):    0.502ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sysClk rise edge)     0.000     0.000 r  
+    W5                                                0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    W5                   IBUF (Prop_ibuf_I_O)         0.226     0.226 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.631     0.858    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     0.884 r  clk_IBUF_BUFG_inst/O
+                         net (fo=67, routed)          0.591     1.474    transmitter/clk_IBUF_BUFG
+    SLICE_X6Y94          FDRE                                         r  transmitter/fsmd.bitPos_reg[1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X6Y94          FDRE (Prop_fdre_C_Q)         0.164     1.638 f  transmitter/fsmd.bitPos_reg[1]/Q
+                         net (fo=16, routed)          0.116     1.755    transmitter/fsmd.bitPos_reg_n_0_[1]
+    SLICE_X7Y94          LUT5 (Prop_lut5_I4_O)        0.045     1.800 r  transmitter/baudCntCE_inv_i_1__0/O
+                         net (fo=1, routed)           0.000     1.800    transmitter/baudCntCE_inv_i_1__0_n_0
+    SLICE_X7Y94          FDRE                                         r  transmitter/baudCntCE_reg_inv/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sysClk rise edge)     0.000     0.000 r  
+    W5                                                0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    W5                   IBUF (Prop_ibuf_I_O)         0.414     0.414 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.685     1.099    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.128 r  clk_IBUF_BUFG_inst/O
+                         net (fo=67, routed)          0.861     1.989    transmitter/clk_IBUF_BUFG
+    SLICE_X7Y94          FDRE                                         r  transmitter/baudCntCE_reg_inv/C
+                         clock pessimism             -0.502     1.487    
+    SLICE_X7Y94          FDRE (Hold_fdre_C_D)         0.091     1.578    transmitter/baudCntCE_reg_inv
+  -------------------------------------------------------------------
+                         required time                         -1.578    
+                         arrival time                           1.800    
+  -------------------------------------------------------------------
+                         slack                                  0.221    
+
+Slack (MET) :             0.223ns  (arrival time - required time)
+  Source:                 transmitter/fsmd.bitPos_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            transmitter/fsmd.bitPos_reg[1]/D
+                            (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             sysClk
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (sysClk rise@0.000ns - sysClk rise@0.000ns)
+  Data Path Delay:        0.359ns  (logic 0.186ns (51.794%)  route 0.173ns (48.206%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        0.016ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.989ns
+    Source Clock Delay      (SCD):    1.474ns
+    Clock Pessimism Removal (CPR):    0.499ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sysClk rise edge)     0.000     0.000 r  
+    W5                                                0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    W5                   IBUF (Prop_ibuf_I_O)         0.226     0.226 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.631     0.858    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     0.884 r  clk_IBUF_BUFG_inst/O
+                         net (fo=67, routed)          0.591     1.474    transmitter/clk_IBUF_BUFG
+    SLICE_X5Y93          FDRE                                         r  transmitter/fsmd.bitPos_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X5Y93          FDRE (Prop_fdre_C_Q)         0.141     1.615 r  transmitter/fsmd.bitPos_reg[0]/Q
+                         net (fo=16, routed)          0.173     1.788    transmitter/fsmd.bitPos_reg_n_0_[0]
+    SLICE_X6Y94          LUT4 (Prop_lut4_I0_O)        0.045     1.833 r  transmitter/fsmd.bitPos[1]_i_1__0/O
+                         net (fo=1, routed)           0.000     1.833    transmitter/fsmd.bitPos[1]_i_1__0_n_0
+    SLICE_X6Y94          FDRE                                         r  transmitter/fsmd.bitPos_reg[1]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sysClk rise edge)     0.000     0.000 r  
+    W5                                                0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    W5                   IBUF (Prop_ibuf_I_O)         0.414     0.414 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.685     1.099    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.128 r  clk_IBUF_BUFG_inst/O
+                         net (fo=67, routed)          0.861     1.989    transmitter/clk_IBUF_BUFG
+    SLICE_X6Y94          FDRE                                         r  transmitter/fsmd.bitPos_reg[1]/C
+                         clock pessimism             -0.499     1.490    
+    SLICE_X6Y94          FDRE (Hold_fdre_C_D)         0.120     1.610    transmitter/fsmd.bitPos_reg[1]
+  -------------------------------------------------------------------
+                         required time                         -1.610    
+                         arrival time                           1.833    
+  -------------------------------------------------------------------
+                         slack                                  0.223    
+
+Slack (MET) :             0.232ns  (arrival time - required time)
+  Source:                 receiver/fsmd.RxDShf_reg[1]/C
                             (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Destination:            transmitter/fsmd.TxDShf_reg[1]/D
                             (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             sysClk
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (sysClk rise@0.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        0.322ns  (logic 0.186ns (57.733%)  route 0.136ns (42.267%))
+  Data Path Delay:        0.339ns  (logic 0.186ns (54.928%)  route 0.153ns (45.072%))
   Logic Levels:           1  (LUT6=1)
-  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.077ns
-    Source Clock Delay      (SCD):    1.558ns
-    Clock Pessimism Removal (CPR):    0.519ns
+  Clock Path Skew:        0.015ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.988ns
+    Source Clock Delay      (SCD):    1.474ns
+    Clock Pessimism Removal (CPR):    0.499ns
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
@@ -1181,63 +1489,14 @@ Slack (MET) :             0.230ns  (arrival time - required time)
     W5                   IBUF (Prop_ibuf_I_O)         0.226     0.226 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.631     0.858    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     0.884 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.674     1.558    transmitter/clk_IBUF_BUFG
-    SLICE_X3Y107         FDSE                                         r  transmitter/fsmd.TxDShf_reg[2]/C
+                         net (fo=67, routed)          0.591     1.474    receiver/clk_IBUF_BUFG
+    SLICE_X4Y93          FDSE                                         r  receiver/fsmd.RxDShf_reg[1]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X3Y107         FDSE (Prop_fdse_C_Q)         0.141     1.699 r  transmitter/fsmd.TxDShf_reg[2]/Q
-                         net (fo=1, routed)           0.136     1.835    transmitter/TxDShf[2]
-    SLICE_X3Y107         LUT6 (Prop_lut6_I5_O)        0.045     1.880 r  transmitter/fsmd.TxDShf[1]_i_1/O
-                         net (fo=1, routed)           0.000     1.880    transmitter/fsmd.TxDShf[1]_i_1_n_0
-    SLICE_X3Y107         FDSE                                         r  transmitter/fsmd.TxDShf_reg[1]/D
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sysClk rise edge)     0.000     0.000 r  
-    W5                                                0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    W5                   IBUF (Prop_ibuf_I_O)         0.414     0.414 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.685     1.099    clk_IBUF
-    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.128 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.949     2.077    transmitter/clk_IBUF_BUFG
-    SLICE_X3Y107         FDSE                                         r  transmitter/fsmd.TxDShf_reg[1]/C
-                         clock pessimism             -0.519     1.558    
-    SLICE_X3Y107         FDSE (Hold_fdse_C_D)         0.092     1.650    transmitter/fsmd.TxDShf_reg[1]
-  -------------------------------------------------------------------
-                         required time                         -1.650    
-                         arrival time                           1.880    
-  -------------------------------------------------------------------
-                         slack                                  0.230    
-
-Slack (MET) :             0.236ns  (arrival time - required time)
-  Source:                 transmitter/fsmd.TxDShf_reg[6]/C
-                            (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            transmitter/fsmd.TxDShf_reg[5]/D
-                            (rising edge-triggered cell FDSE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Path Group:             sysClk
-  Path Type:              Hold (Min at Fast Process Corner)
-  Requirement:            0.000ns  (sysClk rise@0.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        0.357ns  (logic 0.209ns (58.515%)  route 0.148ns (41.485%))
-  Logic Levels:           1  (LUT6=1)
-  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.078ns
-    Source Clock Delay      (SCD):    1.559ns
-    Clock Pessimism Removal (CPR):    0.519ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sysClk rise edge)     0.000     0.000 r  
-    W5                                                0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    W5                   IBUF (Prop_ibuf_I_O)         0.226     0.226 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.631     0.858    clk_IBUF
-    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     0.884 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.675     1.559    transmitter/clk_IBUF_BUFG
-    SLICE_X2Y106         FDSE                                         r  transmitter/fsmd.TxDShf_reg[6]/C
-  -------------------------------------------------------------------    -------------------
-    SLICE_X2Y106         FDSE (Prop_fdse_C_Q)         0.164     1.723 r  transmitter/fsmd.TxDShf_reg[6]/Q
-                         net (fo=1, routed)           0.148     1.871    transmitter/TxDShf[6]
-    SLICE_X2Y106         LUT6 (Prop_lut6_I5_O)        0.045     1.916 r  transmitter/fsmd.TxDShf[5]_i_1/O
-                         net (fo=1, routed)           0.000     1.916    transmitter/fsmd.TxDShf[5]_i_1_n_0
-    SLICE_X2Y106         FDSE                                         r  transmitter/fsmd.TxDShf_reg[5]/D
+    SLICE_X4Y93          FDSE (Prop_fdse_C_Q)         0.141     1.615 r  receiver/fsmd.RxDShf_reg[1]/Q
+                         net (fo=1, routed)           0.153     1.768    transmitter/fsmd.TxDShf_reg[8]_0[0]
+    SLICE_X7Y92          LUT6 (Prop_lut6_I0_O)        0.045     1.813 r  transmitter/fsmd.TxDShf[1]_i_1/O
+                         net (fo=1, routed)           0.000     1.813    transmitter/fsmd.TxDShf[1]_i_1_n_0
+    SLICE_X7Y92          FDSE                                         r  transmitter/fsmd.TxDShf_reg[1]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)     0.000     0.000 r  
@@ -1246,64 +1505,15 @@ Slack (MET) :             0.236ns  (arrival time - required time)
     W5                   IBUF (Prop_ibuf_I_O)         0.414     0.414 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.685     1.099    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.128 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.950     2.078    transmitter/clk_IBUF_BUFG
-    SLICE_X2Y106         FDSE                                         r  transmitter/fsmd.TxDShf_reg[5]/C
-                         clock pessimism             -0.519     1.559    
-    SLICE_X2Y106         FDSE (Hold_fdse_C_D)         0.121     1.680    transmitter/fsmd.TxDShf_reg[5]
+                         net (fo=67, routed)          0.860     1.988    transmitter/clk_IBUF_BUFG
+    SLICE_X7Y92          FDSE                                         r  transmitter/fsmd.TxDShf_reg[1]/C
+                         clock pessimism             -0.499     1.489    
+    SLICE_X7Y92          FDSE (Hold_fdse_C_D)         0.092     1.581    transmitter/fsmd.TxDShf_reg[1]
   -------------------------------------------------------------------
-                         required time                         -1.680    
-                         arrival time                           1.916    
+                         required time                         -1.581    
+                         arrival time                           1.813    
   -------------------------------------------------------------------
-                         slack                                  0.236    
-
-Slack (MET) :             0.245ns  (arrival time - required time)
-  Source:                 receiver/dataRdy_reg/C
-                            (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            transmitter/fsmd.bitPos_reg[0]/D
-                            (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Path Group:             sysClk
-  Path Type:              Hold (Min at Fast Process Corner)
-  Requirement:            0.000ns  (sysClk rise@0.000ns - sysClk rise@0.000ns)
-  Data Path Delay:        0.374ns  (logic 0.209ns (55.922%)  route 0.165ns (44.078%))
-  Logic Levels:           1  (LUT5=1)
-  Clock Path Skew:        0.038ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.078ns
-    Source Clock Delay      (SCD):    1.558ns
-    Clock Pessimism Removal (CPR):    0.482ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sysClk rise edge)     0.000     0.000 r  
-    W5                                                0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    W5                   IBUF (Prop_ibuf_I_O)         0.226     0.226 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.631     0.858    clk_IBUF
-    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     0.884 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.674     1.558    receiver/clk_IBUF_BUFG
-    SLICE_X6Y105         FDRE                                         r  receiver/dataRdy_reg/C
-  -------------------------------------------------------------------    -------------------
-    SLICE_X6Y105         FDRE (Prop_fdre_C_Q)         0.164     1.722 r  receiver/dataRdy_reg/Q
-                         net (fo=3, routed)           0.165     1.886    transmitter/dataRdy
-    SLICE_X3Y105         LUT5 (Prop_lut5_I0_O)        0.045     1.931 r  transmitter/fsmd.bitPos[0]_i_1__0/O
-                         net (fo=1, routed)           0.000     1.931    transmitter/fsmd.bitPos[0]_i_1__0_n_0
-    SLICE_X3Y105         FDRE                                         r  transmitter/fsmd.bitPos_reg[0]/D
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sysClk rise edge)     0.000     0.000 r  
-    W5                                                0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    W5                   IBUF (Prop_ibuf_I_O)         0.414     0.414 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.685     1.099    clk_IBUF
-    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.128 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.950     2.078    transmitter/clk_IBUF_BUFG
-    SLICE_X3Y105         FDRE                                         r  transmitter/fsmd.bitPos_reg[0]/C
-                         clock pessimism             -0.482     1.596    
-    SLICE_X3Y105         FDRE (Hold_fdre_C_D)         0.091     1.687    transmitter/fsmd.bitPos_reg[0]
-  -------------------------------------------------------------------
-                         required time                         -1.687    
-                         arrival time                           1.931    
-  -------------------------------------------------------------------
-                         slack                                  0.245    
+                         slack                                  0.232    
 
 
 
@@ -1318,35 +1528,35 @@ Sources:            { clk }
 
 Check Type        Corner  Lib Pin  Reference Pin  Required(ns)  Actual(ns)  Slack(ns)  Location       Pin
 Min Period        n/a     BUFG/I   n/a            2.155         10.000      7.845      BUFGCTRL_X0Y0  clk_IBUF_BUFG_inst/I
-Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X4Y102   receiver/baudCnt.count_reg[0]/C
-Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X4Y104   receiver/baudCnt.count_reg[10]/C
-Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X4Y104   receiver/baudCnt.count_reg[11]/C
-Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X4Y105   receiver/baudCnt.count_reg[12]/C
-Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X4Y105   receiver/baudCnt.count_reg[13]/C
-Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X4Y105   receiver/baudCnt.count_reg[14]/C
-Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X4Y105   receiver/baudCnt.count_reg[15]/C
-Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X4Y106   receiver/baudCnt.count_reg[16]/C
-Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X4Y102   receiver/baudCnt.count_reg[1]/C
-Low Pulse Width   Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y102   receiver/baudCnt.count_reg[0]/C
-Low Pulse Width   Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y102   receiver/baudCnt.count_reg[0]/C
-Low Pulse Width   Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y104   receiver/baudCnt.count_reg[10]/C
-Low Pulse Width   Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y104   receiver/baudCnt.count_reg[10]/C
-Low Pulse Width   Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y104   receiver/baudCnt.count_reg[11]/C
-Low Pulse Width   Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y104   receiver/baudCnt.count_reg[11]/C
-Low Pulse Width   Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y105   receiver/baudCnt.count_reg[12]/C
-Low Pulse Width   Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y105   receiver/baudCnt.count_reg[12]/C
-Low Pulse Width   Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y105   receiver/baudCnt.count_reg[13]/C
-Low Pulse Width   Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y105   receiver/baudCnt.count_reg[13]/C
-High Pulse Width  Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y102   receiver/baudCnt.count_reg[0]/C
-High Pulse Width  Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y102   receiver/baudCnt.count_reg[0]/C
-High Pulse Width  Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y104   receiver/baudCnt.count_reg[10]/C
-High Pulse Width  Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y104   receiver/baudCnt.count_reg[10]/C
-High Pulse Width  Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y104   receiver/baudCnt.count_reg[11]/C
-High Pulse Width  Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y104   receiver/baudCnt.count_reg[11]/C
-High Pulse Width  Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y105   receiver/baudCnt.count_reg[12]/C
-High Pulse Width  Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y105   receiver/baudCnt.count_reg[12]/C
-High Pulse Width  Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y105   receiver/baudCnt.count_reg[13]/C
-High Pulse Width  Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X4Y105   receiver/baudCnt.count_reg[13]/C
+Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X11Y92   receiver/baudCnt.count_reg[0]/C
+Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X11Y94   receiver/baudCnt.count_reg[10]/C
+Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X11Y94   receiver/baudCnt.count_reg[11]/C
+Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X11Y94   receiver/baudCnt.count_reg[12]/C
+Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X11Y95   receiver/baudCnt.count_reg[13]/C
+Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X11Y95   receiver/baudCnt.count_reg[14]/C
+Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X11Y95   receiver/baudCnt.count_reg[15]/C
+Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X11Y95   receiver/baudCnt.count_reg[16]/C
+Min Period        n/a     FDRE/C   n/a            1.000         10.000      9.000      SLICE_X11Y92   receiver/baudCnt.count_reg[1]/C
+Low Pulse Width   Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y92   receiver/baudCnt.count_reg[0]/C
+Low Pulse Width   Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y92   receiver/baudCnt.count_reg[0]/C
+Low Pulse Width   Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y94   receiver/baudCnt.count_reg[10]/C
+Low Pulse Width   Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y94   receiver/baudCnt.count_reg[10]/C
+Low Pulse Width   Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y94   receiver/baudCnt.count_reg[11]/C
+Low Pulse Width   Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y94   receiver/baudCnt.count_reg[11]/C
+Low Pulse Width   Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y94   receiver/baudCnt.count_reg[12]/C
+Low Pulse Width   Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y94   receiver/baudCnt.count_reg[12]/C
+Low Pulse Width   Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y95   receiver/baudCnt.count_reg[13]/C
+Low Pulse Width   Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y95   receiver/baudCnt.count_reg[13]/C
+High Pulse Width  Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y92   receiver/baudCnt.count_reg[0]/C
+High Pulse Width  Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y92   receiver/baudCnt.count_reg[0]/C
+High Pulse Width  Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y94   receiver/baudCnt.count_reg[10]/C
+High Pulse Width  Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y94   receiver/baudCnt.count_reg[10]/C
+High Pulse Width  Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y94   receiver/baudCnt.count_reg[11]/C
+High Pulse Width  Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y94   receiver/baudCnt.count_reg[11]/C
+High Pulse Width  Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y94   receiver/baudCnt.count_reg[12]/C
+High Pulse Width  Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y94   receiver/baudCnt.count_reg[12]/C
+High Pulse Width  Slow    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y95   receiver/baudCnt.count_reg[13]/C
+High Pulse Width  Fast    FDRE/C   n/a            0.500         5.000       4.500      SLICE_X11Y95   receiver/baudCnt.count_reg[13]/C
 
 
 
@@ -1369,7 +1579,7 @@ Slack:                    inf
                             (output port)
   Path Group:             (none)
   Path Type:              Max at Slow Process Corner
-  Data Path Delay:        5.740ns  (logic 4.036ns (70.305%)  route 1.705ns (29.695%))
+  Data Path Delay:        6.244ns  (logic 3.974ns (63.642%)  route 2.270ns (36.358%))
   Logic Levels:           1  (OBUF=1)
   Clock Uncertainty:      0.025ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.050ns
@@ -1385,13 +1595,13 @@ Slack:                    inf
     W5                   IBUF (Prop_ibuf_I_O)         1.458     1.458 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.967     3.425    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.521 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.808     5.329    transmitter/clk_IBUF_BUFG
-    SLICE_X2Y107         FDSE                                         r  transmitter/fsmd.TxDShf_reg[0]/C
+                         net (fo=67, routed)          1.623     5.144    transmitter/clk_IBUF_BUFG
+    SLICE_X7Y93          FDSE                                         r  transmitter/fsmd.TxDShf_reg[0]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X2Y107         FDSE (Prop_fdse_C_Q)         0.518     5.847 r  transmitter/fsmd.TxDShf_reg[0]/Q
-                         net (fo=1, routed)           1.705     7.552    TxD_OBUF
-    A18                  OBUF (Prop_obuf_I_O)         3.518    11.070 r  TxD_OBUF_inst/O
-                         net (fo=0)                   0.000    11.070    TxD
+    SLICE_X7Y93          FDSE (Prop_fdse_C_Q)         0.456     5.600 r  transmitter/fsmd.TxDShf_reg[0]/Q
+                         net (fo=1, routed)           2.270     7.870    TxD_OBUF
+    A18                  OBUF (Prop_obuf_I_O)         3.518    11.388 r  TxD_OBUF_inst/O
+                         net (fo=0)                   0.000    11.388    TxD
     A18                                                               r  TxD (OUT)
   -------------------------------------------------------------------    -------------------
 
@@ -1408,7 +1618,7 @@ Slack:                    inf
                             (output port)
   Path Group:             (none)
   Path Type:              Min at Fast Process Corner
-  Data Path Delay:        1.729ns  (logic 1.383ns (79.957%)  route 0.347ns (20.043%))
+  Data Path Delay:        1.937ns  (logic 1.360ns (70.203%)  route 0.577ns (29.797%))
   Logic Levels:           1  (OBUF=1)
   Clock Uncertainty:      0.025ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.050ns
@@ -1424,13 +1634,13 @@ Slack:                    inf
     W5                   IBUF (Prop_ibuf_I_O)         0.226     0.226 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.631     0.858    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     0.884 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.674     1.558    transmitter/clk_IBUF_BUFG
-    SLICE_X2Y107         FDSE                                         r  transmitter/fsmd.TxDShf_reg[0]/C
+                         net (fo=67, routed)          0.591     1.474    transmitter/clk_IBUF_BUFG
+    SLICE_X7Y93          FDSE                                         r  transmitter/fsmd.TxDShf_reg[0]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X2Y107         FDSE (Prop_fdse_C_Q)         0.164     1.722 r  transmitter/fsmd.TxDShf_reg[0]/Q
-                         net (fo=1, routed)           0.347     2.068    TxD_OBUF
-    A18                  OBUF (Prop_obuf_I_O)         1.219     3.287 r  TxD_OBUF_inst/O
-                         net (fo=0)                   0.000     3.287    TxD
+    SLICE_X7Y93          FDSE (Prop_fdse_C_Q)         0.141     1.615 r  transmitter/fsmd.TxDShf_reg[0]/Q
+                         net (fo=1, routed)           0.577     2.192    TxD_OBUF
+    A18                  OBUF (Prop_obuf_I_O)         1.219     3.411 r  TxD_OBUF_inst/O
+                         net (fo=0)                   0.000     3.411    TxD
     A18                                                               r  TxD (OUT)
   -------------------------------------------------------------------    -------------------
 
@@ -1457,10 +1667,10 @@ Slack:                    inf
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             (none)
   Path Type:              Setup (Max at Slow Process Corner)
-  Data Path Delay:        4.619ns  (logic 1.454ns (31.476%)  route 3.165ns (68.524%))
+  Data Path Delay:        4.767ns  (logic 1.454ns (30.498%)  route 3.313ns (69.502%))
   Logic Levels:           1  (IBUF=1)
-  Clock Path Skew:        5.024ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.024ns
+  Clock Path Skew:        4.850ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.850ns
     Source Clock Delay      (SCD):    0.000ns
     Clock Pessimism Removal (CPR):    0.000ns
   Clock Uncertainty:      0.025ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
@@ -1474,8 +1684,8 @@ Slack:                    inf
     T18                                               0.000     0.000 r  rst (IN)
                          net (fo=0)                   0.000     0.000    rst
     T18                  IBUF (Prop_ibuf_I_O)         1.454     1.454 r  rst_IBUF_inst/O
-                         net (fo=1, routed)           3.165     4.619    rstSynchronizer/D[0]
-    SLICE_X2Y105         FDRE                                         r  rstSynchronizer/aux_reg[0]/D
+                         net (fo=1, routed)           3.313     4.767    rstSynchronizer/D[0]
+    SLICE_X2Y93          FDRE                                         r  rstSynchronizer/aux_reg[0]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)     0.000     0.000 r  
@@ -1484,8 +1694,8 @@ Slack:                    inf
     W5                   IBUF (Prop_ibuf_I_O)         1.388     1.388 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.862     3.250    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091     3.341 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.683     5.024    rstSynchronizer/clk_IBUF_BUFG
-    SLICE_X2Y105         FDRE                                         r  rstSynchronizer/aux_reg[0]/C
+                         net (fo=67, routed)          1.509     4.850    rstSynchronizer/clk_IBUF_BUFG
+    SLICE_X2Y93          FDRE                                         r  rstSynchronizer/aux_reg[0]/C
 
 Slack:                    inf
   Source:                 RxD
@@ -1494,10 +1704,10 @@ Slack:                    inf
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             (none)
   Path Type:              Setup (Max at Slow Process Corner)
-  Data Path Delay:        2.563ns  (logic 1.456ns (56.806%)  route 1.107ns (43.194%))
+  Data Path Delay:        2.789ns  (logic 1.456ns (52.205%)  route 1.333ns (47.795%))
   Logic Levels:           1  (IBUF=1)
-  Clock Path Skew:        5.024ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.024ns
+  Clock Path Skew:        4.849ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.849ns
     Source Clock Delay      (SCD):    0.000ns
     Clock Pessimism Removal (CPR):    0.000ns
   Clock Uncertainty:      0.025ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
@@ -1511,8 +1721,8 @@ Slack:                    inf
     B18                                               0.000     0.000 r  RxD (IN)
                          net (fo=0)                   0.000     0.000    RxD
     B18                  IBUF (Prop_ibuf_I_O)         1.456     1.456 r  RxD_IBUF_inst/O
-                         net (fo=1, routed)           1.107     2.563    receiver/RxDSynchronizer/aux_reg[0]_0[0]
-    SLICE_X2Y105         FDRE                                         r  receiver/RxDSynchronizer/aux_reg[0]/D
+                         net (fo=1, routed)           1.333     2.789    receiver/RxDSynchronizer/aux_reg[0]_0[0]
+    SLICE_X4Y98          FDRE                                         r  receiver/RxDSynchronizer/aux_reg[0]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)     0.000     0.000 r  
@@ -1521,8 +1731,8 @@ Slack:                    inf
     W5                   IBUF (Prop_ibuf_I_O)         1.388     1.388 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.862     3.250    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091     3.341 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          1.683     5.024    receiver/RxDSynchronizer/clk_IBUF_BUFG
-    SLICE_X2Y105         FDRE                                         r  receiver/RxDSynchronizer/aux_reg[0]/C
+                         net (fo=67, routed)          1.508     4.849    receiver/RxDSynchronizer/clk_IBUF_BUFG
+    SLICE_X4Y98          FDRE                                         r  receiver/RxDSynchronizer/aux_reg[0]/C
 
 
 
@@ -1537,10 +1747,10 @@ Slack:                    inf
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             (none)
   Path Type:              Hold (Min at Fast Process Corner)
-  Data Path Delay:        0.648ns  (logic 0.224ns (34.636%)  route 0.423ns (65.364%))
+  Data Path Delay:        0.756ns  (logic 0.224ns (29.648%)  route 0.532ns (70.352%))
   Logic Levels:           1  (IBUF=1)
-  Clock Path Skew:        2.078ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.078ns
+  Clock Path Skew:        1.990ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.990ns
     Source Clock Delay      (SCD):    0.000ns
     Clock Pessimism Removal (CPR):    -0.000ns
 
@@ -1549,8 +1759,8 @@ Slack:                    inf
     B18                                               0.000     0.000 r  RxD (IN)
                          net (fo=0)                   0.000     0.000    RxD
     B18                  IBUF (Prop_ibuf_I_O)         0.224     0.224 r  RxD_IBUF_inst/O
-                         net (fo=1, routed)           0.423     0.648    receiver/RxDSynchronizer/aux_reg[0]_0[0]
-    SLICE_X2Y105         FDRE                                         r  receiver/RxDSynchronizer/aux_reg[0]/D
+                         net (fo=1, routed)           0.532     0.756    receiver/RxDSynchronizer/aux_reg[0]_0[0]
+    SLICE_X4Y98          FDRE                                         r  receiver/RxDSynchronizer/aux_reg[0]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)     0.000     0.000 r  
@@ -1559,8 +1769,8 @@ Slack:                    inf
     W5                   IBUF (Prop_ibuf_I_O)         0.414     0.414 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.685     1.099    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.128 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.950     2.078    receiver/RxDSynchronizer/clk_IBUF_BUFG
-    SLICE_X2Y105         FDRE                                         r  receiver/RxDSynchronizer/aux_reg[0]/C
+                         net (fo=67, routed)          0.863     1.990    receiver/RxDSynchronizer/clk_IBUF_BUFG
+    SLICE_X4Y98          FDRE                                         r  receiver/RxDSynchronizer/aux_reg[0]/C
 
 Slack:                    inf
   Source:                 rst
@@ -1569,10 +1779,10 @@ Slack:                    inf
                             (rising edge-triggered cell FDRE clocked by sysClk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             (none)
   Path Type:              Hold (Min at Fast Process Corner)
-  Data Path Delay:        1.436ns  (logic 0.222ns (15.453%)  route 1.214ns (84.547%))
+  Data Path Delay:        1.499ns  (logic 0.222ns (14.802%)  route 1.277ns (85.198%))
   Logic Levels:           1  (IBUF=1)
-  Clock Path Skew:        2.078ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.078ns
+  Clock Path Skew:        1.991ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.991ns
     Source Clock Delay      (SCD):    0.000ns
     Clock Pessimism Removal (CPR):    -0.000ns
 
@@ -1581,8 +1791,8 @@ Slack:                    inf
     T18                                               0.000     0.000 r  rst (IN)
                          net (fo=0)                   0.000     0.000    rst
     T18                  IBUF (Prop_ibuf_I_O)         0.222     0.222 r  rst_IBUF_inst/O
-                         net (fo=1, routed)           1.214     1.436    rstSynchronizer/D[0]
-    SLICE_X2Y105         FDRE                                         r  rstSynchronizer/aux_reg[0]/D
+                         net (fo=1, routed)           1.277     1.499    rstSynchronizer/D[0]
+    SLICE_X2Y93          FDRE                                         r  rstSynchronizer/aux_reg[0]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sysClk rise edge)     0.000     0.000 r  
@@ -1591,8 +1801,8 @@ Slack:                    inf
     W5                   IBUF (Prop_ibuf_I_O)         0.414     0.414 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.685     1.099    clk_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.128 r  clk_IBUF_BUFG_inst/O
-                         net (fo=67, routed)          0.950     2.078    rstSynchronizer/clk_IBUF_BUFG
-    SLICE_X2Y105         FDRE                                         r  rstSynchronizer/aux_reg[0]/C
+                         net (fo=67, routed)          0.863     1.991    rstSynchronizer/clk_IBUF_BUFG
+    SLICE_X2Y93          FDRE                                         r  rstSynchronizer/aux_reg[0]/C
 
 
 
