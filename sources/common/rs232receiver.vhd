@@ -60,7 +60,7 @@ begin
     readRxD <= ( count = CYCLES/2-1 );
     if rising_edge(clk) then
        if baudCntCE then
-         count := count + 1; --Puede que se tenga que poner mod (@ Luque seria (count + 1) mod CYCLES-1 ??)
+         count := (count + 1) mod CYCLES; 
        else
          count := 0;
        end if;
@@ -72,7 +72,7 @@ begin
     variable bitPos : natural range 0 to 10 := 0;   
     variable RxDShf : std_logic_vector(9 downto 0) := (others =>'1');
   begin
-    data <= RxDShf(8 downto 1); -- Nada seguro de esto @Luque lo he cambiado de data <= RxDShf
+    data <= RxDShf(8 downto 1);
     baudCntCE <= false;
     if rising_edge(clk) then
       if rst='1' then
@@ -91,7 +91,7 @@ begin
               if bitPos = 10 then
                 dataRdy <= '1';
               end if;
-              bitPos := (bitPos + 1) mod 11;     -- @Luque Cambiado esto para que tenga el mod y vuelva a 0 cuando quiera pasar a 11
+              bitPos := (bitPos + 1) mod 11;
               RxDShf := RxDSync & RxDShf(9 downto 1);
             end if;
         end case;

@@ -68,7 +68,7 @@ begin
     dataOut <= regFile(rdPointer);
     if rising_edge(clk) then
       if wrFifo='1' then
-        regFileType(wrPointer) <= dataIn;
+        -- regFileType(wrPointer) <= dataIn;
       end if;
     end if;
   end process;
@@ -76,8 +76,8 @@ begin
   wrFifo <= '0' when isFull='1' else wrE;   -- No estoy seguro de que esto sea asi
   rdFifo <= '0' when isEmpty='1' else rdE;  -- No estoy seguro de que esto sea asi
   
-  nextWrPointer <= (nextWrPointer + wrFifo) mod DEPTH;  -- No se si hace falta el MOD
-  nextRdPointer <= (nextRdPointer + rdFifo) mod DEPTH;  -- para que vuelva a cero cuando llegue a DEPTH
+  nextWrPointer <= (nextWrPointer + wrFifo) mod DEPTH;
+  nextRdPointer <= (nextRdPointer + rdFifo) mod DEPTH;
     
   fsmd:
   process (clk) 
