@@ -49,6 +49,9 @@ architecture syn of lab5 is
   signal numData : std_logic_vector (3 downto 0);
   signal en : std_logic;
   
+  signal enable : std_logic_vector(3 downto 0);
+  signal binCode: std_logic_vector(15 downto 0);
+  
 begin
 
   rstSynchronizer : synchronizer
@@ -83,16 +86,20 @@ begin
   begin
       leds <= ( others => '0' );
       if full='1' then
-        ...
+        leds(15 downto 12) <= "1111";
       else
         for i in 0 to 15 loop
-          ...
+          if i < to_integer(unsigned(numData)) then
+            leds(i) <= '1';
+          end if;
         end loop;
        end if;
   end process;
   
+  enable <= "110"&en;
+  binCode <= dataRx(7 downto 4) & dataRx(3 downto 0) & "0000" & fifoStatus;
   displayInterface : segsBankRefresher
     generic map ( FREQ_KHZ => FREQ_KHZ, SIZE => 4 )
-    port map ( clk => clk, ens => "110"&en, bins => dataRx(7 downto 4) & dataRx(3 downto 0) & "0000" & fifoStatus, dps => "0000", an_n => an_n, segs_n => segs_n ); 
+    port map ( clk => clk, ens => enable, bins => binCode, dps => "0000", an_n => an_n, segs_n => segs_n ); 
     
 end syn;

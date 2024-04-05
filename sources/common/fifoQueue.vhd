@@ -19,97 +19,102 @@
 --
 -------------------------------------------------------------------
 
-library ieee;
-use ieee.std_logic_1164.all;
-use work.common.all;
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE work.common.ALL;
 
-entity fifoQueue is
-  generic (
-    WL    : natural;   -- anchura de la palabra de fifo
-    DEPTH : natural    -- numero de palabras en fifo
+ENTITY fifoQueue IS
+  GENERIC (
+    WL : NATURAL; -- anchura de la palabra de fifo
+    DEPTH : NATURAL -- numero de palabras en fifo
   );
-  port (
-    clk     : in  std_logic;   -- reloj del sistema
-    rst     : in  std_logic;   -- reset s�ncrono del sistema
-    wrE     : in  std_logic;   -- se activa durante 1 ciclo para escribir un dato en la fifo
-    dataIn  : in  std_logic_vector(WL-1 downto 0);   -- dato a escribir
-    rdE     : in  std_logic;   -- se activa durante 1 ciclo para leer un dato de la fifo
-    dataOut : out std_logic_vector(WL-1 downto 0);   -- dato a leer
-    numData : out std_logic_vector(log2(DEPTH)-1 downto 0);   -- numero de datos almacenados
-    full    : out std_logic;   -- indicador de fifo llena
-    empty   : out std_logic    -- indicador de fifo vacia
+  PORT (
+    clk : IN STD_LOGIC; -- reloj del sistema
+    rst : IN STD_LOGIC; -- reset s�ncrono del sistema
+    wrE : IN STD_LOGIC; -- se activa durante 1 ciclo para escribir un dato en la fifo
+    dataIn : IN STD_LOGIC_VECTOR(WL - 1 DOWNTO 0); -- dato a escribir
+    rdE : IN STD_LOGIC; -- se activa durante 1 ciclo para leer un dato de la fifo
+    dataOut : OUT STD_LOGIC_VECTOR(WL - 1 DOWNTO 0); -- dato a leer
+    numData : OUT STD_LOGIC_VECTOR(log2(DEPTH) - 1 DOWNTO 0); -- numero de datos almacenados
+    full : OUT STD_LOGIC; -- indicador de fifo llena
+    empty : OUT STD_LOGIC -- indicador de fifo vacia
   );
-end fifoQueue;
+END fifoQueue;
 
 -------------------------------------------------------------------
 
-library ieee;
-use ieee.numeric_std.all;
+LIBRARY ieee;
+USE ieee.numeric_std.ALL;
 
-architecture syn of fifoQueue is
+ARCHITECTURE syn OF fifoQueue IS
 
-  type regFileType is array (0 to DEPTH-1) of std_logic_vector(WL-1 downto 0);
+  TYPE regFileType IS ARRAY (0 TO DEPTH - 1) OF STD_LOGIC_VECTOR(WL - 1 DOWNTO 0);
 
   -- Registros
-  signal regFile : regFileType := (others => (others => '0'));
-  signal wrPointer, rdPointer : natural range 0 to DEPTH-1 := 0;
-  signal isFull  : std_logic := '0';
-  signal isEmpty : std_logic := '1';
+  SIGNAL regFile : regFileType := (OTHERS => (OTHERS => '0'));
+  SIGNAL wrPointer, rdPointer : NATURAL RANGE 0 TO DEPTH - 1 := 0;
+  SIGNAL isFull : STD_LOGIC := '0';
+  SIGNAL isEmpty : STD_LOGIC := '1';
   -- Se�ales  
-  signal nextWrPointer, nextRdPointer : natural range 0 to DEPTH-1;
-  signal rdFifo  : std_logic;
-  signal wrFifo  : std_logic;
-  
-begin
+  SIGNAL nextWrPointer, nextRdPointer : NATURAL RANGE 0 TO DEPTH - 1;
+  SIGNAL rdFifo : STD_LOGIC;
+  SIGNAL wrFifo : STD_LOGIC;
 
-  registerFile:
-  process (clk, rdPointer, regFile)
-  begin
+BEGIN
+
+  registerFile :
+  PROCESS (clk, rdPointer, regFile)
+  BEGIN
     dataOut <= regFile(rdPointer);
-    if rising_edge(clk) then
-      if wrFifo='1' then
-        -- regFileType(wrPointer) <= dataIn;
-      end if;
-    end if;
-  end process;
- 
-  wrFifo <= '0' when isFull='1' else wrE;   -- No estoy seguro de que esto sea asi
-  rdFifo <= '0' when isEmpty='1' else rdE;  -- No estoy seguro de que esto sea asi
-  
-  nextWrPointer <= (nextWrPointer + wrFifo) mod DEPTH;
-  nextRdPointer <= (nextRdPointer + rdFifo) mod DEPTH;
-    
-  fsmd:
-  process (clk) 
-  begin     
-    if rising_edge(clk) then
-      if rst='1' then
+    IF rising_edge(clk) THEN
+      IF wrFifo = '1' THEN
+        regFile(wrPointer) <= dataIn;
+      END IF;
+    END IF;
+  END PROCESS;
+
+  wrFifo <= '0' WHEN isFull = '1' ELSE
+    wrE; -- No estoy seguro de que esto sea asi
+  rdFifo <= '0' WHEN isEmpty = '1' ELSE
+    rdE; -- No estoy seguro de que esto sea asi
+
+  nextWrPointer <= (wrPointer + 1) MOD DEPTH; -- Esto puede estar mal
+  nextRdPointer <= (rdPointer + 1) MOD DEPTH;
+
+  fsmd :
+  PROCESS (clk)
+  BEGIN
+    IF rising_edge(clk) THEN
+      IF rst = '1' THEN
         wrPointer <= 0;
         rdPointer <= 0;
-        isFull    <= '0';
-        isEmpty   <= '1';
-      else
-        if wrFifo='1' then
-          if isFull='0' then
-            isFull    <= (nextWrPointer=nextRdPointer);
+        isFull <= '0';
+        isEmpty <= '1';
+      ELSE
+        IF wrFifo = '1' THEN
+          IF isFull = '0' THEN
+            IF nextWrPointer = rdPointer THEN
+              isFull <= '1';            
+            END IF;
             wrPointer <= nextWrPointer;
-            isEmpty   <= '0';
-          end if;
-        end if;
-        if rdFifo='1' then
-          if isEmpty='0' then
-            isEmpty   <= (nextWrPointer=nextRdPointer);
+            isEmpty <= '0';
+          END IF;
+        END IF;
+        IF rdFifo = '1' THEN
+          IF isEmpty = '0' THEN
+            IF nextRdPointer = wrPointer THEN
+              isEmpty <= '1';            
+            END IF;
             rdPointer <= nextRdPointer;
-            isFull    <= '0';
-        end if;
-      end if;
-    end if;
-  end process;
- 
-  full    <= isFull;
-  empty   <= isEmpty;
-  numData <= nextWrPointer - nextRdPointer;
- 
-end syn;
+            isFull <= '0';
+          END IF;
+        END IF;
+      END IF;
+    END IF;
+  END PROCESS;
 
+  full <= isFull;
+  empty <= isEmpty;
+  numData <= STD_LOGIC_VECTOR(TO_SIGNED(nextWrPointer - nextRdPointer, DEPTH - 1));
 
+END syn;
