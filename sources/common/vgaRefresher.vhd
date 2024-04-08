@@ -4,15 +4,15 @@
 --    vgaRefresher.vhd  22/01/2024
 --
 --    (c) J.M. Mendias
---    Diseño Automático de Sistemas
---    Facultad de Informática. Universidad Complutense de Madrid
+--    Diseï¿½o Automï¿½tico de Sistemas
+--    Facultad de Informï¿½tica. Universidad Complutense de Madrid
 --
---  Propósito:
---    Genera las señales de color y sincronismo de un interfaz VGA
---    con resolución 640x420 px
+--  Propï¿½sito:
+--    Genera las seï¿½ales de color y sincronismo de un interfaz VGA
+--    con resoluciï¿½n 640x420 px
 --
---  Notas de diseño:
---    - Válido para frecuencias de reloj multiplos de 25 MHz
+--  Notas de diseï¿½o:
+--    - Vï¿½lido para frecuencias de reloj multiplos de 25 MHz
 --    
 --
 ---------------------------------------------------------------------
@@ -65,29 +65,37 @@ begin
   process (clk)
   begin
     if rising_edge(clk) then
-      ...
+      cycleCnt <= (cycleCnt + 1) mod 4;
       if cycleCnt=CYCLESxPIXEL-1 then
-        ...
+        pixelCnt <= (pixelCnt + 1) mod PIXELSxLINE;
         if pixelCnt=PIXELSxLINE-1 then
-          ...
+          lineCnt <= (lineCnt + 1) mod LINESxFRAME;
         end if;
       end if;
     end if;
   end process;
 
-  pixel <= ...;
-  line  <= ...;
+  pixel <= std_logic_vector(pixelCnt);
+  line  <= std_logic_vector(lineCnt);
   
-  hSyncInt <= ...;
-  vSyncInt <= ...;        
+  hSyncInt <= '1' when (pixelCnt >= 656) nand (pixelCnt < 752) else '0'; --NO estoy seguro
+  vSyncInt <= '1' when (lineCnt >= 490) nand (lineCnt < 492) else '0';  --NO estoy seguro
 
-  blanking <= ...;
+  blanking <= true when (pixelCnt >= 640) or (lineCnt >= 480) else false;
   
   outputRegisters:
   process (clk)
   begin
     if rising_edge(clk) then
-      ...
+        if cycleCnt=CYCLESxPIXEL-1 then
+          hSync <= hSyncInt;
+          vSync <= vSyncInt;
+          if blanking = false then --No estoy 100% seguro de esto
+            RGB(11 downto 8) <= R;
+            RGB(7 downto 4) <= G;
+            RGB(3 downto 0) <= B;
+          end if; 
+        end if;
     end if;
   end process;
     
