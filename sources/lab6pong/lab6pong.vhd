@@ -4,13 +4,13 @@
 --    lab6.vhd  12/09/2023
 --
 --    (c) J.M. Mendias
---    Diseño Automático de Sistemas
---    Facultad de Informática. Universidad Complutense de Madrid
+--    Diseï¿½o Automï¿½tico de Sistemas
+--    Facultad de Informï¿½tica. Universidad Complutense de Madrid
 --
---  Propósito:
+--  Propï¿½sito:
 --    Laboratorio 6: Pong
 --
---  Notas de diseño:
+--  Notas de diseï¿½o:
 --
 ---------------------------------------------------------------------
 
@@ -73,24 +73,30 @@ begin
   keyboardScanner:
   process (clk)
     type states is (keyON, keyOFF);
-    variable state : states := KeyON;
+    variable state : states := keyON; --Puede estar mal no se
   begin
     if rising_edge(clk) then
       if rstSync='1' then
-        ...
+        state := keyOFF; --Revisar lo de el estado inicial
       elsif dataRdy='1' then
         case state is
           when keyON =>
             case data is
               when X"F0" => state := keyOFF;
               when X"15" => qP <= true;
-              ...
+              when X"1C" => aP <= true;
+              when X"4D" => pP <= true;
+              when X"4B" => lP <= true;
+              when X"29" => spcP <= true;
             end case;
           when keyOFF =>
             state := keyON;
             case data is
               when X"15" => qP <= false; 
-              ...
+              when X"1C" => aP <= false;
+              when X"4D" => pP <= false;
+              when X"4B" => lP <= false;
+              when X"29" => spcP <= false;
             end case;
         end case;
       end if;
@@ -103,10 +109,10 @@ begin
     generic map ( FREQ_DIV => FREQ_DIV )
     port map ( clk => clk, line => lineAux, pixel => pixelAux, R => color, G => color, B => color, hSync => hSync, vSync => vSync, RGB => RGB );
 
-  pixel <= ...;
-  line  <= ...;
+  pixel <= unsigned(pixelAux);
+  line  <= unsigned(lineAux);
   
-  color <= ...;
+  color <= (others => pixel(4) xor line(4));--REVISAR ESTO
 
  ------------------
   
