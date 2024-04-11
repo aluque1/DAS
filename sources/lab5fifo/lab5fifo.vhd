@@ -66,8 +66,8 @@ begin
     generic map ( FREQ_KHZ => FREQ_KHZ, BAUDRATE => BAUDRATE )
     port map ( clk => clk, rst => rstSync, dataRdy => dataRdyRx, data => dataRx, RxD => RxD );
 
-    dataRdyTx <= not busy and not empty and TxEnSync;
-
+    dataRdyTx <= '1' when busy = '0' and empty = '0' and TxEnSync = '1' else '0';
+    
   fifo : fifoQueue
     generic map ( WL => 8, DEPTH => 16 )
     port map ( clk => clk, rst => rstSync, wrE => dataRdyRx, dataIn => dataRx, rdE => dataRdyTx, dataOut => dataTx, numData => numData, full => full, empty => empty );
