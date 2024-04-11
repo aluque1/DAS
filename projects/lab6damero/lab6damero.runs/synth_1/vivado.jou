@@ -3,12 +3,12 @@
 # SW Build 3865809 on Sun May  7 15:04:56 MDT 2023
 # IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
 # SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
-# Start of session at: Fri Apr  5 13:34:42 2024
-# Process ID: 105414
+# Start of session at: Thu Apr 11 13:00:31 2024
+# Process ID: 125082
 # Current directory: /home/jorbis/Documentos/GitHub/DAS/projects/lab6damero/lab6damero.runs/synth_1
 # Command line: vivado -log lab6damero.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source lab6damero.tcl
 # Log file: /home/jorbis/Documentos/GitHub/DAS/projects/lab6damero/lab6damero.runs/synth_1/lab6damero.vds
 # Journal file: /home/jorbis/Documentos/GitHub/DAS/projects/lab6damero/lab6damero.runs/synth_1/vivado.jou
-# Running On: Jorbis-Zenbook, OS: Linux, CPU Frequency: 3612.123 MHz, CPU Physical cores: 16, Host memory: 16136 MB
+# Running On: Jorbis-Zenbook, OS: Linux, CPU Frequency: 1735.982 MHz, CPU Physical cores: 16, Host memory: 16136 MB
 #-----------------------------------------------------------
 source lab6damero.tcl -notrace
