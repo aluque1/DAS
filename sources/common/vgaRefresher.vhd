@@ -58,6 +58,9 @@ architecture syn of vgaRefresher is
   signal lineCnt  : unsigned(line'range)  := (others=>'0');
 
   signal blanking : boolean;
+  signal Rint     : std_logic_vector(3 downto 0);
+  signal Gint     : std_logic_vector(3 downto 0);
+  signal Bint     : std_logic_vector(3 downto 0);
   
 begin
 
@@ -65,7 +68,7 @@ begin
   process (clk)
   begin
     if rising_edge(clk) then
-      cycleCnt <= (cycleCnt + 1) mod 4;
+      cycleCnt <= (cycleCnt + 1) mod CYCLESxPIXEL;
       if cycleCnt=CYCLESxPIXEL-1 then
         pixelCnt <= (pixelCnt + 1) mod PIXELSxLINE;
         if pixelCnt=PIXELSxLINE-1 then
@@ -78,11 +81,14 @@ begin
   pixel <= std_logic_vector(pixelCnt);
   line  <= std_logic_vector(lineCnt);
   
-  hSyncInt <= '1' when (pixelCnt >= 656) nand (pixelCnt < 752) else '0'; --NO estoy seguro
-  vSyncInt <= '1' when (lineCnt >= 490) nand (lineCnt < 492) else '0';  --NO estoy seguro
+  hSyncInt <= '1' when (pixelCnt >= 656) nand (pixelCnt < 752) else '0';
+  vSyncInt <= '1' when (lineCnt >= 490) nand (lineCnt < 492) else '0';
 
   blanking <= true when (pixelCnt >= 640) or (lineCnt >= 480) else false;
   
+  Rint <= R when blanking = false else "0000";
+  Gint <= G when blanking = false else "0000";
+  Bint <= B when blanking = false else "0000";
   outputRegisters:
   process (clk)
   begin
@@ -90,12 +96,10 @@ begin
         if cycleCnt=CYCLESxPIXEL-1 then
           hSync <= hSyncInt;
           vSync <= vSyncInt;
-          if blanking = false then --No estoy 100% seguro de esto
-            RGB(11 downto 8) <= R;
-            RGB(7 downto 4) <= G;
-            RGB(3 downto 0) <= B;
-          end if; 
-        end if;
+          RGB(11 downto 8) <= Rint;
+          RGB(7 downto 4) <= Gint;
+          RGB(3 downto 0) <= Bint;
+        end if; 
     end if;
   end process;
     
