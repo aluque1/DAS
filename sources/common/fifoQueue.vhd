@@ -81,8 +81,8 @@ BEGIN
   wrFifo <= '1' WHEN wrE ='1' and isFull = '0' ELSE '0';
   rdFifo <= '1' WHEN rdE ='1' and isEmpty = '0' ELSE '0';
     
-  nextWrPointer <= (wrPointer + 1) MOD DEPTH;
-  nextRdPointer <= (rdPointer + 1) MOD DEPTH;
+  nextWrPointer <= (wrPointer + 1) MOD DEPTH when wrFifo = '1' and isFull = '0' else wrPointer;
+  nextRdPointer <= (rdPointer + 1) MOD DEPTH when rdFifo = '1' and isEmpty = '0' else rdPointer;
     
   fsmd :
   PROCESS (clk)
