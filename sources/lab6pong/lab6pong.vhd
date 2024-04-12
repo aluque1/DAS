@@ -116,15 +116,15 @@ begin
 
  ------------------
   
-  campoJuego <= ...;
-  raquetaIzq <= ...;
-  raquetaDer <= ...;
-  pelota     <= ...;
+  campoJuego <= '1' when ... else '0';
+  raquetaIzq <= '1' when ... else '0';
+  raquetaDer <= '1' when ... else '0';
+  pelota     <= '1' when ... else '0';
 
 ------------------
 
-  finPartida <= ...;
-  reiniciar  <= ...;   
+  finPartida <= true when xBall = 0 or xBall = 159 else false; --revisar las igualdades
+  reiniciar  <= true when spcP else false;   
   
 ------------------
   
@@ -133,7 +133,13 @@ begin
     constant CYCLES : natural := hz2cycles(FREQ_KHZ, 50);
     variable count  : natural range 0 to CYCLES-1 := 0;
   begin
-    ...
+    if rising_edge(clk) then
+        count := (count + 1) mod CYCLES;
+        if count = CYCLES-1 then 
+            --Puede que falte una variable de la que dependa el juego
+            count := 0;
+        end if;
+    end if;
   end process;    
         
 ------------------
