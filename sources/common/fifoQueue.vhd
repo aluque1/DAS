@@ -76,13 +76,13 @@ BEGIN
   full <= isFull;
   empty <= isEmpty;
   
-  numData <= STD_LOGIC_VECTOR(TO_SIGNED(nextWrPointer - nextRdPointer, 4));
+  numData <= STD_LOGIC_VECTOR(TO_unsigned(nextWrPointer - nextRdPointer, 4));
 
   wrFifo <= '1' WHEN wrE ='1' and isFull = '0' ELSE '0';
   rdFifo <= '1' WHEN rdE ='1' and isEmpty = '0' ELSE '0';
     
-  nextWrPointer <= (wrPointer + 1) MOD DEPTH when wrFifo = '1' and isFull = '0' else wrPointer;
-  nextRdPointer <= (rdPointer + 1) MOD DEPTH when rdFifo = '1' and isEmpty = '0' else rdPointer;
+  nextWrPointer <= (wrPointer + 1) MOD DEPTH;
+  nextRdPointer <= (rdPointer + 1) MOD DEPTH;
     
   fsmd :
   PROCESS (clk)
@@ -96,17 +96,17 @@ BEGIN
       ELSE
         IF wrFifo = '1' THEN
           isEmpty <= '0';
-          IF nextWrPointer = rdPointer THEN
+          wrPointer <= nextWrPointer;
+          IF nextWrPointer = rdPointer and rdFifo='0' THEN
             isFull <= '1';            
           END IF;
-          wrPointer <= nextWrPointer;
         END IF;
         IF rdFifo = '1' THEN
           isFull <= '0';
-          IF nextRdPointer = wrPointer THEN
+          rdPointer <= nextRdPointer;
+          IF nextRdPointer = wrPointer and wrFifo='0' THEN
             isEmpty <= '1';            
           END IF;
-          rdPointer <= nextRdPointer;
         END IF;
       END IF;
     END IF;

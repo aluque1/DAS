@@ -69,7 +69,6 @@ begin
     variable TxDShf : std_logic_vector(9 downto 0) := (others =>'1');
   begin
     TxD <= TxDShf(0);
-    baudCntCE <= false; --No se si esta bien, creo que si
     if baudCntCE then
       busy <= '1';
     else
@@ -82,12 +81,13 @@ begin
       else
         case bitPos is
           when 0 =>                              -- Esperando solicitud de envio
+            baudCntCE <= false;
             if dataRdy='1' then
               TxDShf := "1" & data & "0";
               bitPos := 1;
             end if;
           when others =>                         -- Desplaza
-            baudCntCE <= true;                   -- NO se si esto va aqui @Luque yo diria que si
+            baudCntCE <= true;
             if writeTxD then
               TxDShf := "1" & TxDShf(9 downto 1);
               bitPos := (bitPos + 1) mod 11;

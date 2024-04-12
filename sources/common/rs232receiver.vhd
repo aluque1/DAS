@@ -73,7 +73,6 @@ begin
     variable RxDShf : std_logic_vector(9 downto 0) := (others =>'1');
   begin
     data <= RxDShf(8 downto 1);
-    baudCntCE <= false;
     if rising_edge(clk) then
       if rst='1' then
         RxDShf := (others => '1');
@@ -81,6 +80,7 @@ begin
       else
         case bitPos is
           when 0 =>                              -- Esperando bit de start
+            baudCntCE <= false;
             dataRdy <= '0';      
             if RxDSync = '0' then
                 bitPos := 1;

@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date             : Thu Apr 11 13:43:31 2024
+| Date             : Fri Apr 12 13:00:40 2024
 | Host             : PTO0703 running 64-bit major release  (build 9200)
 | Command          : report_power -file lab5_power_routed.rpt -pb lab5_power_summary_routed.pb -rpx lab5_power_routed.rpx
 | Design           : lab5
@@ -33,7 +33,7 @@ Table of Contents
 | Total On-Chip Power (W)  | 0.083        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.011        |
+| Dynamic (W)              | 0.012        |
 | Device Static (W)        | 0.072        |
 | Effective TJA (C/W)      | 5.0          |
 | Max Ambient (C)          | 84.6         |
@@ -53,13 +53,13 @@ Table of Contents
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
 | Clocks                   |     0.001 |        3 |       --- |             --- |
-| Slice Logic              |     0.001 |      394 |       --- |             --- |
-|   LUT as Logic           |     0.001 |      177 |     20800 |            0.85 |
+| Slice Logic              |     0.001 |      395 |       --- |             --- |
+|   LUT as Logic           |     0.001 |      179 |     20800 |            0.86 |
 |   CARRY4                 |    <0.001 |       43 |      8150 |            0.53 |
 |   Register               |    <0.001 |      100 |     41600 |            0.24 |
 |   LUT as Distributed RAM |    <0.001 |        6 |      9600 |            0.06 |
 |   Others                 |     0.000 |       15 |       --- |             --- |
-| Signals                  |     0.002 |      375 |       --- |             --- |
+| Signals                  |     0.002 |      371 |       --- |             --- |
 | I/O                      |     0.007 |       33 |       106 |           31.13 |
 | Static Power             |     0.072 |          |           |                 |
 | Total                    |     0.083 |          |           |                 |
@@ -141,7 +141,7 @@ Table of Contents
 +--------------------+-----------+
 | Name               | Power (W) |
 +--------------------+-----------+
-| lab5               |     0.011 |
+| lab5               |     0.012 |
 |   displayInterface |     0.001 |
 |   receiver         |     0.001 |
 |   transmitter      |     0.001 |

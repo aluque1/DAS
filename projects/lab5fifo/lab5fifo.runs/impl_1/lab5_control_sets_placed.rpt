@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date         : Thu Apr 11 13:43:09 2024
+| Date         : Fri Apr 12 13:00:15 2024
 | Host         : PTO0703 running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file lab5_control_sets_placed.rpt
 | Design       : lab5
@@ -58,32 +58,32 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              33 |           15 |
+| No           | No                    | No                     |              33 |           16 |
 | No           | No                    | Yes                    |               0 |            0 |
-| No           | Yes                   | No                     |              34 |            8 |
+| No           | Yes                   | No                     |              34 |            7 |
 | Yes          | No                    | No                     |               7 |            2 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |              26 |           10 |
+| Yes          | Yes                   | No                     |              26 |           11 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
 4. Detailed Control Set Information
 -----------------------------------
 
-+----------------+------------------------------------+-----------------------+------------------+----------------+--------------+
-|  Clock Signal  |            Enable Signal           |    Set/Reset Signal   | Slice Load Count | Bel Load Count | Bels / Slice |
-+----------------+------------------------------------+-----------------------+------------------+----------------+--------------+
-|  clk_IBUF_BUFG | transmitter/fsmd.TxDShf[7]_i_1_n_0 | rstSynchronizer/Q[0]  |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG | transmitter/fsmd.bitPos[3]_i_1_n_0 | rstSynchronizer/Q[0]  |                2 |              4 |         2.00 |
-|  clk_IBUF_BUFG | transmitter/rdFifo                 | rstSynchronizer/Q[0]  |                1 |              4 |         4.00 |
-|  clk_IBUF_BUFG | receiver/fsmd.bitPos[3]_i_1__0_n_0 | rstSynchronizer/Q[0]  |                1 |              4 |         4.00 |
-|  clk_IBUF_BUFG | receiver/wrFifo                    | rstSynchronizer/Q[0]  |                2 |              4 |         2.00 |
-|  clk_IBUF_BUFG | transmitter/fsmd.TxDShf[7]_i_1_n_0 |                       |                2 |              7 |         3.50 |
-|  clk_IBUF_BUFG | receiver/fsmd.RxDShf[9]_i_1_n_0    | rstSynchronizer/Q[0]  |                3 |              9 |         3.00 |
-|  clk_IBUF_BUFG | receiver/wrFifo                    |                       |                2 |             12 |         6.00 |
-|  clk_IBUF_BUFG |                                    | transmitter/p_0_in    |                4 |             17 |         4.25 |
-|  clk_IBUF_BUFG |                                    | receiver/baudCntCE__0 |                4 |             17 |         4.25 |
-|  clk_IBUF_BUFG |                                    |                       |               15 |             33 |         2.20 |
-+----------------+------------------------------------+-----------------------+------------------+----------------+--------------+
++----------------+------------------------------------+---------------------------------------+------------------+----------------+--------------+
+|  Clock Signal  |            Enable Signal           |            Set/Reset Signal           | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+------------------------------------+---------------------------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG | transmitter/fsmd.TxDShf[7]_i_1_n_0 | rstSynchronizer/Q[0]                  |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG | fifo/rdFifo                        | rstSynchronizer/Q[0]                  |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | receiver/fsmd.bitPos[3]_i_1__0_n_0 | rstSynchronizer/Q[0]                  |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | receiver/wrFifo                    | rstSynchronizer/Q[0]                  |                3 |              4 |         1.33 |
+|  clk_IBUF_BUFG | transmitter/fsmd.bitPos[3]_i_1_n_0 | rstSynchronizer/Q[0]                  |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | transmitter/fsmd.TxDShf[7]_i_1_n_0 |                                       |                2 |              7 |         3.50 |
+|  clk_IBUF_BUFG | receiver/fsmd.RxDShf[9]_i_1_n_0    | rstSynchronizer/Q[0]                  |                3 |              9 |         3.00 |
+|  clk_IBUF_BUFG | receiver/wrFifo                    |                                       |                2 |             12 |         6.00 |
+|  clk_IBUF_BUFG |                                    | receiver/baudCnt.count[16]_i_1__0_n_0 |                4 |             17 |         4.25 |
+|  clk_IBUF_BUFG |                                    | transmitter/p_0_in                    |                3 |             17 |         5.67 |
+|  clk_IBUF_BUFG |                                    |                                       |               16 |             33 |         2.06 |
++----------------+------------------------------------+---------------------------------------+------------------+----------------+--------------+
 
 
