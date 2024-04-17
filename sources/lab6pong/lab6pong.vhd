@@ -116,10 +116,10 @@ begin
 
  ------------------
   
-  campoJuego <= '1' when ... else '0';
-  raquetaIzq <= '1' when ... else '0';
-  raquetaDer <= '1' when ... else '0';
-  pelota     <= '1' when ... else '0';
+  campoJuego <= '1' when ... else '0'; -- Horizontal = 8 ,79, 111 ; Vertical = desde 8 de 8 en 8
+  raquetaIzq <= '1' when ... else '0'; -- Horizontal = 8 ; Vertical = yLeftReg + 8
+  raquetaDer <= '1' when ... else '0'; -- Horizontal = 151 ; Vertical = yRightReg + 8
+  pelota     <= '1' when ... else '0'; -- Horizontal = xBallReg ; Vertical = yBallReg
 
 ------------------
 
@@ -142,18 +142,26 @@ begin
     end if;
   end process;    
         
-------------------
+------------------ PUEDE QUE TODO A PARTIR DE AQUI ESTE MAL
 
   yRightRegister:
   process (clk)
   begin
-    ...
+    if pP = true and yRight > 8 then
+      yRight <= yRight + 1;
+    elsif lP = true and yRight < 103 then
+      yRight <= yRight - 1;
+    end if;
   end process;
-  
+
   yLeftRegister:
   process (clk)
   begin
-    ...
+    if qP = true and yLeft > 8 then
+      yLeft <= yLeft + 1;
+    elsif aP = true and yLeft < 103 then
+      yLeft <= yLeft - 1;
+    end if;
   end process;
   
 ------------------
