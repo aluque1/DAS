@@ -112,11 +112,11 @@ begin
   pixel <= unsigned(pixelAux);
   line  <= unsigned(lineAux);
   
-  color <= (others => pixel(4) xor line(4));--REVISAR ESTO
+  color <= "0000" when campoJuego = '1' or raquetaIzq = '1' or raquetaDer = '1' or pelota = '1' else "1111";--REVISAR ESTO
 
  ------------------
-  -- Horizontal = 8 ,79, 111 ; Vertical = 8 en 8 a partir de 8
-  campoJuego <= '1' when (line = 8 or line = 79 or line = 111) else '0'; -- aqui faltan cosas si o si
+  -- Horizontal = 8 ,79, 111 ; Vertical = 8 en 8 a partir de 8 
+  campoJuego <= '1' when (line = 8 or line = 79 or line = 111)  else '0'; -- aqui faltan cosas si o si
   raquetaIzq <= '1' when ... else '0'; -- Horizontal = 8 ; Vertical = yLeftReg + 8
   raquetaDer <= '1' when ... else '0'; -- Horizontal = 151 ; Vertical = yRightReg + 8
   pelota     <= '1' when ... else '0'; -- Horizontal = xBallReg ; Vertical = yBallReg
