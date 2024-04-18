@@ -69,11 +69,17 @@ begin
     variable TxDShf : std_logic_vector(9 downto 0) := (others =>'1');
   begin
     TxD <= TxDShf(0);
-    --if baudCntCE then                         -- Esto esta mal ya que hace que busy dependa combinacionalmente de baudCntCE
-    --  busy <= '1';                            -- Esto hace que se genere la señal con un ciclo de retraso, haciendo que
-    --else                                      -- la fifo se desincronice
-    --  busy <= '0';
-    ---end if;
+    if bitPos = 0 then 
+        baudCntCE <= false;
+    else
+        baudCntCE <= true;
+    end if;
+    
+    if baudCntCE then                        
+      busy <= '1';                            
+    else                                      
+      busy <= '0';
+    end if;
     if rising_edge(clk) then
       if rst='1' then
         TxDShf := (others =>'1'); 
@@ -81,16 +87,13 @@ begin
       else
         case bitPos is
           when 0 =>                             -- Esperando solicitud de envio
-            baudCntCE <= false;
-            busy <= '0';                        -- Busy tiene que ser una señal moore 
+
             if dataRdy='1' then
               TxDShf := "1" & data & "0";
               bitPos := 1;
             end if;
           when others =>                        -- Desplaza
-            baudCntCE <= true;
-            busy <= '1';                        --Busy tiene que ser una señal moore 
-            if writeTxD then
+            if writeTxD = true then
               TxDShf := "1" & TxDShf(9 downto 1);
               bitPos := (bitPos + 1) mod 11;
             end if;
