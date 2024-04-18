@@ -115,8 +115,8 @@ begin
   color <= (others => pixel(4) xor line(4));--REVISAR ESTO
 
  ------------------
-  
-  campoJuego <= '1' when ... else '0'; -- Horizontal = 8 ,79, 111 ; Vertical = desde 8 de 8 en 8
+  -- Horizontal = 8 ,79, 111 ; Vertical = 8 en 8 a partir de 8
+  campoJuego <= '1' when (line = 8 or line = 79 or line = 111) else '0'; -- aqui faltan cosas si o si
   raquetaIzq <= '1' when ... else '0'; -- Horizontal = 8 ; Vertical = yLeftReg + 8
   raquetaDer <= '1' when ... else '0'; -- Horizontal = 151 ; Vertical = yRightReg + 8
   pelota     <= '1' when ... else '0'; -- Horizontal = xBallReg ; Vertical = yBallReg
@@ -139,6 +139,8 @@ begin
             --Puede que falte una variable de la que dependa el juego
             count := 0;
         end if;
+        -- si no me equivoco aqui se deberia de hacer el movimiento de la pelota y las raquetas que tienen que ir a 50 pts por segundo
+
     end if;
   end process;    
         
@@ -171,7 +173,11 @@ begin
     type sense is (left, right);
     variable dir: sense := left;
   begin
-    ...     
+    if xBall = 9 and yLeft <= YBall and yBall <= (yLeft + 8) then
+        dir := right;
+    elsif xBall = 150 and yRight <= YBall and YBall <= (yRight + 8) then
+        dir := left;
+    end if;
   end process;
 
   yBallRegister:
@@ -179,7 +185,11 @@ begin
     type sense is (up, down);
     variable dir: sense := up;
   begin
-    ...      
+    if yBall = 9 then -- no se si la condicion es asi o de otra manera
+        dir := down; 
+    elsif yBall = 101 then
+        dir := up;
+    end if;
   end process;
 
 end syn;
