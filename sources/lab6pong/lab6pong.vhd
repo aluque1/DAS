@@ -116,10 +116,10 @@ begin
 
  ------------------
   -- Horizontal = 8 ,79, 111 ; Vertical = 8 en 8 a partir de 8 
-  campoJuego <= '1' when (line = 8 or line = 79 or line = 111)  else '0'; -- aqui faltan cosas si o si
-  raquetaIzq <= '1' when ... else '0'; -- Horizontal = 8 ; Vertical = yLeftReg + 8
-  raquetaDer <= '1' when ... else '0'; -- Horizontal = 151 ; Vertical = yRightReg + 8
-  pelota     <= '1' when ... else '0'; -- Horizontal = xBallReg ; Vertical = yBallReg
+  campoJuego <= '1' when (line = 8 and pixel <= 159) or (line = 111 and pixel <= 159) or (pixel = 79 and line <= 111) else '0'; -- aqui faltan cosas si o si
+  raquetaIzq <= '1' when pixel = 8 and (line >= yLeft and line <= yLeft + 16) else '0';
+  raquetaDer <= '1' when pixel = 151 and (line >= yRight and line <= yRight + 16) else '0';
+  pelota     <= '1' when line = yBall and pixel = xBall else '0';
 
 ------------------
 
@@ -135,34 +135,37 @@ begin
   begin
     if rising_edge(clk) then
         count := (count + 1) mod CYCLES;
+        mover <= false;
         if count = CYCLES-1 then 
-            --Puede que falte una variable de la que dependa el juego
+            mover <= true;
             count := 0;
         end if;
-        -- si no me equivoco aqui se deberia de hacer el movimiento de la pelota y las raquetas que tienen que ir a 50 pts por segundo
-
     end if;
   end process;    
         
------------------- PUEDE QUE TODO A PARTIR DE AQUI ESTE MAL
+------------------
 
   yRightRegister:
   process (clk)
   begin
-    if pP = true and yRight > 8 then
-      yRight <= yRight + 1;
-    elsif lP = true and yRight < 103 then
-      yRight <= yRight - 1;
+    if mover then
+        if pP = true and yRight > 8 then
+            yRight <= yRight + 1;
+        elsif lP = true and yRight < 95 then
+            yRight <= yRight - 1;
+        end if;
     end if;
   end process;
 
   yLeftRegister:
   process (clk)
   begin
-    if qP = true and yLeft > 8 then
-      yLeft <= yLeft + 1;
-    elsif aP = true and yLeft < 103 then
-      yLeft <= yLeft - 1;
+    if mover then
+        if qP = true and yLeft > 8 then
+            yLeft <= yLeft + 1;
+        elsif aP = true and yLeft < 95 then
+            yLeft <= yLeft - 1;
+        end if;
     end if;
   end process;
   
@@ -173,10 +176,17 @@ begin
     type sense is (left, right);
     variable dir: sense := left;
   begin
-    if xBall = 9 and yLeft <= YBall and yBall <= (yLeft + 8) then
-        dir := right;
-    elsif xBall = 150 and yRight <= YBall and YBall <= (yRight + 8) then
-        dir := left;
+    if mover then
+        if dir = left then
+            xBall <= xBall + 1;
+        else
+            xBall <= xBall - 1;
+        end if;
+        if xBall = 9 and yLeft <= yBall and yBall <= (yLeft + 16) then
+            dir := right;
+        elsif xBall = 150 and yRight <= yBall and yBall <= (yRight + 16) then
+            dir := left;
+        end if;
     end if;
   end process;
 
@@ -185,10 +195,17 @@ begin
     type sense is (up, down);
     variable dir: sense := up;
   begin
-    if yBall = 9 then -- no se si la condicion es asi o de otra manera
-        dir := down; 
-    elsif yBall = 101 then
-        dir := up;
+    if mover then
+        if dir = up then
+            yBall <= yBall - 1;
+        else
+            yBall <= yBall + 1;
+        end if;
+        if yBall = 9 then
+            dir := down; 
+        elsif yBall = 110 then
+            dir := up;
+        end if;
     end if;
   end process;
 

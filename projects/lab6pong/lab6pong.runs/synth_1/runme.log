@@ -1,0 +1,67 @@
+
+*** Running vivado
+    with args -log lab6pong.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source lab6pong.tcl
+
+
+****** Vivado v2023.1 (64-bit)
+  **** SW Build 3865809 on Sun May  7 15:04:56 MDT 2023
+  **** IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+  **** SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source lab6pong.tcl -notrace
+create_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1273.340 ; gain = 0.023 ; free physical = 6730 ; free virtual = 14283
+Command: synth_design -top lab6pong -part xc7a35tcpg236-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Device 21-403] Loading part xc7a35tcpg236-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 47524
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1980.117 ; gain = 379.770 ; free physical = 5665 ; free virtual = 13247
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'lab6pong' [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:38]
+	Parameter STAGES bound to: 2 - type: integer 
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-3491] module 'synchronizer' declared at '/home/jorbis/Documentos/GitHub/DAS/sources/common/synchronizer.vhd:21' bound to instance 'rstSynchronizer' of component 'synchronizer' [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:64]
+INFO: [Synth 8-638] synthesizing module 'synchronizer' [/home/jorbis/Documentos/GitHub/DAS/sources/common/synchronizer.vhd:35]
+	Parameter STAGES bound to: 2 - type: integer 
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-256] done synthesizing module 'synchronizer' (0#1) [/home/jorbis/Documentos/GitHub/DAS/sources/common/synchronizer.vhd:35]
+INFO: [Synth 8-3491] module 'ps2receiver' declared at '/home/jorbis/Documentos/GitHub/DAS/sources/common/ps2receiver.vhd:21' bound to instance 'ps2KeyboardInterface' of component 'ps2receiver' [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:70]
+INFO: [Synth 8-638] synthesizing module 'ps2receiver' [/home/jorbis/Documentos/GitHub/DAS/sources/common/ps2receiver.vhd:38]
+	Parameter STAGES bound to: 4 - type: integer 
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-3491] module 'synchronizer' declared at '/home/jorbis/Documentos/GitHub/DAS/sources/common/synchronizer.vhd:21' bound to instance 'ps2ClkSynchronizer' of component 'synchronizer' [/home/jorbis/Documentos/GitHub/DAS/sources/common/ps2receiver.vhd:48]
+INFO: [Synth 8-638] synthesizing module 'synchronizer__parameterized1' [/home/jorbis/Documentos/GitHub/DAS/sources/common/synchronizer.vhd:35]
+	Parameter STAGES bound to: 4 - type: integer 
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-256] done synthesizing module 'synchronizer__parameterized1' (0#1) [/home/jorbis/Documentos/GitHub/DAS/sources/common/synchronizer.vhd:35]
+	Parameter STAGES bound to: 2 - type: integer 
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-3491] module 'synchronizer' declared at '/home/jorbis/Documentos/GitHub/DAS/sources/common/synchronizer.vhd:21' bound to instance 'ps2DataSynchronizer' of component 'synchronizer' [/home/jorbis/Documentos/GitHub/DAS/sources/common/ps2receiver.vhd:52]
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-3491] module 'edgeDetector' declared at '/home/jorbis/Documentos/GitHub/DAS/sources/common/edgeDetector.vhd:21' bound to instance 'ps2ClkEdgeDetector' of component 'edgeDetector' [/home/jorbis/Documentos/GitHub/DAS/sources/common/ps2receiver.vhd:56]
+INFO: [Synth 8-638] synthesizing module 'edgeDetector' [/home/jorbis/Documentos/GitHub/DAS/sources/common/edgeDetector.vhd:35]
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-256] done synthesizing module 'edgeDetector' (0#1) [/home/jorbis/Documentos/GitHub/DAS/sources/common/edgeDetector.vhd:35]
+INFO: [Synth 8-256] done synthesizing module 'ps2receiver' (0#1) [/home/jorbis/Documentos/GitHub/DAS/sources/common/ps2receiver.vhd:38]
+ERROR: [Synth 8-426] missing choice(s) 32'b00000000000000000000000000011011 downto 32'b00000000000000000000000000010110 in case statement [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:84]
+ERROR: [Synth 8-426] missing choice(s) 32'b00000000000000000000000000101000 downto 32'b00000000000000000000000000011101 in case statement [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:84]
+ERROR: [Synth 8-426] missing choice(s) 32'b00000000000000000000000001001010 downto 32'b00000000000000000000000000101010 in case statement [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:84]
+ERROR: [Synth 8-426] missing choice(s) 32'b00000000000000000000000001001100 in case statement [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:84]
+ERROR: [Synth 8-426] missing choice(s) 32'b00000000000000000000000011101111 downto 32'b00000000000000000000000001001110 in case statement [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:84]
+ERROR: [Synth 8-426] missing choice(s) 8'b00000000 to 32'b00000000000000000000000000010100 in case statement [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:84]
+ERROR: [Synth 8-285] failed synthesizing module 'lab6pong' [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:38]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2043.086 ; gain = 442.738 ; free physical = 5589 ; free virtual = 13173
+---------------------------------------------------------------------------------
+RTL Elaboration failed
+INFO: [Common 17-83] Releasing license: Synthesis
+20 Infos, 0 Warnings, 0 Critical Warnings and 8 Errors encountered.
+synth_design failed
+ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details
+INFO: [Common 17-206] Exiting Vivado at Fri Apr 19 15:23:18 2024...
