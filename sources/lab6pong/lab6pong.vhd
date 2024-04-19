@@ -88,6 +88,7 @@ begin
               when X"4D" => pP <= true;
               when X"4B" => lP <= true;
               when X"29" => spcP <= true;
+              when others => state := keyON;
             end case;
           when keyOFF =>
             state := keyON;
@@ -97,6 +98,7 @@ begin
               when X"4D" => pP <= false;
               when X"4B" => lP <= false;
               when X"29" => spcP <= false;
+              when others => state := keyOFF;
             end case;
         end case;
       end if;
@@ -109,14 +111,14 @@ begin
     generic map ( FREQ_DIV => FREQ_DIV )
     port map ( clk => clk, line => lineAux, pixel => pixelAux, R => color, G => color, B => color, hSync => hSync, vSync => vSync, RGB => RGB );
 
-  pixel <= unsigned(pixelAux);
-  line  <= unsigned(lineAux);
+  pixel <= unsigned(pixelAux(9 downto 2));
+  line  <= unsigned(lineAux(9 downto 2));
   
-  color <= "0000" when campoJuego = '1' or raquetaIzq = '1' or raquetaDer = '1' or pelota = '1' else "1111";--REVISAR ESTO
+  color <= "1111" when campoJuego = '1' or raquetaIzq = '1' or raquetaDer = '1' or pelota = '1' else "0000";--REVISAR ESTO
 
  ------------------
   -- Horizontal = 8 ,79, 111 ; Vertical = 8 en 8 a partir de 8 
-  campoJuego <= '1' when (line = 8 and pixel <= 159) or (line = 111 and pixel <= 159) or (pixel = 79 and line <= 111) else '0'; -- aqui faltan cosas si o si
+  campoJuego <= '1' when (line = 8 and pixel <= 159) or (line = 111 and pixel <= 159) or (pixel = 79 and line <= 111 and line >= 8) else '0'; -- aqui faltan cosas si o si
   raquetaIzq <= '1' when pixel = 8 and (line >= yLeft and line <= yLeft + 16) else '0';
   raquetaDer <= '1' when pixel = 151 and (line >= yRight and line <= yRight + 16) else '0';
   pelota     <= '1' when line = yBall and pixel = xBall else '0';
@@ -127,18 +129,20 @@ begin
   reiniciar  <= true when spcP else false;   
   
 ------------------
-  
+  --meter fin partida
   pulseGen:
   process (clk)
     constant CYCLES : natural := hz2cycles(FREQ_KHZ, 50);
     variable count  : natural range 0 to CYCLES-1 := 0;
   begin
     if rising_edge(clk) then
-        count := (count + 1) mod CYCLES;
-        mover <= false;
-        if count = CYCLES-1 then 
-            mover <= true;
-            count := 0;
+        if finPartida = false then
+            count := (count + 1) mod CYCLES;
+            mover <= false;
+            if count = CYCLES-1 then 
+                mover <= true;
+                count := 0;
+            end if;
         end if;
     end if;
   end process;    
