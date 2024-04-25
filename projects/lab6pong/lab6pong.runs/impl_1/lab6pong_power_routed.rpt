@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date             : Thu Apr 25 12:30:08 2024
-| Host             : Jorbis-Zenbook running 64-bit unknown
+| Date             : Thu Apr 25 13:16:49 2024
+| Host             : alv-debian running 64-bit Debian GNU/Linux 12 (bookworm)
 | Command          : report_power -file lab6pong_power_routed.rpt -pb lab6pong_power_summary_routed.pb -rpx lab6pong_power_routed.rpx
 | Design           : lab6pong
 | Device           : xc7a35tcpg236-1
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.082        |
+| Total On-Chip Power (W)  | 0.081        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.011        |
+| Dynamic (W)              | 0.009        |
 | Device Static (W)        | 0.072        |
 | Effective TJA (C/W)      | 5.0          |
 | Max Ambient (C)          | 84.6         |
@@ -52,18 +52,17 @@ Table of Contents
 +-------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                 | Power (W) | Used     | Available | Utilization (%) |
 +-------------------------+-----------+----------+-----------+-----------------+
-| Clocks                  |     0.001 |        3 |       --- |             --- |
-| Slice Logic             |     0.002 |      425 |       --- |             --- |
-|   LUT as Logic          |     0.002 |      196 |     20800 |            0.94 |
-|   CARRY4                |    <0.001 |       31 |      8150 |            0.38 |
-|   Register              |    <0.001 |      124 |     41600 |            0.30 |
+| Clocks                  |    <0.001 |        3 |       --- |             --- |
+| Slice Logic             |     0.001 |      352 |       --- |             --- |
+|   LUT as Logic          |     0.001 |      157 |     20800 |            0.75 |
+|   CARRY4                |    <0.001 |       16 |      8150 |            0.20 |
+|   Register              |    <0.001 |      110 |     41600 |            0.26 |
 |   LUT as Shift Register |    <0.001 |        1 |      9600 |            0.01 |
-|   F7/F8 Muxes           |    <0.001 |        1 |     32600 |           <0.01 |
 |   Others                |     0.000 |       16 |       --- |             --- |
-| Signals                 |     0.002 |      303 |       --- |             --- |
+| Signals                 |     0.001 |      209 |       --- |             --- |
 | I/O                     |     0.006 |       18 |       106 |           16.98 |
 | Static Power            |     0.072 |          |           |                 |
-| Total                   |     0.082 |          |           |                 |
+| Total                   |     0.081 |          |           |                 |
 +-------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -73,7 +72,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.014 |       0.005 |      0.010 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.013 |       0.004 |      0.010 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.013 |       0.000 |      0.013 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.003 |       0.002 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -142,7 +141,7 @@ Table of Contents
 +------------------+-----------+
 | Name             | Power (W) |
 +------------------+-----------+
-| lab6pong         |     0.011 |
+| lab6pong         |     0.009 |
 |   screenInteface |     0.001 |
 +------------------+-----------+
 

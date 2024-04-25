@@ -55,9 +55,11 @@ architecture syn of lab6pong is
   signal campoJuego, raquetaDer, raquetaIzq, pelota: std_logic;
   signal mover, finPartida, reiniciar: boolean;
 
-  signal lineAux, pixelAux : std_logic_vector(9 downto 0);  
-  signal line, pixel : unsigned(7 downto 0);
-
+  signal lineAux, pixelAux : std_logic_vector(9 downto 0);
+  signal line, pixel : unsigned(7 downto 0); 
+  
+  signal vToggle : boolean := false;
+  
 
 begin
  
@@ -98,7 +100,7 @@ begin
               when X"4D" => pP <= false;
               when X"4B" => lP <= false;
               when X"29" => spcP <= false;
-              when others => state := keyOFF;
+              -- Esto puede que haya que meterlo when others => state := keyOFF;
             end case;
         end case;
       end if;
@@ -117,7 +119,9 @@ begin
   color <= "1111" when campoJuego = '1' or raquetaIzq = '1' or raquetaDer = '1' or pelota = '1' else "0000";--REVISAR ESTO
 
  ------------------
-  -- Horizontal = 8 ,79, 111 ; Vertical = 8 en 8 a partir de 8 
+  
+  -- Horizontal = 8 ,79, 111 ; Vertical = 8 en 8 a partir de 8
+  vToggle <= not vToggle when (line mod 8 = 0) else vToggle;
   campoJuego <= '1' when (line = 8 and pixel <= 159) or (line = 111 and pixel <= 159) or (pixel = 79 and line <= 111 and line >= 8) else '0'; -- aqui faltan cosas si o si
   raquetaIzq <= '1' when pixel = 8 and (line >= yLeft and line <= yLeft + 16) else '0';
   raquetaDer <= '1' when pixel = 151 and (line >= yRight and line <= yRight + 16) else '0';
@@ -129,33 +133,35 @@ begin
   reiniciar  <= true when spcP else false;   
   
 ------------------
-  --meter fin partida
   pulseGen:
   process (clk)
-    constant CYCLES : natural := hz2cycles(FREQ_KHZ, 50);
+    constant CYCLES : natural := hz2cycles(FREQ_DIV, 50);
     variable count  : natural range 0 to CYCLES-1 := 0;
   begin
     if rising_edge(clk) then
-        if finPartida = false then
-            count := (count + 1) mod CYCLES;
-            mover <= false;
-            if count = CYCLES-1 then 
-                mover <= true;
-                count := 0;
-            end if;
+      if rstSync='1' then
+        count := 0;
+      elsif finPartida = false then
+        count := (count + 1) mod CYCLES;
+        mover <= false;
+        if count = CYCLES-1 then
+          mover <= true;
         end if;
+      end if;
     end if;
-  end process;    
+  end process;
         
 ------------------
 
   yRightRegister:
   process (clk)
   begin
-    if mover then
-        if pP = true and yRight > 8 then
+    if reiniciar <= true then
+        yRight <= to_unsigned(8, 8);
+    else
+        if mover = true and qP = true and yRight > 9 then
             yRight <= yRight + 1;
-        elsif lP = true and yRight < 95 then
+        elsif mover = true and aP = true and yRight < 95 then
             yRight <= yRight - 1;
         end if;
     end if;
@@ -164,7 +170,7 @@ begin
   yLeftRegister:
   process (clk)
   begin
-    if mover then
+    if mover = true then
         if qP = true and yLeft > 8 then
             yLeft <= yLeft + 1;
         elsif aP = true and yLeft < 95 then
@@ -180,7 +186,7 @@ begin
     type sense is (left, right);
     variable dir: sense := left;
   begin
-    if mover then
+    if mover = true then
         if dir = left then
             xBall <= xBall + 1;
         else
@@ -200,7 +206,7 @@ begin
     type sense is (up, down);
     variable dir: sense := up;
   begin
-    if mover then
+    if mover = true then
         if dir = up then
             yBall <= yBall - 1;
         else
