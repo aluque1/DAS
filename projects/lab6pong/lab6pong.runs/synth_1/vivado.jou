@@ -3,12 +3,12 @@
 # SW Build 3865809 on Sun May  7 15:04:56 MDT 2023
 # IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
 # SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
-# Start of session at: Thu Apr 25 13:41:05 2024
-# Process ID: 373058
+# Start of session at: Thu Apr 25 13:46:06 2024
+# Process ID: 399202
 # Current directory: /home/jorbis/Documentos/GitHub/DAS/projects/lab6pong/lab6pong.runs/synth_1
 # Command line: vivado -log lab6pong.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source lab6pong.tcl
 # Log file: /home/jorbis/Documentos/GitHub/DAS/projects/lab6pong/lab6pong.runs/synth_1/lab6pong.vds
 # Journal file: /home/jorbis/Documentos/GitHub/DAS/projects/lab6pong/lab6pong.runs/synth_1/vivado.jou
-# Running On: Jorbis-Zenbook, OS: Linux, CPU Frequency: 1736.436 MHz, CPU Physical cores: 16, Host memory: 16136 MB
+# Running On: Jorbis-Zenbook, OS: Linux, CPU Frequency: 1732.788 MHz, CPU Physical cores: 16, Host memory: 16136 MB
 #-----------------------------------------------------------
 source lab6pong.tcl -notrace
