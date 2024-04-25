@@ -52,7 +52,7 @@ architecture syn of lab6pong is
   signal dataRdy: std_logic;
   
   signal color : std_logic_vector(3 downto 0);
-  signal campoJuego, raquetaDer, raquetaIzq, pelota, vToggle: std_logic;
+  signal campoJuego, raquetaDer, raquetaIzq, pelota: std_logic;
   signal mover, finPartida, reiniciar: boolean;
 
   signal lineAux, pixelAux : std_logic_vector(9 downto 0);  
@@ -60,6 +60,7 @@ architecture syn of lab6pong is
 
 
 begin
+ 
   rstSynchronizer : synchronizer
     generic map ( STAGES => 2, XPOL => '0' )
     port map ( clk => clk, x => rst, xSync => rstSync );
@@ -117,8 +118,7 @@ begin
 
  ------------------
   -- Horizontal = 8 ,79, 111 ; Vertical = 8 en 8 a partir de 8 
-  vToggle <= not vToggle when (line mod 8 = 0) else vToggle;
-  campoJuego <= '1' when (line = 8 and pixel <= 159) or (line = 111 and pixel <= 159) or (pixel = 79 and line <= 111 and line >= 8 and vToggle = '1') else '0'; -- aqui faltan cosas si o si
+  campoJuego <= '1' when (line = 8 and pixel <= 159) or (line = 111 and pixel <= 159) or (pixel = 79 and line <= 111 and line >= 8) else '0'; -- aqui faltan cosas si o si
   raquetaIzq <= '1' when pixel = 8 and (line >= yLeft and line <= yLeft + 16) else '0';
   raquetaDer <= '1' when pixel = 151 and (line >= yRight and line <= yRight + 16) else '0';
   pelota     <= '1' when line = yBall and pixel = xBall else '0';
