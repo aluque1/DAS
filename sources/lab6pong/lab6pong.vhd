@@ -186,12 +186,13 @@ begin
         else
             xBall <= xBall - 1;
         end if;
+    end if;
         if xBall = 9 and yLeft <= yBall and yBall <= (yLeft + 16) then
             dir := right;
         elsif xBall = 150 and yRight <= yBall and yBall <= (yRight + 16) then
             dir := left;
         end if;
-    end if;
+    
   end process;
 
   yBallRegister:
@@ -205,12 +206,13 @@ begin
         else
             yBall <= yBall + 1;
         end if;
+    end if;
         if yBall = 9 then
             dir := down; 
         elsif yBall = 110 then
             dir := up;
         end if;
-    end if;
+    
   end process;
 
 end syn;

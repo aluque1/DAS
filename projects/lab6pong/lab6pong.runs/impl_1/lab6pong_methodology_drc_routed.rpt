@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Fri Apr 19 15:44:31 2024
+| Date         : Thu Apr 25 12:30:08 2024
 | Host         : Jorbis-Zenbook running 64-bit unknown
 | Command      : report_methodology -file lab6pong_methodology_drc_routed.rpt -pb lab6pong_methodology_drc_routed.pb -rpx lab6pong_methodology_drc_routed.rpx
 | Design       : lab6pong
@@ -23,10 +23,11 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 52
+             Violations found: 54
 +-----------+----------+--------------------------------+------------+
 | Rule      | Severity | Description                    | Violations |
 +-----------+----------+--------------------------------+------------+
+| LUTAR-1   | Warning  | LUT drives async reset alert   | 2          |
 | TIMING-18 | Warning  | Missing input or output delay  | 17         |
 | TIMING-20 | Warning  | Non-clocked latch              | 34         |
 | LATCH-1   | Advisory | Existing latches in the design | 1          |
@@ -34,6 +35,16 @@ Table of Contents
 
 2. REPORT DETAILS
 -----------------
+LUTAR-1#1 Warning
+LUT drives async reset alert  
+LUT cell xBallRegister.dir_reg_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) xBallRegister.dir_reg/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#2 Warning
+LUT drives async reset alert  
+LUT cell yBallRegister.dir_reg_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) yBallRegister.dir_reg/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
 TIMING-18#1 Warning
 Missing input or output delay  
 An input delay is missing on ps2Clk relative to the rising and/or falling clock edge(s) of sysClk.

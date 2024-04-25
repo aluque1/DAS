@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date             : Fri Apr 19 15:44:31 2024
+| Date             : Thu Apr 25 12:30:08 2024
 | Host             : Jorbis-Zenbook running 64-bit unknown
 | Command          : report_power -file lab6pong_power_routed.rpt -pb lab6pong_power_summary_routed.pb -rpx lab6pong_power_routed.rpx
 | Design           : lab6pong
@@ -33,7 +33,7 @@ Table of Contents
 | Total On-Chip Power (W)  | 0.082        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.010        |
+| Dynamic (W)              | 0.011        |
 | Device Static (W)        | 0.072        |
 | Effective TJA (C/W)      | 5.0          |
 | Max Ambient (C)          | 84.6         |
@@ -53,14 +53,14 @@ Table of Contents
 | On-Chip                 | Power (W) | Used     | Available | Utilization (%) |
 +-------------------------+-----------+----------+-----------+-----------------+
 | Clocks                  |     0.001 |        3 |       --- |             --- |
-| Slice Logic             |     0.002 |      423 |       --- |             --- |
-|   LUT as Logic          |     0.002 |      195 |     20800 |            0.94 |
+| Slice Logic             |     0.002 |      425 |       --- |             --- |
+|   LUT as Logic          |     0.002 |      196 |     20800 |            0.94 |
 |   CARRY4                |    <0.001 |       31 |      8150 |            0.38 |
 |   Register              |    <0.001 |      124 |     41600 |            0.30 |
 |   LUT as Shift Register |    <0.001 |        1 |      9600 |            0.01 |
 |   F7/F8 Muxes           |    <0.001 |        1 |     32600 |           <0.01 |
 |   Others                |     0.000 |       16 |       --- |             --- |
-| Signals                 |     0.002 |      299 |       --- |             --- |
+| Signals                 |     0.002 |      303 |       --- |             --- |
 | I/O                     |     0.006 |       18 |       106 |           16.98 |
 | Static Power            |     0.072 |          |           |                 |
 | Total                   |     0.082 |          |           |                 |
@@ -142,7 +142,7 @@ Table of Contents
 +------------------+-----------+
 | Name             | Power (W) |
 +------------------+-----------+
-| lab6pong         |     0.010 |
+| lab6pong         |     0.011 |
 |   screenInteface |     0.001 |
 +------------------+-----------+
 
