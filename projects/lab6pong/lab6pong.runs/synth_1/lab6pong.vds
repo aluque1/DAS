@@ -3,16 +3,16 @@
 # SW Build 3865809 on Sun May  7 15:04:56 MDT 2023
 # IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
 # SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
-# Start of session at: Thu Apr 25 12:28:59 2024
-# Process ID: 76135
+# Start of session at: Thu Apr 25 13:41:05 2024
+# Process ID: 373058
 # Current directory: /home/jorbis/Documentos/GitHub/DAS/projects/lab6pong/lab6pong.runs/synth_1
 # Command line: vivado -log lab6pong.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source lab6pong.tcl
 # Log file: /home/jorbis/Documentos/GitHub/DAS/projects/lab6pong/lab6pong.runs/synth_1/lab6pong.vds
 # Journal file: /home/jorbis/Documentos/GitHub/DAS/projects/lab6pong/lab6pong.runs/synth_1/vivado.jou
-# Running On: Jorbis-Zenbook, OS: Linux, CPU Frequency: 1736.074 MHz, CPU Physical cores: 16, Host memory: 16136 MB
+# Running On: Jorbis-Zenbook, OS: Linux, CPU Frequency: 1736.436 MHz, CPU Physical cores: 16, Host memory: 16136 MB
 #-----------------------------------------------------------
 source lab6pong.tcl -notrace
-create_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1273.367 ; gain = 0.023 ; free physical = 6982 ; free virtual = 14798
+create_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1275.082 ; gain = 0.023 ; free physical = 6820 ; free virtual = 14867
 Command: read_checkpoint -auto_incremental -incremental /home/jorbis/Documentos/GitHub/DAS/projects/lab6pong/lab6pong.srcs/utils_1/imports/synth_1/lab6pong.dcp
 INFO: [Vivado 12-5825] Read reference checkpoint from /home/jorbis/Documentos/GitHub/DAS/projects/lab6pong/lab6pong.srcs/utils_1/imports/synth_1/lab6pong.dcp for incremental synthesis
 INFO: [Vivado 12-7989] Please ensure there are no constraint changes
@@ -25,9 +25,9 @@ INFO: [Designutils 20-5440] No compile time benefit to using incremental synthes
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 76338
+INFO: [Synth 8-7075] Helper process launched with PID 373255
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 1980.176 ; gain = 377.770 ; free physical = 5918 ; free virtual = 13734
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 1980.922 ; gain = 378.770 ; free physical = 5778 ; free virtual = 13825
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-638] synthesizing module 'lab6pong' [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:38]
 	Parameter STAGES bound to: 2 - type: integer 
@@ -60,36 +60,39 @@ INFO: [Synth 8-3491] module 'vgaRefresher' declared at '/home/jorbis/Documentos/
 INFO: [Synth 8-638] synthesizing module 'vgaRefresher' [/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaRefresher.vhd:48]
 	Parameter FREQ_DIV bound to: 4 - type: integer 
 INFO: [Synth 8-256] done synthesizing module 'vgaRefresher' (0#1) [/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaRefresher.vhd:48]
-WARNING: [Synth 8-614] signal 'mover' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:152]
-WARNING: [Synth 8-614] signal 'pP' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:152]
-WARNING: [Synth 8-614] signal 'yRight' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:152]
-WARNING: [Synth 8-614] signal 'lP' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:152]
-WARNING: [Synth 8-614] signal 'mover' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:164]
-WARNING: [Synth 8-614] signal 'qP' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:164]
-WARNING: [Synth 8-614] signal 'yLeft' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:164]
-WARNING: [Synth 8-614] signal 'aP' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:164]
-WARNING: [Synth 8-614] signal 'mover' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:178]
-WARNING: [Synth 8-614] signal 'xBall' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:178]
-WARNING: [Synth 8-614] signal 'yLeft' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:178]
-WARNING: [Synth 8-614] signal 'yBall' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:178]
-WARNING: [Synth 8-614] signal 'yRight' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:178]
-WARNING: [Synth 8-614] signal 'mover' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:198]
-WARNING: [Synth 8-614] signal 'yBall' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:198]
+WARNING: [Synth 8-614] signal 'reiniciar' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:151]
+WARNING: [Synth 8-614] signal 'mover' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:151]
+WARNING: [Synth 8-614] signal 'pP' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:151]
+WARNING: [Synth 8-614] signal 'yRight' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:151]
+WARNING: [Synth 8-614] signal 'lP' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:151]
+WARNING: [Synth 8-614] signal 'reiniciar' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:166]
+WARNING: [Synth 8-614] signal 'mover' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:166]
+WARNING: [Synth 8-614] signal 'qP' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:166]
+WARNING: [Synth 8-614] signal 'yLeft' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:166]
+WARNING: [Synth 8-614] signal 'aP' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:166]
+WARNING: [Synth 8-614] signal 'reiniciar' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:183]
+WARNING: [Synth 8-614] signal 'mover' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:183]
+WARNING: [Synth 8-614] signal 'xBall' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:183]
+WARNING: [Synth 8-614] signal 'yLeft' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:183]
+WARNING: [Synth 8-614] signal 'yBall' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:183]
+WARNING: [Synth 8-614] signal 'yRight' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:183]
+WARNING: [Synth 8-614] signal 'reiniciar' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:205]
+WARNING: [Synth 8-614] signal 'mover' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:205]
+WARNING: [Synth 8-614] signal 'yBall' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:205]
 INFO: [Synth 8-256] done synthesizing module 'lab6pong' (0#1) [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:38]
-WARNING: [Synth 8-6014] Unused sequential element spcP_reg was removed.  [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:90]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2049.113 ; gain = 446.707 ; free physical = 5827 ; free virtual = 13645
+Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2049.891 ; gain = 447.738 ; free physical = 5692 ; free virtual = 13740
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2066.926 ; gain = 464.520 ; free physical = 5819 ; free virtual = 13637
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2067.703 ; gain = 465.551 ; free physical = 5680 ; free virtual = 13727
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2066.926 ; gain = 464.520 ; free physical = 5819 ; free virtual = 13637
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2067.703 ; gain = 465.551 ; free physical = 5680 ; free virtual = 13727
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2066.926 ; gain = 0.000 ; free physical = 5819 ; free virtual = 13637
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2067.703 ; gain = 0.000 ; free physical = 5680 ; free virtual = 13727
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -100,37 +103,37 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/lab6pong_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2213.676 ; gain = 0.000 ; free physical = 5778 ; free virtual = 13595
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2210.453 ; gain = 0.000 ; free physical = 5592 ; free virtual = 13640
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2213.676 ; gain = 0.000 ; free physical = 5778 ; free virtual = 13595
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2210.453 ; gain = 0.000 ; free physical = 5592 ; free virtual = 13640
 INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 2213.676 ; gain = 611.270 ; free physical = 5772 ; free virtual = 13592
+Finished Constraint Validation : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2210.453 ; gain = 608.301 ; free physical = 5597 ; free virtual = 13645
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tcpg236-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 2213.676 ; gain = 611.270 ; free physical = 5772 ; free virtual = 13592
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2210.453 ; gain = 608.301 ; free physical = 5597 ; free virtual = 13645
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 2213.676 ; gain = 611.270 ; free physical = 5772 ; free virtual = 13592
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2210.453 ; gain = 608.301 ; free physical = 5597 ; free virtual = 13645
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-327] inferring latch for variable 'yLeft_reg' [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:168]
-WARNING: [Synth 8-327] inferring latch for variable 'yRight_reg' [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:156]
-WARNING: [Synth 8-327] inferring latch for variable 'yBall_reg' [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:205]
-WARNING: [Synth 8-327] inferring latch for variable 'xBall_reg' [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:185]
-WARNING: [Synth 8-327] inferring latch for variable 'yBallRegister.dir_reg' [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:204]
-WARNING: [Synth 8-327] inferring latch for variable 'xBallRegister.dir_reg' [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:184]
+WARNING: [Synth 8-327] inferring latch for variable 'yLeft_reg' [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:170]
+WARNING: [Synth 8-327] inferring latch for variable 'yRight_reg' [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:155]
+WARNING: [Synth 8-327] inferring latch for variable 'yBall_reg' [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:211]
+WARNING: [Synth 8-327] inferring latch for variable 'xBall_reg' [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:189]
+WARNING: [Synth 8-327] inferring latch for variable 'yBallRegister.dir_reg' [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:214]
+WARNING: [Synth 8-327] inferring latch for variable 'xBallRegister.dir_reg' [/home/jorbis/Documentos/GitHub/DAS/sources/lab6pong/lab6pong.vhd:192]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2213.676 ; gain = 611.270 ; free physical = 5772 ; free virtual = 13593
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 2210.453 ; gain = 608.301 ; free physical = 5596 ; free virtual = 13644
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -139,7 +142,7 @@ Detailed RTL Component Info :
 +---Adders : 
 	   2 Input   21 Bit       Adders := 1     
 	   2 Input   10 Bit       Adders := 2     
-	   2 Input    8 Bit       Adders := 6     
+	   2 Input    8 Bit       Adders := 8     
 	   2 Input    2 Bit       Adders := 1     
 +---XORs : 
 	   9 Input      1 Bit         XORs := 1     
@@ -151,14 +154,15 @@ Detailed RTL Component Info :
 	                8 Bit    Registers := 1     
 	                4 Bit    Registers := 1     
 	                2 Bit    Registers := 4     
-	                1 Bit    Registers := 9     
+	                1 Bit    Registers := 10    
 +---Muxes : 
+	   2 Input    8 Bit        Muxes := 8     
 	   2 Input    4 Bit        Muxes := 3     
-	   2 Input    2 Bit        Muxes := 3     
-	   2 Input    1 Bit        Muxes := 13    
+	   2 Input    2 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 19    
 	   3 Input    1 Bit        Muxes := 1     
-	   6 Input    1 Bit        Muxes := 5     
-	   8 Input    1 Bit        Muxes := 5     
+	   6 Input    1 Bit        Muxes := 6     
+	   8 Input    1 Bit        Muxes := 6     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -176,25 +180,25 @@ Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 2213.676 ; gain = 611.270 ; free physical = 5759 ; free virtual = 13581
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2210.453 ; gain = 608.301 ; free physical = 5595 ; free virtual = 13647
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 2213.676 ; gain = 611.270 ; free physical = 5751 ; free virtual = 13574
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 2210.453 ; gain = 608.301 ; free physical = 5597 ; free virtual = 13650
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 2213.676 ; gain = 611.270 ; free physical = 5751 ; free virtual = 13574
+Finished Timing Optimization : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 2210.453 ; gain = 608.301 ; free physical = 5598 ; free virtual = 13651
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 2213.676 ; gain = 611.270 ; free physical = 5751 ; free virtual = 13574
+Finished Technology Mapping : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 2210.453 ; gain = 608.301 ; free physical = 5598 ; free virtual = 13651
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -212,37 +216,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2213.676 ; gain = 611.270 ; free physical = 5754 ; free virtual = 13576
+Finished IO Insertion : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 2210.453 ; gain = 608.301 ; free physical = 5600 ; free virtual = 13653
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2213.676 ; gain = 611.270 ; free physical = 5754 ; free virtual = 13576
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 2210.453 ; gain = 608.301 ; free physical = 5600 ; free virtual = 13653
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2213.676 ; gain = 611.270 ; free physical = 5754 ; free virtual = 13576
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 2210.453 ; gain = 608.301 ; free physical = 5600 ; free virtual = 13653
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2213.676 ; gain = 611.270 ; free physical = 5754 ; free virtual = 13576
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 2210.453 ; gain = 608.301 ; free physical = 5600 ; free virtual = 13653
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2213.676 ; gain = 611.270 ; free physical = 5754 ; free virtual = 13576
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 2210.453 ; gain = 608.301 ; free physical = 5600 ; free virtual = 13653
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2213.676 ; gain = 611.270 ; free physical = 5754 ; free virtual = 13576
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 2210.453 ; gain = 608.301 ; free physical = 5600 ; free virtual = 13653
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -273,16 +277,16 @@ Report Cell Usage:
 |      |Cell   |Count |
 +------+-------+------+
 |1     |BUFG   |     1|
-|2     |CARRY4 |    31|
-|3     |LUT1   |    37|
-|4     |LUT2   |    39|
-|5     |LUT3   |    20|
-|6     |LUT4   |    71|
-|7     |LUT5   |    23|
-|8     |LUT6   |    62|
+|2     |CARRY4 |    27|
+|3     |LUT1   |    31|
+|4     |LUT2   |    56|
+|5     |LUT3   |    24|
+|6     |LUT4   |    75|
+|7     |LUT5   |    30|
+|8     |LUT6   |    68|
 |9     |MUXF7  |     1|
 |10    |SRL16E |     1|
-|11    |FDRE   |    66|
+|11    |FDRE   |    67|
 |12    |FDSE   |    13|
 |13    |LD     |    32|
 |14    |LDP    |     2|
@@ -290,30 +294,30 @@ Report Cell Usage:
 |16    |OBUF   |    14|
 +------+-------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2213.676 ; gain = 611.270 ; free physical = 5754 ; free virtual = 13576
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 2210.453 ; gain = 608.301 ; free physical = 5600 ; free virtual = 13653
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 7 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 2213.676 ; gain = 464.520 ; free physical = 5754 ; free virtual = 13576
-Synthesis Optimization Complete : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2213.676 ; gain = 611.270 ; free physical = 5754 ; free virtual = 13576
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 2210.453 ; gain = 465.551 ; free physical = 5601 ; free virtual = 13653
+Synthesis Optimization Complete : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 2210.453 ; gain = 608.301 ; free physical = 5601 ; free virtual = 13653
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2213.676 ; gain = 0.000 ; free physical = 6039 ; free virtual = 13861
-INFO: [Netlist 29-17] Analyzing 66 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 2210.453 ; gain = 0.000 ; free physical = 5884 ; free virtual = 13937
+INFO: [Netlist 29-17] Analyzing 62 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2213.676 ; gain = 0.000 ; free physical = 6039 ; free virtual = 13861
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2210.453 ; gain = 0.000 ; free physical = 5883 ; free virtual = 13936
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 34 instances were transformed.
   LD => LDCE: 32 instances
   LDP => LDPE: 2 instances
 
-Synth Design complete | Checksum: b17a80ac
+Synth Design complete | Checksum: 9f07e280
 INFO: [Common 17-83] Releasing license: Synthesis
-39 Infos, 23 Warnings, 0 Critical Warnings and 0 Errors encountered.
+39 Infos, 26 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:18 ; elapsed = 00:00:17 . Memory (MB): peak = 2213.676 ; gain = 934.371 ; free physical = 6039 ; free virtual = 13861
-INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 1811.860; main = 1484.386; forked = 379.454
-INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 3159.648; main = 2213.680; forked = 977.984
+synth_design: Time (s): cpu = 00:00:19 ; elapsed = 00:00:19 . Memory (MB): peak = 2210.453 ; gain = 931.402 ; free physical = 5883 ; free virtual = 13936
+INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 1968.346; main = 1667.111; forked = 427.618
+INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 3156.430; main = 2210.457; forked = 977.988
 INFO: [Common 17-1381] The checkpoint '/home/jorbis/Documentos/GitHub/DAS/projects/lab6pong/lab6pong.runs/synth_1/lab6pong.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file lab6pong_utilization_synth.rpt -pb lab6pong_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Thu Apr 25 12:29:26 2024...
+INFO: [Common 17-206] Exiting Vivado at Thu Apr 25 13:41:32 2024...

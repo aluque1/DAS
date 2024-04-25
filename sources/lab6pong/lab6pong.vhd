@@ -125,8 +125,8 @@ begin
 
 ------------------
 
-  finPartida <= true when xBall = 0 or xBall = 159 else false; --revisar las igualdades
-  reiniciar  <= true when spcP else false;   
+  finPartida <= true when xBall = 0 or xBall = 159 or reiniciar = true else false; --revisar las igualdades
+  reiniciar  <= true when spcP = true else false;   
   
 ------------------
   --meter fin partida
@@ -141,7 +141,6 @@ begin
             mover <= false;
             if count = CYCLES-1 then 
                 mover <= true;
-                count := 0;
             end if;
         end if;
     end if;
@@ -152,6 +151,9 @@ begin
   yRightRegister:
   process (clk)
   begin
+    if reiniciar then 
+        yRight <= to_unsigned( 8, 8 );
+    end if;
     if mover then
         if pP = true and yRight > 8 then
             yRight <= yRight + 1;
@@ -164,6 +166,9 @@ begin
   yLeftRegister:
   process (clk)
   begin
+    if reiniciar then
+        yLeft <= to_unsigned( 8, 8 );
+    end if;
     if mover then
         if qP = true and yLeft > 8 then
             yLeft <= yLeft + 1;
@@ -180,6 +185,9 @@ begin
     type sense is (left, right);
     variable dir: sense := left;
   begin
+    if reiniciar then
+        xBall <= to_unsigned( 79, 8 );
+    end if;
     if mover then
         if dir = left then
             xBall <= xBall + 1;
@@ -192,7 +200,6 @@ begin
         elsif xBall = 150 and yRight <= yBall and yBall <= (yRight + 16) then
             dir := left;
         end if;
-    
   end process;
 
   yBallRegister:
@@ -200,6 +207,9 @@ begin
     type sense is (up, down);
     variable dir: sense := up;
   begin
+    if reiniciar then
+        yBall <= to_unsigned( 60, 8 );
+    end if;
     if mover then
         if dir = up then
             yBall <= yBall - 1;
@@ -212,7 +222,6 @@ begin
         elsif yBall = 110 then
             dir := up;
         end if;
-    
   end process;
 
 end syn;

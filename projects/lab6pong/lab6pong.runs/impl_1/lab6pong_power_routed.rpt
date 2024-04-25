@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date             : Thu Apr 25 12:30:08 2024
+| Date             : Thu Apr 25 13:42:15 2024
 | Host             : Jorbis-Zenbook running 64-bit unknown
 | Command          : report_power -file lab6pong_power_routed.rpt -pb lab6pong_power_summary_routed.pb -rpx lab6pong_power_routed.rpx
 | Design           : lab6pong
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.082        |
+| Total On-Chip Power (W)  | 0.080        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.011        |
+| Dynamic (W)              | 0.008        |
 | Device Static (W)        | 0.072        |
 | Effective TJA (C/W)      | 5.0          |
 | Max Ambient (C)          | 84.6         |
@@ -53,17 +53,17 @@ Table of Contents
 | On-Chip                 | Power (W) | Used     | Available | Utilization (%) |
 +-------------------------+-----------+----------+-----------+-----------------+
 | Clocks                  |     0.001 |        3 |       --- |             --- |
-| Slice Logic             |     0.002 |      425 |       --- |             --- |
-|   LUT as Logic          |     0.002 |      196 |     20800 |            0.94 |
-|   CARRY4                |    <0.001 |       31 |      8150 |            0.38 |
-|   Register              |    <0.001 |      124 |     41600 |            0.30 |
+| Slice Logic             |    <0.001 |      454 |       --- |             --- |
+|   LUT as Logic          |    <0.001 |      208 |     20800 |            1.00 |
+|   CARRY4                |    <0.001 |       27 |      8150 |            0.33 |
+|   Register              |    <0.001 |      125 |     41600 |            0.30 |
 |   LUT as Shift Register |    <0.001 |        1 |      9600 |            0.01 |
 |   F7/F8 Muxes           |    <0.001 |        1 |     32600 |           <0.01 |
 |   Others                |     0.000 |       16 |       --- |             --- |
-| Signals                 |     0.002 |      303 |       --- |             --- |
+| Signals                 |    <0.001 |      348 |       --- |             --- |
 | I/O                     |     0.006 |       18 |       106 |           16.98 |
 | Static Power            |     0.072 |          |           |                 |
-| Total                   |     0.082 |          |           |                 |
+| Total                   |     0.080 |          |           |                 |
 +-------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -73,7 +73,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.014 |       0.005 |      0.010 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.012 |       0.002 |      0.010 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.013 |       0.000 |      0.013 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.003 |       0.002 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -139,11 +139,10 @@ Table of Contents
 3.1 By Hierarchy
 ----------------
 
-+------------------+-----------+
-| Name             | Power (W) |
-+------------------+-----------+
-| lab6pong         |     0.011 |
-|   screenInteface |     0.001 |
-+------------------+-----------+
++----------+-----------+
+| Name     | Power (W) |
++----------+-----------+
+| lab6pong |     0.008 |
++----------+-----------+
 
 
