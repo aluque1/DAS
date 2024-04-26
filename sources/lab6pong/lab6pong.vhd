@@ -14,212 +14,237 @@
 --
 ---------------------------------------------------------------------
 
-library ieee;
-use ieee.std_logic_1164.all;
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
 
-entity lab6pong is
-  port ( 
-    clk     : in  std_logic;
-    rst     : in  std_logic;
-    ps2Clk  : in  std_logic;
-    ps2Data : in  std_logic;
-    hSync   : out std_logic;
-    vSync   : out std_logic;
-    RGB     : out std_logic_vector(3*4-1 downto 0)
+ENTITY lab6pong IS
+  PORT (
+    clk : IN STD_LOGIC;
+    rst : IN STD_LOGIC;
+    ps2Clk : IN STD_LOGIC;
+    ps2Data : IN STD_LOGIC;
+    hSync : OUT STD_LOGIC;
+    vSync : OUT STD_LOGIC;
+    RGB : OUT STD_LOGIC_VECTOR(3 * 4 - 1 DOWNTO 0)
   );
-end lab6pong;
+END lab6pong;
 
 ---------------------------------------------------------------------
 
-library ieee;
-use ieee.numeric_std.all;
-use work.common.all;
+LIBRARY ieee;
+USE ieee.numeric_std.ALL;
+USE work.common.ALL;
 
-architecture syn of lab6pong is
+ARCHITECTURE syn OF lab6pong IS
 
-  constant FREQ_KHZ : natural := 100_000;  -- frecuencia de operacion en KHz
-  constant VGA_KHZ  : natural := 25_000;   -- frecuencia de envio de pixeles a la VGA en KHz
-  constant FREQ_DIV : natural := FREQ_KHZ/VGA_KHZ; 
-  
-  signal yRight : unsigned(7 downto 0) := to_unsigned( 8, 8 );
-  signal yLeft  : unsigned(7 downto 0) := to_unsigned( 8, 8 );
-  signal yBall  : unsigned(7 downto 0) := to_unsigned( 60, 8 );
-  signal xBall  : unsigned(7 downto 0) := to_unsigned( 79, 8 );
-  signal qP, aP, pP, lP, spcP: boolean := false;
+  CONSTANT FREQ_KHZ : NATURAL := 100_000; -- frecuencia de operacion en KHz
+  CONSTANT VGA_KHZ : NATURAL := 25_000; -- frecuencia de envio de pixeles a la VGA en KHz
+  CONSTANT FREQ_DIV : NATURAL := FREQ_KHZ/VGA_KHZ;
 
-  signal rstSync : std_logic;
-  signal data: std_logic_vector(7 downto 0);
-  signal dataRdy: std_logic;
-  
-  signal color : std_logic_vector(3 downto 0);
-  signal campoJuego, raquetaDer, raquetaIzq, pelota: std_logic;
-  signal mover, finPartida, reiniciar: boolean;
+  SIGNAL yRight : unsigned(7 DOWNTO 0) := to_unsigned(8, 8);
+  SIGNAL yLeft : unsigned(7 DOWNTO 0) := to_unsigned(8, 8);
+  SIGNAL yBall : unsigned(7 DOWNTO 0) := to_unsigned(60, 8);
+  SIGNAL xBall : unsigned(7 DOWNTO 0) := to_unsigned(79, 8);
+  SIGNAL qP, aP, pP, lP, spcP : BOOLEAN := false;
 
-  signal lineAux, pixelAux : std_logic_vector(9 downto 0);
-  signal line, pixel : unsigned(7 downto 0); 
-  
-  signal vToggle : boolean := false;
-  
+  SIGNAL rstSync : STD_LOGIC;
+  SIGNAL data : STD_LOGIC_VECTOR(7 DOWNTO 0);
+  SIGNAL dataRdy : STD_LOGIC;
 
-begin
- 
+  SIGNAL color : STD_LOGIC_VECTOR(3 DOWNTO 0);
+  SIGNAL campoJuego, raquetaDer, raquetaIzq, pelota : STD_LOGIC;
+  SIGNAL mover, finPartida, reiniciar : BOOLEAN;
+
+  SIGNAL lineAux, pixelAux : STD_LOGIC_VECTOR(9 DOWNTO 0);
+  SIGNAL line, pixel : unsigned(7 DOWNTO 0);
+
+  SIGNAL vToggle : BOOLEAN := false;
+BEGIN
+
   rstSynchronizer : synchronizer
-    generic map ( STAGES => 2, XPOL => '0' )
-    port map ( clk => clk, x => rst, xSync => rstSync );
+  GENERIC MAP(STAGES => 2, XPOL => '0')
+  PORT MAP(clk => clk, x => rst, xSync => rstSync);
 
   ------------------  
- 
+
   ps2KeyboardInterface : ps2receiver
-    port map ( clk => clk, rst => rstSync, dataRdy => dataRdy, data => data, ps2Clk => ps2Clk, ps2Data => ps2Data );   
-   
-  keyboardScanner:
-  process (clk)
-    type states is (keyON, keyOFF);
-    variable state : states := keyON; --Puede estar mal no se
-  begin
-    if rising_edge(clk) then
-      if rstSync='1' then
+  PORT MAP(clk => clk, rst => rstSync, dataRdy => dataRdy, data => data, ps2Clk => ps2Clk, ps2Data => ps2Data);
+
+  keyboardScanner :
+  PROCESS (clk)
+    TYPE states IS (keyON, keyOFF);
+    VARIABLE state : states := keyON; --Puede estar mal no se
+  BEGIN
+    IF rising_edge(clk) THEN
+      IF rstSync = '1' THEN
         state := keyOFF; --Revisar lo de el estado inicial
-      elsif dataRdy='1' then
-        case state is
-          when keyON =>
-            case data is
-              when X"F0" => state := keyOFF;
-              when X"15" => qP <= true;
-              when X"1C" => aP <= true;
-              when X"4D" => pP <= true;
-              when X"4B" => lP <= true;
-              when X"29" => spcP <= true;
-              when others => state := keyON;
-            end case;
-          when keyOFF =>
+      ELSIF dataRdy = '1' THEN
+        CASE state IS
+          WHEN keyON =>
+            CASE data IS
+              WHEN X"F0" => state := keyOFF;
+              WHEN X"15" => qP <= true;
+              WHEN X"1C" => aP <= true;
+              WHEN X"4D" => pP <= true;
+              WHEN X"4B" => lP <= true;
+              WHEN X"29" => spcP <= true;
+              WHEN OTHERS => state := keyON;
+            END CASE;
+          WHEN keyOFF =>
             state := keyON;
-            case data is
-              when X"15" => qP <= false; 
-              when X"1C" => aP <= false;
-              when X"4D" => pP <= false;
-              when X"4B" => lP <= false;
-              when X"29" => spcP <= false;
-              -- Esto puede que haya que meterlo when others => state := keyOFF;
-            end case;
-        end case;
-      end if;
-    end if;
-  end process;        
+            CASE data IS
+              WHEN X"15" => qP <= false;
+              WHEN X"1C" => aP <= false;
+              WHEN X"4D" => pP <= false;
+              WHEN X"4B" => lP <= false;
+              WHEN X"29" => spcP <= false;
+              WHEN OTHERS => state := keyOFF;
+            END CASE;
+        END CASE;
+      END IF;
+    END IF;
+  END PROCESS;
 
-------------------  
+  ------------------  
 
-  screenInteface: vgaRefresher
-    generic map ( FREQ_DIV => FREQ_DIV )
-    port map ( clk => clk, line => lineAux, pixel => pixelAux, R => color, G => color, B => color, hSync => hSync, vSync => vSync, RGB => RGB );
+  screenInteface : vgaRefresher
+  GENERIC MAP(FREQ_DIV => FREQ_DIV)
+  PORT MAP(clk => clk, line => lineAux, pixel => pixelAux, R => color, G => color, B => color, hSync => hSync, vSync => vSync, RGB => RGB);
 
-  pixel <= unsigned(pixelAux(9 downto 2));
-  line  <= unsigned(lineAux(9 downto 2));
-  
-  color <= "1111" when campoJuego = '1' or raquetaIzq = '1' or raquetaDer = '1' or pelota = '1' else "0000";--REVISAR ESTO
+  pixel <= unsigned(pixelAux(9 DOWNTO 2));
+  line <= unsigned(lineAux(9 DOWNTO 2));
 
- ------------------
-  
+  color <= "1111" WHEN campoJuego = '1' OR raquetaIzq = '1' OR raquetaDer = '1' OR pelota = '1' ELSE
+    "0000";
+
+  ------------------
+
   -- Horizontal = 8 ,79, 111 ; Vertical = 8 en 8 a partir de 8
-  vToggle <= not vToggle when (line mod 8 = 0) else vToggle;
-  campoJuego <= '1' when (line = 8 and pixel <= 159) or (line = 111 and pixel <= 159) or (pixel = 79 and line <= 111 and line >= 8) else '0'; -- aqui faltan cosas si o si
-  raquetaIzq <= '1' when pixel = 8 and (line >= yLeft and line <= yLeft + 16) else '0';
-  raquetaDer <= '1' when pixel = 151 and (line >= yRight and line <= yRight + 16) else '0';
-  pelota     <= '1' when line = yBall and pixel = xBall else '0';
+  vToggle <= NOT vToggle WHEN (line MOD 8 = 0) ELSE
+    vToggle;
+  campoJuego <= '1' WHEN line = 8 OR line = 111 OR (pixel = 79 AND line <= 111 AND line >= 8) ELSE
+    '0'; -- aqui faltan cosas si o si
+  raquetaIzq <= '1' WHEN pixel = 8 AND (line >= yLeft AND line <= yLeft + 16) ELSE
+    '0';
+  raquetaDer <= '1' WHEN pixel = 151 AND (line >= yRight AND line <= yRight + 16) ELSE
+    '0';
+  pelota <= '1' WHEN line = yBall AND pixel = xBall ELSE
+    '0';
 
-------------------
+  ------------------
 
-  finPartida <= true when xBall = 0 or xBall = 159 else false; --revisar las igualdades
-  reiniciar  <= true when spcP else false;   
-  
-------------------
-  pulseGen:
-  process (clk)
-    constant CYCLES : natural := hz2cycles(FREQ_DIV, 50);
-    variable count  : natural range 0 to CYCLES-1 := 0;
-  begin
-    if rising_edge(clk) then
-      if rstSync='1' then
+  finPartida <= true WHEN xBall = 0 OR xBall = 159 ELSE
+    false; --revisar las igualdades
+  reiniciar <= true WHEN spcP ELSE
+    false;
+
+  ------------------
+  pulseGen :
+  PROCESS (clk)
+    CONSTANT CYCLES : NATURAL := hz2cycles(FREQ_KHZ, 50);
+    VARIABLE count : NATURAL RANGE 0 TO CYCLES - 1 := 0;
+  BEGIN
+    IF rising_edge(clk) THEN
+      IF rstSync = '1' THEN
         count := 0;
-      elsif finPartida = false then
-        count := (count + 1) mod CYCLES;
+      ELSIF finPartida = false THEN
+        count := (count + 1) MOD CYCLES;
         mover <= false;
-        if count = CYCLES-1 then
+        IF count = (CYCLES - 1) THEN
           mover <= true;
-        end if;
-      end if;
-    end if;
-  end process;
-        
-------------------
+        END IF;
+      END IF;
+    END IF;
+  END PROCESS;
 
-  yRightRegister:
-  process (clk)
-  begin
-    if reiniciar <= true then
-        yRight <= to_unsigned(8, 8);
-    else
-        if mover = true and qP = true and yRight > 9 then
-            yRight <= yRight + 1;
-        elsif mover = true and aP = true and yRight < 95 then
+  ------------------
+
+  yRightRegister :
+  PROCESS (clk)
+  BEGIN
+    IF rising_edge(clk) THEN
+      IF reiniciar = true OR rstSync = '1' THEN
+        yRight <= TO_UNSIGNED(8, 8);
+      ELSE
+        IF mover = true THEN
+          IF pP = true AND yRight > 8 THEN
             yRight <= yRight - 1;
-        end if;
-    end if;
-  end process;
+          ELSIF lP = true AND yRight < 95 THEN
+            yRight <= yRight + 1;
+          END IF;
+        END IF;
+      END IF;
+    END IF;
+  END PROCESS;
 
-  yLeftRegister:
-  process (clk)
-  begin
-    if mover = true then
-        if qP = true and yLeft > 8 then
-            yLeft <= yLeft + 1;
-        elsif aP = true and yLeft < 95 then
+  yLeftRegister :
+  PROCESS (clk)
+  BEGIN
+    IF rising_edge(clk) THEN
+      IF reiniciar = true OR rstSync = '1' THEN
+        yLeft <= TO_UNSIGNED(8, 8);
+      ELSE
+        IF mover = true THEN
+          IF qP = true AND yLeft > 8 THEN
             yLeft <= yLeft - 1;
-        end if;
-    end if;
-  end process;
-  
-------------------
-  
-  xBallRegister:
-  process (clk)
-    type sense is (left, right);
-    variable dir: sense := left;
-  begin
-    if mover = true then
-        if dir = left then
-            xBall <= xBall + 1;
-        else
-            xBall <= xBall - 1;
-        end if;
-    end if;
-        if xBall = 9 and yLeft <= yBall and yBall <= (yLeft + 16) then
+          ELSIF aP = true AND yLeft < 95 THEN
+            yLeft <= yLeft + 1;
+          END IF;
+        END IF;
+      END IF;
+    END IF;
+  END PROCESS;
+
+  ------------------
+
+  xBallRegister :
+  PROCESS (clk)
+    TYPE sense IS (left, right);
+    VARIABLE dir : sense := left;
+  BEGIN
+    IF rising_edge(clk) THEN
+      IF reiniciar = true OR rstSync = '1' THEN
+        xBall <= to_unsigned(79, 8);
+      ELSE
+        IF mover = true THEN
+          IF xBall = 9 AND yLeft <= yBall AND yBall <= (yLeft + 16) THEN
             dir := right;
-        elsif xBall = 150 and yRight <= yBall and yBall <= (yRight + 16) then
+          ELSIF xBall = 150 AND yRight <= yBall AND yBall <= (yRight + 16) THEN
             dir := left;
-        end if;
-    
-  end process;
+          END IF;
+          IF dir = left THEN
+            xBall <= xBall - 1;
+          ELSE
+            xBall <= xBall + 1;
+          END IF;
+        END IF;
+      END IF;
+    END IF;
+  END PROCESS;
 
-  yBallRegister:
-  process (clk)
-    type sense is (up, down);
-    variable dir: sense := up;
-  begin
-    if mover = true then
-        if dir = up then
-            yBall <= yBall - 1;
-        else
-            yBall <= yBall + 1;
-        end if;
-    end if;
-        if yBall = 9 then
-            dir := down; 
-        elsif yBall = 110 then
+  yBallRegister :
+  PROCESS (clk)
+    TYPE sense IS (up, down);
+    VARIABLE dir : sense := up;
+  BEGIN
+    IF rising_edge(clk) THEN
+      IF reiniciar = true OR rstSync = '1' THEN
+        yBall <= to_unsigned(60, 8);
+      ELSE
+        IF mover = true THEN
+          IF yBall = 9 THEN
+            dir := down;
+          ELSIF yBall = 110 THEN
             dir := up;
-        end if;
-    
-  end process;
+          END IF;
+          IF dir = up THEN
+            yBall <= yBall - 1;
+          ELSE
+            yBall <= yBall + 1;
+          END IF;
+        END IF;
+      END IF;
+    END IF;
+  END PROCESS;
 
-end syn;
-
+END syn;

@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Thu Apr 25 13:16:49 2024
+| Date         : Fri Apr 26 13:31:34 2024
 | Host         : alv-debian running 64-bit Debian GNU/Linux 12 (bookworm)
 | Command      : report_methodology -file lab6pong_methodology_drc_routed.rpt -pb lab6pong_methodology_drc_routed.pb -rpx lab6pong_methodology_drc_routed.rpx
 | Design       : lab6pong
@@ -23,28 +23,15 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 54
-+-----------+----------+--------------------------------+------------+
-| Rule      | Severity | Description                    | Violations |
-+-----------+----------+--------------------------------+------------+
-| LUTAR-1   | Warning  | LUT drives async reset alert   | 2          |
-| TIMING-18 | Warning  | Missing input or output delay  | 17         |
-| TIMING-20 | Warning  | Non-clocked latch              | 34         |
-| LATCH-1   | Advisory | Existing latches in the design | 1          |
-+-----------+----------+--------------------------------+------------+
+             Violations found: 17
++-----------+----------+-------------------------------+------------+
+| Rule      | Severity | Description                   | Violations |
++-----------+----------+-------------------------------+------------+
+| TIMING-18 | Warning  | Missing input or output delay | 17         |
++-----------+----------+-------------------------------+------------+
 
 2. REPORT DETAILS
 -----------------
-LUTAR-1#1 Warning
-LUT drives async reset alert  
-LUT cell xBallRegister.dir_reg_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) xBallRegister.dir_reg/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
-Related violations: <none>
-
-LUTAR-1#2 Warning
-LUT drives async reset alert  
-LUT cell yBallRegister.dir_reg_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) yBallRegister.dir_reg/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
-Related violations: <none>
-
 TIMING-18#1 Warning
 Missing input or output delay  
 An input delay is missing on ps2Clk relative to the rising and/or falling clock edge(s) of sysClk.
@@ -128,181 +115,6 @@ Related violations: <none>
 TIMING-18#17 Warning
 Missing input or output delay  
 An output delay is missing on vSync relative to the rising and/or falling clock edge(s) of sysClk.
-Related violations: <none>
-
-TIMING-20#1 Warning
-Non-clocked latch  
-The latch xBallRegister.dir_reg cannot be properly analyzed as its control pin xBallRegister.dir_reg/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#2 Warning
-Non-clocked latch  
-The latch xBall_reg[0] cannot be properly analyzed as its control pin xBall_reg[0]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#3 Warning
-Non-clocked latch  
-The latch xBall_reg[1] cannot be properly analyzed as its control pin xBall_reg[1]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#4 Warning
-Non-clocked latch  
-The latch xBall_reg[2] cannot be properly analyzed as its control pin xBall_reg[2]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#5 Warning
-Non-clocked latch  
-The latch xBall_reg[3] cannot be properly analyzed as its control pin xBall_reg[3]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#6 Warning
-Non-clocked latch  
-The latch xBall_reg[4] cannot be properly analyzed as its control pin xBall_reg[4]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#7 Warning
-Non-clocked latch  
-The latch xBall_reg[5] cannot be properly analyzed as its control pin xBall_reg[5]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#8 Warning
-Non-clocked latch  
-The latch xBall_reg[6] cannot be properly analyzed as its control pin xBall_reg[6]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#9 Warning
-Non-clocked latch  
-The latch xBall_reg[7] cannot be properly analyzed as its control pin xBall_reg[7]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#10 Warning
-Non-clocked latch  
-The latch yBallRegister.dir_reg cannot be properly analyzed as its control pin yBallRegister.dir_reg/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#11 Warning
-Non-clocked latch  
-The latch yBall_reg[0] cannot be properly analyzed as its control pin yBall_reg[0]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#12 Warning
-Non-clocked latch  
-The latch yBall_reg[1] cannot be properly analyzed as its control pin yBall_reg[1]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#13 Warning
-Non-clocked latch  
-The latch yBall_reg[2] cannot be properly analyzed as its control pin yBall_reg[2]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#14 Warning
-Non-clocked latch  
-The latch yBall_reg[3] cannot be properly analyzed as its control pin yBall_reg[3]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#15 Warning
-Non-clocked latch  
-The latch yBall_reg[4] cannot be properly analyzed as its control pin yBall_reg[4]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#16 Warning
-Non-clocked latch  
-The latch yBall_reg[5] cannot be properly analyzed as its control pin yBall_reg[5]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#17 Warning
-Non-clocked latch  
-The latch yBall_reg[6] cannot be properly analyzed as its control pin yBall_reg[6]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#18 Warning
-Non-clocked latch  
-The latch yBall_reg[7] cannot be properly analyzed as its control pin yBall_reg[7]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#19 Warning
-Non-clocked latch  
-The latch yLeft_reg[0] cannot be properly analyzed as its control pin yLeft_reg[0]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#20 Warning
-Non-clocked latch  
-The latch yLeft_reg[1] cannot be properly analyzed as its control pin yLeft_reg[1]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#21 Warning
-Non-clocked latch  
-The latch yLeft_reg[2] cannot be properly analyzed as its control pin yLeft_reg[2]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#22 Warning
-Non-clocked latch  
-The latch yLeft_reg[3] cannot be properly analyzed as its control pin yLeft_reg[3]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#23 Warning
-Non-clocked latch  
-The latch yLeft_reg[4] cannot be properly analyzed as its control pin yLeft_reg[4]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#24 Warning
-Non-clocked latch  
-The latch yLeft_reg[5] cannot be properly analyzed as its control pin yLeft_reg[5]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#25 Warning
-Non-clocked latch  
-The latch yLeft_reg[6] cannot be properly analyzed as its control pin yLeft_reg[6]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#26 Warning
-Non-clocked latch  
-The latch yLeft_reg[7] cannot be properly analyzed as its control pin yLeft_reg[7]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#27 Warning
-Non-clocked latch  
-The latch yRight_reg[0] cannot be properly analyzed as its control pin yRight_reg[0]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#28 Warning
-Non-clocked latch  
-The latch yRight_reg[1] cannot be properly analyzed as its control pin yRight_reg[1]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#29 Warning
-Non-clocked latch  
-The latch yRight_reg[2] cannot be properly analyzed as its control pin yRight_reg[2]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#30 Warning
-Non-clocked latch  
-The latch yRight_reg[3] cannot be properly analyzed as its control pin yRight_reg[3]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#31 Warning
-Non-clocked latch  
-The latch yRight_reg[4] cannot be properly analyzed as its control pin yRight_reg[4]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#32 Warning
-Non-clocked latch  
-The latch yRight_reg[5] cannot be properly analyzed as its control pin yRight_reg[5]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#33 Warning
-Non-clocked latch  
-The latch yRight_reg[6] cannot be properly analyzed as its control pin yRight_reg[6]/G is not reached by a timing clock
-Related violations: <none>
-
-TIMING-20#34 Warning
-Non-clocked latch  
-The latch yRight_reg[7] cannot be properly analyzed as its control pin yRight_reg[7]/G is not reached by a timing clock
-Related violations: <none>
-
-LATCH-1#1 Advisory
-Existing latches in the design  
-There are 34 latches found in the design. Inferred latches are often the result of HDL coding mistakes, such as incomplete if or case statements.
 Related violations: <none>
 
 

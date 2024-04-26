@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Thu Apr 25 13:16:38 2024
+| Date         : Fri Apr 26 13:31:23 2024
 | Host         : alv-debian running 64-bit Debian GNU/Linux 12 (bookworm)
 | Command      : report_control_sets -verbose -file lab6pong_control_sets_placed.rpt
 | Design       : lab6pong
@@ -23,11 +23,11 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |    13 |
-|    Minimum number of control sets                        |    13 |
+| Total control sets                                       |    11 |
+|    Minimum number of control sets                        |    11 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    42 |
+| Unused register locations in slices containing registers |    35 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -39,15 +39,15 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |    13 |
-| >= 0 to < 4        |     4 |
+| Total control sets |    11 |
+| >= 0 to < 4        |     2 |
 | >= 4 to < 6        |     0 |
-| >= 6 to < 8        |     1 |
+| >= 6 to < 8        |     0 |
 | >= 8 to < 10       |     3 |
 | >= 10 to < 12      |     2 |
 | >= 12 to < 14      |     0 |
 | >= 14 to < 16      |     0 |
-| >= 16              |     3 |
+| >= 16              |     4 |
 +--------------------+-------+
 * Control sets can be remapped at either synth_design or opt_design
 
@@ -58,34 +58,32 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              48 |           20 |
+| No           | No                    | No                     |              19 |           13 |
 | No           | No                    | Yes                    |               0 |            0 |
-| No           | Yes                   | No                     |               2 |            2 |
-| Yes          | No                    | No                     |              32 |           11 |
+| No           | Yes                   | No                     |               0 |            0 |
+| Yes          | No                    | No                     |              32 |           13 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |              28 |           10 |
+| Yes          | Yes                   | No                     |              74 |           29 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
 4. Detailed Control Set Information
 -----------------------------------
 
-+----------------+----------------------------------------------+-------------------------------+------------------+----------------+--------------+
-|  Clock Signal  |                 Enable Signal                |        Set/Reset Signal       | Slice Load Count | Bel Load Count | Bels / Slice |
-+----------------+----------------------------------------------+-------------------------------+------------------+----------------+--------------+
-|  clk_IBUF_BUFG | screenInteface/pixelCnt[9]_i_1_n_0           | screenInteface/vSync_i_1_n_0  |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG | screenInteface/pixelCnt[9]_i_1_n_0           | screenInteface/hSync_i_1_n_0  |                1 |              1 |         1.00 |
-|  dir012_out    |                                              | dir0                          |                1 |              1 |         1.00 |
-|  dir__0        |                                              | yBallRegister.dir_reg_i_2_n_0 |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG | count                                        | rstSynchronizer/Q[0]          |                2 |              7 |         3.50 |
-|  clk_IBUF_BUFG | ps2KeyboardInterface/data[7]_i_1_n_0         | rstSynchronizer/Q[0]          |                2 |              8 |         4.00 |
-|  yLeft__0      |                                              |                               |                3 |              8 |         2.67 |
-|  yRight__0     |                                              |                               |                3 |              8 |         2.67 |
-|  clk_IBUF_BUFG | screenInteface/lineCnt0                      |                               |                4 |             10 |         2.50 |
-|  clk_IBUF_BUFG | ps2KeyboardInterface/ps2ClkEdgeDetector/E[0] | rstSynchronizer/SS[0]         |                4 |             11 |         2.75 |
-|  mover_reg_n_0 |                                              |                               |                6 |             16 |         2.67 |
-|  clk_IBUF_BUFG |                                              |                               |                8 |             17 |         2.12 |
-|  clk_IBUF_BUFG | screenInteface/pixelCnt[9]_i_1_n_0           |                               |                7 |             22 |         3.14 |
-+----------------+----------------------------------------------+-------------------------------+------------------+----------------+--------------+
++----------------+----------------------------------------------+------------------------------+------------------+----------------+--------------+
+|  Clock Signal  |                 Enable Signal                |       Set/Reset Signal       | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+----------------------------------------------+------------------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG | screenInteface/pixelCnt[9]_i_1_n_0           | screenInteface/hSync_i_1_n_0 |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG | screenInteface/pixelCnt[9]_i_1_n_0           | screenInteface/vSync_i_1_n_0 |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG | yLeft                                        | rstSynchronizer/SR[0]        |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | ps2KeyboardInterface/data[7]_i_1_n_0         | rstSynchronizer/Q[0]         |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | yRight                                       | rstSynchronizer/SR[0]        |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | screenInteface/lineCnt0                      |                              |                4 |             10 |         2.50 |
+|  clk_IBUF_BUFG | ps2KeyboardInterface/ps2ClkEdgeDetector/E[0] | rstSynchronizer/SS[0]        |                3 |             11 |         3.67 |
+|  clk_IBUF_BUFG | mover_reg_n_0                                | rstSynchronizer/SR[0]        |                6 |             16 |         2.67 |
+|  clk_IBUF_BUFG |                                              |                              |               13 |             20 |         1.54 |
+|  clk_IBUF_BUFG | count                                        | rstSynchronizer/Q[0]         |                9 |             21 |         2.33 |
+|  clk_IBUF_BUFG | screenInteface/pixelCnt[9]_i_1_n_0           |                              |                9 |             22 |         2.44 |
++----------------+----------------------------------------------+------------------------------+------------------+----------------+--------------+
 
 
