@@ -406,9 +406,11 @@ begin
   with uColInt select
     bitMapPixel <= 
       '0' when X"42",
+      '0' when X"00",
+      '0' when X"7e",
       '1' when others;
 
-  color <= (others => '0') when bitMapPixel='1' else (others => '1');  
+  color <= FGCOLOR when bitMapPixel='1' else BGCOLOR;  
   
 ------------------  
 
