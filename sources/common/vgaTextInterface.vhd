@@ -356,7 +356,7 @@ begin
   colInt  <= pixel(9 downto 3);
   uColInt <= pixel(2 downto 0);
   
-  rowInt  <= line(8 downto 4);
+  rowInt  <= line(9 downto 4); -- TODO he cambiado esto que aqui habia un 8 
   uRowInt <= line(3 downto 0);
   
   col  <= colInt;
