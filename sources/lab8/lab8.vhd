@@ -239,14 +239,12 @@ begin
       
  ------------------     
 
-  cursorRender:
-  process (row, col, uRow, x, y)
-  begin
-    RGB <= RGBinterface;
-    if y = to_integer(unsigned(row)) and x = to_integer(unsigned(col)) then
-      RGBinterface <= FGCOLOR;
-    end if;
-  end process;
+  --cursorRender:
+  --process (row, col, uRow, x, y)
+  --begin
+    --RGB <= RGBinterface;
+    
+  --end process;
   
 end syn;
 

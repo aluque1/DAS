@@ -119,45 +119,10 @@ BEGIN
 
   ------------------
 
-<<<<<<< HEAD
-  finPartida <= true when xBall = 0 or xBall = 159 or reiniciar = true else false; --revisar las igualdades
-  reiniciar  <= true when spcP = true else false;   
-  
-------------------
-  --meter fin partida
-  pulseGen:
-  process (clk)
-    constant CYCLES : natural := hz2cycles(FREQ_KHZ, 50);
-    variable count  : natural range 0 to CYCLES-1 := 0;
-  begin
-    if rising_edge(clk) then
-        if finPartida = false then
-            count := (count + 1) mod CYCLES;
-            mover <= false;
-            if count = CYCLES-1 then 
-                mover <= true;
-            end if;
-        end if;
-    end if;
-  end process;    
-        
-------------------
-
-  yRightRegister:
-  process (clk)
-  begin
-    if reiniciar then 
-        yRight <= to_unsigned( 8, 8 );
-    end if;
-    if mover then
-        if pP = true and yRight > 8 then
-            yRight <= yRight + 1;
-        elsif lP = true and yRight < 95 then
-=======
   -- Horizontal = 8 ,79, 111 ; Vertical = 8 en 8 a partir de 8
-  vToggle <= NOT vToggle WHEN (line MOD 8 = 0) ELSE
+  vToggle <= NOT vToggle WHEN (line MOD 8 = 0) AND (line >= 8 AND line <= 111) ELSE
     vToggle;
-  campoJuego <= '1' WHEN line = 8 OR line = 111 OR (pixel = 79 AND line <= 111 AND line >= 8) ELSE
+  campoJuego <= '1' WHEN line = 8 OR line = 111 OR (pixel = 79 AND line >= 8 AND line <= 111) ELSE
     '0'; -- aqui faltan cosas si o si
   raquetaIzq <= '1' WHEN pixel = 8 AND (line >= yLeft AND line <= yLeft + 16) ELSE
     '0';
@@ -203,7 +168,6 @@ BEGIN
       ELSE
         IF mover = true THEN
           IF pP = true AND yRight > 8 THEN
->>>>>>> luque
             yRight <= yRight - 1;
           ELSIF lP = true AND yRight < 95 THEN
             yRight <= yRight + 1;
@@ -213,41 +177,6 @@ BEGIN
     END IF;
   END PROCESS;
 
-<<<<<<< HEAD
-  yLeftRegister:
-  process (clk)
-  begin
-    if reiniciar then
-        yLeft <= to_unsigned( 8, 8 );
-    end if;
-    if mover then
-        if qP = true and yLeft > 8 then
-            yLeft <= yLeft + 1;
-        elsif aP = true and yLeft < 95 then
-            yLeft <= yLeft - 1;
-        end if;
-    end if;
-  end process;
-  
-------------------
-  
-  xBallRegister:
-  process (clk)
-    type sense is (left, right);
-    variable dir: sense := left;
-  begin
-    if reiniciar then
-        xBall <= to_unsigned( 79, 8 );
-    end if;
-    if mover then
-        if dir = left then
-            xBall <= xBall + 1;
-        else
-            xBall <= xBall - 1;
-        end if;
-    end if;
-        if xBall = 9 and yLeft <= yBall and yBall <= (yLeft + 16) then
-=======
   yLeftRegister :
   PROCESS (clk)
   BEGIN
@@ -279,38 +208,9 @@ BEGIN
       ELSE
         IF mover = true THEN
           IF xBall = 9 AND yLeft <= yBall AND yBall <= (yLeft + 16) THEN
->>>>>>> luque
             dir := right;
           ELSIF xBall = 150 AND yRight <= yBall AND yBall <= (yRight + 16) THEN
             dir := left;
-<<<<<<< HEAD
-        end if;
-  end process;
-
-  yBallRegister:
-  process (clk)
-    type sense is (up, down);
-    variable dir: sense := up;
-  begin
-    if reiniciar then
-        yBall <= to_unsigned( 60, 8 );
-    end if;
-    if mover then
-        if dir = up then
-            yBall <= yBall - 1;
-        else
-            yBall <= yBall + 1;
-        end if;
-    end if;
-        if yBall = 9 then
-            dir := down; 
-        elsif yBall = 110 then
-            dir := up;
-        end if;
-  end process;
-
-end syn;
-=======
           END IF;
           IF dir = left THEN
             xBall <= xBall - 1;
@@ -346,6 +246,5 @@ end syn;
       END IF;
     END IF;
   END PROCESS;
->>>>>>> luque
 
 END syn;
