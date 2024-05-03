@@ -166,7 +166,7 @@ begin
         newLine <= '0';
         clear   <= '0';
       else
-        --NO se que se pone aqui 
+        --NO se que se pone aqui
         -- ...
         if keyRdy='1' then
           case state is
@@ -197,7 +197,7 @@ begin
 
   ------------------  
   
-  romAddr <= '1'&key when shiftP or capsOn else '0'&key; --aqui falta algo porque esto no selecciona las mayusculas
+  romAddr <= '1'&key when shiftP or capsOn else '0'&key;--aqui falta algo porque esto no selecciona las mayusculas
 
   asciiCode <= rom(to_integer(unsigned(romAddr)));  
     
@@ -231,7 +231,7 @@ begin
     end if;
   end process;
   
-  ------------------
+  ------------------     
 
   screenInterface: vgaTextInterface 
     generic map ( FREQ_DIV => FREQ_DIV, BGCOLOR => BGCOLOR, FGCOLOR => FGCOLOR )
@@ -239,15 +239,12 @@ begin
       
  ------------------     
 
-  ---- Revisar la teoria es que el bloque en el que esta el puntero esta en verde
-  cursorRender:
-  process (row, col, uRow, x, y)
-  begin
-    RGB <= RGBinterface;
-    if unsigned(row) = y and unsigned(col) = x then
-      RGB <= FGCOLOR;
-    end if;
-  end process;
+  --cursorRender:
+  --process (row, col, uRow, x, y)
+  --begin
+    --RGB <= RGBinterface;
+    
+  --end process;
   
 end syn;
 
