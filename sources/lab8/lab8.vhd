@@ -239,12 +239,15 @@ begin
       
  ------------------     
 
-  --cursorRender:
-  --process (row, col, uRow, x, y)
-  --begin
-    --RGB <= RGBinterface;
-    
-  --end process;
+  ---- Revisar la teoria es que el bloque en el que esta el puntero esta en verde
+  cursorRender:
+  process (row, col, uRow, x, y)
+  begin
+    RGB <= RGBinterface;
+    if unsigned(row) = y and unsigned(col) = x then
+      RGB <= FGCOLOR;
+    end if;
+  end process;
   
 end syn;
 
