@@ -167,7 +167,7 @@ begin
         clear   <= '0';
       else
         --NO se que se pone aqui
-        ...
+        -- ...
         if keyRdy='1' then
           case state is
             when keyOn =>
@@ -175,7 +175,7 @@ begin
                 case key is
                 when X"F0" => state := keyOFF;
                 when X"12" => shiftP <= true;
-                when X"58" => capsOn <= true;--revisar
+                when X"58" => capsOn <= true;--revisar @LUQUE yo aqui pondria not capsOn
                 when X"5a" => newLine <= '1';
                 when X"76" => clear <= '1';
                 when others => state := keyOn;
@@ -184,7 +184,7 @@ begin
             state := keyOn;
                 case key is
                 when X"12" => shiftP <= false;
-                when X"58" => capsOn <= false;--revisar
+                when X"58" => capsOn <= false;--revisar @Luque y aqui nada porque en teoria este si es un toggle
                 when X"5a" => newLine <= '0';
                 when X"76" => clear <= '0';
                 when others => state := keyOff;
@@ -243,8 +243,8 @@ begin
   process (row, col, uRow, x, y)
   begin
     RGB <= RGBinterface;
-    if ... then
-      ...
+    if y = to_integer(unsigned(row)) and x = to_integer(unsigned(col)) then
+      RGBinterface <= FGCOLOR;
     end if;
   end process;
   
