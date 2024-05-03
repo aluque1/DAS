@@ -4,14 +4,14 @@
 --    vgaGraphicInterface.vhd  04/03/2024
 --
 --    (c) J.M. Mendias
---    Diseño Automático de Sistemas
---    Facultad de Informática. Universidad Complutense de Madrid
+--    Diseï¿½o Automï¿½tico de Sistemas
+--    Facultad de Informï¿½tica. Universidad Complutense de Madrid
 --
---  Propósito:
---    Genera las señales de color y sincronismo de un interfaz gráfico
---    VGA con resolución de 640x480 pixeles.
+--  Propï¿½sito:
+--    Genera las seï¿½ales de color y sincronismo de un interfaz grï¿½fico
+--    VGA con resoluciï¿½n de 640x480 pixeles.
 --
---  Notas de diseño:
+--  Notas de diseï¿½o:
 --    - Para frecuencias a partir de 50 Mhz en multiplos de 25 MHz
 --    - Incluye una memoria de refresco para almacenar los pixeles
 --
@@ -69,6 +69,10 @@ architecture syn of vgaGraphicInterface is
   
   signal R, G, B : std_logic_vector(3 downto 0);
   
+  signal xy : std_logic_vector (18 downto 0);
+  signal clearxy : std_logic_vector (18 downto 0);
+  signal pixelNline : std_logic_vector (18 downto 0);
+  
   type   ramType is array (0 to 2**(x'length+y'length)-1) of std_logic_vector (color'range);
   signal ram : ramType;
   
@@ -80,13 +84,21 @@ begin
     
   line  <= lineRefresher(8 downto 0);
   pixel <= pixelRefresher;
+  
+  --Puede que haya que cambiarlo a xInt e yInt
+  xy(18 downto 9) <= x;
+  xy(8 downto 0) <= y;
+  clearxy(18 downto 9) <= std_logic_vector (clearX);
+  clearxy(8 downto 0) <= std_logic_vector (clearY);
+  pixelNline(18 downto 9) <= pixelRefresher;
+  pixelNline(8 downto 0) <= lineRefresher(8 downto 0);
 
 ------------------  
 
-  we        <= ...;
-  ramWrData <= ...;      
-  ramWrAddr <= ...; 
-  ramRdAddr <= ...;
+  we        <= dataRdy or clearing;
+  ramWrData <= color when clearing = '0' else (others => '0');      
+  ramWrAddr <= xy when clearing = '0' else clearxy; 
+  ramRdAddr <= pixelNline;
   
   process (clk)
     variable ramOut : std_logic_vector (2 downto 0);
@@ -95,14 +107,27 @@ begin
     G <= (others => ramOut(1));
     B <= (others => ramOut(0));  
     if rising_edge(clk) then
-      ...
+      if we='1' then 
+        ram(to_integer(unsigned(ramWrAddr))) <= ramWrData;
+      end if;
+      ramOut := ram(to_integer(unsigned(ramRdAddr)));
     end if;
   end process;  
   
   clearCounters:
   process (clk, clearX, clearY, clear)
   begin
-    ...
+    if clear = '1' then
+      clearing <= '1';
+    else
+      clearing <= '0';
+    end if;
+    if rising_edge(clk) then
+      if clear='1' or clearing='1' then
+        clearX <= (others => '0');
+        clearY <= (others => '0');
+      end if;
+    end if;
   end process; 
      
 END syn;

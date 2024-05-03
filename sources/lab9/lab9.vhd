@@ -4,13 +4,13 @@
 --    lab9.vhd  09/02/2024
 --
 --    (c) J.M. Mendias
---    Diseño Automático de Sistemas
---    Facultad de Informática. Universidad Complutense de Madrid
+--    Diseï¿½o Automï¿½tico de Sistemas
+--    Facultad de Informï¿½tica. Universidad Complutense de Madrid
 --
---  Propósito:
+--  Propï¿½sito:
 --    Laboratorio 9
 --
---  Notas de diseño:
+--  Notas de diseï¿½o:
 --
 ---------------------------------------------------------------------
 
@@ -103,11 +103,44 @@ begin
               state := waitingStatus;         
             end if;
           when waitingStatus =>
-            ...
+            status <= RxData;
+            if RxDataRdy='1' then
+                state := waitingXoffset;
+            end if;
           when waitingXoffset =>
-            ...;
+          --Me he hecho tremendo fumadon con lo de la actulizacion de la posicion miralo
+          --porque no estoy nada seguro
+            xOffset := signed(RxData);
+            if xOffset < 0 then
+                status <= ;--aqui se le mete el signo(no se como)
+            end if;
+            if x - unsigned(xOffset) < 0 then 
+                x <= (others => '0');
+            elsif x + unsigned (xOffset) > 639 then
+                x <= (others => '1');
+            else
+                x <= unsigned (signed(x) + xOffset);
+            end if;
+            if RxDataRdy='1' then
+                state := waitingYoffset;
+            end if;
           when waitingYoffset =>
+            yOffset := signed(RxData);
+            if yOffset < 0 then
+                status <= ;--aqui se le mete el signo(no se como)
+            end if;
+            if y - unsigned(yOffset) < 0 then 
+                y <= (others => '0');
+            elsif y + unsigned (yOffset) > 639 then
+                y <= (others => '1');
+            else
+                y <= unsigned (signed(y) + yOffset);
+            end if;
+            --aqui falta algo pero no se a lo que se refiere en las diapos
             ...
+            if RxDataRdy='1' then
+                state := waitingStatus;
+            end if;
         end case;         
       end if;
     end if;

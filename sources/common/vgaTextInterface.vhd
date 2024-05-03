@@ -369,6 +369,7 @@ begin
   xy(4 downto 0) <= y;
   clearxy(11 downto 5) <= std_logic_vector (clearX);
   clearxy(4 downto 0) <= std_logic_vector (clearY);
+  --Revisar lo de colRow
   colrow(11 downto 5) <= colInt;
   colrow(4 downto 0) <= rowInt;  
   
@@ -385,7 +386,7 @@ begin
       if we='1' then
         ram(to_integer(unsigned(ramWrAddr))) <= ramWrData;
       end if; 
-      asciiCode <= ram(to_integer(unsigned(ramWrAddr)));
+      asciiCode <= ram(to_integer(unsigned(ramRrAddr)));
     end if;
   end process;
   
