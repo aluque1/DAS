@@ -57,7 +57,7 @@ architecture syn of lab9 is
   signal x        : unsigned(log2(PIXELSxLINE)-1 downto 0) := (others => '0');
   signal y        : unsigned(log2(LINESxFRAME)-1 downto 0) := (others => '0');
   signal colorRdy : std_logic := '0';
-
+ 
   signal pixel : std_logic_vector(9 downto 0);
   signal line  : std_logic_vector(8 downto 0);
 
@@ -80,7 +80,7 @@ begin
     type states is ( sendEnable, waitACK, waitingStatus, waitingXoffset, waitingYoffset );
     variable state     : states := sendEnable;
     variable xOffset   : signed(x'range);
-    variable yOffset   : signed(y'range); 
+    variable yOffset   : signed(y'range);
   begin
     if rising_edge(clk) then
       if rstSync='1' then
@@ -92,7 +92,6 @@ begin
         state     := sendEnable;
       else
         case state is
-         
           when sendEnable =>
             TxData <= X"F4";
             TxDataRdy <= '1';
@@ -103,44 +102,52 @@ begin
               state := waitingStatus;         
             end if;
           when waitingStatus =>
-            status <= RxData;
+            status <= RXData;
             if RxDataRdy='1' then
                 state := waitingXoffset;
             end if;
           when waitingXoffset =>
-          --Me he hecho tremendo fumadon con lo de la actulizacion de la posicion miralo
-          --porque no estoy nada seguro
-            xOffset := signed(RxData);
-            if xOffset < 0 then
-                status <= ;--aqui se le mete el signo(no se como)
+          --Lo he mirado de cero y lo he hecho como creo que es. No estoy seguro de si es correcto.
+          --en teoria en el sexto bit de status esta el xsign y en el quinto el ysign 
+            xOffset := resize(signed(RxData), log2(PIXELSxLINE));
+            if status(5) = '0' then -- si es positivo entonces sumamos xOffset a x
+                x <= x + to_unsigned(to_integer(xOffset), log2(PIXELSxLINE));
+            else -- lo restamos en caso contrario
+                x <= x - to_unsigned(to_integer(xOffset), log2(PIXELSxLINE));
             end if;
-            if x - unsigned(xOffset) < 0 then 
-                x <= (others => '0');
-            elsif x + unsigned (xOffset) > 639 then
-                x <= (others => '1');
-            else
-                x <= unsigned (signed(x) + xOffset);
+            if x > (PIXELSxLINE-1) then
+              x <= to_unsigned(PIXELSxLINE-1, log2(PIXELSxLINE));
+            elsif x < 0 then
+              x <= to_unsigned(0, log2(PIXELSxLINE));
             end if;
             if RxDataRdy='1' then
-                state := waitingYoffset;
+              state := waitingYoffset;
             end if;
           when waitingYoffset =>
-            yOffset := signed(RxData);
-            if yOffset < 0 then
-                status <= ;--aqui se le mete el signo(no se como)
+            yOffset := resize(signed(RxData), log2(LINESxFRAME));
+            if status(4) = '0' then -- si es positivo entonces sumamos yOffset a y
+                y <= y + to_unsigned(to_integer(yOffset), log2(LINESxFRAME));
+            else -- lo restamos en caso contrario
+                y <= y - to_unsigned(to_integer(yOffset), log2(LINESxFRAME));
             end if;
-            if y - unsigned(yOffset) < 0 then 
-                y <= (others => '0');
-            elsif y + unsigned (yOffset) > 639 then
-                y <= (others => '1');
+            if y > (LINESxFRAME-1) then
+              y <=  to_unsigned(LINESxFRAME-1, log2(LINESxFRAME-1));
+            elsif y < 0 then
+              y <= to_unsigned(0, log2(LINESxFRAME - 1));
+            end if;
+            -- Aqui lo que pide en la diapo es que pinte si estamos pulsando el boton izquierdo del raton.
+            -- Para saber si estamos pulsando el boton izquierdo del raton, miramos el bit 0 de status, LButton
+            -- Supongo que es poner colorRdy a 1 si esta pulsado y a 0 si no lo esta.
+            if status(0)='1' then
+              colorRdy <= '1';
             else
-                y <= unsigned (signed(y) + yOffset);
+              colorRdy <= '0';
             end if;
-            --aqui falta algo pero no se a lo que se refiere en las diapos
-            ...
+
             if RxDataRdy='1' then
-                state := waitingStatus;
+              state := waitingStatus;
             end if;
+            
         end case;         
       end if;
     end if;
@@ -180,11 +187,12 @@ begin
     variable xAddr : natural range 0 to 15;
     variable yAddr : natural range 0 to 15;    
   begin
-    RGB <= ...;
-    if ... then
-      xAddr := ...;
-      yAddr := ...;
-      case rom(...) is
+    RGB <= RGBInterface;
+    -- superimpose the cursor when we refresh the pixels that ocupy his 16x16 bitmap
+    if (unsigned(line(8 downto 0)) = y) and (unsigned(pixel(9 downto 4)) = x) then
+      xAddr := to_integer(unsigned(pixel(3 downto 0)));
+      yAddr := to_integer(unsigned(line(3 downto 0)));
+      case rom(yAddr*SIZE+xAddr) is
         when 0 => RGB <= (others => '0');
         when 1 => RGB <= (others => '1');
         when 2 => null;

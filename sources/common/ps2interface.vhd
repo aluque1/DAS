@@ -133,7 +133,7 @@ begin
             end if;
           when receiving =>     
             if ps2ClkFall='1' then
-              shifter := ps2DataSync & shifter(9 downto 1);
+              shifter := ps2DataSync & shifter(10 downto 1); -- REVISAR esto lo he cambiado porque se quejaba de tamaño aunque en las diapos dice que es 9 downto 1
               if bitPos < 10 then
                 bitPos := bitPos + 1 mod 11;
               elsif bitPos = 10 then
@@ -153,7 +153,7 @@ begin
             end if;
           when sending =>
             if ps2ClkRise='1' and bitPos < 10 then
-              shifter := '1'&shifter(9 downto 1);
+              shifter := '1'&shifter(10 downto 1);
               bitPos := bitPos + 1 mod 11;
             elsif ps2ClkRise='1' and bitPos = 10 then
               state := idle;

@@ -1,0 +1,392 @@
+#-----------------------------------------------------------
+# Vivado v2023.1 (64-bit)
+# SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
+# IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+# SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+# Start of session at: Sat May  4 12:06:29 2024
+# Process ID: 20748
+# Current directory: C:/Users/Administrator/Desktop/uni/DAS/projects/lab9/lab9.runs/synth_1
+# Command line: vivado.exe -log lab9.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source lab9.tcl
+# Log file: C:/Users/Administrator/Desktop/uni/DAS/projects/lab9/lab9.runs/synth_1/lab9.vds
+# Journal file: C:/Users/Administrator/Desktop/uni/DAS/projects/lab9/lab9.runs/synth_1\vivado.jou
+# Running On: alv-desktop, OS: Windows, CPU Frequency: 3194 MHz, CPU Physical cores: 16, Host memory: 33551 MB
+#-----------------------------------------------------------
+source lab9.tcl -notrace
+Command: synth_design -top lab9 -part xc7a35tcpg236-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Device 21-403] Loading part xc7a35tcpg236-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 14992
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1246.844 ; gain = 409.559
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'lab9' [C:/Users/Administrator/Desktop/uni/DAS/sources/lab9/lab9.vhd:39]
+	Parameter STAGES bound to: 2 - type: integer 
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-3491] module 'synchronizer' declared at 'C:/Users/Administrator/Desktop/uni/DAS/sources/common/synchronizer.vhd:21' bound to instance 'rstSynchronizer' of component 'synchronizer' [C:/Users/Administrator/Desktop/uni/DAS/sources/lab9/lab9.vhd:68]
+INFO: [Synth 8-638] synthesizing module 'synchronizer' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/synchronizer.vhd:35]
+	Parameter STAGES bound to: 2 - type: integer 
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-256] done synthesizing module 'synchronizer' (0#1) [C:/Users/Administrator/Desktop/uni/DAS/sources/common/synchronizer.vhd:35]
+	Parameter FREQ_KHZ bound to: 100000 - type: integer 
+INFO: [Synth 8-3491] module 'ps2interface' declared at 'C:/Users/Administrator/Desktop/uni/DAS/sources/common/ps2interface.vhd:21' bound to instance 'mouseInterface' of component 'ps2interface' [C:/Users/Administrator/Desktop/uni/DAS/sources/lab9/lab9.vhd:74]
+INFO: [Synth 8-638] synthesizing module 'ps2interface' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/ps2interface.vhd:44]
+	Parameter FREQ_KHZ bound to: 100000 - type: integer 
+	Parameter STAGES bound to: 2 - type: integer 
+	Parameter XPOL bound to: 1'b1 
+INFO: [Synth 8-3491] module 'synchronizer' declared at 'C:/Users/Administrator/Desktop/uni/DAS/sources/common/synchronizer.vhd:21' bound to instance 'ps2ClkSynchronizer' of component 'synchronizer' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/ps2interface.vhd:51]
+INFO: [Synth 8-638] synthesizing module 'synchronizer__parameterized1' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/synchronizer.vhd:35]
+	Parameter STAGES bound to: 2 - type: integer 
+	Parameter XPOL bound to: 1'b1 
+INFO: [Synth 8-256] done synthesizing module 'synchronizer__parameterized1' (0#1) [C:/Users/Administrator/Desktop/uni/DAS/sources/common/synchronizer.vhd:35]
+	Parameter XPOL bound to: 1'b1 
+INFO: [Synth 8-3491] module 'edgeDetector' declared at 'C:/Users/Administrator/Desktop/uni/DAS/sources/common/edgeDetector.vhd:21' bound to instance 'ps2ClkEdgeDetector' of component 'edgeDetector' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/ps2interface.vhd:55]
+INFO: [Synth 8-638] synthesizing module 'edgeDetector' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/edgeDetector.vhd:35]
+	Parameter XPOL bound to: 1'b1 
+INFO: [Synth 8-256] done synthesizing module 'edgeDetector' (0#1) [C:/Users/Administrator/Desktop/uni/DAS/sources/common/edgeDetector.vhd:35]
+	Parameter STAGES bound to: 2 - type: integer 
+	Parameter XPOL bound to: 1'b1 
+INFO: [Synth 8-3491] module 'synchronizer' declared at 'C:/Users/Administrator/Desktop/uni/DAS/sources/common/synchronizer.vhd:21' bound to instance 'ps2DataSynchronizer' of component 'synchronizer' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/ps2interface.vhd:61]
+INFO: [Synth 8-256] done synthesizing module 'ps2interface' (0#1) [C:/Users/Administrator/Desktop/uni/DAS/sources/common/ps2interface.vhd:44]
+	Parameter FREQ_DIV bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'vgaGraphicInterface' declared at 'C:/Users/Administrator/Desktop/uni/DAS/sources/common/vgaGraphicInterface.vhd:23' bound to instance 'screenInterface' of component 'vgaGraphicInterface' [C:/Users/Administrator/Desktop/uni/DAS/sources/lab9/lab9.vhd:158]
+INFO: [Synth 8-638] synthesizing module 'vgaGraphicInterface' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/vgaGraphicInterface.vhd:51]
+	Parameter FREQ_DIV bound to: 4 - type: integer 
+	Parameter FREQ_DIV bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'vgaRefresher' declared at 'C:/Users/Administrator/Desktop/uni/DAS/sources/common/vgaRefresher.vhd:23' bound to instance 'screenInteface' of component 'vgaRefresher' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/vgaGraphicInterface.vhd:81]
+INFO: [Synth 8-638] synthesizing module 'vgaRefresher' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/vgaRefresher.vhd:48]
+	Parameter FREQ_DIV bound to: 4 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'vgaRefresher' (0#1) [C:/Users/Administrator/Desktop/uni/DAS/sources/common/vgaRefresher.vhd:48]
+INFO: [Synth 8-256] done synthesizing module 'vgaGraphicInterface' (0#1) [C:/Users/Administrator/Desktop/uni/DAS/sources/common/vgaGraphicInterface.vhd:51]
+WARNING: [Synth 8-614] signal 'RGBinterface' is read in the process but is not in the sensitivity list [C:/Users/Administrator/Desktop/uni/DAS/sources/lab9/lab9.vhd:164]
+INFO: [Synth 8-256] done synthesizing module 'lab9' (0#1) [C:/Users/Administrator/Desktop/uni/DAS/sources/lab9/lab9.vhd:39]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1350.801 ; gain = 513.516
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1350.801 ; gain = 513.516
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1350.801 ; gain = 513.516
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 1350.801 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [C:/Users/Administrator/Desktop/uni/DAS/sources/lab9/lab9.xdc]
+Finished Parsing XDC File [C:/Users/Administrator/Desktop/uni/DAS/sources/lab9/lab9.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/Administrator/Desktop/uni/DAS/sources/lab9/lab9.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/lab9_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/lab9_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1404.371 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1404.371 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1404.371 ; gain = 567.086
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35tcpg236-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1404.371 ; gain = 567.086
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1404.371 ; gain = 567.086
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-327] inferring latch for variable 'busy_reg' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/ps2interface.vhd:97]
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1404.371 ; gain = 567.086
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   10 Bit       Adders := 2     
+	   3 Input   10 Bit       Adders := 1     
+	   3 Input    9 Bit       Adders := 1     
+	   2 Input    4 Bit       Adders := 1     
+	   2 Input    2 Bit       Adders := 1     
++---XORs : 
+	   8 Input      1 Bit         XORs := 1     
++---Registers : 
+	               12 Bit    Registers := 1     
+	               11 Bit    Registers := 1     
+	               10 Bit    Registers := 4     
+	                9 Bit    Registers := 2     
+	                8 Bit    Registers := 2     
+	                4 Bit    Registers := 1     
+	                3 Bit    Registers := 3     
+	                2 Bit    Registers := 5     
+	                1 Bit    Registers := 5     
++---RAMs : 
+	            1536K Bit	(524288 X 3 bit)          RAMs := 1     
++---Muxes : 
+	   7 Input   31 Bit        Muxes := 1     
+	   2 Input   19 Bit        Muxes := 1     
+	   3 Input   14 Bit        Muxes := 1     
+	   2 Input   12 Bit        Muxes := 1     
+	   3 Input   12 Bit        Muxes := 1     
+	   2 Input   11 Bit        Muxes := 1     
+	   7 Input   11 Bit        Muxes := 1     
+	   2 Input   10 Bit        Muxes := 2     
+	   2 Input    9 Bit        Muxes := 2     
+	   7 Input    4 Bit        Muxes := 1     
+	   2 Input    4 Bit        Muxes := 3     
+	   3 Input    3 Bit        Muxes := 1     
+	   2 Input    3 Bit        Muxes := 2     
+	   2 Input    2 Bit        Muxes := 2     
+	   2 Input    1 Bit        Muxes := 5     
+	   7 Input    1 Bit        Muxes := 4     
+	   4 Input    1 Bit        Muxes := 1     
+	   6 Input    1 Bit        Muxes := 7     
+	   3 Input    1 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+WARNING: [Synth 8-3332] Sequential element (mouseInterface/busy_reg) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_1) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_1__0) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_1__1) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_2) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_2__0) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_2__1) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_2__2) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_2__3) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_2__4) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_1__2) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_1__3) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_1__4) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_2__5) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_2__6) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_2__7) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_2__8) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_2__9) is unused and will be removed from module lab9.
+WARNING: [Synth 8-3332] Sequential element (screenInterface/ram_reg_mux_sel_a_pos_2__10) is unused and will be removed from module lab9.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 1404.371 ; gain = 567.086
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+ROM: Preliminary Mapping Report
++------------+------------+---------------+----------------+
+|Module Name | RTL Object | Depth x Width | Implemented As | 
++------------+------------+---------------+----------------+
+|lab9        | rom[0]     | 256x2         | LUT            | 
+|lab9        | rom[0]     | 256x2         | LUT            | 
++------------+------------+---------------+----------------+
+
+
+Block RAM: Preliminary Mapping Report (see note below)
++------------+-------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name | RTL Object              | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++------------+-------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|lab9        | screenInterface/ram_reg | 512 K x 3(READ_FIRST)  | W |   | 512 K x 3(WRITE_FIRST) |   | R | Port A and B     | 0      | 48     | 
++------------+-------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+Note: The table above is a preliminary report that shows the Block RAMs at the current stage of the synthesis flow. Some Block RAMs may be reimplemented as non Block RAM primitives later in the synthesis flow. Multiple instantiated Block RAMs are reported only once. 
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:17 ; elapsed = 00:00:19 . Memory (MB): peak = 1404.371 ; gain = 567.086
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:18 ; elapsed = 00:00:20 . Memory (MB): peak = 1404.371 ; gain = 567.086
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Final Mapping Report
++------------+-------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name | RTL Object              | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++------------+-------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|lab9        | screenInterface/ram_reg | 512 K x 3(READ_FIRST)  | W |   | 512 K x 3(WRITE_FIRST) |   | R | Port A and B     | 0      | 48     | 
++------------+-------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_1_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_1_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_1_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_3_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_3_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_3_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_5_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_5_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_5_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_7_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_7_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_7_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_9_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_9_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_9_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_11_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_11_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_11_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_13_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_13_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_13_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_15_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_15_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance screenInterface/ram_reg_15_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:18 ; elapsed = 00:00:20 . Memory (MB): peak = 1404.371 ; gain = 567.086
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 1404.371 ; gain = 567.086
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 1404.371 ; gain = 567.086
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:22 ; elapsed = 00:00:25 . Memory (MB): peak = 1404.371 ; gain = 567.086
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:22 ; elapsed = 00:00:25 . Memory (MB): peak = 1404.371 ; gain = 567.086
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:22 ; elapsed = 00:00:25 . Memory (MB): peak = 1404.371 ; gain = 567.086
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:22 ; elapsed = 00:00:25 . Memory (MB): peak = 1404.371 ; gain = 567.086
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Static Shift Register Report:
++------------+----------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|Module Name | RTL Name                                     | Length | Width | Reset Signal | Pull out first Reg | Pull out last Reg | SRL16E | SRLC32E | 
++------------+----------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|lab9        | mouseInterface/ps2ClkEdgeDetector/aux_reg[0] | 3      | 1     | NO           | NO                 | YES               | 1      | 0       | 
++------------+----------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+---------+------+
+|      |Cell     |Count |
++------+---------+------+
+|1     |BUFG     |     1|
+|2     |CARRY4   |    16|
+|3     |LUT1     |     8|
+|4     |LUT2     |    68|
+|5     |LUT3     |    41|
+|6     |LUT4     |    91|
+|7     |LUT5     |    38|
+|8     |LUT6     |    72|
+|9     |RAMB36E1 |    48|
+|11    |SRL16E   |     1|
+|12    |FDRE     |   138|
+|13    |FDSE     |     3|
+|14    |IBUF     |     5|
+|15    |IOBUF    |     2|
+|16    |OBUF     |    14|
++------+---------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:22 ; elapsed = 00:00:25 . Memory (MB): peak = 1404.371 ; gain = 567.086
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 21 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:15 ; elapsed = 00:00:23 . Memory (MB): peak = 1404.371 ; gain = 513.516
+Synthesis Optimization Complete : Time (s): cpu = 00:00:22 ; elapsed = 00:00:25 . Memory (MB): peak = 1404.371 ; gain = 567.086
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.010 . Memory (MB): peak = 1404.371 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 66 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1404.371 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 2 instances were transformed.
+  IOBUF => IOBUF (IBUF, OBUFT): 2 instances
+
+Synth Design complete | Checksum: 17b0d9fc
+INFO: [Common 17-83] Releasing license: Synthesis
+60 Infos, 22 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:24 ; elapsed = 00:00:29 . Memory (MB): peak = 1404.371 ; gain = 970.387
+INFO: [Common 17-1381] The checkpoint 'C:/Users/Administrator/Desktop/uni/DAS/projects/lab9/lab9.runs/synth_1/lab9.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file lab9_utilization_synth.rpt -pb lab9_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Sat May  4 12:07:04 2024...
