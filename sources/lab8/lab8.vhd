@@ -243,10 +243,12 @@ begin
   cursorRender:
   process (row, col, uRow, x, y)
   begin
+  if rising_edge(clk) then
     RGB <= RGBinterface;
     if unsigned(row) = y and unsigned(col) = x then
       RGB <= FGCOLOR;
     end if;
+  end if;
   end process;
   
 end syn;

@@ -386,7 +386,7 @@ begin
       if we='1' then
         ram(to_integer(unsigned(ramWrAddr))) <= ramWrData;
       end if; 
-      asciiCode <= ram(to_integer(unsigned(ramRrAddr)));
+      asciiCode <= ram(to_integer(unsigned(ramRdAddr)));
     end if;
   end process;
   
