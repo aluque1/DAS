@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenRun Id="impl_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1715038602">
+  <File Type="ROUTE-RQS-RPT" Name="route_report_qor_suggestions_0.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-RQS" Name="lab10loopback_postroute_physopted.rqs"/>
+  <File Type="ROUTE-RQS" Name="lab10loopback_routed.rqs"/>
+  <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
+  <File Type="BG-BGN" Name="lab10loopback.bgn"/>
+  <File Type="BITSTR-SYSDEF" Name="lab10loopback.sysdef"/>
+  <File Type="BITSTR-LTX" Name="debug_nets.ltx"/>
+  <File Type="BITSTR-LTX" Name="lab10loopback.ltx"/>
+  <File Type="RBD_FILE" Name="lab10loopback.rbd"/>
+  <File Type="NPI_FILE" Name="lab10loopback.npi"/>
+  <File Type="RNPI_FILE" Name="lab10loopback.rnpi"/>
+  <File Type="CFI_FILE" Name="lab10loopback.cfi"/>
+  <File Type="RCFI_FILE" Name="lab10loopback.rcfi"/>
+  <File Type="PL-PDI-FILE" Name="lab10loopback_pld.pdi"/>
+  <File Type="BOOT-PDI-FILE" Name="lab10loopback_soc.pdi"/>
+  <File Type="RDI-RDI" Name="lab10loopback.vdi"/>
+  <File Type="PDI-FILE" Name="lab10loopback.pdi"/>
+  <File Type="BITSTR-MMI" Name="lab10loopback.mmi"/>
+  <File Type="BITSTR-BMM" Name="lab10loopback_bd.bmm"/>
+  <File Type="BITSTR-NKY" Name="lab10loopback.nky"/>
+  <File Type="BITSTR-RBT" Name="lab10loopback.rbt"/>
+  <File Type="BITSTR-MSK" Name="lab10loopback.msk"/>
+  <File Type="BG-BIN" Name="lab10loopback.bin"/>
+  <File Type="POSTROUTE-PHYSOPT-RQS-RPT" Name="postroute_physopt_report_qor_suggestions_0.rpt"/>
+  <File Type="BG-BIT" Name="lab10loopback.bit"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-RPX" Name="lab10loopback_bus_skew_postroute_physopted.rpx"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-PB" Name="lab10loopback_bus_skew_postroute_physopted.pb"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW" Name="lab10loopback_bus_skew_postroute_physopted.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-RPX" Name="lab10loopback_timing_summary_postroute_physopted.rpx"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-PB" Name="lab10loopback_timing_summary_postroute_physopted.pb"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING" Name="lab10loopback_timing_summary_postroute_physopted.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-BLACKBOX-DCP" Name="lab10loopback_postroute_physopt_bb.dcp"/>
+  <File Type="POSTROUTE-PHYSOPT-DCP" Name="lab10loopback_postroute_physopt.dcp"/>
+  <File Type="BG-DRC" Name="lab10loopback.drc"/>
+  <File Type="ROUTE-RQS-PB" Name="lab10loopback_rqs_routed.pb"/>
+  <File Type="ROUTE-BUS-SKEW-RPX" Name="lab10loopback_bus_skew_routed.rpx"/>
+  <File Type="ROUTE-BUS-SKEW-PB" Name="lab10loopback_bus_skew_routed.pb"/>
+  <File Type="ROUTE-BUS-SKEW" Name="lab10loopback_bus_skew_routed.rpt"/>
+  <File Type="ROUTE-CLK" Name="lab10loopback_clock_utilization_routed.rpt"/>
+  <File Type="ROUTE-SIMILARITY" Name="lab10loopback_incremental_reuse_routed.rpt"/>
+  <File Type="ROUTE-TIMING-RPX" Name="lab10loopback_timing_summary_routed.rpx"/>
+  <File Type="ROUTE-TIMING-PB" Name="lab10loopback_timing_summary_routed.pb"/>
+  <File Type="ROUTE-TIMINGSUMMARY" Name="lab10loopback_timing_summary_routed.rpt"/>
+  <File Type="ROUTE-STATUS-PB" Name="lab10loopback_route_status.pb"/>
+  <File Type="ROUTE-STATUS" Name="lab10loopback_route_status.rpt"/>
+  <File Type="ROUTE-PWR-RPX" Name="lab10loopback_power_routed.rpx"/>
+  <File Type="ROUTE-PWR-SUM" Name="lab10loopback_power_summary_routed.pb"/>
+  <File Type="ROUTE-PWR" Name="lab10loopback_power_routed.rpt"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="lab10loopback_methodology_drc_routed.pb"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="lab10loopback_methodology_drc_routed.rpx"/>
+  <File Type="ROUTE-METHODOLOGY-DRC" Name="lab10loopback_methodology_drc_routed.rpt"/>
+  <File Type="ROUTE-DRC-RPX" Name="lab10loopback_drc_routed.rpx"/>
+  <File Type="ROUTE-DRC-PB" Name="lab10loopback_drc_routed.pb"/>
+  <File Type="ROUTE-DRC" Name="lab10loopback_drc_routed.rpt"/>
+  <File Type="ROUTE-BLACKBOX-DCP" Name="lab10loopback_routed_bb.dcp"/>
+  <File Type="ROUTE-DCP" Name="lab10loopback_routed.dcp"/>
+  <File Type="ROUTE-ERROR-DCP" Name="lab10loopback_routed_error.dcp"/>
+  <File Type="PHYSOPT-TIMING" Name="lab10loopback_timing_summary_physopted.rpt"/>
+  <File Type="PHYSOPT-DRC" Name="lab10loopback_drc_physopted.rpt"/>
+  <File Type="PHYSOPT-DCP" Name="lab10loopback_physopt.dcp"/>
+  <File Type="POSTPLACE-PWROPT-TIMING" Name="lab10loopback_timing_summary_postplace_pwropted.rpt"/>
+  <File Type="POSTPLACE-PWROPT-DCP" Name="lab10loopback_postplace_pwropt.dcp"/>
+  <File Type="PLACE-RQA-PB" Name="lab10loopback_rqa_placed.pb"/>
+  <File Type="PLACE-TIMING" Name="lab10loopback_timing_summary_placed.rpt"/>
+  <File Type="PLACE-PRE-SIMILARITY" Name="lab10loopback_incremental_reuse_pre_placed.rpt"/>
+  <File Type="PLACE-SIMILARITY" Name="lab10loopback_incremental_reuse_placed.rpt"/>
+  <File Type="PLACE-CTRL" Name="lab10loopback_control_sets_placed.rpt"/>
+  <File Type="PLACE-UTIL-PB" Name="lab10loopback_utilization_placed.pb"/>
+  <File Type="PLACE-UTIL" Name="lab10loopback_utilization_placed.rpt"/>
+  <File Type="PLACE-CLK" Name="lab10loopback_clock_utilization_placed.rpt"/>
+  <File Type="PLACE-IO" Name="lab10loopback_io_placed.rpt"/>
+  <File Type="PLACE-DCP" Name="lab10loopback_placed.dcp"/>
+  <File Type="PWROPT-TIMING" Name="lab10loopback_timing_summary_pwropted.rpt"/>
+  <File Type="PWROPT-DRC" Name="lab10loopback_drc_pwropted.rpt"/>
+  <File Type="PWROPT-DCP" Name="lab10loopback_pwropt.dcp"/>
+  <File Type="OPT-RQA-PB" Name="lab10loopback_rqa_opted.pb"/>
+  <File Type="OPT-HWDEF" Name="lab10loopback.hwdef"/>
+  <File Type="OPT-METHODOLOGY-DRC" Name="lab10loopback_methodology_drc_opted.rpt"/>
+  <File Type="OPT-DRC" Name="lab10loopback_drc_opted.rpt"/>
+  <File Type="OPT-DCP" Name="lab10loopback_opt.dcp"/>
+  <File Type="OPT-TIMING" Name="lab10loopback_timing_summary_opted.rpt"/>
+  <File Type="REPORTS-TCL" Name="lab10loopback_reports.tcl"/>
+  <File Type="INIT-TIMING" Name="lab10loopback_timing_summary_init.rpt"/>
+  <File Type="PA-TCL" Name="lab10loopback.tcl"/>
+  <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
+    <Filter Type="Srcs"/>
+    <File Path="$PPRDIR/../../sources/common/common.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/common/iisInterface.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/lab10loopback/lab10loopback.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="DesignMode" Val="RTL"/>
+      <Option Name="TopModule" Val="lab10loopback"/>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1" RelGenDir="$PGENDIR/constrs_1">
+    <Filter Type="Constrs"/>
+    <File Path="$PPRDIR/../../sources/lab10loopback/lab10loopback.xdc">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="ConstrsType" Val="XDC"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="utils" Type="Utils" RelSrcDir="$PSRCDIR/utils_1" RelGenDir="$PGENDIR/utils_1">
+    <Filter Type="Utils"/>
+    <File Path="$PSRCDIR/utils_1/imports/synth_1/lab10loopback.dcp">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedInSteps" Val="synth_1"/>
+        <Attr Name="AutoDcp" Val="1"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <Strategy Version="1" Minor="2">
+    <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2023"/>
+    <Step Id="init_design"/>
+    <Step Id="opt_design"/>
+    <Step Id="power_opt_design"/>
+    <Step Id="place_design"/>
+    <Step Id="post_place_power_opt_design"/>
+    <Step Id="phys_opt_design"/>
+    <Step Id="route_design"/>
+    <Step Id="post_route_phys_opt_design"/>
+    <Step Id="write_bitstream"/>
+  </Strategy>
+</GenRun>
