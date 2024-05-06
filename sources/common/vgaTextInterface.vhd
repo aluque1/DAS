@@ -411,7 +411,7 @@ begin
       '0' when X"7e",
       '1' when others;
 
-  color <= FGCOLOR when bitMapPixel='1' else BGCOLOR;  
+  color <= BGCOLOR when bitMapPixel='1' else FGCOLOR;  
   
 ------------------  
 

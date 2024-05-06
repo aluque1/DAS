@@ -180,7 +180,7 @@ begin
                 when others => state := keyOn;
                 end case;
             when keyOff =>
-            state := keyOn;
+                state := keyOn;
                 case key is
                 when X"12" => shiftP <= false;
                 --when X"58" => capsOn <= false;--revisar @Luque y aqui nada porque en teoria este si es un toggle
@@ -207,11 +207,10 @@ begin
     if rising_edge(clk) then
         if rstSync='1' or clear = '1' then
             x <= (others => '0');
-            clear <= '0';--creo que esto es innecesario
         else
             if newLine = '1' then
                 x <= (others => '0');
-            elsif keyRdy = '1' and key /= X"F0" then -- todo esto puede estar mal
+            elsif keyRdy='1' and key = X"F0" then -- avanza en caps y shift pero no se como solucionarlo
                 x <= (x + 1) mod COLSxLINE;
             end if;
         end if;
@@ -224,10 +223,9 @@ begin
     if rising_edge(clk) then
         if rstSync='1' or clear = '1' then
             y <= (others => '0');
-            clear <= '0';--creo que esto es innecesario
         else
             if newLine = '1' or x = COLSxLINE - 1 then
-                y <= (y + 1) mod ROWSxFRAME;
+                y <= (y + 1) mod ROWSxFRAME; -- Esto peta no se porque
             end if;
         end if;
     end if;
@@ -241,15 +239,17 @@ begin
       
  ------------------     
 
-  -- Esto no funciona y da error en el ps2 reciever por algun motivo
+  --
   cursorRender:
-  process (row, col, uRow, x, y)
+  process (clk, row, col, uRow, x, y)
   begin
-      if unsigned(row) = y and unsigned(col) = x then
-        RGB <= FGCOLOR;
-      else
-        RGB <= RGBinterface;
-      end if;
+    if rising_edge(clk) then
+        if unsigned(row) = y and unsigned(col) = x then
+            RGB <= FGCOLOR;
+        else
+            RGB <= RGBinterface;
+        end if;
+    end if;
   end process;
   
 end syn;
