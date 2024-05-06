@@ -151,7 +151,7 @@ begin
   
   ps2KeyboardInterface : ps2receiver
     port map ( clk => clk, rst => rstSync, dataRdy => keyRdy, data => key, ps2Clk => ps2Clk, ps2Data => ps2Data ); 
-       
+            
   keyScanner:
   process (clk)
     type states is (keyON, keyOFF);
@@ -207,6 +207,7 @@ begin
     if rising_edge(clk) then
         if rstSync='1' or clear = '1' then
             x <= (others => '0');
+            clear <= '0';
         else
             if newLine = '1' then
                 x <= (others => '0');
@@ -223,6 +224,7 @@ begin
     if rising_edge(clk) then
         if rstSync='1' or clear = '1' then
             y <= (others => '0');
+            clear <= '0';
         else
             if newLine = '1' or x = COLSxLINE - 1 then
                 y <= (y + 1) mod ROWSxFRAME;
@@ -239,16 +241,15 @@ begin
       
  ------------------     
 
-  ---- Revisar la teoria es que el bloque en el que esta el puntero esta en verde
+  -- Esto no funciona y da error en el ps2 reciever por algun motivo
   cursorRender:
   process (row, col, uRow, x, y)
   begin
-  if rising_edge(clk) then
-    RGB <= RGBinterface;
-    --if unsigned(row) = y and unsigned(col) = x then
-     -- RGB <= FGCOLOR;
-    --end if;
-  end if;
+      if unsigned(row) = y and unsigned(col) = x then
+        RGB <= FGCOLOR;
+      else
+        RGB <= RGBinterface;
+      end if;
   end process;
   
 end syn;
