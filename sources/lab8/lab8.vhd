@@ -166,16 +166,15 @@ begin
         newLine <= '0';
         clear   <= '0';
       else
-        --NO se que se pone aqui
-        -- ...
+        -- TODO esto puede estar muy mal.
+        key <= X"7f";
         if keyRdy='1' then
           case state is
             when keyOn =>
-                charRdy <= '1'; --no se si va aqui
                 case key is
                 when X"F0" => state := keyOFF;
                 when X"12" => shiftP <= true;
-                when X"58" => capsOn <= true;--revisar @LUQUE yo aqui pondria not capsOn
+                when X"58" => capsOn <= not capsOn; --revisar @LUQUE he cambiado de true
                 when X"5a" => newLine <= '1';
                 when X"76" => clear <= '1';
                 when others => state := keyOn;
@@ -184,7 +183,7 @@ begin
             state := keyOn;
                 case key is
                 when X"12" => shiftP <= false;
-                when X"58" => capsOn <= false;--revisar @Luque y aqui nada porque en teoria este si es un toggle
+                -- when X"58" => capsOn <= false;--revisar @Luque y aqui nada porque en teoria este si es un toggle
                 when X"5a" => newLine <= '0';
                 when X"76" => clear <= '0';
                 when others => state := keyOff;
@@ -202,7 +201,6 @@ begin
   asciiCode <= rom(to_integer(unsigned(romAddr)));  
     
   ------------------     
-  
   xCounter:
   process (clk)
   begin
@@ -210,7 +208,9 @@ begin
         if rstSync='1' or clear = '1' then
             x <= (others => '0');
         else
-            if keyRdy='1' then
+            if newLine = '1' then
+                x <= (others => '0');
+            elsif keyRdy = '1' and key /= x"F0" then -- todo esto puede estar mal
                 x <= (x + 1) mod COLSxLINE;
             end if;
         end if;
@@ -245,9 +245,9 @@ begin
   begin
   if rising_edge(clk) then
     RGB <= RGBinterface;
-    if unsigned(row) = y and unsigned(col) = x then
-      RGB <= FGCOLOR;
-    end if;
+    --if unsigned(row) = y and unsigned(col) = x then
+     -- RGB <= FGCOLOR;
+    --end if;
   end if;
   end process;
   
