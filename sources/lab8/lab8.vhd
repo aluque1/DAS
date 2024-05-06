@@ -166,8 +166,8 @@ begin
         newLine <= '0';
         clear   <= '0';
       else
-        -- TODO esto puede estar muy mal.
-        key <= X"7f";
+        --NO se puede modificar el valor de key ya que es un valor que viene del ps2
+        --Aqui tiene que ir otra cosa
         if keyRdy='1' then
           case state is
             when keyOn =>
@@ -183,7 +183,7 @@ begin
             state := keyOn;
                 case key is
                 when X"12" => shiftP <= false;
-                -- when X"58" => capsOn <= false;--revisar @Luque y aqui nada porque en teoria este si es un toggle
+                --when X"58" => capsOn <= false;--revisar @Luque y aqui nada porque en teoria este si es un toggle
                 when X"5a" => newLine <= '0';
                 when X"76" => clear <= '0';
                 when others => state := keyOff;
@@ -207,11 +207,11 @@ begin
     if rising_edge(clk) then
         if rstSync='1' or clear = '1' then
             x <= (others => '0');
-            clear <= '0';
+            clear <= '0';--creo que esto es innecesario
         else
             if newLine = '1' then
                 x <= (others => '0');
-            elsif keyRdy = '1' and key /= x"F0" then -- todo esto puede estar mal
+            elsif keyRdy = '1' and key /= X"F0" then -- todo esto puede estar mal
                 x <= (x + 1) mod COLSxLINE;
             end if;
         end if;
@@ -224,7 +224,7 @@ begin
     if rising_edge(clk) then
         if rstSync='1' or clear = '1' then
             y <= (others => '0');
-            clear <= '0';
+            clear <= '0';--creo que esto es innecesario
         else
             if newLine = '1' or x = COLSxLINE - 1 then
                 y <= (y + 1) mod ROWSxFRAME;

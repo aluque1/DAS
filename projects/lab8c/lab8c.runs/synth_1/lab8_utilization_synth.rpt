@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Mon May  6 19:30:35 2024
-| Host         : alv-debian running 64-bit Debian GNU/Linux 12 (bookworm)
+| Date         : Mon May  6 21:05:19 2024
+| Host         : Jorbis-Zenbook running 64-bit unknown
 | Command      : report_utilization -file lab8_utilization_synth.rpt -pb lab8_utilization_synth.pb
 | Design       : lab8
 | Device       : xc7a35tcpg236-1
@@ -36,8 +36,8 @@ Table of Contents
 |   LUT as Memory            |    1 |     0 |          0 |      9600 |  0.01 |
 |     LUT as Distributed RAM |    0 |     0 |            |           |       |
 |     LUT as Shift Register  |    1 |     0 |            |           |       |
-| Slice Registers            |   75 |     0 |          0 |     41600 |  0.18 |
-|   Register as Flip Flop    |   75 |     0 |          0 |     41600 |  0.18 |
+| Slice Registers            |   67 |     0 |          0 |     41600 |  0.16 |
+|   Register as Flip Flop    |   67 |     0 |          0 |     41600 |  0.16 |
 |   Register as Latch        |    0 |     0 |          0 |     41600 |  0.00 |
 | F7 Muxes                   |    0 |     0 |          0 |     16300 |  0.00 |
 | F8 Muxes                   |    0 |     0 |          0 |      8150 |  0.00 |
@@ -61,7 +61,7 @@ Warning! LUT value is adjusted to account for LUT combining.
 | 0     |          Yes |           - |          Set |
 | 0     |          Yes |           - |        Reset |
 | 13    |          Yes |         Set |            - |
-| 62    |          Yes |       Reset |            - |
+| 54    |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -153,7 +153,7 @@ Warning! LUT value is adjusted to account for LUT combining.
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| FDRE     |   62 |        Flop & Latch |
+| FDRE     |   54 |        Flop & Latch |
 | LUT6     |   33 |                 LUT |
 | OBUF     |   14 |                  IO |
 | LUT5     |   13 |                 LUT |
@@ -161,7 +161,7 @@ Warning! LUT value is adjusted to account for LUT combining.
 | LUT4     |   12 |                 LUT |
 | LUT2     |    9 |                 LUT |
 | LUT3     |    7 |                 LUT |
-| LUT1     |    5 |                 LUT |
+| LUT1     |    4 |                 LUT |
 | IBUF     |    4 |                  IO |
 | SRL16E   |    1 |  Distributed Memory |
 | BUFG     |    1 |               Clock |

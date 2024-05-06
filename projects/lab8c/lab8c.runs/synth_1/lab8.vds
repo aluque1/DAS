@@ -3,18 +3,17 @@
 # SW Build 3865809 on Sun May  7 15:04:56 MDT 2023
 # IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
 # SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
-# Start of session at: Mon May  6 19:30:05 2024
-# Process ID: 62328
-# Current directory: /home/alv/Desktop/uni/DAS/projects/lab8c/lab8c.runs/synth_1
+# Start of session at: Mon May  6 21:04:57 2024
+# Process ID: 21563
+# Current directory: /home/jorbis/Documentos/GitHub/DAS/projects/lab8c/lab8c.runs/synth_1
 # Command line: vivado -log lab8.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source lab8.tcl
-# Log file: /home/alv/Desktop/uni/DAS/projects/lab8c/lab8c.runs/synth_1/lab8.vds
-# Journal file: /home/alv/Desktop/uni/DAS/projects/lab8c/lab8c.runs/synth_1/vivado.jou
-# Running On: alv-debian, OS: Linux, CPU Frequency: 3086.505 MHz, CPU Physical cores: 4, Host memory: 16450 MB
+# Log file: /home/jorbis/Documentos/GitHub/DAS/projects/lab8c/lab8c.runs/synth_1/lab8.vds
+# Journal file: /home/jorbis/Documentos/GitHub/DAS/projects/lab8c/lab8c.runs/synth_1/vivado.jou
+# Running On: Jorbis-Zenbook, OS: Linux, CPU Frequency: 3631.329 MHz, CPU Physical cores: 16, Host memory: 16136 MB
 #-----------------------------------------------------------
 source lab8.tcl -notrace
-create_project: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1275.879 ; gain = 62.047 ; free physical = 6325 ; free virtual = 11720
-Command: read_checkpoint -auto_incremental -incremental /home/alv/Desktop/uni/DAS/projects/lab8c/lab8c.srcs/utils_1/imports/synth_1/lab8.dcp
-INFO: [Vivado 12-5825] Read reference checkpoint from /home/alv/Desktop/uni/DAS/projects/lab8c/lab8c.srcs/utils_1/imports/synth_1/lab8.dcp for incremental synthesis
+Command: read_checkpoint -auto_incremental -incremental /home/jorbis/Documentos/GitHub/DAS/projects/lab8c/lab8c.srcs/utils_1/imports/synth_1/lab8.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from /home/jorbis/Documentos/GitHub/DAS/projects/lab8c/lab8c.srcs/utils_1/imports/synth_1/lab8.dcp for incremental synthesis
 INFO: [Vivado 12-7989] Please ensure there are no constraint changes
 Command: synth_design -top lab8 -part xc7a35tcpg236-1
 Starting synth_design
@@ -25,64 +24,64 @@ INFO: [Designutils 20-5440] No compile time benefit to using incremental synthes
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 62355
+INFO: [Synth 8-7075] Helper process launched with PID 21594
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1978.719 ; gain = 377.770 ; free physical = 5317 ; free virtual = 10711
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 1981.074 ; gain = 380.738 ; free physical = 8408 ; free virtual = 14640
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-638] synthesizing module 'lab8' [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:38]
+INFO: [Synth 8-638] synthesizing module 'lab8' [/home/jorbis/Documentos/GitHub/DAS/sources/lab8/lab8.vhd:38]
 	Parameter STAGES bound to: 2 - type: integer 
 	Parameter XPOL bound to: 1'b0 
-INFO: [Synth 8-3491] module 'synchronizer' declared at '/home/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd:21' bound to instance 'rstSynchronizer' of component 'synchronizer' [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:146]
-INFO: [Synth 8-638] synthesizing module 'synchronizer' [/home/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd:35]
+INFO: [Synth 8-3491] module 'synchronizer' declared at '/home/jorbis/Documentos/GitHub/DAS/sources/common/synchronizer.vhd:21' bound to instance 'rstSynchronizer' of component 'synchronizer' [/home/jorbis/Documentos/GitHub/DAS/sources/lab8/lab8.vhd:146]
+INFO: [Synth 8-638] synthesizing module 'synchronizer' [/home/jorbis/Documentos/GitHub/DAS/sources/common/synchronizer.vhd:35]
 	Parameter STAGES bound to: 2 - type: integer 
 	Parameter XPOL bound to: 1'b0 
-INFO: [Synth 8-256] done synthesizing module 'synchronizer' (0#1) [/home/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd:35]
-INFO: [Synth 8-3491] module 'ps2receiver' declared at '/home/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:21' bound to instance 'ps2KeyboardInterface' of component 'ps2receiver' [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:152]
-INFO: [Synth 8-638] synthesizing module 'ps2receiver' [/home/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:38]
+INFO: [Synth 8-256] done synthesizing module 'synchronizer' (0#1) [/home/jorbis/Documentos/GitHub/DAS/sources/common/synchronizer.vhd:35]
+INFO: [Synth 8-3491] module 'ps2receiver' declared at '/home/jorbis/Documentos/GitHub/DAS/sources/common/ps2receiver.vhd:21' bound to instance 'ps2KeyboardInterface' of component 'ps2receiver' [/home/jorbis/Documentos/GitHub/DAS/sources/lab8/lab8.vhd:152]
+INFO: [Synth 8-638] synthesizing module 'ps2receiver' [/home/jorbis/Documentos/GitHub/DAS/sources/common/ps2receiver.vhd:38]
 	Parameter STAGES bound to: 4 - type: integer 
 	Parameter XPOL bound to: 1'b0 
-INFO: [Synth 8-3491] module 'synchronizer' declared at '/home/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd:21' bound to instance 'ps2ClkSynchronizer' of component 'synchronizer' [/home/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:48]
-INFO: [Synth 8-638] synthesizing module 'synchronizer__parameterized1' [/home/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd:35]
+INFO: [Synth 8-3491] module 'synchronizer' declared at '/home/jorbis/Documentos/GitHub/DAS/sources/common/synchronizer.vhd:21' bound to instance 'ps2ClkSynchronizer' of component 'synchronizer' [/home/jorbis/Documentos/GitHub/DAS/sources/common/ps2receiver.vhd:48]
+INFO: [Synth 8-638] synthesizing module 'synchronizer__parameterized1' [/home/jorbis/Documentos/GitHub/DAS/sources/common/synchronizer.vhd:35]
 	Parameter STAGES bound to: 4 - type: integer 
 	Parameter XPOL bound to: 1'b0 
-INFO: [Synth 8-256] done synthesizing module 'synchronizer__parameterized1' (0#1) [/home/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd:35]
+INFO: [Synth 8-256] done synthesizing module 'synchronizer__parameterized1' (0#1) [/home/jorbis/Documentos/GitHub/DAS/sources/common/synchronizer.vhd:35]
 	Parameter STAGES bound to: 2 - type: integer 
 	Parameter XPOL bound to: 1'b0 
-INFO: [Synth 8-3491] module 'synchronizer' declared at '/home/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd:21' bound to instance 'ps2DataSynchronizer' of component 'synchronizer' [/home/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:52]
+INFO: [Synth 8-3491] module 'synchronizer' declared at '/home/jorbis/Documentos/GitHub/DAS/sources/common/synchronizer.vhd:21' bound to instance 'ps2DataSynchronizer' of component 'synchronizer' [/home/jorbis/Documentos/GitHub/DAS/sources/common/ps2receiver.vhd:52]
 	Parameter XPOL bound to: 1'b0 
-INFO: [Synth 8-3491] module 'edgeDetector' declared at '/home/alv/Desktop/uni/DAS/sources/common/edgeDetector.vhd:21' bound to instance 'ps2ClkEdgeDetector' of component 'edgeDetector' [/home/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:56]
-INFO: [Synth 8-638] synthesizing module 'edgeDetector' [/home/alv/Desktop/uni/DAS/sources/common/edgeDetector.vhd:35]
+INFO: [Synth 8-3491] module 'edgeDetector' declared at '/home/jorbis/Documentos/GitHub/DAS/sources/common/edgeDetector.vhd:21' bound to instance 'ps2ClkEdgeDetector' of component 'edgeDetector' [/home/jorbis/Documentos/GitHub/DAS/sources/common/ps2receiver.vhd:56]
+INFO: [Synth 8-638] synthesizing module 'edgeDetector' [/home/jorbis/Documentos/GitHub/DAS/sources/common/edgeDetector.vhd:35]
 	Parameter XPOL bound to: 1'b0 
-INFO: [Synth 8-256] done synthesizing module 'edgeDetector' (0#1) [/home/alv/Desktop/uni/DAS/sources/common/edgeDetector.vhd:35]
-INFO: [Synth 8-256] done synthesizing module 'ps2receiver' (0#1) [/home/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:38]
+INFO: [Synth 8-256] done synthesizing module 'edgeDetector' (0#1) [/home/jorbis/Documentos/GitHub/DAS/sources/common/edgeDetector.vhd:35]
+INFO: [Synth 8-256] done synthesizing module 'ps2receiver' (0#1) [/home/jorbis/Documentos/GitHub/DAS/sources/common/ps2receiver.vhd:38]
 	Parameter FREQ_DIV bound to: 4 - type: integer 
 	Parameter BGCOLOR bound to: 12'b000000000000 
 	Parameter FGCOLOR bound to: 12'b000011110000 
-INFO: [Synth 8-3491] module 'vgaTextInterface' declared at '/home/alv/Desktop/uni/DAS/sources/common/vgaTextInterface.vhd:24' bound to instance 'screenInterface' of component 'vgaTextInterface' [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:238]
-INFO: [Synth 8-638] synthesizing module 'vgaTextInterface' [/home/alv/Desktop/uni/DAS/sources/common/vgaTextInterface.vhd:56]
+INFO: [Synth 8-3491] module 'vgaTextInterface' declared at '/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaTextInterface.vhd:24' bound to instance 'screenInterface' of component 'vgaTextInterface' [/home/jorbis/Documentos/GitHub/DAS/sources/lab8/lab8.vhd:238]
+INFO: [Synth 8-638] synthesizing module 'vgaTextInterface' [/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaTextInterface.vhd:56]
 	Parameter FREQ_DIV bound to: 4 - type: integer 
 	Parameter BGCOLOR bound to: 12'b000000000000 
 	Parameter FGCOLOR bound to: 12'b000011110000 
 	Parameter FREQ_DIV bound to: 4 - type: integer 
-INFO: [Synth 8-3491] module 'vgaRefresher' declared at '/home/alv/Desktop/uni/DAS/sources/common/vgaRefresher.vhd:23' bound to instance 'screenInteface' of component 'vgaRefresher' [/home/alv/Desktop/uni/DAS/sources/common/vgaTextInterface.vhd:352]
-INFO: [Synth 8-638] synthesizing module 'vgaRefresher' [/home/alv/Desktop/uni/DAS/sources/common/vgaRefresher.vhd:48]
+INFO: [Synth 8-3491] module 'vgaRefresher' declared at '/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaRefresher.vhd:23' bound to instance 'screenInteface' of component 'vgaRefresher' [/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaTextInterface.vhd:352]
+INFO: [Synth 8-638] synthesizing module 'vgaRefresher' [/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaRefresher.vhd:48]
 	Parameter FREQ_DIV bound to: 4 - type: integer 
-INFO: [Synth 8-256] done synthesizing module 'vgaRefresher' (0#1) [/home/alv/Desktop/uni/DAS/sources/common/vgaRefresher.vhd:48]
-WARNING: [Synth 8-6044] Case expression and choice expression width mismatch, Case expression is 3 wide and choice expression is 8 wide [/home/alv/Desktop/uni/DAS/sources/common/vgaTextInterface.vhd:410]
-WARNING: [Synth 8-6044] Case expression and choice expression width mismatch, Case expression is 3 wide and choice expression is 8 wide [/home/alv/Desktop/uni/DAS/sources/common/vgaTextInterface.vhd:409]
-WARNING: [Synth 8-6044] Case expression and choice expression width mismatch, Case expression is 3 wide and choice expression is 8 wide [/home/alv/Desktop/uni/DAS/sources/common/vgaTextInterface.vhd:411]
-WARNING: [Synth 8-153] case item 8'b01000010 will never be executed [/home/alv/Desktop/uni/DAS/sources/common/vgaTextInterface.vhd:407]
-WARNING: [Synth 8-153] case item 8'b01111110 will never be executed [/home/alv/Desktop/uni/DAS/sources/common/vgaTextInterface.vhd:407]
-INFO: [Synth 8-256] done synthesizing module 'vgaTextInterface' (0#1) [/home/alv/Desktop/uni/DAS/sources/common/vgaTextInterface.vhd:56]
-WARNING: [Synth 8-614] signal 'RGBinterface' is read in the process but is not in the sensitivity list [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:245]
-INFO: [Synth 8-256] done synthesizing module 'lab8' (0#1) [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:38]
-WARNING: [Synth 8-6014] Unused sequential element bitMapLine_reg was removed.  [/home/alv/Desktop/uni/DAS/sources/common/vgaTextInterface.vhd:401]
+INFO: [Synth 8-256] done synthesizing module 'vgaRefresher' (0#1) [/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaRefresher.vhd:48]
+WARNING: [Synth 8-6044] Case expression and choice expression width mismatch, Case expression is 3 wide and choice expression is 8 wide [/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaTextInterface.vhd:410]
+WARNING: [Synth 8-6044] Case expression and choice expression width mismatch, Case expression is 3 wide and choice expression is 8 wide [/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaTextInterface.vhd:409]
+WARNING: [Synth 8-6044] Case expression and choice expression width mismatch, Case expression is 3 wide and choice expression is 8 wide [/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaTextInterface.vhd:411]
+WARNING: [Synth 8-153] case item 8'b01000010 will never be executed [/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaTextInterface.vhd:407]
+WARNING: [Synth 8-153] case item 8'b01111110 will never be executed [/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaTextInterface.vhd:407]
+INFO: [Synth 8-256] done synthesizing module 'vgaTextInterface' (0#1) [/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaTextInterface.vhd:56]
+WARNING: [Synth 8-614] signal 'RGBinterface' is read in the process but is not in the sensitivity list [/home/jorbis/Documentos/GitHub/DAS/sources/lab8/lab8.vhd:245]
+INFO: [Synth 8-256] done synthesizing module 'lab8' (0#1) [/home/jorbis/Documentos/GitHub/DAS/sources/lab8/lab8.vhd:38]
+WARNING: [Synth 8-6014] Unused sequential element bitMapLine_reg was removed.  [/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaTextInterface.vhd:401]
 WARNING: [Synth 8-6014] Unused sequential element ram_reg was removed. 
-WARNING: [Synth 8-6014] Unused sequential element asciiCode_reg was removed.  [/home/alv/Desktop/uni/DAS/sources/common/vgaTextInterface.vhd:389]
-WARNING: [Synth 8-6014] Unused sequential element clearX_reg was removed.  [/home/alv/Desktop/uni/DAS/sources/common/vgaTextInterface.vhd:370]
-WARNING: [Synth 8-6014] Unused sequential element clearY_reg was removed.  [/home/alv/Desktop/uni/DAS/sources/common/vgaTextInterface.vhd:371]
-WARNING: [Synth 8-6014] Unused sequential element shiftP_reg was removed.  [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:163]
-WARNING: [Synth 8-6014] Unused sequential element capsOn_reg was removed.  [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:164]
+WARNING: [Synth 8-6014] Unused sequential element asciiCode_reg was removed.  [/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaTextInterface.vhd:389]
+WARNING: [Synth 8-6014] Unused sequential element clearX_reg was removed.  [/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaTextInterface.vhd:370]
+WARNING: [Synth 8-6014] Unused sequential element clearY_reg was removed.  [/home/jorbis/Documentos/GitHub/DAS/sources/common/vgaTextInterface.vhd:371]
+WARNING: [Synth 8-6014] Unused sequential element shiftP_reg was removed.  [/home/jorbis/Documentos/GitHub/DAS/sources/lab8/lab8.vhd:163]
+WARNING: [Synth 8-6014] Unused sequential element capsOn_reg was removed.  [/home/jorbis/Documentos/GitHub/DAS/sources/lab8/lab8.vhd:164]
 WARNING: [Synth 8-7129] Port clear in module vgaTextInterface is either unconnected or has no load
 WARNING: [Synth 8-7129] Port dataRdy in module vgaTextInterface is either unconnected or has no load
 WARNING: [Synth 8-7129] Port char[7] in module vgaTextInterface is either unconnected or has no load
@@ -106,53 +105,53 @@ WARNING: [Synth 8-7129] Port y[2] in module vgaTextInterface is either unconnect
 WARNING: [Synth 8-7129] Port y[1] in module vgaTextInterface is either unconnected or has no load
 WARNING: [Synth 8-7129] Port y[0] in module vgaTextInterface is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2047.656 ; gain = 446.707 ; free physical = 5234 ; free virtual = 10629
+Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2049.012 ; gain = 448.676 ; free physical = 8342 ; free virtual = 14575
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2065.469 ; gain = 464.520 ; free physical = 5222 ; free virtual = 10617
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2063.855 ; gain = 463.520 ; free physical = 8330 ; free virtual = 14563
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2065.469 ; gain = 464.520 ; free physical = 5222 ; free virtual = 10617
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2063.855 ; gain = 463.520 ; free physical = 8330 ; free virtual = 14563
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2065.469 ; gain = 0.000 ; free physical = 5222 ; free virtual = 10617
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2063.855 ; gain = 0.000 ; free physical = 8330 ; free virtual = 14563
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.xdc]
-Finished Parsing XDC File [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.xdc]
-INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/lab8_propImpl.xdc].
+Parsing XDC File [/home/jorbis/Documentos/GitHub/DAS/sources/lab8/lab8.xdc]
+Finished Parsing XDC File [/home/jorbis/Documentos/GitHub/DAS/sources/lab8/lab8.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/jorbis/Documentos/GitHub/DAS/sources/lab8/lab8.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/lab8_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/lab8_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2209.219 ; gain = 0.000 ; free physical = 5168 ; free virtual = 10564
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2209.605 ; gain = 0.000 ; free physical = 8246 ; free virtual = 14480
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2209.219 ; gain = 0.000 ; free physical = 5168 ; free virtual = 10564
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2209.605 ; gain = 0.000 ; free physical = 8246 ; free virtual = 14480
 INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2209.219 ; gain = 608.270 ; free physical = 5166 ; free virtual = 10562
+Finished Constraint Validation : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2209.605 ; gain = 609.270 ; free physical = 8246 ; free virtual = 14480
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tcpg236-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2209.219 ; gain = 608.270 ; free physical = 5166 ; free virtual = 10562
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2209.605 ; gain = 609.270 ; free physical = 8246 ; free virtual = 14480
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2209.219 ; gain = 608.270 ; free physical = 5166 ; free virtual = 10562
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2209.605 ; gain = 609.270 ; free physical = 8246 ; free virtual = 14480
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2209.219 ; gain = 608.270 ; free physical = 5164 ; free virtual = 10560
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2209.605 ; gain = 609.270 ; free physical = 8245 ; free virtual = 14479
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -200,27 +199,27 @@ Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 2209.219 ; gain = 608.270 ; free physical = 5156 ; free virtual = 10551
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 2209.605 ; gain = 609.270 ; free physical = 8241 ; free virtual = 14479
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 2209.219 ; gain = 608.270 ; free physical = 5142 ; free virtual = 10538
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 2209.605 ; gain = 609.270 ; free physical = 8241 ; free virtual = 14479
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 2209.219 ; gain = 608.270 ; free physical = 5142 ; free virtual = 10538
+Finished Timing Optimization : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 2209.605 ; gain = 609.270 ; free physical = 8241 ; free virtual = 14479
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-5966] Removing register instance (clear_reg__0) from module (lab8) as it has self-loop and (clear_reg__1) is actual driver [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:208]
-INFO: [Synth 8-5966] Removing register instance (clear_reg) from module (lab8) as it has self-loop and (clear_reg__1) is actual driver [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:225]
+INFO: [Synth 8-5966] Removing register instance (clear_reg__0) from module (lab8) as it has self-loop and (clear_reg__1) is actual driver [/home/jorbis/Documentos/GitHub/DAS/sources/lab8/lab8.vhd:208]
+INFO: [Synth 8-5966] Removing register instance (clear_reg) from module (lab8) as it has self-loop and (clear_reg__1) is actual driver [/home/jorbis/Documentos/GitHub/DAS/sources/lab8/lab8.vhd:225]
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 2209.219 ; gain = 608.270 ; free physical = 5142 ; free virtual = 10538
+Finished Technology Mapping : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 2209.605 ; gain = 609.270 ; free physical = 8241 ; free virtual = 14479
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -238,60 +237,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 2209.219 ; gain = 608.270 ; free physical = 5142 ; free virtual = 10538
+Finished IO Insertion : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2209.605 ; gain = 609.270 ; free physical = 8242 ; free virtual = 14480
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 2209.219 ; gain = 608.270 ; free physical = 5142 ; free virtual = 10538
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2209.605 ; gain = 609.270 ; free physical = 8242 ; free virtual = 14480
 ---------------------------------------------------------------------------------
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin key[7] with 1st driver pin 'ps2KeyboardInterface/data_reg[7]/Q' [/home/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:94]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin key[7] with 2nd driver pin 'key_reg[7]/Q' [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:153]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin key[6] with 1st driver pin 'ps2KeyboardInterface/data_reg[6]/Q' [/home/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:94]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin key[6] with 2nd driver pin 'key_reg[6]/Q' [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:153]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin key[5] with 1st driver pin 'ps2KeyboardInterface/data_reg[5]/Q' [/home/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:94]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin key[5] with 2nd driver pin 'key_reg[5]/Q' [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:153]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin key[4] with 1st driver pin 'ps2KeyboardInterface/data_reg[4]/Q' [/home/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:94]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin key[4] with 2nd driver pin 'key_reg[4]/Q' [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:153]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin key[3] with 1st driver pin 'ps2KeyboardInterface/data_reg[3]/Q' [/home/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:94]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin key[3] with 2nd driver pin 'key_reg[3]/Q' [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:153]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin key[2] with 1st driver pin 'ps2KeyboardInterface/data_reg[2]/Q' [/home/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:94]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin key[2] with 2nd driver pin 'key_reg[2]/Q' [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:153]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin key[1] with 1st driver pin 'ps2KeyboardInterface/data_reg[1]/Q' [/home/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:94]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin key[1] with 2nd driver pin 'key_reg[1]/Q' [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:153]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin key[0] with 1st driver pin 'ps2KeyboardInterface/data_reg[0]/Q' [/home/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:94]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin key[0] with 2nd driver pin 'key_reg[0]/Q' [/home/alv/Desktop/uni/DAS/sources/lab8/lab8.vhd:153]
-
-Report Check Netlist: 
-+------+------------------+-------+---------+-------+------------------+
-|      |Item              |Errors |Warnings |Status |Description       |
-+------+------------------+-------+---------+-------+------------------+
-|1     |multi_driven_nets |      0|        8|Failed |Multi driven nets |
-+------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 2209.219 ; gain = 608.270 ; free physical = 5142 ; free virtual = 10538
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2209.605 ; gain = 609.270 ; free physical = 8242 ; free virtual = 14480
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 2209.219 ; gain = 608.270 ; free physical = 5142 ; free virtual = 10538
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2209.605 ; gain = 609.270 ; free physical = 8242 ; free virtual = 14480
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 2209.219 ; gain = 608.270 ; free physical = 5142 ; free virtual = 10538
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2209.605 ; gain = 609.270 ; free physical = 8242 ; free virtual = 14480
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 2209.219 ; gain = 608.270 ; free physical = 5142 ; free virtual = 10538
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2209.605 ; gain = 609.270 ; free physical = 8242 ; free virtual = 14480
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -322,40 +298,39 @@ Report Cell Usage:
 |      |Cell   |Count |
 +------+-------+------+
 |1     |BUFG   |     1|
-|2     |LUT1   |     5|
+|2     |LUT1   |     4|
 |3     |LUT2   |     9|
 |4     |LUT3   |     7|
 |5     |LUT4   |    12|
 |6     |LUT5   |    13|
 |7     |LUT6   |    33|
 |8     |SRL16E |     1|
-|9     |FDRE   |    62|
+|9     |FDRE   |    54|
 |10    |FDSE   |    13|
 |11    |IBUF   |     4|
 |12    |OBUF   |    14|
 +------+-------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 2209.219 ; gain = 608.270 ; free physical = 5142 ; free virtual = 10538
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2209.605 ; gain = 609.270 ; free physical = 8242 ; free virtual = 14480
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 16 critical warnings and 1 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:18 ; elapsed = 00:00:18 . Memory (MB): peak = 2209.219 ; gain = 464.520 ; free physical = 5142 ; free virtual = 10538
-Synthesis Optimization Complete : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 2209.219 ; gain = 608.270 ; free physical = 5142 ; free virtual = 10538
+Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 2209.605 ; gain = 463.520 ; free physical = 8242 ; free virtual = 14480
+Synthesis Optimization Complete : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2209.605 ; gain = 609.270 ; free physical = 8242 ; free virtual = 14480
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2209.219 ; gain = 0.000 ; free physical = 5432 ; free virtual = 10829
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2209.605 ; gain = 0.000 ; free physical = 8532 ; free virtual = 14770
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2209.219 ; gain = 0.000 ; free physical = 5438 ; free virtual = 10835
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2209.605 ; gain = 0.000 ; free physical = 8529 ; free virtual = 14767
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Synth Design complete | Checksum: cc7da491
+Synth Design complete | Checksum: 7b9841
 INFO: [Common 17-83] Releasing license: Synthesis
-42 Infos, 36 Warnings, 16 Critical Warnings and 0 Errors encountered.
+42 Infos, 36 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:26 ; elapsed = 00:00:23 . Memory (MB): peak = 2209.219 ; gain = 930.371 ; free physical = 5438 ; free virtual = 10834
-INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 1778.254; main = 1463.881; forked = 378.903
-INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 3146.496; main = 2209.219; forked = 969.293
-INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
-INFO: [Common 17-1381] The checkpoint '/home/alv/Desktop/uni/DAS/projects/lab8c/lab8c.runs/synth_1/lab8.dcp' has been generated.
+synth_design: Time (s): cpu = 00:00:18 ; elapsed = 00:00:17 . Memory (MB): peak = 2209.605 ; gain = 930.340 ; free physical = 8529 ; free virtual = 14767
+INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 1829.729; main = 1501.622; forked = 379.919
+INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 3155.406; main = 2209.609; forked = 977.812
+INFO: [Common 17-1381] The checkpoint '/home/jorbis/Documentos/GitHub/DAS/projects/lab8c/lab8c.runs/synth_1/lab8.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file lab8_utilization_synth.rpt -pb lab8_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Mon May  6 19:30:35 2024...
+INFO: [Common 17-206] Exiting Vivado at Mon May  6 21:05:19 2024...

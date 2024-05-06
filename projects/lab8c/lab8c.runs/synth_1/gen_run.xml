@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1715016602" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/lab8.dcp">
+<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1715022295" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/lab8.dcp">
   <File Type="VDS-TIMINGSUMMARY" Name="lab8_timing_summary_synth.rpt"/>
   <File Type="RDS-DCP" Name="lab8.dcp"/>
   <File Type="RDS-UTIL-PB" Name="lab8_utilization_synth.pb"/>

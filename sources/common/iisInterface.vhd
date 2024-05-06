@@ -4,15 +4,15 @@
 --    issInterface.vhd  14/09/2023
 --
 --    (c) J.M. Mendias
---    Diseño Automático de Sistemas
---    Facultad de Informática. Universidad Complutense de Madrid
+--    Diseï¿½o Automï¿½tico de Sistemas
+--    Facultad de Informï¿½tica. Universidad Complutense de Madrid
 --
---  Propósito:
+--  Propï¿½sito:
 --    Transmite/recibe muestras de sonido por un bus IIS con
 --    24 bits, fs=48.8 KHz, fsclk = 64fs y fmclk=256fs
 --
---  Notas de diseño:
---    - Solo válido para 100 MHz de frecuencia de reloj
+--  Notas de diseï¿½o:
+--    - Solo vï¿½lido para 100 MHz de frecuencia de reloj
 --
 ---------------------------------------------------------------------
 
@@ -60,8 +60,19 @@ begin
 
   clkGenCounter: 
   process (clk)
+    variable aux : natural range 0 to 4 := 0;
+    variable CE : boolean := false;
   begin
-    ...
+    if rising_edge(clk) then
+        CE := false; --no estoy 100% seguro
+        aux := (aux + 1) mod 4;
+        if aux = 3 then
+            CE := true;
+        end if;
+        if CE then
+            
+        end if;
+    end if;
   end process;
    
   mclk <= ...;
