@@ -1,0 +1,117 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
+| Date         : Tue May  7 17:17:58 2024
+| Host         : Jorbis-Zenbook running 64-bit unknown
+| Command      : report_methodology -file lab10multicycle_methodology_drc_routed.rpt -pb lab10multicycle_methodology_drc_routed.pb -rpx lab10multicycle_methodology_drc_routed.rpx
+| Design       : lab10multicycle
+| Device       : xc7a35tcpg236-1
+| Speed File   : -1
+| Design State : Fully Routed
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Report Methodology
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: design_1
+      Design limits: <entire design considered>
+             Max violations: <unlimited>
+             Violations found: 16
++-----------+----------+--------------------------------+------------+
+| Rule      | Severity | Description                    | Violations |
++-----------+----------+--------------------------------+------------+
+| TIMING-18 | Warning  | Missing input or output delay  | 9          |
+| TIMING-20 | Warning  | Non-clocked latch              | 6          |
+| LATCH-1   | Advisory | Existing latches in the design | 1          |
++-----------+----------+--------------------------------+------------+
+
+2. REPORT DETAILS
+-----------------
+TIMING-18#1 Warning
+Missing input or output delay  
+An input delay is missing on filterOn relative to the rising and/or falling clock edge(s) of sysClk.
+Related violations: <none>
+
+TIMING-18#2 Warning
+Missing input or output delay  
+An input delay is missing on sdto relative to the rising and/or falling clock edge(s) of sysClk.
+Related violations: <none>
+
+TIMING-18#3 Warning
+Missing input or output delay  
+An output delay is missing on lrckAD relative to the rising and/or falling clock edge(s) of sysClk.
+Related violations: <none>
+
+TIMING-18#4 Warning
+Missing input or output delay  
+An output delay is missing on lrckDA relative to the rising and/or falling clock edge(s) of sysClk.
+Related violations: <none>
+
+TIMING-18#5 Warning
+Missing input or output delay  
+An output delay is missing on mclkAD relative to the rising and/or falling clock edge(s) of sysClk.
+Related violations: <none>
+
+TIMING-18#6 Warning
+Missing input or output delay  
+An output delay is missing on mclkDA relative to the rising and/or falling clock edge(s) of sysClk.
+Related violations: <none>
+
+TIMING-18#7 Warning
+Missing input or output delay  
+An output delay is missing on sclkAD relative to the rising and/or falling clock edge(s) of sysClk.
+Related violations: <none>
+
+TIMING-18#8 Warning
+Missing input or output delay  
+An output delay is missing on sclkDA relative to the rising and/or falling clock edge(s) of sysClk.
+Related violations: <none>
+
+TIMING-18#9 Warning
+Missing input or output delay  
+An output delay is missing on sdti relative to the rising and/or falling clock edge(s) of sysClk.
+Related violations: <none>
+
+TIMING-20#1 Warning
+Non-clocked latch  
+The latch leftFilter/cs_reg[0] cannot be properly analyzed as its control pin leftFilter/cs_reg[0]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#2 Warning
+Non-clocked latch  
+The latch leftFilter/cs_reg[1] cannot be properly analyzed as its control pin leftFilter/cs_reg[1]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#3 Warning
+Non-clocked latch  
+The latch leftFilter/cs_reg[2] cannot be properly analyzed as its control pin leftFilter/cs_reg[2]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#4 Warning
+Non-clocked latch  
+The latch rightFilter/cs_reg[0] cannot be properly analyzed as its control pin rightFilter/cs_reg[0]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#5 Warning
+Non-clocked latch  
+The latch rightFilter/cs_reg[1] cannot be properly analyzed as its control pin rightFilter/cs_reg[1]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#6 Warning
+Non-clocked latch  
+The latch rightFilter/cs_reg[2] cannot be properly analyzed as its control pin rightFilter/cs_reg[2]/G is not reached by a timing clock
+Related violations: <none>
+
+LATCH-1#1 Advisory
+Existing latches in the design  
+There are 6 latches found in the design. Inferred latches are often the result of HDL coding mistakes, such as incomplete if or case statements.
+Related violations: <none>
+
+

@@ -4,14 +4,14 @@
 --    multicycleNotchFilter.vhd  14/09/2023
 --
 --    (c) J.M. Mendias
---    Diseño Automático de Sistemas
---    Facultad de Informática. Universidad Complutense de Madrid
+--    Diseï¿½o Automï¿½tico de Sistemas
+--    Facultad de Informï¿½tica. Universidad Complutense de Madrid
 --
---  Propósito:
+--  Propï¿½sito:
 --    Filtro IIR de segundo orden tipo notch de caracteristicas 
---    configurables e implementación multiciclo
+--    configurables e implementaciï¿½n multiciclo
 --
---  Notas de diseño:
+--  Notas de diseï¿½o:
 --    - Los coeficientes se calculan segun las especificaciones de
 --      S.J. Orfanidis, "Introduction to Signal Processing" 
 --
@@ -23,7 +23,7 @@ use ieee.std_logic_1164.all;
 entity multicycleNotchFilter is
   generic (
     WL : natural;  -- anchura de la muestra
-    QM : natural;  -- número de bits decimales en la muestra
+    QM : natural;  -- nï¿½mero de bits decimales en la muestra
     FS : real;     -- frecuencia de muestreo
     F0 : real      -- frecuencia de corte
   );
@@ -44,7 +44,7 @@ use work.common.all;
 
 architecture syn of multicycleNotchFilter is
 
-  constant QN : natural := WL-QM;  -- número de bits enteros en la muestra
+  constant QN : natural := WL-QM;  -- nï¿½mero de bits enteros en la muestra
 
   type signedArray is array (0 to 2) of signed(WL-1 downto 0);
 
@@ -58,9 +58,9 @@ architecture syn of multicycleNotchFilter is
     toFix( k, QN, QM ) 
   ); 
   constant b : signedArray := ( 
-    ...,
-    ...,
-    ...
+    toFix(0.0, QN, QM),
+    toFix(2.0*k*cos(w0), QN, QM),
+    toFix(-(2.0*k - 1.0), QN, QM)
   );
   
   signal x, y : signedArray := (others => (others => '0'));
@@ -75,16 +75,16 @@ architecture syn of multicycleNotchFilter is
   
 begin
  
-  outSample <= ...;
+  outSample <= std_logic_vector (y(0));
   
   multiplier :
-  mulResult <= ...;
+  mulResult <= mulLeftOp * mulRightOp;
   
   adder :
-  addResult <= ...;
+  addResult <= mulResult + acc;
 
   wrapping :
-  y(0) <= ...;
+  y(0) <= acc((2*WL-1) - QN downto QM);
   
   multiplexers :
   process (cs, x, y)
@@ -93,8 +93,29 @@ begin
       when waiting =>
         mulLeftOp  <= (others => '-');
         mulRightOp <= (others => '-');
-      when ... =>
-        ...
+        if newSample = '1' then
+            cs <= s1;
+        end if;
+      when s1 =>
+        mulLeftOp  <= x(0);
+        mulRightOp <= a(0);
+        cs <= s2;
+      when s2 =>
+        mulLeftOp  <= x(1);
+        mulRightOp <= a(1);
+        cs <= s3;
+      when s3 =>
+        mulLeftOp  <= x(2);
+        mulRightOp <= a(2);
+        cs <= s4;
+      when s4 =>
+        mulLeftOp  <= y(1);
+        mulRightOp <= b(1);
+        cs <= s5;
+      when s5 =>
+        mulLeftOp  <= y(2);
+        mulRightOp <= b(2);
+        cs <= waiting;
     end case;
   end process;    
     
@@ -105,10 +126,15 @@ begin
       case cs is
         when waiting =>
           if newSample='1' then
-            ...
+            x(0) <= signed (inSample);
+            x(1) <= x(0);
+            x(2) <= x(1);
+            y(1) <= y(0);
+            y(2) <= y(1);
+            acc <= (others => '0');
           end if;            
-        when ... =>
-          ...
+        when others =>
+          acc <= addResult;
       end case;  
     end if; 
   end process;
