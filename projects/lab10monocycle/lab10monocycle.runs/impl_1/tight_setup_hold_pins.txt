@@ -1,0 +1,8 @@
++====================+===================+==================================================+
+| Launch Setup Clock | Launch Hold Clock | Pin                                              |
++====================+===================+==================================================+
+| sysClk             | sysClk            | codecInterface/outSampleShifter.sample_reg[16]/D |
+| sysClk             | sysClk            | codecInterface/outSampleShifter.sample_reg[11]/D |
+| sysClk             | sysClk            | codecInterface/outSampleShifter.sample_reg[10]/D |
+| sysClk             | sysClk            | codecInterface/outSampleShifter.sample_reg[22]/D |
++--------------------+-------------------+--------------------------------------------------+

@@ -4,14 +4,14 @@
 --    monocycleNotchFilter.vhd  14/09/2023
 --
 --    (c) J.M. Mendias
---    Diseño Automático de Sistemas
---    Facultad de Informática. Universidad Complutense de Madrid
+--    Diseï¿½o Automï¿½tico de Sistemas
+--    Facultad de Informï¿½tica. Universidad Complutense de Madrid
 --
---  Propósito:
+--  Propï¿½sito:
 --    Filtro IIR de segundo orden tipo notch de caracteristicas 
---    configurables e implementación monociclo
+--    configurables e implementaciï¿½n monociclo
 --
---  Notas de diseño:
+--  Notas de diseï¿½o:
 --    - Los coeficientes se calculan segun las especificaciones de
 --      S.J. Orfanidis, "Introduction to Signal Processing" 
 --
@@ -23,7 +23,7 @@ use ieee.std_logic_1164.all;
 entity monocycleNotchFilter is
   generic (
     WL : natural;  -- anchura de la muestra
-    QM : natural;  -- número de bits decimales en la muestra
+    QM : natural;  -- nï¿½mero de bits decimales en la muestra
     FS : real;     -- frecuencia de muestreo
     F0 : real      -- frecuencia de corte
   );
@@ -44,7 +44,7 @@ use work.common.all;
 
 architecture syn of monocycleNotchFilter is
 
-  constant QN : natural := WL-QM;  -- número de bits enteros en la muestra
+  constant QN : natural := WL-QM;  -- nï¿½mero de bits enteros en la muestra
 
   type signedArray is array (0 to 2) of signed(WL-1 downto 0);
   
@@ -58,9 +58,9 @@ architecture syn of monocycleNotchFilter is
     toFix( k, QN, QM ) 
   ); 
   constant b : signedArray := ( 
-    ...,
-    ...,
-    ...
+    toFix(0.0, QN, QM),
+    toFix(2.0*k*cos(w0), QN, QM),
+    toFix(-(2.0*k - 1.0), QN, QM)
   );
  
   signal x, y : signedArray := (others => (others => '0'));
@@ -68,20 +68,27 @@ architecture syn of monocycleNotchFilter is
 
 begin
  
-  outSample <= ...;
+  outSample <= std_logic_vector (y(0));
 
-  filterFU :
-  acc <= ...;
+  filterFU : --Esto hay que ver si se usa el toFix
+  acc <= ((((a(0) * x(0)) + (a(1) * x(1))) + (a(2) * x(2))) + (b(1) * y(1))) + (b(2) * y(2));
 
   wrapping :
-  y(0) <= ...;
-
+  y(0) <= acc((2*WL-1) - QN downto QM);
+  
+  xIni:
+  --x(0) <= toFix(real(to_integer(signed (inSample))), QN, QM);--creo que esta bien pero no estoy seguro
+  x(0) <= signed (inSample); --Esto a lo mejor tambien esta bien
+  
   filterRegisters :
   process (clk)
   begin
     if rising_edge(clk) then
       if newSample='1' then
-        ...
+        x(1) <= x(0);
+        x(2) <= x(1);
+        y(1) <= y(0);
+        y(2) <= y(1);
       end if;
     end if; 
   end process;
