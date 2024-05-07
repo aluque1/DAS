@@ -166,8 +166,8 @@ begin
         newLine <= '0';
         clear   <= '0';
       else
-        --NO se puede modificar el valor de key ya que es un valor que viene del ps2
-        --Aqui tiene que ir otra cosa
+        -- Preguntarle a mendias que diablos tiene que haber aqui
+        -- ...
         if keyRdy='1' then
           case state is
             when keyOn =>

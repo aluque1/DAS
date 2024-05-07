@@ -353,26 +353,19 @@ begin
   screenInteface: vgaRefresher
     generic map ( FREQ_DIV => FREQ_DIV )
     port map ( clk => clk, line => line, pixel => pixel, R => color(11 downto 8), G => color(7 downto 4), B => color(3 downto 0), hSync => hSync, vSync => vSync, RGB => RGB );
+
+    colInt  <= ...; -- Es un contador modulo 80 que se activa cuando uColInt ha terminado su cuenta
+    uColInt <= ...; -- Es un contador modulo 8
     
-  colInt  <= pixel(9 downto 3);
-  uColInt <= pixel(2 downto 0);
-  
-  rowInt  <= line(8 downto 4);
-  uRowInt <= line(3 downto 0);
-  
-  col  <= colInt;
-  uCol <= uColInt;
-  
-  row  <= rowInt;
-  uRow <= uRowInt;
-  
-  xy(11 downto 5) <= x;
-  xy(4 downto 0) <= y;
-  clearxy(11 downto 5) <= std_logic_vector (clearX);
-  clearxy(4 downto 0) <= std_logic_vector (clearY);
-  colrow(11 downto 5) <= colInt;
-  colrow(4 downto 0) <= rowInt;  
-  
+    rowInt  <= ...; -- Es un contador modulo 30 que se activa cuando uRowInt ha terminado su cuenta
+    uRowInt <= ...; -- Es un contados modulo 16
+    
+    col  <= colInt;
+    uCol <= uColInt;
+    
+    row  <= rowInt;
+    uRow <= uRowInt;
+
 ------------------ 
 
   we        <= dataRdy or clearing;
@@ -392,8 +385,7 @@ begin
   
 ------------------
 
-  romAddr(11 downto 4) <= asciiCode;
-  romAddr(3 downto 0) <= uRowInt;
+  romAddr <= asciiCode & uRowInt;
   
   process (clk)
   begin
