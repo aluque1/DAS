@@ -1,14 +1,14 @@
 #-----------------------------------------------------------
 # Vivado v2023.1 (64-bit)
-# SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
+# SW Build 3865809 on Sun May  7 15:04:56 MDT 2023
 # IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
 # SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
-# Start of session at: Tue May  7 19:31:54 2024
-# Process ID: 12752
-# Current directory: C:/Users/Administrator/Desktop/uni/DAS/projects/lab8c/lab8c.runs/synth_1
-# Command line: vivado.exe -log lab8.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source lab8.tcl
-# Log file: C:/Users/Administrator/Desktop/uni/DAS/projects/lab8c/lab8c.runs/synth_1/lab8.vds
-# Journal file: C:/Users/Administrator/Desktop/uni/DAS/projects/lab8c/lab8c.runs/synth_1\vivado.jou
-# Running On: alv-desktop, OS: Windows, CPU Frequency: 3194 MHz, CPU Physical cores: 16, Host memory: 33551 MB
+# Start of session at: Tue May  7 21:44:48 2024
+# Process ID: 72680
+# Current directory: /home/jorbis/Documentos/GitHub/DAS/projects/lab8c/lab8c.runs/synth_1
+# Command line: vivado -log lab8.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source lab8.tcl
+# Log file: /home/jorbis/Documentos/GitHub/DAS/projects/lab8c/lab8c.runs/synth_1/lab8.vds
+# Journal file: /home/jorbis/Documentos/GitHub/DAS/projects/lab8c/lab8c.runs/synth_1/vivado.jou
+# Running On: Jorbis-Zenbook, OS: Linux, CPU Frequency: 3522.769 MHz, CPU Physical cores: 16, Host memory: 16136 MB
 #-----------------------------------------------------------
 source lab8.tcl -notrace

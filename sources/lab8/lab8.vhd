@@ -196,7 +196,7 @@ begin
 
   ------------------  
   
-  romAddr <= '1'&key when shiftP or capsOn else '0'&key;--aqui falta algo porque esto no selecciona las mayusculas
+  romAddr <= '1'&key when shiftP or capsOn else '0'&key;
 
   asciiCode <= rom(to_integer(unsigned(romAddr)));  
     
