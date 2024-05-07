@@ -81,9 +81,9 @@ begin
   pixel <= std_logic_vector(pixelCnt);
   line  <= std_logic_vector(lineCnt);
   
-  hSyncInt <= '1' when (pixelCnt >= 656) nand (pixelCnt < 752) else '0';
-  vSyncInt <= '1' when (lineCnt >= 490) nand (lineCnt < 492) else '0';
-
+  hSyncInt <= '0' when (pixelCnt >= 656) and (pixelCnt < 752) else '1';
+  vSyncInt <= '0' when (lineCnt >= 490) and (lineCnt < 492) else '1';
+  
   blanking <= true when (pixelCnt >= 640) or (lineCnt >= 480) else false;
   
   Rint <= R when blanking = false else "0000";
@@ -93,7 +93,7 @@ begin
   process (clk)
   begin
     if rising_edge(clk) then
-        if cycleCnt=CYCLESxPIXEL-1 then
+        if cycleCnt=CYCLESxPIXEL - 1 then
           hSync <= hSyncInt;
           vSync <= vSyncInt;
           RGB(11 downto 8) <= Rint;

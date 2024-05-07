@@ -83,6 +83,7 @@ architecture syn of vgaTextInterface is
   signal bitMapLine  : std_logic_vector (7 downto 0);
   signal bitMapPixel : std_logic;
   
+  -- esto lo hemos añadido nosotros
   signal xy : std_logic_vector (11 downto 0);
   signal clearxy : std_logic_vector (11 downto 0);
   signal colrow : std_logic_vector (11 downto 0);
@@ -388,10 +389,10 @@ begin
       end if; 
       asciiCode <= ram(to_integer(unsigned(ramRdAddr)));
     end if;
-  end process;
+  end process; 
   
-------------------  
-  
+------------------
+
   romAddr(11 downto 4) <= asciiCode;
   romAddr(3 downto 0) <= uRowInt;
   
@@ -406,12 +407,17 @@ begin
 
   with uColInt select
     bitMapPixel <= 
-      '0' when X"42",
-      '0' when X"00",
-      '0' when X"7e",
-      '1' when others;
+      bitMapLine(0) when "000",
+      bitMapLine(1) when "001",
+      bitMapLine(2) when "010",
+      bitMapLine(3) when "011",
+      bitMapLine(4) when "100",
+      bitMapLine(5) when "101",
+      bitMapLine(6) when "110",
+      bitMapLine(7) when others;
 
-  color <= BGCOLOR when bitMapPixel='1' else FGCOLOR;  
+  color <= FGCOLOR when bitMapPixel='1' else BGCOLOR;
+  
   
 ------------------  
 

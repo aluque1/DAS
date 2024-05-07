@@ -223,9 +223,9 @@ begin
     if rising_edge(clk) then
         if rstSync='1' or clear = '1' then
             y <= (others => '0');
-        else
-            if newLine = '1' or x = COLSxLINE - 1 then
-                y <= (y + 1) mod ROWSxFRAME; -- Esto peta no se porque
+        else -- no se porque esto peta completamente
+            if newLine = '1' or x = COLSxLINE then
+                y <= (y + 1) mod ROWSxFRAME;
             end if;
         end if;
     end if;
@@ -239,7 +239,6 @@ begin
       
  ------------------     
 
-  --
   cursorRender:
   process (clk, row, col, uRow, x, y)
   begin
