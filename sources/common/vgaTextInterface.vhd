@@ -83,7 +83,7 @@ architecture syn of vgaTextInterface is
   signal bitMapLine  : std_logic_vector (7 downto 0);
   signal bitMapPixel : std_logic;
   
-  -- esto lo hemos añadido nosotros
+  -- esto lo hemos aï¿½adido nosotros
   signal xy : std_logic_vector (11 downto 0);
   signal clearxy : std_logic_vector (11 downto 0);
   signal colrow : std_logic_vector (11 downto 0);
@@ -353,26 +353,51 @@ begin
   screenInteface: vgaRefresher
     generic map ( FREQ_DIV => FREQ_DIV )
     port map ( clk => clk, line => line, pixel => pixel, R => color(11 downto 8), G => color(7 downto 4), B => color(3 downto 0), hSync => hSync, vSync => vSync, RGB => RGB );
+    
+  Counters:
+  process (clk)
+    variable uColCnt : natural range 0 to 7 := 0;
+    variable ColCnt : natural range 0 to COLSxLINE-1 := 0;
+    variable uRowCnt : natural range 0 to 15 := 0;
+    variable RowCnt : natural range 0 to ROWSxFRAME-1 := 0;
+  begin 
+    colInt  <= std_logic_vector (to_unsigned(ColCnt, 7));
+    uColInt <= std_logic_vector (to_unsigned(uColCnt, 3));
+    rowInt  <= std_logic_vector (to_unsigned(rowCnt, 5));
+    uRowInt <= std_logic_vector (to_unsigned(uRowCnt, 4));
+    if rising_edge(clk) then
+        if clear='1' then
+             uColCnt := 0;
+             ColCnt := 0;
+             uRowCnt := 0;
+             RowCnt := 0;
+        else
+            uColCnt := (uColCnt + 1) mod 8;
+            if uColCnt = 7 then
+                colCnt := (colCnt + 1) mod COLSxLINE;
+                if colCnt = COLSxLINE - 1 then
+                    uRowCnt := (uRowCnt + 1) mod 16;
+                    if uRowCnt = 15 then
+                        rowCnt := (rowCnt + 1) mod ROWSxFRAME;
+                    end if;
+                end if;
+            end if;
+        end if;
+    end if;
+  end process;
   
-  colInt  <= pixel(9 downto 3);
-  uColInt <= pixel(2 downto 0);
+  col  <= pixel(9 downto 3);
+  uCol <= pixel(2 downto 0);
   
-  rowInt  <= line(8 downto 4);
-  uRowInt <= line(3 downto 0);
-  
-  col  <= colInt;
-  uCol <= uColInt;
-  
-  row  <= rowInt;
-  uRow <= uRowInt;
+  row  <= line(8 downto 4);
+  uRow <= line(3 downto 0);
   
   xy(11 downto 5) <= x;
   xy(4 downto 0) <= y;
   clearxy(11 downto 5) <= std_logic_vector (clearX);
   clearxy(4 downto 0) <= std_logic_vector (clearY);
-  --Revisar lo de colRow
-  colrow(11 downto 5) <= colInt;
-  colrow(4 downto 0) <= rowInt;  
+  colrow(11 downto 5) <= pixel(9 downto 3);
+  colrow(4 downto 0) <= line(8 downto 4);  
   
 ------------------ 
 
