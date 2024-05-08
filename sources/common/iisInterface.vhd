@@ -93,7 +93,7 @@ begin
       end if;
       if (bitNum > 1 and bitNum < 25) or cycleNum = 0 or clkNum = 0 then
         sample := sample(22 downto 0) & '0';
-        --sdti <= sample(23); NO estoy seguro de que esto vaya aqui
+        --sdti <= sample(23);-- NO estoy seguro de que esto vaya aqui
       end if;
     end if;
   end process;

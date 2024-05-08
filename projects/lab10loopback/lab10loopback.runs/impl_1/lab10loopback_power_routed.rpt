@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date             : Tue May  7 01:37:44 2024
+| Date             : Wed May  8 15:50:07 2024
 | Host             : Jorbis-Zenbook running 64-bit unknown
 | Command          : report_power -file lab10loopback_power_routed.rpt -pb lab10loopback_power_summary_routed.pb -rpx lab10loopback_power_routed.rpx
 | Design           : lab10loopback
@@ -30,7 +30,7 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.077        |
+| Total On-Chip Power (W)  | 0.076        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
 | Dynamic (W)              | 0.005        |
@@ -53,14 +53,14 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |    <0.001 |        3 |       --- |             --- |
-| Slice Logic    |    <0.001 |       70 |       --- |             --- |
-|   LUT as Logic |    <0.001 |       31 |     20800 |            0.15 |
-|   Register     |    <0.001 |       29 |     41600 |            0.07 |
+| Slice Logic    |    <0.001 |       72 |       --- |             --- |
+|   LUT as Logic |    <0.001 |       24 |     20800 |            0.12 |
+|   Register     |    <0.001 |       30 |     41600 |            0.07 |
 |   Others       |     0.000 |        4 |       --- |             --- |
 | Signals        |    <0.001 |       40 |       --- |             --- |
 | I/O            |     0.004 |        9 |       106 |            8.49 |
 | Static Power   |     0.072 |          |           |                 |
-| Total          |     0.077 |          |           |                 |
+| Total          |     0.076 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -136,11 +136,10 @@ Table of Contents
 3.1 By Hierarchy
 ----------------
 
-+------------------+-----------+
-| Name             | Power (W) |
-+------------------+-----------+
-| lab10loopback    |     0.005 |
-|   codecInterface |     0.001 |
-+------------------+-----------+
++---------------+-----------+
+| Name          | Power (W) |
++---------------+-----------+
+| lab10loopback |     0.005 |
++---------------+-----------+
 
 
