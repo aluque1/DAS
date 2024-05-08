@@ -4,14 +4,14 @@
 --    vgaTextInterface.vhd  12/09/2023
 --
 --    (c) J.M. Mendias
---    Diseï¿½o Automï¿½tico de Sistemas
---    Facultad de Informï¿½tica. Universidad Complutense de Madrid
+--    Dise�o Autom�tico de Sistemas
+--    Facultad de Inform�tica. Universidad Complutense de Madrid
 --
---  Propï¿½sito:
---    Genera las seï¿½ales de color y sincronismo de un interfaz texto
---    VGA con resoluciï¿½n de 80x30 caracteres de 8x16 pixeles.
+--  Prop�sito:
+--    Genera las se�ales de color y sincronismo de un interfaz texto
+--    VGA con resoluci�n de 80x30 caracteres de 8x16 pixeles.
 --
---  Notas de diseï¿½o:
+--  Notas de dise�o:
 --    - Para frecuencias a partir de 50 Mhz en multiplos de 25 MHz
 --    - Incluye una memoria de refresco para almacenar los caracteres
 --      a visualizar y una memoria de mapas de bits de cada caracter 
@@ -82,13 +82,8 @@ architecture syn of vgaTextInterface is
   signal romAddr     : std_logic_vector (11 downto 0);
   signal bitMapLine  : std_logic_vector (7 downto 0);
   signal bitMapPixel : std_logic;
-  
-  -- esto lo hemos añadido nosotros
-  signal xy : std_logic_vector (11 downto 0);
-  signal clearxy : std_logic_vector (11 downto 0);
-  signal colrow : std_logic_vector (11 downto 0);
 
-  type   romType is array (0 to 2**12-1) of std_logic_vector (7 downto 0);  -- OJO: los pixeles estï¿½n ubicados de izq. a der. y da igual que se cambie el range
+  type   romType is array (0 to 2**12-1) of std_logic_vector (7 downto 0);  -- OJO: los pixeles est�n ubicados de izq. a der. y da igual que se cambie el range
   signal rom : romType := (
     X"00", X"00", X"00", X"00", X"00", X"00", X"00", X"00", X"00", X"00", X"00", X"00", X"00", X"00", X"00", X"00",    -- null
     X"00", X"7e", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"7e", X"00",    -- empty
@@ -129,7 +124,7 @@ architecture syn of vgaTextInterface is
     X"00", X"18", X"18", X"7c", X"c6", X"c2", X"c0", X"7c", X"06", X"86", X"c6", X"7c", X"18", X"18", X"00", X"00",    -- $
     X"00", X"00", X"00", X"00", X"00", X"c3", X"c6", X"0c", X"18", X"30", X"63", X"c3", X"00", X"00", X"00", X"00",    -- %
     X"00", X"00", X"00", X"38", X"6c", X"6c", X"38", X"76", X"dc", X"cc", X"cc", X"76", X"00", X"00", X"00", X"00",    -- &
-    X"00", X"00", X"30", X"30", X"30", X"60", X"00", X"00", X"00", X"00", X"00", X"00", X"00", X"00", X"00", X"00",    -- ï¿½
+    X"00", X"00", X"30", X"30", X"30", X"60", X"00", X"00", X"00", X"00", X"00", X"00", X"00", X"00", X"00", X"00",    -- �
     X"00", X"00", X"00", X"18", X"30", X"60", X"60", X"60", X"60", X"60", X"30", X"18", X"00", X"00", X"00", X"00",    -- (
     X"00", X"00", X"00", X"18", X"0c", X"06", X"06", X"06", X"06", X"06", X"0c", X"18", X"00", X"00", X"00", X"00",    -- )
     X"00", X"00", X"00", X"00", X"00", X"6c", X"38", X"fe", X"38", X"6c", X"00", X"00", X"00", X"00", X"00", X"00",    -- *
@@ -254,8 +249,8 @@ architecture syn of vgaTextInterface is
     X"00", X"7e", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"7e", X"00",    -- empty
     X"00", X"7e", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"7e", X"00",    -- empty
     X"00", X"7e", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"7e", X"00",    -- empty
-    X"00", X"00", X"76", X"dc", X"00", X"00", X"dc", X"66", X"66", X"66", X"66", X"66", X"00", X"00", X"00", X"00",    -- ï¿½
-    X"00", X"00", X"76", X"dc", X"00", X"00", X"dc", X"66", X"66", X"66", X"66", X"66", X"00", X"00", X"00", X"00",    -- ï¿½
+    X"00", X"00", X"76", X"dc", X"00", X"00", X"dc", X"66", X"66", X"66", X"66", X"66", X"00", X"00", X"00", X"00",    -- �
+    X"00", X"00", X"76", X"dc", X"00", X"00", X"dc", X"66", X"66", X"66", X"66", X"66", X"00", X"00", X"00", X"00",    -- �
     X"00", X"7e", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"7e", X"00",    -- empty
     X"00", X"7e", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"7e", X"00",    -- empty
     X"00", X"7e", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"42", X"7e", X"00",    -- empty
@@ -366,20 +361,12 @@ begin
   row  <= rowInt;
   uRow <= uRowInt;
   
-  xy(11 downto 5) <= x;
-  xy(4 downto 0) <= y;
-  clearxy(11 downto 5) <= std_logic_vector (clearX);
-  clearxy(4 downto 0) <= std_logic_vector (clearY);
-  --Revisar lo de colRow
-  colrow(11 downto 5) <= colInt;
-  colrow(4 downto 0) <= rowInt;  
-  
 ------------------ 
 
   we        <= dataRdy or clearing;
   ramWrData <= char when clearing='0' else (others => '0');      
-  ramWrAddr <= xy when clearing='0' else clearxy; 
-  ramRdAddr <= colrow;
+  ramWrAddr <= x & y when clearing='0' else std_logic_vector (clearX) & std_logic_vector (clearY); 
+  ramRdAddr <= colInt & rowInt;
   
   process (clk)
   begin
@@ -430,7 +417,7 @@ begin
       clearing <= '0';
     end if;
     if rising_edge(clk) then
-      if clear='1' or clearing='1' then
+      if clear='1'  or clearing= '1' then
         clearX <= (others => '0');
         clearY <= (others => '0');
       end if;
