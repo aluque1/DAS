@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date             : Wed May  8 15:50:07 2024
+| Date             : Wed May  8 16:51:36 2024
 | Host             : Jorbis-Zenbook running 64-bit unknown
 | Command          : report_power -file lab10loopback_power_routed.rpt -pb lab10loopback_power_summary_routed.pb -rpx lab10loopback_power_routed.rpx
 | Design           : lab10loopback
@@ -30,7 +30,7 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.076        |
+| Total On-Chip Power (W)  | 0.077        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
 | Dynamic (W)              | 0.005        |
@@ -49,19 +49,20 @@ Table of Contents
 1.1 On-Chip Components
 ----------------------
 
-+----------------+-----------+----------+-----------+-----------------+
-| On-Chip        | Power (W) | Used     | Available | Utilization (%) |
-+----------------+-----------+----------+-----------+-----------------+
-| Clocks         |    <0.001 |        3 |       --- |             --- |
-| Slice Logic    |    <0.001 |       72 |       --- |             --- |
-|   LUT as Logic |    <0.001 |       24 |     20800 |            0.12 |
-|   Register     |    <0.001 |       30 |     41600 |            0.07 |
-|   Others       |     0.000 |        4 |       --- |             --- |
-| Signals        |    <0.001 |       40 |       --- |             --- |
-| I/O            |     0.004 |        9 |       106 |            8.49 |
-| Static Power   |     0.072 |          |           |                 |
-| Total          |     0.076 |          |           |                 |
-+----------------+-----------+----------+-----------+-----------------+
++-------------------------+-----------+----------+-----------+-----------------+
+| On-Chip                 | Power (W) | Used     | Available | Utilization (%) |
++-------------------------+-----------+----------+-----------+-----------------+
+| Clocks                  |    <0.001 |        3 |       --- |             --- |
+| Slice Logic             |    <0.001 |       75 |       --- |             --- |
+|   LUT as Logic          |    <0.001 |       34 |     20800 |            0.16 |
+|   Register              |    <0.001 |       30 |     41600 |            0.07 |
+|   LUT as Shift Register |    <0.001 |        1 |      9600 |            0.01 |
+|   Others                |     0.000 |        4 |       --- |             --- |
+| Signals                 |    <0.001 |       42 |       --- |             --- |
+| I/O                     |     0.004 |        9 |       106 |            8.49 |
+| Static Power            |     0.072 |          |           |                 |
+| Total                   |     0.077 |          |           |                 |
++-------------------------+-----------+----------+-----------+-----------------+
 
 
 1.2 Power Supply Summary
@@ -136,10 +137,11 @@ Table of Contents
 3.1 By Hierarchy
 ----------------
 
-+---------------+-----------+
-| Name          | Power (W) |
-+---------------+-----------+
-| lab10loopback |     0.005 |
-+---------------+-----------+
++------------------+-----------+
+| Name             | Power (W) |
++------------------+-----------+
+| lab10loopback    |     0.005 |
+|   codecInterface |     0.001 |
++------------------+-----------+
 
 
