@@ -93,9 +93,9 @@ begin
       else
         case state is
           when sendEnable =>
+            state := waitACK;
             TxData <= X"F4";
             TxDataRdy <= '1';
-            state := waitACK;
           when waitACK => 
             TxDataRdy <= '0';
             if RxDataRdy='1' then
@@ -107,33 +107,41 @@ begin
                 state := waitingXoffset;
             end if;
           when waitingXoffset =>
-          --Lo he mirado de cero y lo he hecho como creo que es. No estoy seguro de si es correcto.
-          --en teoria en el sexto bit de status esta el xsign y en el quinto el ysign 
+            -- xsign = status(4)
+            -- ysign = status(5)
+            -- xov = status(6)
+            -- yov = status(7)
             xOffset := resize(signed(RxData), log2(PIXELSxLINE));
-            if status(5) = '0' then -- si es positivo entonces sumamos xOffset a x
+            if status(4) = '0' then
+              if status(6) = '1' then
+                x <= to_unsigned(PIXELSxLINE-1, log2(PIXELSxLINE));
+              else
                 x <= x + to_unsigned(to_integer(xOffset), log2(PIXELSxLINE));
-            else -- lo restamos en caso contrario
+              end if;
+            else
+              if status(6) = '1' then
+                x <= to_unsigned(0, log2(PIXELSxLINE));
+              else
                 x <= x - to_unsigned(to_integer(xOffset), log2(PIXELSxLINE));
-            end if;
-            if x > (PIXELSxLINE-1) then
-              x <= to_unsigned(PIXELSxLINE-1, log2(PIXELSxLINE));
-            elsif x < 0 then
-              x <= to_unsigned(0, log2(PIXELSxLINE));
+              end if;
             end if;
             if RxDataRdy='1' then
               state := waitingYoffset;
             end if;
           when waitingYoffset =>
             yOffset := resize(signed(RxData), log2(LINESxFRAME));
-            if status(4) = '0' then -- si es positivo entonces sumamos yOffset a y
+            if status(5) = '0' then
+              if status(7) = '1' then
+                y <=  to_unsigned(LINESxFRAME-1, log2(LINESxFRAME-1));
+              else
                 y <= y + to_unsigned(to_integer(yOffset), log2(LINESxFRAME));
-            else -- lo restamos en caso contrario
+              end if;
+            else
+              if status(7) = '1' then
+                y <= to_unsigned(0, log2(LINESxFRAME - 1));
+              else
                 y <= y - to_unsigned(to_integer(yOffset), log2(LINESxFRAME));
-            end if;
-            if y > (LINESxFRAME-1) then
-              y <=  to_unsigned(LINESxFRAME-1, log2(LINESxFRAME-1));
-            elsif y < 0 then
-              y <= to_unsigned(0, log2(LINESxFRAME - 1));
+              end if;
             end if;
             -- Aqui lo que pide en la diapo es que pinte si estamos pulsando el boton izquierdo del raton.
             -- Para saber si estamos pulsando el boton izquierdo del raton, miramos el bit 0 de status, LButton
@@ -147,7 +155,6 @@ begin
             if RxDataRdy='1' then
               state := waitingStatus;
             end if;
-            
         end case;         
       end if;
     end if;
@@ -188,11 +195,10 @@ begin
     variable yAddr : natural range 0 to 15;    
   begin
     RGB <= RGBInterface;
-    -- superimpose the cursor when we refresh the pixels that ocupy his 16x16 bitmap
-    if (unsigned(line(8 downto 0)) = y) and (unsigned(pixel(9 downto 4)) = x) then
-      xAddr := to_integer(unsigned(pixel(3 downto 0)));
-      yAddr := to_integer(unsigned(line(3 downto 0)));
-      case rom(yAddr*SIZE+xAddr) is
+    if unsigned(line) = y and unsigned(pixel) = x then
+      xAddr := to_integer(x);
+      yAddr := to_integer(y);
+      case rom(xAddr + yAddr*SIZE) is
         when 0 => RGB <= (others => '0');
         when 1 => RGB <= (others => '1');
         when 2 => null;

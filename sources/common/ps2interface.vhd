@@ -90,7 +90,8 @@ begin
     case state is
       when idle | receiving =>
         ps2Clk  <= 'Z';
-        ps2Data <= 'Z';            
+        ps2Data <= 'Z';
+        busy <= '0';            
       when clkDown => 
         ps2Clk <= '0';
         ps2Data <= 'Z';
@@ -127,29 +128,27 @@ begin
               bitPos    := 0;
             elsif ps2ClkFall='1' then
               state     := receiving;
-              numCycles := us2cycles(FREQ_KHZ, 100);
               shifter   := (others => '0');
-              bitPos    := 0;
+              bitPos    := 1;
             end if;
           when receiving =>     
-            if ps2ClkFall='1' then
+            if ps2ClkFall='1' and bitPos < 10 then
               shifter := ps2DataSync & shifter(10 downto 1); -- REVISAR esto lo he cambiado porque se quejaba de tamaño aunque en las diapos dice que es 9 downto 1
-              if bitPos < 10 then
-                bitPos := bitPos + 1 mod 11;
-              elsif bitPos = 10 then
-                RxDataRdy <= '1';
-                state     := idle;
-              end if;
+              bitPos := bitPos + 1 mod 11;
+            elsif ps2ClkFall='1' and bitPos = 10 then
+              state := idle;
+              shifter := ps2DataSync & shifter(10 downto 1); -- REVISAR esto lo he cambiado porque se quejaba de tamaño aunque en las diapos dice que es 9 downto 1
+              RxDataRdy <= '1';
             end if;
           when clkDown =>
             state     := dataDown;
-            numCycles := us2cycles(FREQ_KHZ, 100);
+            numCycles := us2cycles(FREQ_KHZ, 20);
           when dataDown =>
             state     := waitingClkRise;
-            numCycles := us2cycles(FREQ_KHZ, 20); -- creo que esto es asi
+            -- numCycles := us2cycles(FREQ_KHZ, 20); -- Por si acaso pero creo que se hace en el estado anterior
           when waitingClkRise =>
             if ps2ClkRise='1' then
-              state     := sending;
+              state   := sending;
             end if;
           when sending =>
             if ps2ClkRise='1' and bitPos < 10 then

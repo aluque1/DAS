@@ -69,9 +69,10 @@ architecture syn of vgaGraphicInterface is
   
   signal R, G, B : std_logic_vector(3 downto 0);
   
-  signal xy : std_logic_vector (18 downto 0);
-  signal clearxy : std_logic_vector (18 downto 0);
-  signal pixelNline : std_logic_vector (18 downto 0);
+  -- Lo quito de mientras
+  --signal xy : std_logic_vector (18 downto 0);
+  --signal clearxy : std_logic_vector (18 downto 0);
+  --signal pixelNline : std_logic_vector (18 downto 0);
   
   type   ramType is array (0 to 2**(x'length+y'length)-1) of std_logic_vector (color'range);
   signal ram : ramType;
@@ -86,19 +87,19 @@ begin
   pixel <= pixelRefresher;
   
   --Puede que haya que cambiarlo a xInt e yInt
-  xy(18 downto 9) <= x;
-  xy(8 downto 0) <= y;
-  clearxy(18 downto 9) <= std_logic_vector (clearX);
-  clearxy(8 downto 0) <= std_logic_vector (clearY);
-  pixelNline(18 downto 9) <= pixelRefresher;
-  pixelNline(8 downto 0) <= lineRefresher(8 downto 0);
+  --xy(18 downto 9) <= x;
+  --xy(8 downto 0) <= y;
+  --clearxy(18 downto 9) <= std_logic_vector (clearX);
+  --clearxy(8 downto 0) <= std_logic_vector (clearY);
+  --pixelNline(18 downto 9) <= pixelRefresher;
+  --pixelNline(8 downto 0) <= lineRefresher(8 downto 0);
 
 ------------------  
 
   we        <= dataRdy or clearing;
   ramWrData <= color when clearing = '0' else (others => '0');      
-  ramWrAddr <= xy when clearing = '0' else clearxy; 
-  ramRdAddr <= pixelNline;
+  ramWrAddr <= x & y when clearing = '0' else std_logic_vector(clearX) & std_logic_vector(clearY); 
+  ramRdAddr <= pixelRefresher & lineRefresher(8 downto 0);
   
   process (clk)
     variable ramOut : std_logic_vector (2 downto 0);

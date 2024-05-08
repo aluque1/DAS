@@ -70,7 +70,6 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 4
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35tcpg236-1
 
@@ -108,6 +107,8 @@ read_xdc C:/Users/Administrator/Desktop/uni/DAS/sources/lab9/lab9.xdc
 set_property used_in_implementation false [get_files C:/Users/Administrator/Desktop/uni/DAS/sources/lab9/lab9.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
+
+read_checkpoint -auto_incremental -incremental C:/Users/Administrator/Desktop/uni/DAS/projects/lab9/lab9.srcs/utils_1/imports/synth_1/lab9.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
