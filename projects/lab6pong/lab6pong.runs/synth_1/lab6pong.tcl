@@ -70,8 +70,6 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param xicom.use_bs_reader 1
-set_param chipscope.maxJobs 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35tcpg236-1
 
@@ -82,8 +80,6 @@ set_property webtalk.parent_dir /home/jorbis/Documentos/GitHub/DAS/projects/lab6
 set_property parent.project_path /home/jorbis/Documentos/GitHub/DAS/projects/lab6pong/lab6pong.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
-set_property board_part_repo_paths {/home/jorbis/.Xilinx/Vivado/2023.1/xhub/board_store/xilinx_board_store} [current_project]
-set_property board_part digilentinc.com:basys3:part0:1.2 [current_project]
 set_property ip_output_repo /home/jorbis/Documentos/GitHub/DAS/projects/lab6pong/lab6pong.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }

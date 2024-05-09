@@ -3,12 +3,12 @@
 # SW Build 3865809 on Sun May  7 15:04:56 MDT 2023
 # IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
 # SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
-# Start of session at: Wed May  8 16:50:31 2024
-# Process ID: 93414
+# Start of session at: Thu May  9 14:18:45 2024
+# Process ID: 5719
 # Current directory: /home/jorbis/Documentos/GitHub/DAS/projects/lab10loopback/lab10loopback.runs/synth_1
 # Command line: vivado -log lab10loopback.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source lab10loopback.tcl
 # Log file: /home/jorbis/Documentos/GitHub/DAS/projects/lab10loopback/lab10loopback.runs/synth_1/lab10loopback.vds
 # Journal file: /home/jorbis/Documentos/GitHub/DAS/projects/lab10loopback/lab10loopback.runs/synth_1/vivado.jou
-# Running On: Jorbis-Zenbook, OS: Linux, CPU Frequency: 3555.765 MHz, CPU Physical cores: 16, Host memory: 16136 MB
+# Running On: Jorbis-Zenbook, OS: Linux, CPU Frequency: 400.000 MHz, CPU Physical cores: 16, Host memory: 16136 MB
 #-----------------------------------------------------------
 source lab10loopback.tcl -notrace
