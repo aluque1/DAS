@@ -176,7 +176,7 @@ begin
                 case key is
                 when X"F0" => state := keyOFF;
                 when X"12" => shiftP <= true;
-                when X"58" => capsOn <= not CapsOn;
+                when X"58" => capsOn <= not capsOn;
                 when X"5a" => newLine <= '1';
                 when X"76" => clear <= '1';
                 when others => state := keyOn;
@@ -185,10 +185,9 @@ begin
                 state := keyOn;
                 case key is
                 when X"12" => shiftP <= false;
-                -- when X"58" => capsOn <= false;
                 when X"5a" => newLine <= '0';
                 when X"76" => clear <= '0';
-                when others => state := keyOff;
+                when others => charRdy <= '0';
                 end case;
           end case;
         end if;

@@ -119,10 +119,30 @@ begin
       rdy <= '0';
     end if; 
     case state is
-      when initial | loadFrame | check | idle =>
+      when initial | loadFrame | check =>
         sioc <= '1';
-        siod <= '1';      
-      ...     
+        siod <= '1';
+        rdy <= '0';
+      when idle => 
+        sioc <= '1';
+        siod <= '1'; 
+        rdy <= '1';
+      when start1 | stop2 =>
+        sioc <= '1';
+        siod <= '0';
+        rdy <= '0';
+      when start2 | stop1 =>
+        sioc <= '0';
+        siod <= '0';
+        rdy <= '0';
+      when wr1 | wr4 =>
+        sioc <= '0';
+        siod <= shifter(26);
+        rdy <= '0';
+      when wr2 | wr3=>
+        sioc <= '1';
+        siod <= shifter(26);
+        rdy <= '0';
     end case;
     
     if rising_edge(clk) then
@@ -139,7 +159,34 @@ begin
             shifter   := (DEV_ID & WR & "0") & (confRom( addr ).reg & "0") & (confRom( addr ).data & "0"); -- MSB first
             addr      := addr+1;
             bitPos    := 0;
-          ...
+          when start1 =>
+            state := start2;
+          when start2 =>
+            state := wr1;
+          when wr1 =>
+            state := wr2;
+          when wr2 =>
+            state := wr3;
+          when wr3 =>
+            state := wr4;
+          when wr4 =>
+            if bitPos < 27 then
+              state := wr1;
+              shifter := shifter(25 downto 0) & '1';
+              bitPos := bitPos + 1;
+            elsif bitPos = 27 then
+              state := stop1;
+            end if;
+          when stop1 => 
+            state := stop2;
+          when stop2 => 
+            state := check;
+          when check => 
+            if addr < 35 then
+              state := loadFrame;
+            elsif addr = 35 then
+              state := idle;
+            end if; 
         end case;
       end if;
     end if;
