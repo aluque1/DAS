@@ -76,15 +76,14 @@ begin
   wrapping :
   y(0) <= acc((2*WL-1) - QN downto QM);
   
-  xIni:
-  --x(0) <= toFix(real(to_integer(signed (inSample))), QN, QM);--creo que esta bien pero no estoy seguro
-  x(0) <= signed (inSample); --Esto a lo mejor tambien esta bien
+
   
   filterRegisters :
   process (clk)
   begin
     if rising_edge(clk) then
       if newSample='1' then
+        x(0) <= signed (inSample);
         x(1) <= x(0);
         x(2) <= x(1);
         y(1) <= y(0);

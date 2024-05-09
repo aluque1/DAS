@@ -89,7 +89,8 @@ begin
     sdti <= sample(23);
     if rising_edge(clk) then
       if (bitNum = 25 and cycleNum = 0) or clkNum = 0  then
-        sample(WL-1 downto 0) := outSample;
+        sample := (others => '0');
+        sample(23 downto 24-WL) := outSample;
       end if;
       if (bitNum > 1 and bitNum < 25) or cycleNum = 0 or clkNum = 0 then
         sample := sample(22 downto 0) & '0';
@@ -101,10 +102,10 @@ begin
   process (clk)
     variable sample: std_logic_vector (23 downto 0) := (others => '0');
   begin
-    inSample <= sample(WL-1 downto 0);
+    inSample <= sample(23 downto 24-WL);
     if rising_edge(clk) then
       if (bitNum > 0 and bitNum < 25) or cycleNum = 4 or clkNum = 0 then
-        inSample <= sample(WL-2 downto 0) & sdto;
+        inSample <= sample(22 downto 24-WL) & sdto;
       end if;
     end if;
   end process;

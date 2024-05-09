@@ -196,8 +196,8 @@ begin
   begin
     RGB <= RGBInterface;
     if unsigned(line) = y and unsigned(pixel) = x then
-      xAddr := to_integer(x);
-      yAddr := to_integer(y);
+      xAddr := (xAddr + 1) mod 16;
+      yAddr := (yAddr + 1) mod 16;
       case rom(xAddr + yAddr*SIZE) is
         when 0 => RGB <= (others => '0');
         when 1 => RGB <= (others => '1');

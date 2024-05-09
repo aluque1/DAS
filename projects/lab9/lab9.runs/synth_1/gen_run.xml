@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1715161963" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/lab9.dcp">
-  <File Type="PA-TCL" Name="lab9.tcl"/>
-  <File Type="RDS-PROPCONSTRS" Name="lab9_drc_synth.rpt"/>
-  <File Type="REPORTS-TCL" Name="lab9_reports.tcl"/>
-  <File Type="RDS-RDS" Name="lab9.vds"/>
-  <File Type="RDS-UTIL" Name="lab9_utilization_synth.rpt"/>
-  <File Type="RDS-UTIL-PB" Name="lab9_utilization_synth.pb"/>
-  <File Type="RDS-DCP" Name="lab9.dcp"/>
+<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1715295401" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/lab9.dcp">
   <File Type="VDS-TIMINGSUMMARY" Name="lab9_timing_summary_synth.rpt"/>
+  <File Type="RDS-DCP" Name="lab9.dcp"/>
+  <File Type="RDS-UTIL-PB" Name="lab9_utilization_synth.pb"/>
+  <File Type="RDS-UTIL" Name="lab9_utilization_synth.rpt"/>
+  <File Type="RDS-PROPCONSTRS" Name="lab9_drc_synth.rpt"/>
+  <File Type="RDS-RDS" Name="lab9.vds"/>
+  <File Type="REPORTS-TCL" Name="lab9_reports.tcl"/>
   <File Type="VDS-TIMING-PB" Name="lab9_timing_summary_synth.pb"/>
+  <File Type="PA-TCL" Name="lab9.tcl"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PPRDIR/../../sources/common/common.vhd">
