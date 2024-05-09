@@ -166,14 +166,17 @@ begin
         newLine <= '0';
         clear   <= '0';
       else
-        char <= asciiCode; 
+        charRdy <= '1';
+        newLine <= '0';
+        clear <= '0';
+        char <= asciiCode;
         if keyRdy='1' then
           case state is
             when keyOn =>
                 case key is
                 when X"F0" => state := keyOFF;
                 when X"12" => shiftP <= true;
-                when X"58" => capsOn <= not capsOn; --revisar @LUQUE he cambiado de true
+                when X"58" => capsOn <= not CapsOn;
                 when X"5a" => newLine <= '1';
                 when X"76" => clear <= '1';
                 when others => state := keyOn;
@@ -182,7 +185,7 @@ begin
                 state := keyOn;
                 case key is
                 when X"12" => shiftP <= false;
-                --when X"58" => capsOn <= false;--revisar @Luque y aqui nada porque en teoria este si es un toggle
+                -- when X"58" => capsOn <= false;
                 when X"5a" => newLine <= '0';
                 when X"76" => clear <= '0';
                 when others => state := keyOff;
@@ -208,7 +211,7 @@ begin
         else
             if newLine = '1' then
                 x <= (others => '0');
-            elsif keyRdy='1' and key /= X"F0" then --and key = X"F0" then -- avanza en caps y shift pero no se como solucionarlo
+            elsif keyRdy='1' and key = X"F0" then
                 x <= (x + 1) mod COLSxLINE;
             end if;
         end if;
@@ -221,7 +224,7 @@ begin
     if rising_edge(clk) then
         if rstSync='1' or clear = '1' then
             y <= (others => '0');
-        else -- no se porque esto peta completamente
+        else
             if newLine = '1' or x = COLSxLINE - 1 then
                 y <= (y + 1) mod ROWSxFRAME;
             end if;
