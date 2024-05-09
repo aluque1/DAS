@@ -112,8 +112,8 @@ begin
     end if;
     if rising_edge(clk) then
       if clear='1' or clearing='1' then
-        clearX <= (others => '0');
-        clearY <= (others => '0');
+        clearX <= unsigned(pixelRefresher);
+        clearY <= unsigned(lineRefresher(8 downto 0));
       end if;
     end if;
   end process; 

@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Fri May 10 00:00:26 2024
+| Date         : Fri May 10 00:57:40 2024
 | Host         : Jorbis-Zenbook running 64-bit unknown
 | Command      : report_control_sets -verbose -file lab9_control_sets_placed.rpt
 | Design       : lab9
@@ -23,11 +23,11 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |    12 |
-|    Minimum number of control sets                        |    12 |
+| Total control sets                                       |    13 |
+|    Minimum number of control sets                        |    13 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    45 |
+| Unused register locations in slices containing registers |    57 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -39,7 +39,7 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |    12 |
+| Total control sets |    13 |
 | >= 0 to < 4        |     2 |
 | >= 4 to < 6        |     1 |
 | >= 6 to < 8        |     1 |
@@ -47,7 +47,7 @@ Table of Contents
 | >= 10 to < 12      |     2 |
 | >= 12 to < 14      |     0 |
 | >= 14 to < 16      |     0 |
-| >= 16              |     4 |
+| >= 16              |     5 |
 +--------------------+-------+
 * Control sets can be remapped at either synth_design or opt_design
 
@@ -58,12 +58,12 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              29 |           20 |
+| No           | No                    | No                     |              29 |           21 |
 | No           | No                    | Yes                    |               0 |            0 |
-| No           | Yes                   | No                     |              39 |           12 |
-| Yes          | No                    | No                     |              49 |           21 |
+| No           | Yes                   | No                     |              39 |           10 |
+| Yes          | No                    | No                     |              77 |           34 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |              38 |           18 |
+| Yes          | Yes                   | No                     |              38 |           17 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
@@ -76,15 +76,16 @@ Table of Contents
 |  clk_IBUF_BUFG                       | screenInterface/screenInteface/pixelCnt[9]_i_1_n_0      | screenInterface/screenInteface/hSync_i_1_n_0 |                1 |              1 |         1.00 |
 |  clk_IBUF_BUFG                       | screenInterface/screenInteface/pixelCnt[9]_i_1_n_0      | screenInterface/screenInteface/vSync_i_1_n_0 |                1 |              1 |         1.00 |
 |  clk_IBUF_BUFG                       | mouseInterface/ps2ClkEdgeDetector/E[0]                  |                                              |                1 |              4 |         4.00 |
-|  clk_IBUF_BUFG                       | status[7]_i_1_n_0                                       | rstSynchronizer/aux_reg[1]_0[0]              |                4 |              6 |         1.50 |
-|  screenInterface/screenInteface/E[0] |                                                         |                                              |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG                       | status[7]_i_1_n_0                                       | rstSynchronizer/aux_reg[1]_0[0]              |                3 |              6 |         2.00 |
+|  screenInterface/screenInteface/E[0] |                                                         |                                              |                2 |              8 |         4.00 |
 |  clk_IBUF_BUFG                       | colorRdy                                                | rstSynchronizer/aux_reg[1]_0[0]              |                4 |              9 |         2.25 |
 |  clk_IBUF_BUFG                       | x[9]_i_1_n_0                                            | rstSynchronizer/aux_reg[1]_0[0]              |                4 |             10 |         2.50 |
 |  clk_IBUF_BUFG                       | mouseInterface/ps2ClkEdgeDetector/fsmdt.state_reg[1][0] | rstSynchronizer/aux_reg[1]_0[0]              |                4 |             11 |         2.75 |
-|  clk_IBUF_BUFG                       |                                                         |                                              |               17 |             22 |         1.29 |
-|  clk_IBUF_BUFG                       | screenInterface/screenInteface/line0                    |                                              |               10 |             22 |         2.20 |
-|  clk_IBUF_BUFG                       | screenInterface/screenInteface/pixelCnt[9]_i_1_n_0      |                                              |               10 |             23 |         2.30 |
-|  clk_IBUF_BUFG                       |                                                         | rstSynchronizer/aux_reg[1]_0[0]              |               12 |             39 |         3.25 |
+|  clk_IBUF_BUFG                       | clear                                                   |                                              |                9 |             19 |         2.11 |
+|  clk_IBUF_BUFG                       |                                                         |                                              |               19 |             22 |         1.16 |
+|  clk_IBUF_BUFG                       | screenInterface/screenInteface/line0                    |                                              |               10 |             26 |         2.60 |
+|  clk_IBUF_BUFG                       | screenInterface/screenInteface/pixelCnt[9]_i_1_n_0      |                                              |               14 |             28 |         2.00 |
+|  clk_IBUF_BUFG                       |                                                         | rstSynchronizer/aux_reg[1]_0[0]              |               10 |             39 |         3.90 |
 +--------------------------------------+---------------------------------------------------------+----------------------------------------------+------------------+----------------+--------------+
 
 
