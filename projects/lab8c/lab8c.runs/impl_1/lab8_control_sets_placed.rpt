@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date         : Fri May 10 01:02:38 2024
-| Host         : alv-desktop running 64-bit major release  (build 9200)
+| Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
+| Date         : Fri May 10 01:34:41 2024
+| Host         : Jorbis-Zenbook running 64-bit unknown
 | Command      : report_control_sets -verbose -file lab8_control_sets_placed.rpt
 | Design       : lab8
 | Device       : xc7a35t
@@ -42,8 +42,8 @@ Table of Contents
 | Total control sets |    12 |
 | >= 0 to < 4        |     2 |
 | >= 4 to < 6        |     2 |
-| >= 6 to < 8        |     2 |
-| >= 8 to < 10       |     1 |
+| >= 6 to < 8        |     1 |
+| >= 8 to < 10       |     2 |
 | >= 10 to < 12      |     3 |
 | >= 12 to < 14      |     2 |
 | >= 14 to < 16      |     0 |
@@ -58,12 +58,12 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              12 |           10 |
+| No           | No                    | No                     |              11 |            7 |
 | No           | No                    | Yes                    |               0 |            0 |
-| No           | Yes                   | No                     |               5 |            2 |
+| No           | Yes                   | No                     |               5 |            3 |
 | Yes          | No                    | No                     |              33 |           10 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |              40 |           17 |
+| Yes          | Yes                   | No                     |              41 |           17 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
@@ -75,16 +75,16 @@ Table of Contents
 +----------------+----------------------------------------------------+----------------------------------------------+------------------+----------------+--------------+
 |  clk_IBUF_BUFG | screenInterface/screenInteface/pixelCnt[9]_i_1_n_0 | screenInterface/screenInteface/hSync_i_1_n_0 |                1 |              1 |         1.00 |
 |  clk_IBUF_BUFG | screenInterface/screenInteface/pixelCnt[9]_i_1_n_0 | screenInterface/screenInteface/vSync_i_1_n_0 |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG |                                                    | rstSynchronizer/Q[0]                         |                2 |              5 |         2.50 |
+|  clk_IBUF_BUFG |                                                    | rstSynchronizer/Q[0]                         |                3 |              5 |         1.67 |
 |  clk_IBUF_BUFG | y0                                                 | rstSynchronizer/aux_reg[1]_0[0]              |                2 |              5 |         2.50 |
-|  clk_IBUF_BUFG | rstSynchronizer/aux_reg[1]_1                       | ps2KeyboardInterface/data_reg[7]_0           |                6 |              7 |         1.17 |
 |  clk_IBUF_BUFG | ps2KeyboardInterface/E[0]                          | rstSynchronizer/SR[0]                        |                2 |              7 |         3.50 |
-|  clk_IBUF_BUFG | ps2KeyboardInterface/dataRdy_i_1_n_0               | rstSynchronizer/Q[0]                         |                3 |              8 |         2.67 |
-|  clk_IBUF_BUFG | screenInterface/screenInteface/lineCnt0            |                                              |                4 |             10 |         2.50 |
+|  clk_IBUF_BUFG | ps2KeyboardInterface/dataRdy_i_1_n_0               | rstSynchronizer/Q[0]                         |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | ps2KeyboardInterface/dataRdy_reg_1[0]              | rstSynchronizer/aux_reg[1]_1[0]              |                7 |              8 |         1.14 |
+|  clk_IBUF_BUFG | screenInterface/screenInteface/lineCnt0            |                                              |                3 |             10 |         3.33 |
+|  clk_IBUF_BUFG | screenInterface/screenInteface/pixelCnt[9]_i_1_n_0 |                                              |                4 |             11 |         2.75 |
 |  clk_IBUF_BUFG | ps2KeyboardInterface/ps2ClkEdgeDetector/E[0]       | rstSynchronizer/SS[0]                        |                2 |             11 |         5.50 |
-|  clk_IBUF_BUFG | screenInterface/screenInteface/pixelCnt[9]_i_1_n_0 |                                              |                3 |             11 |         3.67 |
+|  clk_IBUF_BUFG |                                                    |                                              |                7 |             12 |         1.71 |
 |  clk_IBUF_BUFG | clear_reg_n_0                                      |                                              |                3 |             12 |         4.00 |
-|  clk_IBUF_BUFG |                                                    |                                              |               10 |             13 |         1.30 |
 +----------------+----------------------------------------------------+----------------------------------------------+------------------+----------------+--------------+
 
 

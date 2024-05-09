@@ -166,13 +166,13 @@ begin
         newLine <= '0';
         clear   <= '0';
       else
-        charRdy <= '1';
         newLine <= '0';
         clear <= '0';
-        char <= asciiCode;
         if keyRdy='1' then
           case state is
             when keyOn =>
+                charRdy <= '1';
+                char <= asciiCode;
                 case key is
                 when X"F0" => state := keyOFF;
                 when X"12" => shiftP <= true;
@@ -183,11 +183,13 @@ begin
                 end case;
             when keyOff =>
                 state := keyOn;
+                charRdy <= '0';
+                char <= (others => '0');
                 case key is
                 when X"12" => shiftP <= false;
                 when X"5a" => newLine <= '0';
                 when X"76" => clear <= '0';
-                when others => charRdy <= '0';
+                when others => state := keyOff;
                 end case;
           end case;
         end if;
@@ -210,7 +212,7 @@ begin
         else
             if newLine = '1' then
                 x <= (others => '0');
-            elsif keyRdy='1' and key = X"F0" then
+            elsif keyRdy='1' and shiftP = false and newLine = '0' and clear = '0' then --mirar lo de capsOn
                 x <= (x + 1) mod COLSxLINE;
             end if;
         end if;
