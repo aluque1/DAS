@@ -70,6 +70,8 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
+set_param xicom.use_bs_reader 1
+set_param chipscope.maxJobs 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35tcpg236-1
 
@@ -106,6 +108,8 @@ read_xdc /home/jorbis/Documentos/GitHub/DAS/sources/lab10multicycle/lab10multicy
 set_property used_in_implementation false [get_files /home/jorbis/Documentos/GitHub/DAS/sources/lab10multicycle/lab10multicycle.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
+
+read_checkpoint -auto_incremental -incremental /home/jorbis/Documentos/GitHub/DAS/projects/lab10multicycle/lab10multicycle.srcs/utils_1/imports/synth_1/lab10multicycle.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }

@@ -64,7 +64,7 @@ begin
     if rising_edge(clk) then
         clkNum <= (clkNum + 1) mod CYCLESxMCLK;
         if clkNum = CYCLESxMCLK - 1 then
-            clkGen <= (clkGen + 1) mod 512;
+            clkGen <= clkGen + 1;
         end if;
     end if;
   end process;
@@ -80,7 +80,7 @@ begin
   
   -------------  
 
-  newSample <= '1' when (bitNum = 25 and cycleNum = 0) or clkNum = 0 else '0';
+  newSample <= '1' when (bitNum = 25 and cycleNum = 0) and clkNum = 0 else '0';
 
   outSampleShifter: 
   process (clk)
@@ -88,11 +88,11 @@ begin
   begin
     sdti <= sample(23);
     if rising_edge(clk) then
-      if (bitNum = 25 and cycleNum = 0) or clkNum = 0  then
+      if (bitNum = 25 and cycleNum = 0) and clkNum = 0  then
         sample := (others => '0');
         sample(23 downto 24-WL) := outSample;
       end if;
-      if (bitNum > 1 and bitNum < 25) or cycleNum = 0 or clkNum = 0 then
+      if (bitNum >= 2 and bitNum <= 24) and cycleNum = 0 and clkNum = 0 then
         sample := sample(22 downto 0) & '0';
       end if;
     end if;
@@ -104,8 +104,9 @@ begin
   begin
     inSample <= sample(23 downto 24-WL);
     if rising_edge(clk) then
-      if (bitNum > 0 and bitNum < 25) or cycleNum = 4 or clkNum = 0 then
-        inSample <= sample(22 downto 24-WL) & sdto;
+      if (bitNum >= 1 and bitNum <= 24) and cycleNum = 4 and clkNum = 0 then
+        sample := sample(22 downto 0) & sdto;
+        inSample <= sample(23 downto 24-WL);
       end if;
     end if;
   end process;

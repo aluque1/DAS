@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Tue May  7 17:17:48 2024
+| Date         : Fri May 10 13:47:29 2024
 | Host         : Jorbis-Zenbook running 64-bit unknown
 | Command      : report_control_sets -verbose -file lab10multicycle_control_sets_placed.rpt
 | Design       : lab10multicycle
@@ -23,11 +23,11 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |     7 |
-|    Minimum number of control sets                        |     7 |
+| Total control sets                                       |     9 |
+|    Minimum number of control sets                        |     9 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    29 |
+| Unused register locations in slices containing registers |    27 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -39,15 +39,15 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |     7 |
+| Total control sets |     9 |
 | >= 0 to < 4        |     2 |
 | >= 4 to < 6        |     0 |
-| >= 6 to < 8        |     1 |
+| >= 6 to < 8        |     0 |
 | >= 8 to < 10       |     1 |
 | >= 10 to < 12      |     0 |
 | >= 12 to < 14      |     0 |
 | >= 14 to < 16      |     0 |
-| >= 16              |     3 |
+| >= 16              |     6 |
 +--------------------+-------+
 * Control sets can be remapped at either synth_design or opt_design
 
@@ -58,10 +58,10 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              12 |            7 |
+| No           | No                    | No                     |              26 |            7 |
 | No           | No                    | Yes                    |               0 |            0 |
 | No           | Yes                   | No                     |               0 |            0 |
-| Yes          | No                    | No                     |              95 |           24 |
+| Yes          | No                    | No                     |             219 |           65 |
 | Yes          | No                    | Yes                    |               0 |            0 |
 | Yes          | Yes                   | No                     |               0 |            0 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
@@ -73,13 +73,15 @@ Table of Contents
 +-----------------------------------+----------------------------------------------------+------------------+------------------+----------------+--------------+
 |            Clock Signal           |                    Enable Signal                   | Set/Reset Signal | Slice Load Count | Bel Load Count | Bels / Slice |
 +-----------------------------------+----------------------------------------------------+------------------+------------------+----------------+--------------+
-|  leftFilter/cs_reg[2]_i_2_n_0     |                                                    |                  |                2 |              3 |         1.50 |
-|  rightFilter/cs_reg[2]_i_2__0_n_0 |                                                    |                  |                2 |              3 |         1.50 |
-|  clk_IBUF_BUFG                    |                                                    |                  |                3 |              6 |         2.00 |
-|  clk_IBUF_BUFG                    | codecInterface/clkGen[8]_i_1_n_0                   |                  |                3 |              9 |         3.00 |
+|  leftFilter/cs_reg[2]_i_2_n_0     |                                                    |                  |                1 |              3 |         3.00 |
+|  rightFilter/cs_reg[2]_i_2__0_n_0 |                                                    |                  |                1 |              3 |         3.00 |
+|  clk_IBUF_BUFG                    | codecInterface/clkGen[8]_i_1_n_0                   |                  |                5 |              9 |         1.80 |
 |  clk_IBUF_BUFG                    | codecInterface/outSampleShifter.sample[23]_i_1_n_0 |                  |                8 |             16 |         2.00 |
-|  clk_IBUF_BUFG                    | rightFilter/x[0][0]_i_1__0_n_0                     |                  |                7 |             35 |         5.00 |
-|  clk_IBUF_BUFG                    | leftFilter/RSTP                                    |                  |                6 |             35 |         5.83 |
+|  clk_IBUF_BUFG                    | codecInterface/newSample                           |                  |                4 |             16 |         4.00 |
+|  clk_IBUF_BUFG                    | codecInterface/sample0                             |                  |                5 |             19 |         3.80 |
+|  clk_IBUF_BUFG                    |                                                    |                  |                5 |             20 |         4.00 |
+|  clk_IBUF_BUFG                    | rightFilter/x[0][15]_i_1__0_n_0                    |                  |               21 |             80 |         3.81 |
+|  clk_IBUF_BUFG                    | leftFilter/y[2]                                    |                  |               22 |             80 |         3.64 |
 +-----------------------------------+----------------------------------------------------+------------------+------------------+----------------+--------------+
 
 

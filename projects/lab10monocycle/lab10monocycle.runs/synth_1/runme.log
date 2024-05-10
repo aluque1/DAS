@@ -11,16 +11,21 @@
     ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 
 source lab10monocycle.tcl -notrace
+Command: read_checkpoint -auto_incremental -incremental /home/jorbis/Documentos/GitHub/DAS/projects/lab10monocycle/lab10monocycle.srcs/utils_1/imports/synth_1/lab10monocycle.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from /home/jorbis/Documentos/GitHub/DAS/projects/lab10monocycle/lab10monocycle.srcs/utils_1/imports/synth_1/lab10monocycle.dcp for incremental synthesis
+INFO: [Vivado 12-7989] Please ensure there are no constraint changes
 Command: synth_design -top lab10monocycle -part xc7a35tcpg236-1
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: [Device 21-403] Loading part xc7a35tcpg236-1
+INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
+INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 13428
+INFO: [Synth 8-7075] Helper process launched with PID 123367
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1978.172 ; gain = 377.801 ; free physical = 8268 ; free virtual = 14993
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1981.141 ; gain = 380.770 ; free physical = 6071 ; free virtual = 13359
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-638] synthesizing module 'lab10monocycle' [/home/jorbis/Documentos/GitHub/DAS/sources/lab10monocycle/lab10monocycle.vhd:41]
 	Parameter STAGES bound to: 2 - type: integer 
@@ -58,18 +63,18 @@ INFO: [Synth 8-638] synthesizing module 'iisInterface' [/home/jorbis/Documentos/
 INFO: [Synth 8-256] done synthesizing module 'iisInterface' (0#1) [/home/jorbis/Documentos/GitHub/DAS/sources/common/iisInterface.vhd:49]
 INFO: [Synth 8-256] done synthesizing module 'lab10monocycle' (0#1) [/home/jorbis/Documentos/GitHub/DAS/sources/lab10monocycle/lab10monocycle.vhd:41]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2045.141 ; gain = 444.770 ; free physical = 8194 ; free virtual = 14919
+Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2048.109 ; gain = 447.738 ; free physical = 6009 ; free virtual = 13299
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2062.953 ; gain = 462.582 ; free physical = 8186 ; free virtual = 14911
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2065.922 ; gain = 465.551 ; free physical = 5997 ; free virtual = 13287
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2062.953 ; gain = 462.582 ; free physical = 8186 ; free virtual = 14911
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2065.922 ; gain = 465.551 ; free physical = 5997 ; free virtual = 13287
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 2062.953 ; gain = 0.000 ; free physical = 8186 ; free virtual = 14911
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 2065.922 ; gain = 0.000 ; free physical = 5997 ; free virtual = 13287
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -80,29 +85,31 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/lab10monocycle_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2214.703 ; gain = 0.000 ; free physical = 8108 ; free virtual = 14846
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2213.672 ; gain = 0.000 ; free physical = 5912 ; free virtual = 13201
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2214.703 ; gain = 0.000 ; free physical = 8108 ; free virtual = 14846
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2213.672 ; gain = 0.000 ; free physical = 5912 ; free virtual = 13201
+INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
+INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 2214.703 ; gain = 614.332 ; free physical = 8114 ; free virtual = 14851
+Finished Constraint Validation : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 2213.672 ; gain = 613.301 ; free physical = 5914 ; free virtual = 13203
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tcpg236-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 2214.703 ; gain = 614.332 ; free physical = 8114 ; free virtual = 14851
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 2213.672 ; gain = 613.301 ; free physical = 5914 ; free virtual = 13203
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 2214.703 ; gain = 614.332 ; free physical = 8114 ; free virtual = 14851
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 2213.672 ; gain = 613.301 ; free physical = 5914 ; free virtual = 13203
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 2214.703 ; gain = 614.332 ; free physical = 8114 ; free virtual = 14852
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 2213.672 ; gain = 613.301 ; free physical = 5913 ; free virtual = 13203
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -112,15 +119,15 @@ Detailed RTL Component Info :
 	   2 Input    9 Bit       Adders := 1     
 	   2 Input    2 Bit       Adders := 1     
 +---Registers : 
-	               24 Bit    Registers := 1     
-	               16 Bit    Registers := 5     
+	               24 Bit    Registers := 2     
+	               16 Bit    Registers := 8     
 	                9 Bit    Registers := 1     
 	                2 Bit    Registers := 2     
-	                1 Bit    Registers := 1     
 +---Muxes : 
 	   2 Input   24 Bit        Muxes := 2     
+	   2 Input   23 Bit        Muxes := 1     
 	   2 Input   16 Bit        Muxes := 3     
-	   2 Input    1 Bit        Muxes := 2     
+	   2 Input    1 Bit        Muxes := 1     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -137,70 +144,74 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
-DSP Debug: swapped A/B pins for adder 0x2785d680
-DSP Debug: swapped A/B pins for adder 0x25c9faa0
-DSP Report: Generating DSP leftFilter/acc3, operation Mode is: (A:0x3ff2)*B2.
-DSP Report: register leftFilter/acc3 is absorbed into DSP leftFilter/acc3.
-DSP Report: operator leftFilter/acc3 is absorbed into DSP leftFilter/acc3.
-DSP Report: Generating DSP rightFilter/acc, operation Mode is: PCIN+(A:0x3fffc01c)*B''.
-DSP Report: register rightFilter/y_reg[1] is absorbed into DSP rightFilter/acc.
-DSP Report: register rightFilter/y_reg[2] is absorbed into DSP rightFilter/acc.
+DSP Report: Generating DSP rightFilter/acc0, operation Mode is: (A:0x3fffc01c)*B''.
+DSP Report: register rightFilter/y_reg[1] is absorbed into DSP rightFilter/acc0.
+DSP Report: register rightFilter/y_reg[2] is absorbed into DSP rightFilter/acc0.
+DSP Report: operator rightFilter/acc0 is absorbed into DSP rightFilter/acc0.
+DSP Report: Generating DSP rightFilter/acc, operation Mode is: C+A''*(B:0x3ff2).
+DSP Report: register codecInterface/inSample_reg is absorbed into DSP rightFilter/acc.
+DSP Report: register rightFilter/x_reg[0] is absorbed into DSP rightFilter/acc.
 DSP Report: operator rightFilter/acc is absorbed into DSP rightFilter/acc.
-DSP Report: operator rightFilter/acc0 is absorbed into DSP rightFilter/acc.
+DSP Report: operator rightFilter/acc3 is absorbed into DSP rightFilter/acc.
 DSP Report: Generating DSP rightFilter/acc, operation Mode is: PCIN+(A:0x7f37)*B2.
 DSP Report: register rightFilter/y_reg[1] is absorbed into DSP rightFilter/acc.
 DSP Report: operator rightFilter/acc is absorbed into DSP rightFilter/acc.
 DSP Report: operator rightFilter/acc1 is absorbed into DSP rightFilter/acc.
 DSP Report: Generating DSP rightFilter/acc, operation Mode is: PCIN+A''*(B:0x3ff2).
-DSP Report: register rightFilter/acc is absorbed into DSP rightFilter/acc.
-DSP Report: register rightFilter/acc is absorbed into DSP rightFilter/acc.
+DSP Report: register rightFilter/x_reg[1] is absorbed into DSP rightFilter/acc.
+DSP Report: register rightFilter/x_reg[2] is absorbed into DSP rightFilter/acc.
 DSP Report: operator rightFilter/acc is absorbed into DSP rightFilter/acc.
 DSP Report: operator rightFilter/acc2 is absorbed into DSP rightFilter/acc.
-DSP Report: Generating DSP rightFilter/acc, operation Mode is: PCIN+(A:0x3fff80c9)*B''.
-DSP Report: register rightFilter/acc is absorbed into DSP rightFilter/acc.
-DSP Report: register rightFilter/acc is absorbed into DSP rightFilter/acc.
+DSP Report: Generating DSP rightFilter/acc, operation Mode is: PCIN+A''*(B:0x380c9).
+DSP Report: register rightFilter/x_reg[0] is absorbed into DSP rightFilter/acc.
+DSP Report: register rightFilter/x_reg[1] is absorbed into DSP rightFilter/acc.
 DSP Report: operator rightFilter/acc is absorbed into DSP rightFilter/acc.
 DSP Report: operator rightFilter/acc3 is absorbed into DSP rightFilter/acc.
-DSP Report: Generating DSP leftFilter/acc, operation Mode is: C+(A:0x3fffc01c)*B''.
-DSP Report: register leftFilter/y_reg[1] is absorbed into DSP leftFilter/acc.
-DSP Report: register leftFilter/y_reg[2] is absorbed into DSP leftFilter/acc.
+DSP Report: Generating DSP leftFilter/acc0, operation Mode is: (A:0x3fffc01c)*B''.
+DSP Report: register leftFilter/y_reg[1] is absorbed into DSP leftFilter/acc0.
+DSP Report: register leftFilter/y_reg[2] is absorbed into DSP leftFilter/acc0.
+DSP Report: operator leftFilter/acc0 is absorbed into DSP leftFilter/acc0.
+DSP Report: Generating DSP leftFilter/acc, operation Mode is: C+A''*(B:0x3ff2).
+DSP Report: register codecInterface/inSample_reg is absorbed into DSP leftFilter/acc.
+DSP Report: register leftFilter/x_reg[0] is absorbed into DSP leftFilter/acc.
 DSP Report: operator leftFilter/acc is absorbed into DSP leftFilter/acc.
-DSP Report: operator leftFilter/acc0 is absorbed into DSP leftFilter/acc.
+DSP Report: operator leftFilter/acc3 is absorbed into DSP leftFilter/acc.
 DSP Report: Generating DSP leftFilter/acc, operation Mode is: PCIN+(A:0x7f37)*B2.
 DSP Report: register leftFilter/y_reg[1] is absorbed into DSP leftFilter/acc.
 DSP Report: operator leftFilter/acc is absorbed into DSP leftFilter/acc.
 DSP Report: operator leftFilter/acc1 is absorbed into DSP leftFilter/acc.
 DSP Report: Generating DSP leftFilter/acc, operation Mode is: PCIN+A''*(B:0x3ff2).
-DSP Report: register leftFilter/acc is absorbed into DSP leftFilter/acc.
-DSP Report: register leftFilter/acc is absorbed into DSP leftFilter/acc.
+DSP Report: register leftFilter/x_reg[1] is absorbed into DSP leftFilter/acc.
+DSP Report: register leftFilter/x_reg[2] is absorbed into DSP leftFilter/acc.
 DSP Report: operator leftFilter/acc is absorbed into DSP leftFilter/acc.
 DSP Report: operator leftFilter/acc2 is absorbed into DSP leftFilter/acc.
-DSP Report: Generating DSP leftFilter/acc, operation Mode is: PCIN+(A:0x3fff80c9)*B''.
-DSP Report: register leftFilter/acc is absorbed into DSP leftFilter/acc.
-DSP Report: register leftFilter/acc is absorbed into DSP leftFilter/acc.
+DSP Report: Generating DSP leftFilter/acc, operation Mode is: PCIN+A''*(B:0x380c9).
+DSP Report: register leftFilter/x_reg[0] is absorbed into DSP leftFilter/acc.
+DSP Report: register leftFilter/x_reg[1] is absorbed into DSP leftFilter/acc.
 DSP Report: operator leftFilter/acc is absorbed into DSP leftFilter/acc.
 DSP Report: operator leftFilter/acc3 is absorbed into DSP leftFilter/acc.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 2214.703 ; gain = 614.332 ; free physical = 8110 ; free virtual = 14853
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2213.672 ; gain = 613.301 ; free physical = 5910 ; free virtual = 13205
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
 ---------------------------------------------------------------------------------
 
 DSP: Preliminary Mapping Report (see note below. The ' indicates corresponding REG is set)
-+---------------------+-------------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
-|Module Name          | DSP Mapping             | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
-+---------------------+-------------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
-|lab10monocycle       | (A:0x3ff2)*B2           | 2      | 15     | -      | -      | 30     | 1    | 0    | -    | -    | -     | 0    | 0    | 
-|monocycleNotchFilter | PCIN+(A:0x3fffc01c)*B'' | 15     | 16     | -      | -      | 30     | 0    | 2    | -    | -    | -     | 0    | 0    | 
-|monocycleNotchFilter | PCIN+(A:0x7f37)*B2      | 16     | 16     | -      | -      | 30     | 0    | 1    | -    | -    | -     | 0    | 0    | 
-|lab10monocycle       | PCIN+A''*(B:0x3ff2)     | 16     | 15     | -      | -      | 30     | 2    | 0    | -    | -    | -     | 0    | 0    | 
-|lab10monocycle       | PCIN+(A:0x3fff80c9)*B'' | 16     | 16     | -      | -      | 30     | 0    | 2    | -    | -    | -     | 0    | 0    | 
-|monocycleNotchFilter | C+(A:0x3fffc01c)*B''    | 15     | 16     | 30     | -      | 30     | 0    | 2    | 0    | -    | -     | 0    | 0    | 
-|monocycleNotchFilter | PCIN+(A:0x7f37)*B2      | 16     | 16     | -      | -      | 30     | 0    | 1    | -    | -    | -     | 0    | 0    | 
-|lab10monocycle       | PCIN+A''*(B:0x3ff2)     | 16     | 15     | -      | -      | 30     | 2    | 0    | -    | -    | -     | 0    | 0    | 
-|lab10monocycle       | PCIN+(A:0x3fff80c9)*B'' | 16     | 16     | -      | -      | 30     | 0    | 2    | -    | -    | -     | 0    | 0    | 
-+---------------------+-------------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
++---------------------+----------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name          | DSP Mapping          | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++---------------------+----------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|monocycleNotchFilter | (A:0x3fffc01c)*B''   | 15     | 16     | -      | -      | 31     | 0    | 2    | -    | -    | -     | 0    | 0    | 
+|lab10monocycle       | C+A''*(B:0x3ff2)     | 16     | 15     | 30     | -      | 30     | 2    | 0    | 0    | -    | -     | 0    | 0    | 
+|monocycleNotchFilter | PCIN+(A:0x7f37)*B2   | 16     | 16     | -      | -      | 30     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|monocycleNotchFilter | PCIN+A''*(B:0x3ff2)  | 16     | 15     | -      | -      | 30     | 2    | 0    | -    | -    | -     | 0    | 0    | 
+|monocycleNotchFilter | PCIN+A''*(B:0x380c9) | 16     | 16     | -      | -      | 30     | 2    | 0    | -    | -    | -     | 0    | 0    | 
+|monocycleNotchFilter | (A:0x3fffc01c)*B''   | 15     | 16     | -      | -      | 31     | 0    | 2    | -    | -    | -     | 0    | 0    | 
+|lab10monocycle       | C+A''*(B:0x3ff2)     | 16     | 15     | 30     | -      | 30     | 2    | 0    | 0    | -    | -     | 0    | 0    | 
+|monocycleNotchFilter | PCIN+(A:0x7f37)*B2   | 16     | 16     | -      | -      | 30     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|monocycleNotchFilter | PCIN+A''*(B:0x3ff2)  | 16     | 15     | -      | -      | 30     | 2    | 0    | -    | -    | -     | 0    | 0    | 
+|monocycleNotchFilter | PCIN+A''*(B:0x380c9) | 16     | 16     | -      | -      | 30     | 2    | 0    | -    | -    | -     | 0    | 0    | 
++---------------------+----------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
 
 Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
 ---------------------------------------------------------------------------------
@@ -210,19 +221,19 @@ Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 2214.703 ; gain = 614.332 ; free physical = 8095 ; free virtual = 14845
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 2213.672 ; gain = 613.301 ; free physical = 5914 ; free virtual = 13208
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 2214.703 ; gain = 614.332 ; free physical = 8079 ; free virtual = 14829
+Finished Timing Optimization : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 2213.672 ; gain = 613.301 ; free physical = 5915 ; free virtual = 13209
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 2214.703 ; gain = 614.332 ; free physical = 8073 ; free virtual = 14823
+Finished Technology Mapping : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 2213.672 ; gain = 613.301 ; free physical = 5916 ; free virtual = 13210
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -240,37 +251,51 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 2214.703 ; gain = 614.332 ; free physical = 8074 ; free virtual = 14824
+Finished IO Insertion : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2213.672 ; gain = 613.301 ; free physical = 5918 ; free virtual = 13212
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 2214.703 ; gain = 614.332 ; free physical = 8074 ; free virtual = 14824
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2213.672 ; gain = 613.301 ; free physical = 5918 ; free virtual = 13212
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 2214.703 ; gain = 614.332 ; free physical = 8075 ; free virtual = 14825
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2213.672 ; gain = 613.301 ; free physical = 5919 ; free virtual = 13213
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 2214.703 ; gain = 614.332 ; free physical = 8075 ; free virtual = 14825
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2213.672 ; gain = 613.301 ; free physical = 5917 ; free virtual = 13211
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2214.703 ; gain = 614.332 ; free physical = 8075 ; free virtual = 14825
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2213.672 ; gain = 613.301 ; free physical = 5917 ; free virtual = 13211
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2214.703 ; gain = 614.332 ; free physical = 8075 ; free virtual = 14825
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2213.672 ; gain = 613.301 ; free physical = 5917 ; free virtual = 13211
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Static Shift Register Report:
++---------------+----------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|Module Name    | RTL Name                                     | Length | Width | Reset Signal | Pull out first Reg | Pull out last Reg | SRL16E | SRLC32E | 
++---------------+----------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|lab10monocycle | codecInterface/inSampleShifter.sample_reg[7] | 8      | 1     | NO           | YES                | YES               | 1      | 0       | 
++---------------+----------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -280,15 +305,16 @@ DSP Final Report (the ' indicates corresponding REG is set)
 +---------------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
 |Module Name          | DSP Mapping | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
 +---------------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
-|lab10monocycle       | A'*B        | 1      | 14     | -      | -      | 30     | 1    | 0    | -    | -    | -     | 0    | 0    | 
-|monocycleNotchFilter | C+A*B''     | 30     | 18     | 48     | -      | 0      | 0    | 2    | 2    | -    | -     | 0    | 0    | 
+|monocycleNotchFilter | A*B''       | 30     | 18     | -      | -      | 31     | 0    | 2    | -    | -    | -     | 0    | 0    | 
+|lab10monocycle       | C+A''*B     | 30     | 14     | 48     | -      | 0      | 2    | 0    | 0    | -    | -     | 0    | 0    | 
 |monocycleNotchFilter | PCIN+A*B'   | 15     | 18     | -      | -      | 0      | 0    | 1    | -    | -    | -     | 0    | 0    | 
-|lab10monocycle       | PCIN+A''*B  | 1      | 14     | -      | -      | 0      | 2    | 0    | -    | -    | -     | 0    | 0    | 
-|lab10monocycle       | PCIN+A*B''  | 30     | 1      | -      | -      | 30     | 0    | 2    | -    | -    | -     | 0    | 0    | 
-|monocycleNotchFilter | PCIN+A*B''  | 30     | 18     | -      | -      | 0      | 0    | 2    | -    | -    | -     | 0    | 0    | 
+|monocycleNotchFilter | PCIN+A''*B  | 30     | 14     | -      | -      | 0      | 2    | 0    | -    | -    | -     | 0    | 0    | 
+|monocycleNotchFilter | PCIN+A''*B  | 30     | 18     | -      | -      | 30     | 2    | 0    | -    | -    | -     | 0    | 0    | 
+|monocycleNotchFilter | A*B''       | 30     | 18     | -      | -      | 31     | 0    | 2    | -    | -    | -     | 0    | 0    | 
+|lab10monocycle       | C+A''*B     | 30     | 14     | 48     | -      | 0      | 2    | 0    | 0    | -    | -     | 0    | 0    | 
 |monocycleNotchFilter | PCIN+A*B'   | 15     | 18     | -      | -      | 0      | 0    | 1    | -    | -    | -     | 0    | 0    | 
-|lab10monocycle       | PCIN+A''*B  | 1      | 14     | -      | -      | 0      | 2    | 0    | -    | -    | -     | 0    | 0    | 
-|lab10monocycle       | PCIN+A*B''  | 30     | 1      | -      | -      | 30     | 0    | 2    | -    | -    | -     | 0    | 0    | 
+|monocycleNotchFilter | PCIN+A''*B  | 30     | 14     | -      | -      | 0      | 2    | 0    | -    | -    | -     | 0    | 0    | 
+|monocycleNotchFilter | PCIN+A''*B  | 30     | 18     | -      | -      | 30     | 2    | 0    | -    | -    | -     | 0    | 0    | 
 +---------------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
 
 
@@ -303,40 +329,41 @@ Report Cell Usage:
 |      |Cell    |Count |
 +------+--------+------+
 |1     |BUFG    |     1|
-|2     |DSP48E1 |     9|
-|7     |LUT1    |     2|
-|8     |LUT2    |     8|
-|9     |LUT3    |     3|
-|10    |LUT4    |    16|
-|11    |LUT5    |    19|
-|12    |LUT6    |     8|
-|13    |FDRE    |    31|
+|2     |DSP48E1 |    10|
+|6     |LUT1    |     2|
+|7     |LUT2    |     8|
+|8     |LUT3    |    18|
+|9     |LUT4    |     2|
+|10    |LUT5    |    35|
+|11    |LUT6    |     6|
+|12    |SRL16E  |     1|
+|13    |FDRE    |   111|
 |14    |IBUF    |     3|
 |15    |OBUF    |     7|
 +------+--------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2214.703 ; gain = 614.332 ; free physical = 8075 ; free virtual = 14825
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2213.672 ; gain = 613.301 ; free physical = 5917 ; free virtual = 13211
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 2214.703 ; gain = 462.582 ; free physical = 8075 ; free virtual = 14825
-Synthesis Optimization Complete : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2214.703 ; gain = 614.332 ; free physical = 8075 ; free virtual = 14825
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 2213.672 ; gain = 465.551 ; free physical = 5917 ; free virtual = 13211
+Synthesis Optimization Complete : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2213.672 ; gain = 613.301 ; free physical = 5917 ; free virtual = 13211
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2214.703 ; gain = 0.000 ; free physical = 8360 ; free virtual = 15110
-INFO: [Netlist 29-17] Analyzing 9 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2213.672 ; gain = 0.000 ; free physical = 6200 ; free virtual = 13495
+INFO: [Netlist 29-17] Analyzing 10 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2214.703 ; gain = 0.000 ; free physical = 8361 ; free virtual = 15110
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2213.672 ; gain = 0.000 ; free physical = 6196 ; free virtual = 13490
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Synth Design complete | Checksum: 69cafcee
+Synth Design complete | Checksum: bd456d96
 INFO: [Common 17-83] Releasing license: Synthesis
-27 Infos, 2 Warnings, 0 Critical Warnings and 0 Errors encountered.
+33 Infos, 2 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:21 ; elapsed = 00:00:19 . Memory (MB): peak = 2214.703 ; gain = 941.340 ; free physical = 8361 ; free virtual = 15110
-INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 1936.824; main = 1651.805; forked = 429.738
-INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 3160.504; main = 2214.707; forked = 977.812
+synth_design: Time (s): cpu = 00:00:21 ; elapsed = 00:00:20 . Memory (MB): peak = 2213.672 ; gain = 934.340 ; free physical = 6196 ; free virtual = 13490
+INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 1966.971; main = 1664.835; forked = 426.618
+INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 3159.566; main = 2213.676; forked = 977.906
 INFO: [Common 17-1381] The checkpoint '/home/jorbis/Documentos/GitHub/DAS/projects/lab10monocycle/lab10monocycle.runs/synth_1/lab10monocycle.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file lab10monocycle_utilization_synth.rpt -pb lab10monocycle_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Tue May  7 14:00:03 2024...
+INFO: [Common 17-206] Exiting Vivado at Fri May 10 13:34:11 2024...

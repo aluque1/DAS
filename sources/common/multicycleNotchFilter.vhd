@@ -97,24 +97,25 @@ begin
             cs <= s1;
         end if;
       when s1 =>
-        mulLeftOp  <= x(0);
-        mulRightOp <= a(0);
+        mulLeftOp  <= a(0);
+        mulRightOp <= b(0);
+        --acc <= addResult
         cs <= s2;
       when s2 =>
-        mulLeftOp  <= x(1);
-        mulRightOp <= a(1);
+        mulLeftOp  <= a(1);
+        mulRightOp <= x(1);
         cs <= s3;
       when s3 =>
-        mulLeftOp  <= x(2);
-        mulRightOp <= a(2);
+        mulLeftOp  <= a(2);
+        mulRightOp <= x(2);
         cs <= s4;
       when s4 =>
-        mulLeftOp  <= y(1);
-        mulRightOp <= b(1);
+        mulLeftOp  <= b(1);
+        mulRightOp <= y(1);
         cs <= s5;
       when s5 =>
-        mulLeftOp  <= y(2);
-        mulRightOp <= b(2);
+        mulLeftOp  <= b(2);
+        mulRightOp <= y(2);
         cs <= waiting;
     end case;
   end process;    
@@ -131,7 +132,7 @@ begin
             x(2) <= x(1);
             y(1) <= y(0);
             y(2) <= y(1);
-            acc <= (others => '0');
+            --acc <= (others => '0');
           end if;            
         when others =>
           acc <= addResult;
