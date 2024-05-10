@@ -17,7 +17,7 @@ proc create_report { reportName command } {
   }
 }
 namespace eval ::optrace {
-  variable script "C:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.runs/impl_1/lab11VGAgrey.tcl"
+  variable script "U:/hlocal/temp/DAS/projects/lab11VGAgrey/lab11VGAgrey.runs/impl_1/lab11VGAgrey.tcl"
   variable category "vivado_impl"
 }
 
@@ -122,9 +122,9 @@ start_step init_design
 set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
-  set_param chipscope.maxJobs 4
+  set_param chipscope.maxJobs 2
   set_param xicom.use_bs_reader 1
-  set_param runs.launchOptions { -jobs 14  }
+  set_param runs.launchOptions { -jobs 4  }
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7a35tcpg236-1
   set_property board_part digilentinc.com:basys3:part0:1.2 [current_project]
@@ -132,18 +132,18 @@ OPTRACE "create in-memory project" START { }
   set_param project.singleFileAddWarning.threshold 0
 OPTRACE "create in-memory project" END { }
 OPTRACE "set parameters" START { }
-  set_property webtalk.parent_dir C:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.cache/wt [current_project]
-  set_property parent.project_path C:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.xpr [current_project]
-  set_property ip_output_repo C:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.cache/ip [current_project]
+  set_property webtalk.parent_dir U:/hlocal/temp/DAS/projects/lab11VGAgrey/lab11VGAgrey.cache/wt [current_project]
+  set_property parent.project_path U:/hlocal/temp/DAS/projects/lab11VGAgrey/lab11VGAgrey.xpr [current_project]
+  set_property ip_output_repo U:/hlocal/temp/DAS/projects/lab11VGAgrey/lab11VGAgrey.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
   set_property XPM_LIBRARIES XPM_MEMORY [current_project]
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
-  add_files -quiet C:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.runs/synth_1/lab11VGAgrey.dcp
-  read_ip -quiet c:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.srcs/sources_1/ip/frameBuffer/frameBuffer.xci
-  read_ip -quiet c:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.srcs/sources_1/ip/multAdd/multAdd.xci
+  add_files -quiet U:/hlocal/temp/DAS/projects/lab11VGAgrey/lab11VGAgrey.runs/synth_1/lab11VGAgrey.dcp
+  read_ip -quiet u:/hlocal/temp/DAS/projects/lab11VGAgrey/lab11VGAgrey.srcs/sources_1/ip/frameBuffer/frameBuffer.xci
+  read_ip -quiet u:/hlocal/temp/DAS/projects/lab11VGAgrey/lab11VGAgrey.srcs/sources_1/ip/multAdd/multAdd.xci
 OPTRACE "read constraints: implementation" START { }
-  read_xdc C:/Users/Administrator/Desktop/uni/DAS/sources/lab11VGAgrey/lab11VGAgrey.xdc
+  read_xdc U:/hlocal/temp/DAS/sources/lab11VGAgrey/lab11VGAgrey.xdc
 OPTRACE "read constraints: implementation" END { }
 OPTRACE "add files" END { }
 OPTRACE "link_design" START { }

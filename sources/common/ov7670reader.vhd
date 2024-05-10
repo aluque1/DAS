@@ -90,6 +90,9 @@ begin
           nibble := cData(3 downto 0);
           byteCnt := (byteCnt + 1) mod 1280;
         end if;
+        if byteCnt = 1280 - 1 then 
+            lineCnt := (lineCnt + 1) mod 480;
+        end if;
         data <= nibble & cData;
         x <= std_logic_vector(byteCnt(10 downto 1));
         if hRef='1' and pclkRise='1' and rec='1' and byteCnt(0)='1' then

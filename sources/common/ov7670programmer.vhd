@@ -151,14 +151,19 @@ begin
             bitPos    := 0;
           when start1 =>
             state := start2;
+            numCycles := QSCK_CYCLES;
           when start2 =>
             state := wr1;
+            numCycles := QSCK_CYCLES;
           when wr1 =>
             state := wr2;
+            numCycles := QSCK_CYCLES;
           when wr2 =>
             state := wr3;
+            numCycles := QSCK_CYCLES;
           when wr3 =>
             state := wr4;
+            numCycles := QSCK_CYCLES;
           when wr4 =>
             if bitPos < 27 then
               state := wr1;
@@ -166,9 +171,11 @@ begin
               bitPos := bitPos + 1;
             elsif bitPos = 27 then
               state := stop1;
+              numCycles := QSCK_CYCLES;
             end if;
           when stop1 => 
             state := stop2;
+            numCycles := QSCK_CYCLES;
           when stop2 => 
             state := check;
           when check => 

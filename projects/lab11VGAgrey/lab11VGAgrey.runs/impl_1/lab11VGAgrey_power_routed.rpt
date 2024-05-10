@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date             : Fri May 10 06:39:41 2024
-| Host             : alv-desktop running 64-bit major release  (build 9200)
+| Date             : Fri May 10 13:47:00 2024
+| Host             : PTO0703 running 64-bit major release  (build 9200)
 | Command          : report_power -file lab11VGAgrey_power_routed.rpt -pb lab11VGAgrey_power_summary_routed.pb -rpx lab11VGAgrey_power_routed.rpx
 | Design           : lab11VGAgrey
 | Device           : xc7a35tcpg236-1
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.202        |
+| Total On-Chip Power (W)  | 0.203        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.128        |
+| Dynamic (W)              | 0.129        |
 | Device Static (W)        | 0.074        |
 | Effective TJA (C/W)      | 5.0          |
 | Max Ambient (C)          | 84.0         |
@@ -53,18 +53,18 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.003 |        5 |       --- |             --- |
-| Slice Logic    |    <0.001 |      561 |       --- |             --- |
-|   LUT as Logic |    <0.001 |      220 |     20800 |            1.06 |
+| Slice Logic    |    <0.001 |      580 |       --- |             --- |
+|   LUT as Logic |    <0.001 |      236 |     20800 |            1.13 |
 |   CARRY4       |    <0.001 |       19 |      8150 |            0.23 |
-|   Register     |    <0.001 |      159 |     41600 |            0.38 |
-|   Others       |     0.000 |       78 |       --- |             --- |
-| Signals        |     0.002 |      457 |       --- |             --- |
+|   Register     |    <0.001 |      177 |     41600 |            0.43 |
+|   Others       |     0.000 |       79 |       --- |             --- |
+| Signals        |     0.002 |      512 |       --- |             --- |
 | Block RAM      |     0.012 |     37.5 |        50 |           75.00 |
 | PLL            |     0.097 |        1 |         5 |           20.00 |
 | DSPs           |    <0.001 |        2 |        90 |            2.22 |
 | I/O            |     0.013 |       32 |       106 |           30.19 |
 | Static Power   |     0.074 |          |           |                 |
-| Total          |     0.202 |          |           |                 |
+| Total          |     0.203 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -74,7 +74,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.037 |       0.026 |      0.011 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.037 |       0.027 |      0.011 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.062 |       0.049 |      0.013 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.005 |       0.004 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -145,11 +145,15 @@ Table of Contents
 +------------------------+-----------+
 | Name                   | Power (W) |
 +------------------------+-----------+
-| lab11VGAgrey           |     0.128 |
+| lab11VGAgrey           |     0.129 |
 |   programmer           |     0.001 |
+|   videoIn              |     0.001 |
 |   videoInMemory        |     0.013 |
 |     U0                 |     0.013 |
 |       inst_blk_mem_gen |     0.013 |
+|   wrAddrCalculator     |     0.001 |
+|     U0                 |     0.001 |
+|       i_synth          |     0.001 |
 |   xclkGenerator        |     0.097 |
 +------------------------+-----------+
 

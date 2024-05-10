@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date         : Fri May 10 06:39:14 2024
-| Host         : alv-desktop running 64-bit major release  (build 9200)
+| Date         : Fri May 10 13:46:31 2024
+| Host         : PTO0703 running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file lab11VGAgrey_control_sets_placed.rpt
 | Design       : lab11VGAgrey
 | Device       : xc7a35t
@@ -23,11 +23,11 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |    12 |
-|    Minimum number of control sets                        |    12 |
+| Total control sets                                       |    13 |
+|    Minimum number of control sets                        |    13 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    49 |
+| Unused register locations in slices containing registers |    55 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -39,15 +39,15 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |    12 |
+| Total control sets |    13 |
 | >= 0 to < 4        |     2 |
-| >= 4 to < 6        |     0 |
+| >= 4 to < 6        |     1 |
 | >= 6 to < 8        |     1 |
-| >= 8 to < 10       |     0 |
+| >= 8 to < 10       |     1 |
 | >= 10 to < 12      |     2 |
-| >= 12 to < 14      |     3 |
-| >= 14 to < 16      |     1 |
-| >= 16              |     3 |
+| >= 12 to < 14      |     2 |
+| >= 14 to < 16      |     0 |
+| >= 16              |     4 |
 +--------------------+-------+
 * Control sets can be remapped at either synth_design or opt_design
 
@@ -60,31 +60,32 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | No           | No                    | No                     |              37 |           18 |
 | No           | No                    | Yes                    |               0 |            0 |
-| No           | Yes                   | No                     |               0 |            0 |
-| Yes          | No                    | No                     |              80 |           28 |
+| No           | Yes                   | No                     |              20 |            6 |
+| Yes          | No                    | No                     |              93 |           38 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |              42 |           14 |
+| Yes          | Yes                   | No                     |              27 |           12 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
 4. Detailed Control Set Information
 -----------------------------------
 
-+----------------+-----------------------------------------------+-----------------------------------------+------------------+----------------+--------------+
-|  Clock Signal  |                 Enable Signal                 |             Set/Reset Signal            | Slice Load Count | Bel Load Count | Bels / Slice |
-+----------------+-----------------------------------------------+-----------------------------------------+------------------+----------------+--------------+
-|  clk_IBUF_BUFG | videoOut/pixelCnt[9]_i_1_n_0                  | videoOut/hSync_i_1_n_0                  |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG | videoOut/pixelCnt[9]_i_1_n_0                  | videoOut/vSync_i_1_n_0                  |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG | programmer/fsmdt.addr[5]_i_1_n_0              |                                         |                2 |              6 |         3.00 |
-|  clk_IBUF_BUFG | videoOut/lineCnt0                             |                                         |                5 |             10 |         2.00 |
-|  clk_IBUF_BUFG | videoOut/pixelCnt[9]_i_1_n_0                  |                                         |                5 |             10 |         2.00 |
-|  clk_IBUF_BUFG | videoOut/pixelCnt[9]_i_1_n_0                  | videoOut/RGB[11]_i_1_n_0                |                4 |             12 |         3.00 |
-|  clk_IBUF_BUFG | programmer/FSM_onehot_fsmdt.state[11]_i_1_n_0 |                                         |                2 |             12 |         6.00 |
-|  clk_IBUF_BUFG | programmer/fsmdt.shifter[25]_i_1_n_0          | programmer/fsmdt.shifter[26]_i_1_n_0    |                4 |             13 |         3.25 |
-|  clk_IBUF_BUFG | videoIn/pclkEdgeDetector/nibble1__1           | videoIn/cvSyncEdgeDetector/aux_reg[1]_0 |                4 |             15 |         3.75 |
-|  clk_IBUF_BUFG | programmer/fsmdt.shifter[25]_i_1_n_0          |                                         |                6 |             19 |         3.17 |
-|  clk_IBUF_BUFG | videoIn/cvSyncEdgeDetector/E[0]               |                                         |                8 |             23 |         2.88 |
-|  clk_IBUF_BUFG |                                               |                                         |               18 |             37 |         2.06 |
-+----------------+-----------------------------------------------+-----------------------------------------+------------------+----------------+--------------+
++----------------+---------------------------------------------------------+-----------------------------------------------------------+------------------+----------------+--------------+
+|  Clock Signal  |                      Enable Signal                      |                      Set/Reset Signal                     | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+---------------------------------------------------------+-----------------------------------------------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG | videoOut/pixelCnt[9]_i_1_n_0                            | videoOut/hSync_i_1_n_0                                    |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG | videoOut/pixelCnt[9]_i_1_n_0                            | videoOut/vSync_i_1_n_0                                    |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG | videoIn/pclkEdgeDetector/FSM_onehot_fsmdt.state_reg[11] | videoIn/cvSyncEdgeDetector/FSM_onehot_fsmdt.state_reg[11] |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | programmer/fsmdt.addr[5]_i_1_n_0                        |                                                           |                2 |              6 |         3.00 |
+|  clk_IBUF_BUFG | programmer/fsmdt.bitPos[4]_i_1_n_0                      | programmer/fsmdt.bitPos[0]_i_1_n_0                        |                5 |              9 |         1.80 |
+|  clk_IBUF_BUFG | videoOut/pixelCnt[9]_i_1_n_0                            |                                                           |                4 |             10 |         2.50 |
+|  clk_IBUF_BUFG | videoOut/lineCnt0                                       |                                                           |                6 |             10 |         1.67 |
+|  clk_IBUF_BUFG | videoOut/pixelCnt[9]_i_1_n_0                            | videoOut/RGB[11]_i_1_n_0                                  |                4 |             12 |         3.00 |
+|  clk_IBUF_BUFG | programmer/FSM_onehot_fsmdt.state[11]_i_1_n_0           |                                                           |                3 |             12 |         4.00 |
+|  clk_IBUF_BUFG |                                                         | videoIn/cvSyncEdgeDetector/FSM_onehot_fsmdt.state_reg[11] |                6 |             20 |         3.33 |
+|  clk_IBUF_BUFG | programmer/fsmdt.bitPos[4]_i_1_n_0                      |                                                           |               11 |             23 |         2.09 |
+|  clk_IBUF_BUFG | videoIn/cvSyncEdgeDetector/E[0]                         |                                                           |               12 |             32 |         2.67 |
+|  clk_IBUF_BUFG |                                                         |                                                           |               18 |             37 |         2.06 |
++----------------+---------------------------------------------------------+-----------------------------------------------------------+------------------+----------------+--------------+
 
 

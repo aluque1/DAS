@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "C:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.runs/synth_1/lab11VGAgrey.tcl"
+  variable script "U:/hlocal/temp/DAS/projects/lab11VGAgrey/lab11VGAgrey.runs/synth_1/lab11VGAgrey.tcl"
   variable category "vivado_synth"
 }
 
@@ -70,7 +70,7 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 4
+set_param chipscope.maxJobs 2
 set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35tcpg236-1
@@ -79,31 +79,31 @@ set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
-set_property webtalk.parent_dir C:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.cache/wt [current_project]
-set_property parent.project_path C:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.xpr [current_project]
+set_property webtalk.parent_dir U:/hlocal/temp/DAS/projects/lab11VGAgrey/lab11VGAgrey.cache/wt [current_project]
+set_property parent.project_path U:/hlocal/temp/DAS/projects/lab11VGAgrey/lab11VGAgrey.xpr [current_project]
 set_property XPM_LIBRARIES XPM_MEMORY [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
 set_property board_part digilentinc.com:basys3:part0:1.2 [current_project]
-set_property ip_output_repo c:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.cache/ip [current_project]
+set_property ip_output_repo u:/hlocal/temp/DAS/projects/lab11VGAgrey/lab11VGAgrey.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_vhdl -library xil_defaultlib {
-  C:/Users/Administrator/Desktop/uni/DAS/sources/common/common.vhd
-  C:/Users/Administrator/Desktop/uni/DAS/sources/common/edgeDetector.vhd
-  C:/Users/Administrator/Desktop/uni/DAS/sources/common/freqSynthesizer.vhd
-  C:/Users/Administrator/Desktop/uni/DAS/sources/common/ov7670programmer.vhd
-  C:/Users/Administrator/Desktop/uni/DAS/sources/common/ov7670reader.vhd
-  C:/Users/Administrator/Desktop/uni/DAS/sources/common/rgb2gray.vhd
-  C:/Users/Administrator/Desktop/uni/DAS/sources/common/synchronizer.vhd
-  C:/Users/Administrator/Desktop/uni/DAS/sources/common/vgaRefresher.vhd
-  C:/Users/Administrator/Desktop/uni/DAS/sources/lab11VGAgrey/lab11VGAgrey.vhd
+  U:/hlocal/temp/DAS/sources/common/common.vhd
+  U:/hlocal/temp/DAS/sources/common/edgeDetector.vhd
+  U:/hlocal/temp/DAS/sources/common/freqSynthesizer.vhd
+  U:/hlocal/temp/DAS/sources/common/ov7670programmer.vhd
+  U:/hlocal/temp/DAS/sources/common/ov7670reader.vhd
+  U:/hlocal/temp/DAS/sources/common/rgb2gray.vhd
+  U:/hlocal/temp/DAS/sources/common/synchronizer.vhd
+  U:/hlocal/temp/DAS/sources/common/vgaRefresher.vhd
+  U:/hlocal/temp/DAS/sources/lab11VGAgrey/lab11VGAgrey.vhd
 }
-read_ip -quiet c:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.srcs/sources_1/ip/frameBuffer/frameBuffer.xci
-set_property used_in_implementation false [get_files -all c:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.gen/sources_1/ip/frameBuffer/frameBuffer_ooc.xdc]
+read_ip -quiet u:/hlocal/temp/DAS/projects/lab11VGAgrey/lab11VGAgrey.srcs/sources_1/ip/frameBuffer/frameBuffer.xci
+set_property used_in_implementation false [get_files -all u:/hlocal/temp/DAS/projects/lab11VGAgrey/lab11VGAgrey.gen/sources_1/ip/frameBuffer_1/frameBuffer_ooc.xdc]
 
-read_ip -quiet c:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.srcs/sources_1/ip/multAdd/multAdd.xci
+read_ip -quiet u:/hlocal/temp/DAS/projects/lab11VGAgrey/lab11VGAgrey.srcs/sources_1/ip/multAdd/multAdd.xci
 
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -114,12 +114,14 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc C:/Users/Administrator/Desktop/uni/DAS/sources/lab11VGAgrey/lab11VGAgrey.xdc
-set_property used_in_implementation false [get_files C:/Users/Administrator/Desktop/uni/DAS/sources/lab11VGAgrey/lab11VGAgrey.xdc]
+read_xdc U:/hlocal/temp/DAS/sources/lab11VGAgrey/lab11VGAgrey.xdc
+set_property used_in_implementation false [get_files U:/hlocal/temp/DAS/sources/lab11VGAgrey/lab11VGAgrey.xdc]
 
+read_xdc dont_touch.xdc
+set_property used_in_implementation false [get_files dont_touch.xdc]
 set_param ips.enableIPCacheLiteLoad 1
 
-read_checkpoint -auto_incremental -incremental C:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.srcs/utils_1/imports/synth_1/lab11VGAgrey.dcp
+read_checkpoint -auto_incremental -incremental U:/hlocal/temp/DAS/projects/lab11VGAgrey/lab11VGAgrey.srcs/utils_1/imports/synth_1/lab11VGAgrey.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
