@@ -73,14 +73,33 @@ begin
     port map ( clk => clk, x => cvSync, xFall => open, xRise => cvSyncRise );
     
   frameRdy <= cvSyncRise and rec;
-    
+  
   reader : 
   process( clk )
     variable nibble  : std_logic_vector(3 downto 0) := (others => '0');
     variable byteCnt : unsigned(10 downto 0)        := (others => '0');
     variable lineCnt : unsigned(8 downto 0)         := (others => '0');
   begin
-    ...
+    if rising_edge(clk) then
+      if cvSyncRise='1'and rec='1' then
+        nibble := (others => '0');
+        byteCnt := (others => '0');
+        lineCnt := (others => '0');
+      else
+        if hRef='1' and pclkRise='1' and rec='1' then
+          nibble := cData(3 downto 0);
+          byteCnt := (byteCnt + 1) mod 1280;
+        end if;
+        data <= nibble & cData;
+        x <= std_logic_vector(byteCnt(10 downto 1));
+        if hRef='1' and pclkRise='1' and rec='1' and byteCnt(0)='1' then
+          dataRdy <= '1';
+        else
+          dataRdy <= '0';
+        end if;
+        y <= std_logic_vector(lineCnt);
+      end if;
+    end if;
   end process;
   
 end syn;

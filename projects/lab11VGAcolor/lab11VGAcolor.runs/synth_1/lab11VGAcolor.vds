@@ -1,0 +1,100 @@
+#-----------------------------------------------------------
+# Vivado v2023.1 (64-bit)
+# SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
+# IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+# SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+# Start of session at: Fri May 10 07:51:33 2024
+# Process ID: 1784
+# Current directory: C:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAcolor/lab11VGAcolor.runs/synth_1
+# Command line: vivado.exe -log lab11VGAcolor.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source lab11VGAcolor.tcl
+# Log file: C:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAcolor/lab11VGAcolor.runs/synth_1/lab11VGAcolor.vds
+# Journal file: C:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAcolor/lab11VGAcolor.runs/synth_1\vivado.jou
+# Running On: alv-desktop, OS: Windows, CPU Frequency: 3194 MHz, CPU Physical cores: 16, Host memory: 33551 MB
+#-----------------------------------------------------------
+source lab11VGAcolor.tcl -notrace
+Command: synth_design -top lab11VGAcolor -part xc7a35tcpg236-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Device 21-403] Loading part xc7a35tcpg236-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 14176
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1258.035 ; gain = 409.938
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'lab11VGAcolor' [C:/Users/Administrator/Desktop/uni/DAS/sources/lab11VGAcolor/lab11QVGAcolor.vhd:45]
+	Parameter FREQ_KHZ bound to: 100000 - type: integer 
+	Parameter MULTIPLY bound to: 1 - type: integer 
+	Parameter DIVIDE bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'freqSynthesizer' declared at 'C:/Users/Administrator/Desktop/uni/DAS/sources/common/freqSynthesizer.vhd:21' bound to instance 'xclkGenerator' of component 'freqSynthesizer' [C:/Users/Administrator/Desktop/uni/DAS/sources/lab11VGAcolor/lab11QVGAcolor.vhd:91]
+INFO: [Synth 8-638] synthesizing module 'freqSynthesizer' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/freqSynthesizer.vhd:39]
+	Parameter FREQ_KHZ bound to: 100000 - type: integer 
+	Parameter MULTIPLY bound to: 1 - type: integer 
+	Parameter DIVIDE bound to: 4 - type: integer 
+	Parameter BANDWIDTH bound to: OPTIMIZED - type: string 
+	Parameter CLKFBOUT_MULT bound to: 8 - type: integer 
+	Parameter CLKFBOUT_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKIN1_PERIOD bound to: 10.000000 - type: double 
+	Parameter CLKOUT0_DIVIDE bound to: 32 - type: integer 
+	Parameter CLKOUT0_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT0_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT1_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT1_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT1_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT2_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT2_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT2_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT3_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT3_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT3_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT4_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT4_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT4_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT5_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT5_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT5_PHASE bound to: 0.000000 - type: double 
+	Parameter DIVCLK_DIVIDE bound to: 1 - type: integer 
+	Parameter REF_JITTER1 bound to: 0.000000 - type: double 
+	Parameter STARTUP_WAIT bound to: FALSE - type: string 
+INFO: [Synth 8-113] binding component instance 'clockManager' to cell 'PLLE2_BASE' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/freqSynthesizer.vhd:48]
+INFO: [Synth 8-256] done synthesizing module 'freqSynthesizer' (0#1) [C:/Users/Administrator/Desktop/uni/DAS/sources/common/freqSynthesizer.vhd:39]
+	Parameter STAGES bound to: 2 - type: integer 
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-3491] module 'synchronizer' declared at 'C:/Users/Administrator/Desktop/uni/DAS/sources/common/synchronizer.vhd:21' bound to instance 'cctvOnSynchronizer' of component 'synchronizer' [C:/Users/Administrator/Desktop/uni/DAS/sources/lab11VGAcolor/lab11QVGAcolor.vhd:97]
+INFO: [Synth 8-638] synthesizing module 'synchronizer' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/synchronizer.vhd:35]
+	Parameter STAGES bound to: 2 - type: integer 
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-256] done synthesizing module 'synchronizer' (0#1) [C:/Users/Administrator/Desktop/uni/DAS/sources/common/synchronizer.vhd:35]
+	Parameter FREQ_KHZ bound to: 100000 - type: integer 
+	Parameter BAUDRATE bound to: 400000 - type: integer 
+	Parameter DEV_ID bound to: 7'b0100001 
+INFO: [Synth 8-3491] module 'ov7670programmer' declared at 'C:/Users/Administrator/Desktop/uni/DAS/sources/common/ov7670programmer.vhd:22' bound to instance 'programmer' of component 'ov7670programmer' [C:/Users/Administrator/Desktop/uni/DAS/sources/lab11VGAcolor/lab11QVGAcolor.vhd:103]
+INFO: [Synth 8-638] synthesizing module 'ov7670programmer' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/ov7670programmer.vhd:44]
+	Parameter FREQ_KHZ bound to: 100000 - type: integer 
+	Parameter BAUDRATE bound to: 400000 - type: integer 
+	Parameter DEV_ID bound to: 7'b0100001 
+INFO: [Synth 8-256] done synthesizing module 'ov7670programmer' (0#1) [C:/Users/Administrator/Desktop/uni/DAS/sources/common/ov7670programmer.vhd:44]
+INFO: [Synth 8-3491] module 'ov7670reader' declared at 'C:/Users/Administrator/Desktop/uni/DAS/sources/common/ov7670reader.vhd:21' bound to instance 'videoIn' of component 'ov7670reader' [C:/Users/Administrator/Desktop/uni/DAS/sources/lab11VGAcolor/lab11QVGAcolor.vhd:111]
+INFO: [Synth 8-638] synthesizing module 'ov7670reader' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/ov7670reader.vhd:46]
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-3491] module 'edgeDetector' declared at 'C:/Users/Administrator/Desktop/uni/DAS/sources/common/edgeDetector.vhd:21' bound to instance 'pclkEdgeDetector' of component 'edgeDetector' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/ov7670reader.vhd:67]
+INFO: [Synth 8-638] synthesizing module 'edgeDetector' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/edgeDetector.vhd:35]
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-256] done synthesizing module 'edgeDetector' (0#1) [C:/Users/Administrator/Desktop/uni/DAS/sources/common/edgeDetector.vhd:35]
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-3491] module 'edgeDetector' declared at 'C:/Users/Administrator/Desktop/uni/DAS/sources/common/edgeDetector.vhd:21' bound to instance 'cvSyncEdgeDetector' of component 'edgeDetector' [C:/Users/Administrator/Desktop/uni/DAS/sources/common/ov7670reader.vhd:71]
+INFO: [Synth 8-256] done synthesizing module 'ov7670reader' (0#1) [C:/Users/Administrator/Desktop/uni/DAS/sources/common/ov7670reader.vhd:46]
+INFO: [Synth 8-637] synthesizing blackbox instance 'wrAddrCalculator' of component 'multAdd' [C:/Users/Administrator/Desktop/uni/DAS/sources/lab11VGAcolor/lab11QVGAcolor.vhd:116]
+ERROR: [Synth 8-549] port width mismatch for port 'a': port width = 8, actual width = 9 [C:/Users/Administrator/Desktop/uni/DAS/sources/lab11VGAcolor/lab11QVGAcolor.vhd:118]
+ERROR: [Synth 8-549] port width mismatch for port 'c': port width = 9, actual width = 10 [C:/Users/Administrator/Desktop/uni/DAS/sources/lab11VGAcolor/lab11QVGAcolor.vhd:119]
+ERROR: [Synth 8-285] failed synthesizing module 'lab11VGAcolor' [C:/Users/Administrator/Desktop/uni/DAS/sources/lab11VGAcolor/lab11QVGAcolor.vhd:45]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1351.723 ; gain = 503.625
+---------------------------------------------------------------------------------
+RTL Elaboration failed
+INFO: [Common 17-83] Releasing license: Synthesis
+25 Infos, 0 Warnings, 0 Critical Warnings and 4 Errors encountered.
+synth_design failed
+ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details
+INFO: [Common 17-206] Exiting Vivado at Fri May 10 07:51:48 2024...

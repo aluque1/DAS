@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# Vivado v2023.1 (64-bit)
+# SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
+# IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+# SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+# Start of session at: Fri May 10 06:38:41 2024
+# Process ID: 10152
+# Current directory: C:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.runs/impl_1
+# Command line: vivado.exe -log lab11VGAgrey.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source lab11VGAgrey.tcl -notrace
+# Log file: C:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.runs/impl_1/lab11VGAgrey.vdi
+# Journal file: C:/Users/Administrator/Desktop/uni/DAS/projects/lab11VGAgrey/lab11VGAgrey.runs/impl_1\vivado.jou
+# Running On: alv-desktop, OS: Windows, CPU Frequency: 3194 MHz, CPU Physical cores: 16, Host memory: 33551 MB
+#-----------------------------------------------------------
+source lab11VGAgrey.tcl -notrace

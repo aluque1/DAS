@@ -47,23 +47,23 @@ architecture syn of lab11VGAcolor is
   component frameBuffer
     port (
       clka  : in  std_logic;
-      wea   : in  std_logic_vector(...);
-      addra : in  std_logic_vector(...);
-      dina  : in  std_logic_vector(...);
+      wea   : in  std_logic_vector(0 downto 0);
+      addra : in  std_logic_vector(16 downto 0);
+      dina  : in  std_logic_vector(11 downto 0);
       clkb  : in  std_logic;
-      addrb : in  std_logic_vector(...);
-      doutb : out std_logic_vector(...)
+      addrb : in  std_logic_vector(16 downto  0);
+      doutb : out std_logic_vector(11 downto 0)
     );
   end component;
   
   component multAdd
     port (
-      a        : in  std_logic_vector(...);
-      b        : in  std_logic_vector(...);
-      c        : in  std_logic_vector(...);
+      a        : in  std_logic_vector(7 downto 0);
+      b        : in  std_logic_vector(8 downto 0);
+      c        : in  std_logic_vector(8 downto 0);
       subtract : in  std_logic;
-      p        : out std_logic_vector(...);
-      pcout    : out std_logic_vector(...)
+      p        : out std_logic_vector(16 downto 0);
+      pcout    : out std_logic_vector(47 downto 0)
     );
   end component;  
   
@@ -113,14 +113,17 @@ begin
     
   ------------------  
 
-  wrAddrCalculator: multAdd
-    port map ( ... );
-    
+  wrAddrCalculator: multAdd -- TODO los widths no cuadran
+  
+    port map (a => wrY, b => std_logic_vector(to_unsigned(320,9)), 
+              c => wrX, subtract => '0', p => wrAddr, pcout => open);
+       
   rdAddrCalculator: multAdd
-    port map ( ... );
+    port map (a => rdY, b => std_logic_vector(to_unsigned(320,9)), 
+              c => rdX, subtract => '0', p => rdAddr, pcout => open);
   
   videoInMemory : frameBuffer 
-    port map ( ... );
+    port map (clka => clk, addra => wrAddr, dina => wrData, wea => wea, clkb => clk, addrb => rdAddr, doutb => rdData );
     
   ------------------  
     

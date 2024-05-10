@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenRun Id="impl_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1715315877">
+  <File Type="ROUTE-PWR" Name="lab11VGAgrey_power_routed.rpt"/>
+  <File Type="PA-TCL" Name="lab11VGAgrey.tcl"/>
+  <File Type="ROUTE-PWR-SUM" Name="lab11VGAgrey_power_summary_routed.pb"/>
+  <File Type="REPORTS-TCL" Name="lab11VGAgrey_reports.tcl"/>
+  <File Type="OPT-RQA-PB" Name="lab11VGAgrey_rqa_opted.pb"/>
+  <File Type="BITSTR-MMI" Name="lab11VGAgrey.mmi"/>
+  <File Type="OPT-METHODOLOGY-DRC" Name="lab11VGAgrey_methodology_drc_opted.rpt"/>
+  <File Type="INIT-TIMING" Name="lab11VGAgrey_timing_summary_init.rpt"/>
+  <File Type="OPT-TIMING" Name="lab11VGAgrey_timing_summary_opted.rpt"/>
+  <File Type="OPT-DCP" Name="lab11VGAgrey_opt.dcp"/>
+  <File Type="OPT-DRC" Name="lab11VGAgrey_drc_opted.rpt"/>
+  <File Type="OPT-HWDEF" Name="lab11VGAgrey.hwdef"/>
+  <File Type="PWROPT-DCP" Name="lab11VGAgrey_pwropt.dcp"/>
+  <File Type="PWROPT-DRC" Name="lab11VGAgrey_drc_pwropted.rpt"/>
+  <File Type="PWROPT-TIMING" Name="lab11VGAgrey_timing_summary_pwropted.rpt"/>
+  <File Type="PLACE-DCP" Name="lab11VGAgrey_placed.dcp"/>
+  <File Type="PLACE-IO" Name="lab11VGAgrey_io_placed.rpt"/>
+  <File Type="PLACE-CLK" Name="lab11VGAgrey_clock_utilization_placed.rpt"/>
+  <File Type="PLACE-UTIL" Name="lab11VGAgrey_utilization_placed.rpt"/>
+  <File Type="PLACE-UTIL-PB" Name="lab11VGAgrey_utilization_placed.pb"/>
+  <File Type="PLACE-CTRL" Name="lab11VGAgrey_control_sets_placed.rpt"/>
+  <File Type="PLACE-SIMILARITY" Name="lab11VGAgrey_incremental_reuse_placed.rpt"/>
+  <File Type="PLACE-PRE-SIMILARITY" Name="lab11VGAgrey_incremental_reuse_pre_placed.rpt"/>
+  <File Type="BG-BIN" Name="lab11VGAgrey.bin"/>
+  <File Type="PLACE-TIMING" Name="lab11VGAgrey_timing_summary_placed.rpt"/>
+  <File Type="ROUTE-PWR-RPX" Name="lab11VGAgrey_power_routed.rpx"/>
+  <File Type="PLACE-RQA-PB" Name="lab11VGAgrey_rqa_placed.pb"/>
+  <File Type="POSTPLACE-PWROPT-DCP" Name="lab11VGAgrey_postplace_pwropt.dcp"/>
+  <File Type="BITSTR-MSK" Name="lab11VGAgrey.msk"/>
+  <File Type="POSTPLACE-PWROPT-TIMING" Name="lab11VGAgrey_timing_summary_postplace_pwropted.rpt"/>
+  <File Type="PHYSOPT-DCP" Name="lab11VGAgrey_physopt.dcp"/>
+  <File Type="PHYSOPT-DRC" Name="lab11VGAgrey_drc_physopted.rpt"/>
+  <File Type="BITSTR-RBT" Name="lab11VGAgrey.rbt"/>
+  <File Type="PHYSOPT-TIMING" Name="lab11VGAgrey_timing_summary_physopted.rpt"/>
+  <File Type="ROUTE-ERROR-DCP" Name="lab11VGAgrey_routed_error.dcp"/>
+  <File Type="ROUTE-DCP" Name="lab11VGAgrey_routed.dcp"/>
+  <File Type="ROUTE-BLACKBOX-DCP" Name="lab11VGAgrey_routed_bb.dcp"/>
+  <File Type="ROUTE-DRC" Name="lab11VGAgrey_drc_routed.rpt"/>
+  <File Type="ROUTE-DRC-PB" Name="lab11VGAgrey_drc_routed.pb"/>
+  <File Type="ROUTE-DRC-RPX" Name="lab11VGAgrey_drc_routed.rpx"/>
+  <File Type="ROUTE-METHODOLOGY-DRC" Name="lab11VGAgrey_methodology_drc_routed.rpt"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="lab11VGAgrey_methodology_drc_routed.rpx"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="lab11VGAgrey_methodology_drc_routed.pb"/>
+  <File Type="ROUTE-RQS-PB" Name="lab11VGAgrey_rqs_routed.pb"/>
+  <File Type="ROUTE-STATUS" Name="lab11VGAgrey_route_status.rpt"/>
+  <File Type="ROUTE-STATUS-PB" Name="lab11VGAgrey_route_status.pb"/>
+  <File Type="ROUTE-TIMINGSUMMARY" Name="lab11VGAgrey_timing_summary_routed.rpt"/>
+  <File Type="ROUTE-TIMING-PB" Name="lab11VGAgrey_timing_summary_routed.pb"/>
+  <File Type="ROUTE-TIMING-RPX" Name="lab11VGAgrey_timing_summary_routed.rpx"/>
+  <File Type="ROUTE-SIMILARITY" Name="lab11VGAgrey_incremental_reuse_routed.rpt"/>
+  <File Type="ROUTE-CLK" Name="lab11VGAgrey_clock_utilization_routed.rpt"/>
+  <File Type="ROUTE-BUS-SKEW" Name="lab11VGAgrey_bus_skew_routed.rpt"/>
+  <File Type="ROUTE-BUS-SKEW-PB" Name="lab11VGAgrey_bus_skew_routed.pb"/>
+  <File Type="ROUTE-BUS-SKEW-RPX" Name="lab11VGAgrey_bus_skew_routed.rpx"/>
+  <File Type="POSTROUTE-PHYSOPT-DCP" Name="lab11VGAgrey_postroute_physopt.dcp"/>
+  <File Type="POSTROUTE-PHYSOPT-BLACKBOX-DCP" Name="lab11VGAgrey_postroute_physopt_bb.dcp"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING" Name="lab11VGAgrey_timing_summary_postroute_physopted.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-PB" Name="lab11VGAgrey_timing_summary_postroute_physopted.pb"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-RPX" Name="lab11VGAgrey_timing_summary_postroute_physopted.rpx"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW" Name="lab11VGAgrey_bus_skew_postroute_physopted.rpt"/>
+  <File Type="BG-BIT" Name="lab11VGAgrey.bit"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-PB" Name="lab11VGAgrey_bus_skew_postroute_physopted.pb"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-RPX" Name="lab11VGAgrey_bus_skew_postroute_physopted.rpx"/>
+  <File Type="BITSTR-NKY" Name="lab11VGAgrey.nky"/>
+  <File Type="BITSTR-BMM" Name="lab11VGAgrey_bd.bmm"/>
+  <File Type="PDI-FILE" Name="lab11VGAgrey.pdi"/>
+  <File Type="BOOT-PDI-FILE" Name="lab11VGAgrey_soc.pdi"/>
+  <File Type="PL-PDI-FILE" Name="lab11VGAgrey_pld.pdi"/>
+  <File Type="RCFI_FILE" Name="lab11VGAgrey.rcfi"/>
+  <File Type="CFI_FILE" Name="lab11VGAgrey.cfi"/>
+  <File Type="RNPI_FILE" Name="lab11VGAgrey.rnpi"/>
+  <File Type="NPI_FILE" Name="lab11VGAgrey.npi"/>
+  <File Type="RBD_FILE" Name="lab11VGAgrey.rbd"/>
+  <File Type="BITSTR-LTX" Name="debug_nets.ltx"/>
+  <File Type="BITSTR-LTX" Name="lab11VGAgrey.ltx"/>
+  <File Type="BITSTR-SYSDEF" Name="lab11VGAgrey.sysdef"/>
+  <File Type="BG-BGN" Name="lab11VGAgrey.bgn"/>
+  <File Type="BG-DRC" Name="lab11VGAgrey.drc"/>
+  <File Type="RDI-RDI" Name="lab11VGAgrey.vdi"/>
+  <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
+  <File Type="ROUTE-RQS" Name="lab11VGAgrey_routed.rqs"/>
+  <File Type="POSTROUTE-PHYSOPT-RQS" Name="lab11VGAgrey_postroute_physopted.rqs"/>
+  <File Type="ROUTE-RQS-RPT" Name="route_report_qor_suggestions_0.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-RQS-RPT" Name="postroute_physopt_report_qor_suggestions_0.rpt"/>
+  <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
+    <Filter Type="Srcs"/>
+    <File Path="$PPRDIR/../../sources/common/common.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/common/edgeDetector.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/common/freqSynthesizer.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/common/ov7670programmer.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/common/ov7670reader.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/common/rgb2gray.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/common/synchronizer.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/common/vgaRefresher.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/lab11VGAgrey/lab11VGAgrey.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="DesignMode" Val="RTL"/>
+      <Option Name="TopModule" Val="lab11VGAgrey"/>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1" RelGenDir="$PGENDIR/constrs_1">
+    <Filter Type="Constrs"/>
+    <File Path="$PPRDIR/../../sources/lab11VGAgrey/lab11VGAgrey.xdc">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="ConstrsType" Val="XDC"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="utils" Type="Utils" RelSrcDir="$PSRCDIR/utils_1" RelGenDir="$PGENDIR/utils_1">
+    <Filter Type="Utils"/>
+    <File Path="$PSRCDIR/utils_1/imports/synth_1/lab11VGAgrey.dcp">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedInSteps" Val="synth_1"/>
+        <Attr Name="AutoDcp" Val="1"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <Strategy Version="1" Minor="2">
+    <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2023"/>
+    <Step Id="init_design"/>
+    <Step Id="opt_design"/>
+    <Step Id="power_opt_design"/>
+    <Step Id="place_design"/>
+    <Step Id="post_place_power_opt_design"/>
+    <Step Id="phys_opt_design"/>
+    <Step Id="route_design"/>
+    <Step Id="post_route_phys_opt_design"/>
+    <Step Id="write_bitstream"/>
+  </Strategy>
+  <BlockFileSet Type="BlockSrcs" Name="frameBuffer"/>
+  <BlockFileSet Type="BlockSrcs" Name="multAdd"/>
+</GenRun>

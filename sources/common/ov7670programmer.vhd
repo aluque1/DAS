@@ -119,32 +119,22 @@ begin
       rdy <= '0';
     end if; 
     case state is
-      when initial | loadFrame | check =>
+      when initial | loadFrame | check | idle =>
         sioc <= '1';
-        siod <= '1';
-        rdy <= '0';
-      when idle => 
-        sioc <= '1';
-        siod <= '1'; 
-        rdy <= '1';
+        siod <= '1';      
       when start1 | stop2 =>
         sioc <= '1';
         siod <= '0';
-        rdy <= '0';
       when start2 | stop1 =>
         sioc <= '0';
         siod <= '0';
-        rdy <= '0';
       when wr1 | wr4 =>
         sioc <= '0';
         siod <= shifter(26);
-        rdy <= '0';
-      when wr2 | wr3=>
+      when wr2 | wr3 =>
         sioc <= '1';
         siod <= shifter(26);
-        rdy <= '0';
     end case;
-    
     if rising_edge(clk) then
       if numCycles/=0 then
         numCycles := numCycles-1;
@@ -187,6 +177,8 @@ begin
             elsif addr = 35 then
               state := idle;
             end if; 
+          when idle =>
+            state := idle;
         end case;
       end if;
     end if;

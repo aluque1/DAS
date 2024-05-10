@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenRun Id="impl_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1715320291">
+  <File Type="ROUTE-PWR" Name="lab11VGAcolor_power_routed.rpt"/>
+  <File Type="PA-TCL" Name="lab11VGAcolor.tcl"/>
+  <File Type="ROUTE-PWR-SUM" Name="lab11VGAcolor_power_summary_routed.pb"/>
+  <File Type="REPORTS-TCL" Name="lab11VGAcolor_reports.tcl"/>
+  <File Type="OPT-RQA-PB" Name="lab11VGAcolor_rqa_opted.pb"/>
+  <File Type="BITSTR-MMI" Name="lab11VGAcolor.mmi"/>
+  <File Type="OPT-METHODOLOGY-DRC" Name="lab11VGAcolor_methodology_drc_opted.rpt"/>
+  <File Type="INIT-TIMING" Name="lab11VGAcolor_timing_summary_init.rpt"/>
+  <File Type="OPT-TIMING" Name="lab11VGAcolor_timing_summary_opted.rpt"/>
+  <File Type="OPT-DCP" Name="lab11VGAcolor_opt.dcp"/>
+  <File Type="OPT-DRC" Name="lab11VGAcolor_drc_opted.rpt"/>
+  <File Type="OPT-HWDEF" Name="lab11VGAcolor.hwdef"/>
+  <File Type="PWROPT-DCP" Name="lab11VGAcolor_pwropt.dcp"/>
+  <File Type="PWROPT-DRC" Name="lab11VGAcolor_drc_pwropted.rpt"/>
+  <File Type="PWROPT-TIMING" Name="lab11VGAcolor_timing_summary_pwropted.rpt"/>
+  <File Type="PLACE-DCP" Name="lab11VGAcolor_placed.dcp"/>
+  <File Type="PLACE-IO" Name="lab11VGAcolor_io_placed.rpt"/>
+  <File Type="PLACE-CLK" Name="lab11VGAcolor_clock_utilization_placed.rpt"/>
+  <File Type="PLACE-UTIL" Name="lab11VGAcolor_utilization_placed.rpt"/>
+  <File Type="PLACE-UTIL-PB" Name="lab11VGAcolor_utilization_placed.pb"/>
+  <File Type="PLACE-CTRL" Name="lab11VGAcolor_control_sets_placed.rpt"/>
+  <File Type="PLACE-SIMILARITY" Name="lab11VGAcolor_incremental_reuse_placed.rpt"/>
+  <File Type="PLACE-PRE-SIMILARITY" Name="lab11VGAcolor_incremental_reuse_pre_placed.rpt"/>
+  <File Type="BG-BIN" Name="lab11VGAcolor.bin"/>
+  <File Type="PLACE-TIMING" Name="lab11VGAcolor_timing_summary_placed.rpt"/>
+  <File Type="ROUTE-PWR-RPX" Name="lab11VGAcolor_power_routed.rpx"/>
+  <File Type="PLACE-RQA-PB" Name="lab11VGAcolor_rqa_placed.pb"/>
+  <File Type="POSTPLACE-PWROPT-DCP" Name="lab11VGAcolor_postplace_pwropt.dcp"/>
+  <File Type="BITSTR-MSK" Name="lab11VGAcolor.msk"/>
+  <File Type="POSTPLACE-PWROPT-TIMING" Name="lab11VGAcolor_timing_summary_postplace_pwropted.rpt"/>
+  <File Type="PHYSOPT-DCP" Name="lab11VGAcolor_physopt.dcp"/>
+  <File Type="PHYSOPT-DRC" Name="lab11VGAcolor_drc_physopted.rpt"/>
+  <File Type="BITSTR-RBT" Name="lab11VGAcolor.rbt"/>
+  <File Type="PHYSOPT-TIMING" Name="lab11VGAcolor_timing_summary_physopted.rpt"/>
+  <File Type="ROUTE-ERROR-DCP" Name="lab11VGAcolor_routed_error.dcp"/>
+  <File Type="ROUTE-DCP" Name="lab11VGAcolor_routed.dcp"/>
+  <File Type="ROUTE-BLACKBOX-DCP" Name="lab11VGAcolor_routed_bb.dcp"/>
+  <File Type="ROUTE-DRC" Name="lab11VGAcolor_drc_routed.rpt"/>
+  <File Type="ROUTE-DRC-PB" Name="lab11VGAcolor_drc_routed.pb"/>
+  <File Type="ROUTE-DRC-RPX" Name="lab11VGAcolor_drc_routed.rpx"/>
+  <File Type="ROUTE-METHODOLOGY-DRC" Name="lab11VGAcolor_methodology_drc_routed.rpt"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="lab11VGAcolor_methodology_drc_routed.rpx"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="lab11VGAcolor_methodology_drc_routed.pb"/>
+  <File Type="ROUTE-RQS-PB" Name="lab11VGAcolor_rqs_routed.pb"/>
+  <File Type="ROUTE-STATUS" Name="lab11VGAcolor_route_status.rpt"/>
+  <File Type="ROUTE-STATUS-PB" Name="lab11VGAcolor_route_status.pb"/>
+  <File Type="ROUTE-TIMINGSUMMARY" Name="lab11VGAcolor_timing_summary_routed.rpt"/>
+  <File Type="ROUTE-TIMING-PB" Name="lab11VGAcolor_timing_summary_routed.pb"/>
+  <File Type="ROUTE-TIMING-RPX" Name="lab11VGAcolor_timing_summary_routed.rpx"/>
+  <File Type="ROUTE-SIMILARITY" Name="lab11VGAcolor_incremental_reuse_routed.rpt"/>
+  <File Type="ROUTE-CLK" Name="lab11VGAcolor_clock_utilization_routed.rpt"/>
+  <File Type="ROUTE-BUS-SKEW" Name="lab11VGAcolor_bus_skew_routed.rpt"/>
+  <File Type="ROUTE-BUS-SKEW-PB" Name="lab11VGAcolor_bus_skew_routed.pb"/>
+  <File Type="ROUTE-BUS-SKEW-RPX" Name="lab11VGAcolor_bus_skew_routed.rpx"/>
+  <File Type="POSTROUTE-PHYSOPT-DCP" Name="lab11VGAcolor_postroute_physopt.dcp"/>
+  <File Type="POSTROUTE-PHYSOPT-BLACKBOX-DCP" Name="lab11VGAcolor_postroute_physopt_bb.dcp"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING" Name="lab11VGAcolor_timing_summary_postroute_physopted.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-PB" Name="lab11VGAcolor_timing_summary_postroute_physopted.pb"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-RPX" Name="lab11VGAcolor_timing_summary_postroute_physopted.rpx"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW" Name="lab11VGAcolor_bus_skew_postroute_physopted.rpt"/>
+  <File Type="BG-BIT" Name="lab11VGAcolor.bit"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-PB" Name="lab11VGAcolor_bus_skew_postroute_physopted.pb"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-RPX" Name="lab11VGAcolor_bus_skew_postroute_physopted.rpx"/>
+  <File Type="BITSTR-NKY" Name="lab11VGAcolor.nky"/>
+  <File Type="BITSTR-BMM" Name="lab11VGAcolor_bd.bmm"/>
+  <File Type="PDI-FILE" Name="lab11VGAcolor.pdi"/>
+  <File Type="BOOT-PDI-FILE" Name="lab11VGAcolor_soc.pdi"/>
+  <File Type="PL-PDI-FILE" Name="lab11VGAcolor_pld.pdi"/>
+  <File Type="RCFI_FILE" Name="lab11VGAcolor.rcfi"/>
+  <File Type="CFI_FILE" Name="lab11VGAcolor.cfi"/>
+  <File Type="RNPI_FILE" Name="lab11VGAcolor.rnpi"/>
+  <File Type="NPI_FILE" Name="lab11VGAcolor.npi"/>
+  <File Type="RBD_FILE" Name="lab11VGAcolor.rbd"/>
+  <File Type="BITSTR-LTX" Name="debug_nets.ltx"/>
+  <File Type="BITSTR-LTX" Name="lab11VGAcolor.ltx"/>
+  <File Type="BITSTR-SYSDEF" Name="lab11VGAcolor.sysdef"/>
+  <File Type="BG-BGN" Name="lab11VGAcolor.bgn"/>
+  <File Type="BG-DRC" Name="lab11VGAcolor.drc"/>
+  <File Type="RDI-RDI" Name="lab11VGAcolor.vdi"/>
+  <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
+  <File Type="ROUTE-RQS" Name="lab11VGAcolor_routed.rqs"/>
+  <File Type="POSTROUTE-PHYSOPT-RQS" Name="lab11VGAcolor_postroute_physopted.rqs"/>
+  <File Type="ROUTE-RQS-RPT" Name="route_report_qor_suggestions_0.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-RQS-RPT" Name="postroute_physopt_report_qor_suggestions_0.rpt"/>
+  <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
+    <Filter Type="Srcs"/>
+    <File Path="$PSRCDIR/sources_1/ip/frameBuffer/frameBuffer.xci">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/ip/multAdd/multAdd.xci">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/common/common.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/common/edgeDetector.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/common/freqSynthesizer.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/common/ov7670programmer.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/common/ov7670reader.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/common/synchronizer.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/common/vgaRefresher.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/lab11VGAcolor/lab11QVGAcolor.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/common/rgb2gray.vhd">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="DesignMode" Val="RTL"/>
+      <Option Name="TopModule" Val="lab11VGAcolor"/>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1" RelGenDir="$PGENDIR/constrs_1">
+    <Filter Type="Constrs"/>
+    <File Path="$PPRDIR/../../sources/lab11VGAcolor/lab11QVGAcolor.xdc">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="ConstrsType" Val="XDC"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="utils" Type="Utils" RelSrcDir="$PSRCDIR/utils_1" RelGenDir="$PGENDIR/utils_1">
+    <Filter Type="Utils"/>
+    <Config>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <Strategy Version="1" Minor="2">
+    <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2023"/>
+    <Step Id="init_design"/>
+    <Step Id="opt_design"/>
+    <Step Id="power_opt_design"/>
+    <Step Id="place_design"/>
+    <Step Id="post_place_power_opt_design"/>
+    <Step Id="phys_opt_design"/>
+    <Step Id="route_design"/>
+    <Step Id="post_route_phys_opt_design"/>
+    <Step Id="write_bitstream"/>
+  </Strategy>
+</GenRun>

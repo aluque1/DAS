@@ -4,13 +4,13 @@
 --    rgb2grey.vhd  27/02/2024
 --
 --    (c) J.M. Mendias
---    Diseño Automático de Sistemas
---    Facultad de Informática. Universidad Complutense de Madrid
+--    Diseï¿½o Automï¿½tico de Sistemas
+--    Facultad de Informï¿½tica. Universidad Complutense de Madrid
 --
---  Propósito:
+--  Propï¿½sito:
 --    Convierte un color RGB a escala de grises
 --
---  Notas de diseño:
+--  Notas de diseï¿½o:
 --    - Para pantallas con 4b por canal
 --
 ---------------------------------------------------------------------
@@ -48,6 +48,14 @@ architecture syn of rgb2grey is
 
 begin 
 
-  ...
+  process(rgb)
+  begin
+    R <= unsigned(rgb(11 downto 8));
+    G <= unsigned(rgb(7 downto 4));
+    B <= unsigned(rgb(3 downto 0));
     
+    acc <= (Rcoef * R) + (Gcoef * G) + (Bcoef * B);
+    
+    grey <= std_logic_vector(acc(11 downto 8));
+  end process;
 end syn;

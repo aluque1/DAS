@@ -1,0 +1,7 @@
+verilog xil_defaultlib  \
+"../../../../lab11VGAcolor.gen/sources_1/ip/frameBuffer/sim/frameBuffer.v" \
+
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
