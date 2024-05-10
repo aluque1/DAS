@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "/home/jorbis/Documentos/GitHub/DAS/projects/lab8c/lab8c.runs/synth_1/lab8.tcl"
+  variable script "C:/Users/Administrator/Desktop/uni/DAS/projects/lab8c/lab8c.runs/synth_1/lab8.tcl"
   variable category "vivado_synth"
 }
 
@@ -70,30 +70,31 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
+set_param chipscope.maxJobs 4
+set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35tcpg236-1
 
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
-set_property webtalk.parent_dir /home/jorbis/Documentos/GitHub/DAS/projects/lab8c/lab8c.cache/wt [current_project]
-set_property parent.project_path /home/jorbis/Documentos/GitHub/DAS/projects/lab8c/lab8c.xpr [current_project]
+set_property webtalk.parent_dir C:/Users/Administrator/Desktop/uni/DAS/projects/lab8c/lab8c.cache/wt [current_project]
+set_property parent.project_path C:/Users/Administrator/Desktop/uni/DAS/projects/lab8c/lab8c.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language VHDL [current_project]
-set_property board_part_repo_paths {/home/jorbis/.Xilinx/Vivado/2023.1/xhub/board_store/xilinx_board_store} [current_project]
 set_property board_part digilentinc.com:basys3:part0:1.2 [current_project]
-set_property ip_output_repo /home/jorbis/Documentos/GitHub/DAS/projects/lab8c/lab8c.cache/ip [current_project]
+set_property ip_output_repo c:/Users/Administrator/Desktop/uni/DAS/projects/lab8c/lab8c.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_vhdl -library xil_defaultlib {
-  /home/jorbis/Documentos/GitHub/DAS/sources/common/common.vhd
-  /home/jorbis/Documentos/GitHub/DAS/sources/common/edgeDetector.vhd
-  /home/jorbis/Documentos/GitHub/DAS/sources/common/ps2receiver.vhd
-  /home/jorbis/Documentos/GitHub/DAS/sources/common/synchronizer.vhd
-  /home/jorbis/Documentos/GitHub/DAS/sources/common/vgaRefresher.vhd
-  /home/jorbis/Documentos/GitHub/DAS/sources/common/vgaTextInterface.vhd
-  /home/jorbis/Documentos/GitHub/DAS/sources/lab8/lab8.vhd
+  C:/Users/Administrator/Desktop/uni/DAS/sources/common/common.vhd
+  C:/Users/Administrator/Desktop/uni/DAS/sources/common/edgeDetector.vhd
+  C:/Users/Administrator/Desktop/uni/DAS/sources/common/ps2receiver.vhd
+  C:/Users/Administrator/Desktop/uni/DAS/sources/common/synchronizer.vhd
+  C:/Users/Administrator/Desktop/uni/DAS/sources/common/vgaRefresher.vhd
+  C:/Users/Administrator/Desktop/uni/DAS/sources/common/vgaTextInterface.vhd
+  C:/Users/Administrator/Desktop/uni/DAS/sources/lab8/lab8.vhd
 }
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -104,12 +105,12 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc /home/jorbis/Documentos/GitHub/DAS/sources/lab8/lab8.xdc
-set_property used_in_implementation false [get_files /home/jorbis/Documentos/GitHub/DAS/sources/lab8/lab8.xdc]
+read_xdc C:/Users/Administrator/Desktop/uni/DAS/sources/lab8/lab8.xdc
+set_property used_in_implementation false [get_files C:/Users/Administrator/Desktop/uni/DAS/sources/lab8/lab8.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
 
-read_checkpoint -auto_incremental -incremental /home/jorbis/Documentos/GitHub/DAS/projects/lab8c/lab8c.srcs/utils_1/imports/synth_1/lab8.dcp
+read_checkpoint -auto_incremental -incremental C:/Users/Administrator/Desktop/uni/DAS/projects/lab8c/lab8c.srcs/utils_1/imports/synth_1/lab8.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
