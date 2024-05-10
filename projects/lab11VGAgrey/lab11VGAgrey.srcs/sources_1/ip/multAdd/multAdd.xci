@@ -4,7 +4,7 @@
     "xci_name": "multAdd",
     "component_reference": "xilinx.com:ip:xbip_multadd:3.0",
     "ip_revision": "17",
-    "gen_directory": "../../../../lab11VGAgrey.gen/sources_1/ip/multAdd",
+    "gen_directory": "../../../../lab11VGAgrey.gen/sources_1/ip/multAdd_1",
     "parameters": {
       "component_parameters": {
         "Component_Name": [ { "value": "multAdd", "resolve_type": "user", "usage": "all" } ],
@@ -56,7 +56,7 @@
         "IPCONTEXT": [ { "value": "IP_Flow" } ],
         "IPREVISION": [ { "value": "17" } ],
         "MANAGED": [ { "value": "TRUE" } ],
-        "OUTPUTDIR": [ { "value": "../../../../lab11VGAgrey.gen/sources_1/ip/multAdd" } ],
+        "OUTPUTDIR": [ { "value": "../../../../lab11VGAgrey.gen/sources_1/ip/multAdd_1" } ],
         "SELECTEDSIMMODEL": [ { "value": "" } ],
         "SHAREDDIR": [ { "value": "." } ],
         "SWVERSION": [ { "value": "2023.1" } ],

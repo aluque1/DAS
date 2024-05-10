@@ -418,7 +418,7 @@ begin
       clearing <= '0';
     end if;
     if rising_edge(clk) then
-      if clear='1' or clearing= '1' then
+      if clear='1'  or clearing= '1' then
         clearX <= unsigned(colInt);
         clearY <= unsigned(rowInt);
       end if;

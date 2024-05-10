@@ -166,8 +166,9 @@ begin
         newLine <= '0';
         clear   <= '0';
       else
-        charRdy <= '1';
         clear <= '0';
+        newLine <= '0';
+        charRdy <= '1';
         char <= asciiCode;
         if keyRdy='1' then
           case state is
@@ -223,7 +224,7 @@ begin
         if rstSync='1' or clear = '1' then
             y <= (others => '0');
         else
-            if newLine = '1' or x = COLSxLINE - 1 then
+            if newLine = '1' then
                 y <= (y + 1) mod ROWSxFRAME;
             end if;
         end if;
