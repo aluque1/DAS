@@ -167,18 +167,17 @@ begin
         clear   <= '0';
       else
         charRdy <= '1';
-        newLine <= '0';
         clear <= '0';
         char <= asciiCode;
         if keyRdy='1' then
           case state is
             when keyOn =>
                 case key is
-                when X"F0" => state := keyOFF;
-                when X"12" => shiftP <= true;
+                when X"12" | X"59" => shiftP <= true;
                 when X"58" => capsOn <= not capsOn;
                 when X"5a" => newLine <= '1';
                 when X"76" => clear <= '1';
+                when X"F0" => state := keyOFF;
                 when others => state := keyOn;
                 end case;
             when keyOff =>
@@ -193,7 +192,7 @@ begin
         end if;
       end if;
     end if;
-  end process;    
+  end process;        
 
   ------------------  
   
