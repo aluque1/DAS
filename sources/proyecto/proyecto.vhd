@@ -17,7 +17,7 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 
-ENTITY lab6pong IS
+ENTITY proyecto IS
   PORT (
     clk : IN STD_LOGIC;
     rst : IN STD_LOGIC;
@@ -27,7 +27,7 @@ ENTITY lab6pong IS
     vSync : OUT STD_LOGIC;
     RGB : OUT STD_LOGIC_VECTOR(3 * 4 - 1 DOWNTO 0)
   );
-END lab6pong;
+END proyecto;
 
 ---------------------------------------------------------------------
 
@@ -35,7 +35,7 @@ LIBRARY ieee;
 USE ieee.numeric_std.ALL;
 USE work.common.ALL;
 
-ARCHITECTURE syn OF lab6pong IS
+ARCHITECTURE syn OF proyecto IS
 
   CONSTANT FREQ_KHZ : NATURAL := 100_000; -- frecuencia de operacion en KHz
   CONSTANT VGA_KHZ : NATURAL := 25_000; -- frecuencia de envio de pixeles a la VGA en KHz
@@ -61,8 +61,8 @@ ARCHITECTURE syn OF lab6pong IS
   SIGNAL lineAux, pixelAux : STD_LOGIC_VECTOR(9 DOWNTO 0);
   SIGNAL line, pixel : unsigned(7 DOWNTO 0);
   
-  --signal x : natural := 14;
-  --signal y : natural := 54;
+  signal x : natural := 14;
+  signal y : natural := 54;
   SIGNAL vToggle : BOOLEAN := false;
 BEGIN
 
@@ -119,47 +119,56 @@ BEGIN
   pixel <= unsigned(pixelAux(9 DOWNTO 2));
   line <= unsigned(lineAux(9 DOWNTO 2));
 
-  --with visual select
-    --color <= 
-    --"011101110111" when "10",
-    --"100110011001" when "01",
-    --"000000000000" when others;
+  with visual select
+    color <= 
+    "011101110111" when "01",
+    "100110011001" when "10",
+    "011101110111" when "11",
+    "000000000000" when others;
   
-  color <= "100010001000" when campoJuego = '1' else (others => '0');
+  --color <= "100010001000" when campoJuego = '1' else (others => '0');
   ------------------
-  --pintabordes:
-  --process(clk, line, pixel)
-  --begin
-  --if rising_edge(clk) then
-    --if (pixel = y and ((line > 9 and line < 14) or (line > 114 and line < 119)))  then
-        --y <= y + 5;
-        --if y = 104 then
-            --y <= 54;
-        --end if;
-    --end if;
-   
-    --if (line = x and ((pixel > 49 and pixel < 54) or (pixel > 104 and pixel < 109))) then
-        --x <= x + 5;
-        --if x = 114 then
-            --x <= 14;
-        --end if;
-    --end if;  
-  --end if;      
-  --end process;
+
+  --REVISAR LAS CONDICIONES
+  regSumX:
+  process(clk)
+  begin
+    if rising_edge(clk) then
+        if (line = x and ((pixel > 49 and pixel < 54) and (pixel > 104 and pixel < 109))) then
+            x <= x + 5;
+            if x = 114 then
+                x <= 14;
+            end if;
+        end if;
+    end if;
+  end process;
   
-  --visual(0) <= '1' when (pixel = 59 and ((line > 9 and line < 14) or (line > 114 and line < 119))) or
- --                       (line = 19 and ((pixel > 49 and pixel < 54) or (pixel > 104 and pixel < 109))) or
- --                       (line = 9 and (pixel >= 49 and pixel <= 109)) or
- --                       (line = 14 and (pixel >= 54 and pixel <= 104)) or
- --                       (line = 114 and (pixel >= 54 and pixel <= 104)) or
- --                       (line = 119 and (pixel >= 49 and pixel <= 109)) or
- --                       (pixel = 49 and (line >= 9 and line <= 119)) or
- --                       (pixel = 54 and (line >= 14 and line <= 114)) or
- --                       (pixel = 104 and (line >= 14 and line <= 114)) or
- --                       (pixel = 109 and (line >= 9 and line <= 119)) else '0';
+  regSumY:
+  process(clk)
+  begin
+  if rising_edge(clk) then
+        if (pixel = y and ((line > 9 and line < 14) and (line > 114 and line < 119))) then
+            y <= y + 5;
+            if y = 104 then
+                y <= 54;
+            end if;
+        end if;
+    end if;
+  end process;
+  
+  visual(0) <= '1' when (pixel = y and ((line > 9 and line < 14) or (line > 114 and line < 119))) or
+                        (line = x and ((pixel > 49 and pixel < 54) or (pixel > 104 and pixel < 109))) or
+                        (line = 9 and (pixel >= 49 and pixel <= 109)) or
+                        (line = 14 and (pixel >= 54 and pixel <= 104)) or
+                        (line = 114 and (pixel >= 54 and pixel <= 104)) or
+                        (line = 119 and (pixel >= 49 and pixel <= 109)) or
+                        (pixel = 49 and (line >= 9 and line <= 119)) or
+                        (pixel = 54 and (line >= 14 and line <= 114)) or
+                        (pixel = 104 and (line >= 14 and line <= 114)) or
+                        (pixel = 109 and (line >= 9 and line <= 119)) else '0';
                         
- --visual(1) <= '1' when ((pixel > 49 and pixel < 109) and (line > 9 and line < 14) and (line > 114 and line < 119)) or
- --                       ((line > 9 and line < 119) and (pixel > 49 and pixel < 54) and (pixel > 104 and pixel < 109)) else '0';
+  visual(1) <= '1' when ((pixel > 49 and pixel < 109) and (line > 9 and line < 14) and (line > 114 and line < 119)) or
+                        ((line > 9 and line < 119) and (pixel > 49 and pixel < 54) and (pixel > 104 and pixel < 109)) else '0';
   campoJuego <= '1' when (((line >= 114 and line <= 119)or(line >= 9 and line <= 14)) and (pixel >= 49 and pixel <= 109)) or
                          (((pixel >= 49 and pixel <= 54) or (pixel >= 104 and pixel <= 109)) and (line >= 9 and line <= 119)) else '0';
                          

@@ -7,4 +7,4 @@
 # Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 #
 
-vivado -log lab6pong.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source lab6pong.tcl -notrace
+vivado -log proyecto.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source proyecto.tcl -notrace

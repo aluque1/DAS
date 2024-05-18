@@ -37,4 +37,4 @@ EAStep()
      fi
 }
 
-EAStep vivado -log lab6pong.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source lab6pong.tcl
+EAStep vivado -log proyecto.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source proyecto.tcl
