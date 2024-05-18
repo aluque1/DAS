@@ -121,9 +121,9 @@ BEGIN
 
   with visual select
     color <= 
-    "011101110111" when "01",
-    "100110011001" when "10",
-    "011101110111" when "11",
+    "100110011001" when "01",
+    "011101110111" when "10",
+    "100110011001" when "11",
     "000000000000" when others;
   
   --color <= "100010001000" when campoJuego = '1' else (others => '0');
@@ -134,7 +134,7 @@ BEGIN
   process(clk)
   begin
     if rising_edge(clk) then
-        if (line = x and ((pixel > 49 and pixel < 54) and (pixel > 104 and pixel < 109))) then
+        if (line = x+1 and ((pixel > 49 and pixel < 54) or (pixel > 104 and pixel < 109))) then
             x <= x + 5;
             if x = 114 then
                 x <= 14;
@@ -147,7 +147,7 @@ BEGIN
   process(clk)
   begin
   if rising_edge(clk) then
-        if (pixel = y and ((line > 9 and line < 14) and (line > 114 and line < 119))) then
+        if (pixel = y+1 and ((line > 9 and line < 14) or (line > 114 and line < 119))) then
             y <= y + 5;
             if y = 104 then
                 y <= 54;
@@ -167,8 +167,9 @@ BEGIN
                         (pixel = 104 and (line >= 14 and line <= 114)) or
                         (pixel = 109 and (line >= 9 and line <= 119)) else '0';
                         
-  visual(1) <= '1' when ((pixel > 49 and pixel < 109) and (line > 9 and line < 14) and (line > 114 and line < 119)) or
-                        ((line > 9 and line < 119) and (pixel > 49 and pixel < 54) and (pixel > 104 and pixel < 109)) else '0';
+  visual(1) <= '1' when ((pixel > 49 and pixel < 109) and ((line > 9 and line < 14) or (line > 114 and line < 119))) or
+                        ((line > 9 and line < 119) and ((pixel > 49 and pixel < 54) or (pixel > 104 and pixel < 109))) else '0';
+                        
   campoJuego <= '1' when (((line >= 114 and line <= 119)or(line >= 9 and line <= 14)) and (pixel >= 49 and pixel <= 109)) or
                          (((pixel >= 49 and pixel <= 54) or (pixel >= 104 and pixel <= 109)) and (line >= 9 and line <= 119)) else '0';
                          
