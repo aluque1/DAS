@@ -1,19 +1,3 @@
----------------------------------------------------------------------
---
---  Fichero:
---    lab6.vhd  12/09/2023
---
---    (c) J.M. Mendias
---    Dise�o Autom�tico de Sistemas
---    Facultad de Inform�tica. Universidad Complutense de Madrid
---
---  Prop�sito:
---    Laboratorio 6: Pong
---
---  Notas de dise�o:
---
----------------------------------------------------------------------
-
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 
@@ -45,6 +29,12 @@ ARCHITECTURE syn OF proyecto IS
   SIGNAL yLeft : unsigned(7 DOWNTO 0) := to_unsigned(8, 8);
   SIGNAL yBall : unsigned(7 DOWNTO 0) := to_unsigned(60, 8);
   SIGNAL xBall : unsigned(7 DOWNTO 0) := to_unsigned(79, 8);
+  
+  signal xPiezaAct : unsigned(7 downto 0) := to_unsigned(74, 8);
+  signal yPiezaAct : unsigned(7 downto 0) := to_unsigned(15, 8);
+  
+  signal distASuelo : natural := 10;
+  
   SIGNAL qP, aP, pP, lP, spcP : BOOLEAN := false;
 
   SIGNAL rstSync : STD_LOGIC;
@@ -52,10 +42,14 @@ ARCHITECTURE syn OF proyecto IS
   SIGNAL dataRdy : STD_LOGIC;
 
   SIGNAL color : STD_LOGIC_VECTOR(11 DOWNTO 0);
-  signal visual: std_logic_vector(1 downto 0) := (others => '0');--Muy seguramente aumenten los bits
+  
+  signal visual: std_logic_vector(3 downto 0) := (others => '0');--Muy seguramente aumenten los bits
   --visual(0) bordes claritos de los bordes del campo
   --visual(1) interior oscuro
-  SIGNAL campoJuego, raquetaDer, raquetaIzq, pelota : STD_LOGIC;
+  --visual(2) lineas de las piezas
+  --A IMPLEMENTAR
+  --visual(3) relleno de las piezas
+  SIGNAL cuadradoB, cuadradoI, piezaActualB, piezaActualI : STD_LOGIC;
   SIGNAL mover, finPartida, reiniciar : BOOLEAN;
 
   SIGNAL lineAux, pixelAux : STD_LOGIC_VECTOR(9 DOWNTO 0);
@@ -63,7 +57,7 @@ ARCHITECTURE syn OF proyecto IS
   
   signal x : natural := 14;
   signal y : natural := 54;
-  SIGNAL vToggle : BOOLEAN := false;
+  
 BEGIN
 
   rstSynchronizer : synchronizer
@@ -121,15 +115,84 @@ BEGIN
 
   with visual select
     color <= 
-    "100110011001" when "01",
-    "011101110111" when "10",
-    "100110011001" when "11",
+    "100110011001" when "0001",
+    "011101110111" when "0010",
+    "100110011001" when "0011",
+    "111111110000" when "0100",
+    --Modificar esto para que los colores sean variables
+    "111111110000" when "1100",
+    "110111010000" when "1000",
     "000000000000" when others;
-  
-  --color <= "100010001000" when campoJuego = '1' else (others => '0');
+    
   ------------------
 
-  --REVISAR LAS CONDICIONES
+  
+  visual(0) <= '1' when (pixel = y and ((line > 9 and line < 14) or (line > 114 and line < 119))) or
+                        (line = x and ((pixel > 49 and pixel < 54) or (pixel > 104 and pixel < 109))) or
+                        (line = 9 and (pixel >= 49 and pixel <= 109)) or
+                        (line = 14 and (pixel >= 54 and pixel <= 104)) or
+                        (line = 114 and (pixel >= 54 and pixel <= 104)) or
+                        (line = 119 and (pixel >= 49 and pixel <= 109)) or
+                        (pixel = 49 and (line >= 9 and line <= 119)) or
+                        (pixel = 54 and (line >= 14 and line <= 114)) or
+                        (pixel = 104 and (line >= 14 and line <= 114)) or
+                        (pixel = 109 and (line >= 9 and line <= 119)) else '0';
+                        
+  visual(1) <= '1' when ((pixel > 49 and pixel < 109) and ((line > 9 and line < 14) or (line > 114 and line < 119))) or
+                        ((line > 9 and line < 119) and ((pixel > 49 and pixel < 54) or (pixel > 104 and pixel < 109))) else '0';
+  
+  visual(2) <= '1' when piezaActualB = '1' else '0';
+  
+  visual(3) <= '1' when piezaActualI = '1' else '0';
+  
+  piezaActualB <= '1' when cuadradoB = '1' else '0'; --piezaActualB <= '1' when cuadradoB = '1' or .... else '0';
+  piezaActualI <= '1' when cuadradoI = '1' else '0'; --piezaActualI <= '1' when cuadradoI = '1' or .... else '0';
+  
+  cuadradoB <= '1' when ((pixel = xPiezaAct or pixel = (xPiezaAct + 10) or pixel = (xPiezaAct + 5)) and (line >= yPiezaAct and line <= (yPiezaAct + 10))) or
+                         ((line = yPiezaAct or line = (yPiezaAct + 10) or line = (yPiezaAct + 5)) and (pixel >= xPiezaAct and pixel <= (xPiezaAct + 10))) else '0';
+                         --Aqui poner variable que le indique cuando pintarse
+  cuadradoI <= '1' when (pixel > xPiezaAct and pixel < (xPiezaAct + 10)) and (line > yPiezaAct and line < (yPiezaAct + 10)) else '0';
+  
+  pulseGen :
+  PROCESS (clk)
+    CONSTANT CYCLES : NATURAL := hz2cycles(FREQ_KHZ, 50);
+    VARIABLE count : NATURAL RANGE 0 TO CYCLES - 1 := 0;
+  BEGIN
+    IF rising_edge(clk) THEN
+      IF rstSync = '1' THEN
+        count := 0;
+      ELSIF finPartida = false THEN
+        count := (count + 1) MOD CYCLES;
+        mover <= false;
+        IF count = (CYCLES - 1) THEN
+          mover <= true;
+        END IF;
+      END IF;
+    END IF;
+  END PROCESS;
+
+  ------------------
+
+  caidaPiezaReg:
+  process(clk)
+  begin 
+    if rising_edge(clk) then
+        IF rstSync = '1' THEN
+            yPiezaAct <= to_unsigned(15, 8);
+        else
+            if mover then
+                if yPiezaAct + distASuelo < 113 then
+                    yPiezaAct <= yPiezaAct + 1;
+                end if;
+            end if;
+        end if;
+    end if;
+  end process;
+
+
+  ------------------
+
+ 
   regSumX:
   process(clk)
   begin
@@ -155,145 +218,5 @@ BEGIN
         end if;
     end if;
   end process;
-  
-  visual(0) <= '1' when (pixel = y and ((line > 9 and line < 14) or (line > 114 and line < 119))) or
-                        (line = x and ((pixel > 49 and pixel < 54) or (pixel > 104 and pixel < 109))) or
-                        (line = 9 and (pixel >= 49 and pixel <= 109)) or
-                        (line = 14 and (pixel >= 54 and pixel <= 104)) or
-                        (line = 114 and (pixel >= 54 and pixel <= 104)) or
-                        (line = 119 and (pixel >= 49 and pixel <= 109)) or
-                        (pixel = 49 and (line >= 9 and line <= 119)) or
-                        (pixel = 54 and (line >= 14 and line <= 114)) or
-                        (pixel = 104 and (line >= 14 and line <= 114)) or
-                        (pixel = 109 and (line >= 9 and line <= 119)) else '0';
-                        
-  visual(1) <= '1' when ((pixel > 49 and pixel < 109) and ((line > 9 and line < 14) or (line > 114 and line < 119))) or
-                        ((line > 9 and line < 119) and ((pixel > 49 and pixel < 54) or (pixel > 104 and pixel < 109))) else '0';
-                        
-  campoJuego <= '1' when (((line >= 114 and line <= 119)or(line >= 9 and line <= 14)) and (pixel >= 49 and pixel <= 109)) or
-                         (((pixel >= 49 and pixel <= 54) or (pixel >= 104 and pixel <= 109)) and (line >= 9 and line <= 119)) else '0';
-                         
-  raquetaIzq <= '1' WHEN pixel = 8 AND (line >= yLeft AND line <= yLeft + 16) ELSE
-    '0';
-  raquetaDer <= '1' WHEN pixel = 151 AND (line >= yRight AND line <= yRight + 16) ELSE
-    '0';
-  pelota <= '1' WHEN line = yBall AND pixel = xBall ELSE
-    '0';
-
-  ------------------
-
-  finPartida <= true WHEN xBall = 0 OR xBall = 159 ELSE
-    false; --revisar las igualdades
-  reiniciar <= true WHEN spcP ELSE
-    false;
-  
-  ------------------
-  pulseGen :
-  PROCESS (clk)
-    CONSTANT CYCLES : NATURAL := hz2cycles(FREQ_KHZ, 50);
-    VARIABLE count : NATURAL RANGE 0 TO CYCLES - 1 := 0;
-  BEGIN
-    IF rising_edge(clk) THEN
-      IF rstSync = '1' THEN
-        count := 0;
-      ELSIF finPartida = false THEN
-        count := (count + 1) MOD CYCLES;
-        mover <= false;
-        IF count = (CYCLES - 1) THEN
-          mover <= true;
-        END IF;
-      END IF;
-    END IF;
-  END PROCESS;
-
-  ------------------
-
-  yRightRegister :
-  PROCESS (clk)
-  BEGIN
-    IF rising_edge(clk) THEN
-      IF reiniciar = true OR rstSync = '1' THEN
-        yRight <= TO_UNSIGNED(8, 8);
-      ELSE
-        IF mover = true THEN
-          IF pP = true AND yRight > 8 THEN
-            yRight <= yRight - 1;
-          ELSIF lP = true AND yRight < 95 THEN
-            yRight <= yRight + 1;
-          END IF;
-        END IF;
-      END IF;
-    END IF;
-  END PROCESS;
-
-  yLeftRegister :
-  PROCESS (clk)
-  BEGIN
-    IF rising_edge(clk) THEN
-      IF reiniciar = true OR rstSync = '1' THEN
-        yLeft <= TO_UNSIGNED(8, 8);
-      ELSE
-        IF mover = true THEN
-          IF qP = true AND yLeft > 8 THEN
-            yLeft <= yLeft - 1;
-          ELSIF aP = true AND yLeft < 95 THEN
-            yLeft <= yLeft + 1;
-          END IF;
-        END IF;
-      END IF;
-    END IF;
-  END PROCESS;
-
-  ------------------
-
-  xBallRegister :
-  PROCESS (clk)
-    TYPE sense IS (left, right);
-    VARIABLE dir : sense := left;
-  BEGIN
-    IF rising_edge(clk) THEN
-      IF reiniciar = true OR rstSync = '1' THEN
-        xBall <= to_unsigned(79, 8);
-      ELSE
-        IF mover = true THEN
-          IF xBall = 9 AND yLeft <= yBall AND yBall <= (yLeft + 16) THEN
-            dir := right;
-          ELSIF xBall = 150 AND yRight <= yBall AND yBall <= (yRight + 16) THEN
-            dir := left;
-          END IF;
-          IF dir = left THEN
-            xBall <= xBall - 1;
-          ELSE
-            xBall <= xBall + 1;
-          END IF;
-        END IF;
-      END IF;
-    END IF;
-  END PROCESS;
-
-  yBallRegister :
-  PROCESS (clk)
-    TYPE sense IS (up, down);
-    VARIABLE dir : sense := up;
-  BEGIN
-    IF rising_edge(clk) THEN
-      IF reiniciar = true OR rstSync = '1' THEN
-        yBall <= to_unsigned(60, 8);
-      ELSE
-        IF mover = true THEN
-          IF yBall = 9 THEN
-            dir := down;
-          ELSIF yBall = 110 THEN
-            dir := up;
-          END IF;
-          IF dir = up THEN
-            yBall <= yBall - 1;
-          ELSE
-            yBall <= yBall + 1;
-          END IF;
-        END IF;
-      END IF;
-    END IF;
-  END PROCESS;
 
 END syn;
