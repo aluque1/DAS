@@ -40,12 +40,25 @@ ARCHITECTURE syn OF proyecto IS
   
   signal distASuelo : natural := 2; -- variable que se modifica
   
-  SIGNAL aP, sP, dP, rP, spcP, actCuadrado, actLinea, lineaPos1, lineaPos2 : BOOLEAN := false;
+  --Señales teclas
+  SIGNAL aP, sP, dP, rP, spcP: BOOLEAN := false;
+  --Señales posiciones
+  signal CPos1, LinPos1, LinPos2, ZPos1, ZPos2, ZInvPos1, ZInvPos2, LPos1, LPos2, LPos3, LPos4, LInvPos1, LInvPos2, LInvPos3, LInvPos4, TPos1, TPos2, TPos3, TPos4 : boolean := false;
+  --Señales de limpieza
+  signal limpC, limpLin, limpZ, limpZInv, limpL, limpLInv, limpT: boolean := false;
+  --Señales de pintado
+  signal pintC, pintLin, pintZ, pintZInv, pintL, pintLInv, pintT: boolean := false;
+  --colisiones
+  --signal colision, colisionC, colisionLin, colisionZ, colisionZinv, colision
 
   SIGNAL rstSync : STD_LOGIC;
   SIGNAL data : STD_LOGIC_VECTOR(7 DOWNTO 0);
   SIGNAL dataRdy : STD_LOGIC;
-
+  
+  signal ce, ld : std_logic := '0';
+  signal seed : std_logic_vector(2 downto 0) := "001";
+  signal piezaSig : std_logic_vector(2 downto 0);
+  
   SIGNAL color : STD_LOGIC_VECTOR(11 DOWNTO 0);
   signal colorPiezaActB : std_logic_vector (11 downto 0) := amarilloClaro;
   signal colorPiezaActI : std_logic_vector (11 downto 0) := amarilloOscuro;
@@ -81,6 +94,10 @@ BEGIN
   ps2KeyboardInterface : ps2receiver
   PORT MAP(clk => clk, rst => rstSync, dataRdy => dataRdy, data => data, ps2Clk => ps2Clk, ps2Data => ps2Data);
 
+  generaPieza: lsfr
+  generic map(WL => 3)
+  port map(clk => clk, rst => rstSync, ce => ce, ld => ld, seed => seed, random => piezaSig);
+  
   keyboardScanner :
   PROCESS (clk)
     TYPE states IS (keyON, keyOFF);
@@ -164,6 +181,8 @@ BEGIN
                          --Aqui poner variable que le indique cuando pintarse
   cuadradoI <= '1' when (pixel > xPiezaAct and pixel < (xPiezaAct + 10)) and (line > yPiezaAct and line < (yPiezaAct + 10)) else '0';
   
+  
+  --Implementar el aumento de velocidad
   pulseGen :
   PROCESS (clk)
     CONSTANT CYCLES : NATURAL := hz2cycles(FREQ_KHZ, 50);
@@ -183,6 +202,94 @@ BEGIN
   END PROCESS;
 
   ------------------
+  
+  fsm:
+  process(clk, colision)
+    type states is (S0, S1, S2, S3, S4, S5, S6);
+    variable state: states := S0;
+  begin
+    if rising_edge(clk) then
+        if rstSync = '1' then 
+            state := S0;
+        else
+            case state is
+                when S0 =>
+                    ld <= '1';
+                    state := S1;
+                when S1 =>
+                    ld <= '0';
+                    ce <= '1';
+                    state := S2;
+                when S2 =>
+                    ce <= '0';
+                    --NOTA hay que ponerlos a false en algun momento
+                    case piezaSig is
+                        when "000" =>
+                            CPos1 <= true;
+                        when "001" =>
+                            CPos1 <= true;
+                        when "010" =>
+                            LinPos1 <= true;
+                        when "011" =>
+                            ZPos1 <= true;
+                        when "100" =>
+                            ZInvPos1 <= true;
+                        when "101" =>
+                            LPos1 <= true;
+                        when "110" =>
+                            LInvPos1 <= true;
+                        when "111" =>
+                            TPos1 <= true;
+                    end case;
+                    state := S3;
+                 when S3 =>
+                 --NOTA hay que ponerlos a false en algun momento
+                     case piezaSig is
+                            when "000" =>
+                                limpC <= true;
+                            when "001" =>
+                                limpC <= true;
+                            when "010" =>
+                                limpLin <= true;
+                            when "011" =>
+                                limpZ <= true;
+                            when "100" =>
+                                limpZInv <= true;
+                            when "101" =>
+                                limpL <= true;
+                            when "110" =>
+                                limpLInv <= true;
+                            when "111" =>
+                                limpT <= true;
+                      end case;
+                        state := S4;
+                  when S4 =>
+                  --NOTA hay que ponerlos a false en algun momento
+                    case piezaSig is
+                            when "000" =>
+                                pintC <= true;
+                            when "001" =>
+                                pintC <= true;
+                            when "010" =>
+                                pintLin <= true;
+                            when "011" =>
+                                pintZ <= true;
+                            when "100" =>
+                                pintZInv <= true;
+                            when "101" =>
+                                pintL <= true;
+                            when "110" =>
+                                pintLInv <= true;
+                            when "111" =>
+                                pintT <= true;
+                     end case;
+                     --si hay colision saltamos al estado de comprobar si linea completa
+                     --si no, cae
+            end case;
+        end if;
+    end if;
+  end process;
+  
   --Replantear el movimiento entero de la pieza
   movPiezaTab:
   process(clk)

@@ -386,6 +386,20 @@ component rgb2grey
   );
 end component;
 
+component lsfr
+  generic(
+    WL : natural   -- anchura del numero aleatorio
+  );
+  port(
+    clk    : in  std_logic;   -- reloj del sistema
+    rst    : in  std_logic;   -- reset s�ncrono del sistema
+    ce     : in  std_logic;   -- activa la generacion de numeros aleatorios (1 por ciclo de reloj)
+    ld     : in  std_logic;   -- carga la semilla
+    seed   : in  std_logic_vector(WL-1 downto 0);   -- semilla
+    random : out std_logic_vector(WL-1 downto 0)    -- numero aleatorio
+   );
+end component;
+
 end package common;
 
 -------------------------------------------------------------------
