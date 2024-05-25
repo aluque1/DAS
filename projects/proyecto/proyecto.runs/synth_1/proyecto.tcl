@@ -71,7 +71,6 @@ proc create_report { reportName command } {
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param chipscope.maxJobs 1
-set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35tcpg236-1
 
@@ -90,6 +89,7 @@ OPTRACE "Adding files" START { }
 read_vhdl -library xil_defaultlib {
   {C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/common.vhd}
   {C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/edgeDetector.vhd}
+  {C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/lsfr.vhd}
   {C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/ps2receiver.vhd}
   {C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/synchronizer.vhd}
   {C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/vgaRefresher.vhd}

@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date         : Thu May 23 14:11:06 2024
+| Date         : Sun May 26 01:15:47 2024
 | Host         : Sobremesa running 64-bit major release  (build 9200)
 | Command      : report_drc -file proyecto_drc_routed.rpt -pb proyecto_drc_routed.pb -rpx proyecto_drc_routed.rpx
 | Design       : proyecto

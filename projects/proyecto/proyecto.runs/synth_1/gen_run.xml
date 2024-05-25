@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1716466131" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/lab6pong.dcp">
+<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1716678826" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/lab6pong.dcp">
   <File Type="PA-TCL" Name="proyecto.tcl"/>
   <File Type="RDS-PROPCONSTRS" Name="proyecto_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="proyecto_reports.tcl"/>
@@ -18,6 +18,12 @@
       </FileInfo>
     </File>
     <File Path="$PPRDIR/../../sources/common/edgeDetector.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../sources/common/lsfr.vhd">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
