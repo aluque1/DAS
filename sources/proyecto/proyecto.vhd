@@ -24,33 +24,45 @@ ARCHITECTURE syn OF proyecto IS
   CONSTANT FREQ_KHZ : NATURAL := 100_000; -- frecuencia de operacion en KHz
   CONSTANT VGA_KHZ : NATURAL := 25_000; -- frecuencia de envio de pixeles a la VGA en KHz
   CONSTANT FREQ_DIV : NATURAL := FREQ_KHZ/VGA_KHZ;
-
-  SIGNAL yRight : unsigned(7 DOWNTO 0) := to_unsigned(8, 8);
-  SIGNAL yLeft : unsigned(7 DOWNTO 0) := to_unsigned(8, 8);
-  SIGNAL yBall : unsigned(7 DOWNTO 0) := to_unsigned(60, 8);
-  SIGNAL xBall : unsigned(7 DOWNTO 0) := to_unsigned(79, 8);
+  constant negro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "000000000000";
+  constant grisOscuro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "011101110111";
+  constant grisClaro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "100110011001";
+  constant amarilloOscuro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "110111010000";
+  constant amarilloClaro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "111111110000";
+  constant azulOscuro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "";
+  constant azulClaro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "";
   
-  signal xPiezaAct : unsigned(7 downto 0) := to_unsigned(74, 8);
-  signal yPiezaAct : unsigned(7 downto 0) := to_unsigned(15, 8);
+  signal xPiezaAct : unsigned(7 downto 0) := to_unsigned(5, 8);
+  signal yPiezaAct : unsigned(7 downto 0) := to_unsigned(0, 8);
   
-  signal distASuelo : natural := 10;
+  signal addrTabRd : unsigned(7 downto 0) := (others => '0');
+  signal addrTabWr : unsigned(7 downto 0) := (others => '0');
   
-  SIGNAL qP, aP, pP, lP, spcP : BOOLEAN := false;
+  signal distASuelo : natural := 2; -- variable que se modifica
+  
+  SIGNAL aP, sP, dP, rP, spcP, actCuadrado, actLinea, lineaPos1, lineaPos2 : BOOLEAN := false;
 
   SIGNAL rstSync : STD_LOGIC;
   SIGNAL data : STD_LOGIC_VECTOR(7 DOWNTO 0);
   SIGNAL dataRdy : STD_LOGIC;
 
   SIGNAL color : STD_LOGIC_VECTOR(11 DOWNTO 0);
+  signal colorPiezaActB : std_logic_vector (11 downto 0) := amarilloClaro;
+  signal colorPiezaActI : std_logic_vector (11 downto 0) := amarilloOscuro;
   
   signal visual: std_logic_vector(3 downto 0) := (others => '0');--Muy seguramente aumenten los bits
   --visual(0) bordes claritos de los bordes del campo
   --visual(1) interior oscuro
   --visual(2) lineas de las piezas
-  --A IMPLEMENTAR
   --visual(3) relleno de las piezas
-  SIGNAL cuadradoB, cuadradoI, piezaActualB, piezaActualI : STD_LOGIC;
+  --A IMPLEMENTAR
+  --visual(4) lineas piezas en el campo
+  --visual(5) relleno piezas en el campo
+  SIGNAL cuadradoB, cuadradoI, piezaActualB, piezaActualI: STD_LOGIC;
   SIGNAL mover, finPartida, reiniciar : BOOLEAN;
+
+  type tablero_t is array (0 to 230) of unsigned(2 downto 0); 
+  signal tablero : tablero_t := (others => (others => '0'));
 
   SIGNAL lineAux, pixelAux : STD_LOGIC_VECTOR(9 DOWNTO 0);
   SIGNAL line, pixel : unsigned(7 DOWNTO 0);
@@ -82,20 +94,20 @@ BEGIN
           WHEN keyON =>
             CASE data IS
               WHEN X"F0" => state := keyOFF;
-              WHEN X"15" => qP <= true;
               WHEN X"1C" => aP <= true;
-              WHEN X"4D" => pP <= true;
-              WHEN X"4B" => lP <= true;
+              WHEN X"1B" => sP <= true;
+              WHEN X"23" => dP <= true;
+              WHEN X"2D" => rP <= true;
               WHEN X"29" => spcP <= true;
               WHEN OTHERS => state := keyON;
             END CASE;
           WHEN keyOFF =>
             state := keyON;
             CASE data IS
-              WHEN X"15" => qP <= false;
               WHEN X"1C" => aP <= false;
-              WHEN X"4D" => pP <= false;
-              WHEN X"4B" => lP <= false;
+              WHEN X"1B" => sP <= false;
+              WHEN X"23" => dP <= false;
+              WHEN X"2D" => rP <= false;
               WHEN X"29" => spcP <= false;
               WHEN OTHERS => state := keyOFF;
             END CASE;
@@ -115,14 +127,13 @@ BEGIN
 
   with visual select
     color <= 
-    "100110011001" when "0001",
-    "011101110111" when "0010",
-    "100110011001" when "0011",
-    "111111110000" when "0100",
-    --Modificar esto para que los colores sean variables
-    "111111110000" when "1100",
-    "110111010000" when "1000",
-    "000000000000" when others;
+    grisClaro when "0001",
+    grisOscuro when "0010",
+    grisClaro when "0011",
+    colorPiezaActB when "0100",
+    colorPiezaActB when "1100",
+    colorPiezaActI when "1000",
+    negro when others;
     
   ------------------
 
@@ -172,17 +183,24 @@ BEGIN
   END PROCESS;
 
   ------------------
-
-  caidaPiezaReg:
+  --Replantear el movimiento entero de la pieza
+  movPiezaTab:
   process(clk)
-  begin 
+  begin
     if rising_edge(clk) then
-        IF rstSync = '1' THEN
-            yPiezaAct <= to_unsigned(15, 8);
-        else
-            if mover then
-                if yPiezaAct + distASuelo < 113 then
+        if mover then
+            if yPiezaAct + distASuelo < 220 and ... and (xPiezaAct > 0 and xPiezaAct < 11) then --falta la señal colision
+                --Aqui se manda la señal para borrar la pieza
+                if sP then
+                    yPiezaAct <= yPiezaAct + 2;
+                else
                     yPiezaAct <= yPiezaAct + 1;
+                end if;
+                if aP then
+                    xPiezaAct <= xPiezaAct - 1;
+                end if;
+                if dP then
+                    xPiezaAct <= xPiezaAct + 1;
                 end if;
             end if;
         end if;
@@ -219,4 +237,258 @@ BEGIN
     end if;
   end process;
 
+-------------------------------------------
+--Limpiado, dibujado de piezas y colision--
+-------------------------------------------
+--Falta implementar lo de colision
+--A lo mejor hay que meter una señal para mandar el limpiado a la hora de darle a la r
+---------------------------------
+  limpiaCuadrado:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when actCuadrado else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= (others => '0') when actCuadrado else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= (others => '0') when actCuadrado else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) <= (others => '0') when actCuadrado else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1)));
+  
+  pintaCuadrado:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(1,3) when actCuadrado else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= to_unsigned(1,3) when actCuadrado else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= to_unsigned(1,3) when actCuadrado else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) <= to_unsigned(1,3) when actCuadrado else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1)));
+  
+---------------------------------
+   
+  limpiaLineaPos1:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when actLinea and lineaPos1 else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= (others => '0') when actLinea and lineaPos1 else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= (others => '0') when actLinea and lineaPos1 else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+3))) <= (others => '0') when actLinea and lineaPos1 else tablero(to_integer(11*yPiezaAct + (xPiezaAct+3)));
+  
+  pintaLineaPos1:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(2,3) when actLinea and lineaPos1 else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= to_unsigned(2,3) when actLinea and lineaPos1 else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= to_unsigned(2,3) when actLinea and lineaPos1 else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+3))) <= to_unsigned(2,3) when actLinea and lineaPos1 else tablero(to_integer(11*yPiezaAct + (xPiezaAct+3)));
+  
+  limpiaLineaPos2:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when actLinea and lineaPos2 else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= (others => '0') when actLinea and lineaPos2 else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= (others => '0') when actLinea and lineaPos2 else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct)) <= (others => '0') when actLinea and lineaPos2 else tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct));
+  
+  pintaLineaPos2:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(2,3) when actLinea and lineaPos2 else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= to_unsigned(2,3) when actLinea and lineaPos2 else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= to_unsigned(2,3) when actLinea and lineaPos2 else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct)) <= to_unsigned(2,3) when actLinea and lineaPos2 else tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct));
+
+---------------------------------
+
+  limpiaZetaPos1:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+2))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+2)));
+  
+  pintaZetaPos1:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(3,3) when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= to_unsigned(3,3) when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) <= to_unsigned(3,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) <= to_unsigned(3,3) when ... else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+2))) <= to_unsigned(3,3) when ... else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+2)));
+  
+  limpiaZetaPos2:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
+  tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+2))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+2)));
+  
+  pintaZetaPos2:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(3,3) when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= to_unsigned(3,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= to_unsigned(3,3) when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= to_unsigned(3,3) when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
+  tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+2))) <= to_unsigned(3,3) when ... else tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+2)));
+  
+---------------------------------
+  
+  limpiaZetaInvPos1:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct-1))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct-1)));
+  
+  pintaZetaInvPos1:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(4,3) when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= to_unsigned(4,3) when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= to_unsigned(4,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= to_unsigned(4,3) when ... else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct-1))) <= to_unsigned(4,3) when ... else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct-1)));
+  
+  limpiaZetaInvPos2:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2)));
+  tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+2))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+2)));
+  
+  pintaZetaInvPos2:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(4,3) when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= to_unsigned(4,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) <= to_unsigned(4,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) <= to_unsigned(4,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2)));
+  tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+2))) <= to_unsigned(4,3) when ... else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+2)));
+  
+---------------------------------
+  
+  limpiaElePos1:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1)));
+  
+  pintaElePos1:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(5,3) when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= to_unsigned(5,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= to_unsigned(5,3) when ... else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) <= to_unsigned(5,3) when ... else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1)));
+  
+  limpiaElePos2:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
+  
+  pintaElePos2:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(5,3) when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= to_unsigned(5,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= to_unsigned(5,3) when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= to_unsigned(5,3) when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
+  
+  limpiaElePos3:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+3) + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+3) + (xPiezaAct+1)));
+   
+  pintaElePos3:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(5,3) when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= to_unsigned(5,3) when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) <= to_unsigned(5,3) when ... else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+3) + (xPiezaAct+1))) <= to_unsigned(5,3) when ... else tablero(to_integer(11*(yPiezaAct+3) + (xPiezaAct+1)));
+  
+  limpiaElePos4:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
+  tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+2))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+2)));
+  
+  pintaElePos4:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(5,3) when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= to_unsigned(5,3) when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= to_unsigned(5,3) when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
+  tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+2))) <= to_unsigned(5,3) when ... else tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+2)));
+  
+---------------------------------
+  
+  limpiaEleInvPos1:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct-1))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct-1)));
+  
+  pintaEleInvPos1:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(6,3) when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= to_unsigned(6,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= to_unsigned(6,3) when ... else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct-1))) <= to_unsigned(6,3) when ... else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct-1)));
+  
+  limpiaEleInvPos2:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2)));
+  
+  pintaEleInvPos2:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(6,3) when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= to_unsigned(6,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) <= to_unsigned(6,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) <= to_unsigned(6,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2)));
+  
+  limpiaEleInvPos3:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct));
+  
+  pintaEleInvPos3:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(6,3) when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= to_unsigned(6,3) when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= to_unsigned(6,3) when ... else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct)) <= to_unsigned(6,3) when ... else tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct));
+  
+  limpiaEleInvPos4:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2)));
+  
+  limpiaEleInvPos4:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(6,3) when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= to_unsigned(6,3) when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= to_unsigned(6,3) when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) <= to_unsigned(6,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2)));
+  
+---------------------------------
+  
+  limpiaTePos1:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct-1))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct-1)));
+   
+  pintaTePos1:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(7,3) when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= to_unsigned(7,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= to_unsigned(7,3) when ... else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct-1))) <= to_unsigned(7,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct-1)));
+  
+  limpiaTePos2:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
+  tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+1)));
+   
+  pintaTePos2:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(7,3) when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= to_unsigned(7,3) when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= to_unsigned(7,3) when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
+  tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+1))) <= to_unsigned(7,3) when ... else tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+1)));
+  
+  limpiaTePos3:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1)));
+   
+  pintaTePos3:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(7,3) when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= to_unsigned(7,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= to_unsigned(7,3) when ... else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) <= to_unsigned(7,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1)));
+  
+  limpiaTePos4:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= (others => '0') when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) <= (others => '0') when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1)));
+   
+  pintaTePos4:
+  tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= to_unsigned(7,3) when ... else tablero(to_integer(11*yPiezaAct + xPiezaAct));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= to_unsigned(7,3) when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
+  tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= to_unsigned(7,3) when ... else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
+  tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) <= to_unsigned(7,3) when ... else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1)));
+  
 END syn;
