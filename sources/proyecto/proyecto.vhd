@@ -35,19 +35,21 @@ ARCHITECTURE syn OF proyecto IS
   signal xPiezaAct : unsigned(7 downto 0) := to_unsigned(5, 8);
   signal yPiezaAct : unsigned(7 downto 0) := to_unsigned(1, 8);
   
-  signal distASuelo : natural := 2; -- variable que se modifica
+  signal distASuelo : natural := 2;
+  signal distDer : natural := 2;
+  signal distIzq : natural := 0;
   
-  --Señales teclas
-  SIGNAL aP, sP, dP, rP, spcP: BOOLEAN := false;
+  --Señales teclas 
+  SIGNAL aP, sP, dP, rP, spcP:  BOOLEAN := false;
   --Señales posiciones
   signal CPos1, LinPos1, LinPos2, ZPos1, ZPos2, ZInvPos1, ZInvPos2, LPos1, LPos2, LPos3, LPos4, LInvPos1, LInvPos2, LInvPos3, LInvPos4, TPos1, TPos2, TPos3, TPos4 : boolean := false;
   --Señales de limpieza
   signal limpC, limpLin, limpZ, limpZInv, limpL, limpLInv, limpT: boolean := false;
   --Señales de pintado
   signal pintC, pintLin, pintZ, pintZInv, pintL, pintLInv, pintT: boolean := false;
-  --colisiones
-  --signal colision, colisionC, colisionLin, colisionZ, colisionZinv, colision
-
+  
+  signal colision, colCPos1, colLinPos1, colLinPos2, colZPos1, colZPos2, colZInvPos1, colZInvPos2, colLPos1, colLPos2, colLPos3, colLPos4, colLInvPos1, colLInvPos2, colLInvPos3, colLInvPos4, colTPos1, colTPos2, colTPos3, colTPos4 : std_logic;
+  
   SIGNAL rstSync : STD_LOGIC;
   SIGNAL data : STD_LOGIC_VECTOR(7 DOWNTO 0);
   SIGNAL dataRdy : STD_LOGIC;
@@ -69,7 +71,7 @@ ARCHITECTURE syn OF proyecto IS
   --visual(4) lineas piezas en el campo
   --visual(5) relleno piezas en el campo
   SIGNAL cuadradoB, cuadradoI, piezaActualB, piezaActualI: STD_LOGIC;
-  SIGNAL mover, colision, finPartida, reiniciar : BOOLEAN;
+  SIGNAL mover, finPartida, reiniciar : BOOLEAN;
 
   type tablero_t is array (0 to 230) of unsigned(2 downto 0); 
   signal tablero : tablero_t := (others => (others => '0'));
@@ -201,7 +203,7 @@ BEGIN
   ------------------
   
   fsm:
-  process(clk, colision)
+  process(clk)
     type states is (S0, S1, S2, S3, S4, S5, S6);
     variable state: states := S0;
   begin
@@ -214,30 +216,59 @@ BEGIN
                     ld <= '1';
                     state := S1;
                 when S1 =>
+                    CPos1 <= false; LinPos1 <= false; LinPos2 <= false; ZPos1 <= false; ZPos2 <= false; ZInvPos1 <= false; ZInvPos2 <= false;
+                    LPos1 <= false; LPos2 <= false; LPos3 <= false; LPos4 <= false; LInvPos1 <= false; LInvPos2 <= false; LInvPos3 <= false;
+                    LInvPos4 <= false; TPos1 <= false; TPos2 <= false; TPos3 <= false; TPos4 <= false; limpC  <= false; limpLin <= false; 
+                    limpZ <= false; limpZInv <= false; limpL <= false; limpLInv <= false; limpT <= false; pintC <= false; pintLin <= false; 
+                    pintZ <= false; pintZInv <= false; pintL <= false; pintLInv <= false; pintT <= false;
+                    xPiezaAct <= to_unsigned(5, 8);
+                    yPiezaAct <= to_unsigned(1, 8);
                     ld <= '0';
                     ce <= '1';
                     state := S2;
                 when S2 =>
                     ce <= '0';
-                    --NOTA hay que ponerlos a false en algun momento
-                    --Aqui se actualizan las distancias de los bordes de las piezas
                     case piezaSig is
                         when "000" =>
                             CPos1 <= true;
+                            distAsuelo <= 2;
+                            distDer <= 2;
+                            distIzq <= 1; 
                         when "001" =>
                             CPos1 <= true;
+                            distAsuelo <= 2;
+                            distDer <= 2;
+                            distIzq <= 1; 
                         when "010" =>
                             LinPos1 <= true;
+                            distAsuelo <= 1; 
+                            distDer <= 4;
+                            distIzq <= 1; 
                         when "011" =>
                             ZPos1 <= true;
+                            distAsuelo <= 3;
+                            distDer <= 3;
+                            distIzq <= 1; 
                         when "100" =>
                             ZInvPos1 <= true;
+                            distAsuelo <= 3;
+                            distDer <= 2;
+                            distIzq <= 2;
                         when "101" =>
                             LPos1 <= true;
+                            distAsuelo <= 3;
+                            distDer <= 2;
+                            distIzq <= 1;
                         when "110" =>
                             LInvPos1 <= true;
+                            distAsuelo <= 3;
+                            distDer <= 1;
+                            distIzq <= 2;
                         when "111" =>
                             TPos1 <= true;
+                            distAsuelo <= 3;
+                            distDer <= 1;
+                            distIzq <= 2;
                     end case;
                     state := S3;
                  when S3 =>
@@ -262,61 +293,72 @@ BEGIN
                       end case;
                         state := S4;
                   when S4 =>
-                  --NOTA hay que ponerlos a false en algun momento
                     case piezaSig is
                             when "000" =>
+                                limpC <= false;
                                 pintC <= true;
                             when "001" =>
+                                limpC <= false;
                                 pintC <= true;
                             when "010" =>
+                                limpLin <= false;
                                 pintLin <= true;
                             when "011" =>
+                                limpZ <= false;
                                 pintZ <= true;
                             when "100" =>
+                                limpZInv <= false;
                                 pintZInv <= true;
                             when "101" =>
+                                limpL <= false;
                                 pintL <= true;
                             when "110" =>
+                                limpLInv <= false;
                                 pintLInv <= true;
                             when "111" =>
+                                limpT <= false;
                                 pintT <= true;
                      end case;
-                     --si hay colision saltamos al estado de comprobar si linea completa, antes de la colision que sea final de tab
-                     --si no, cae
+                     if colision = '1' then
+                        state := S6;
+                     elsif 11*(yPiezaAct + distASuelo) = 220 then
+                        state := S1;
+                     else
+                        state := S5;
+                     end if;
+                     when S5 =>
+                        pintC <= false; pintLin <= false; pintZ <= false; pintZInv <= false; pintL <= false; pintLInv <= false; pintT <= false;
+                        if mover then
+                            if 11*(yPiezaAct + distASuelo) > 220 then
+                                if sP then
+                                    yPiezaAct <= yPiezaAct + 2;
+                                else
+                                    yPiezaAct <= yPiezaAct + 1;
+                                end if;
+                            end if;
+                            if xPiezaAct + distDer < 10 and dP then
+                                xPiezaAct <= xPiezaAct + 1;
+                            end if;
+                            if xPiezaAct - distIzq > 0 and aP then
+                                xPiezaAct <= xPiezaAct - 1;
+                            end if;
+                        end if;
+                        state := S3;
+                     when S6 =>
+                     pintC <= false; pintLin <= false; pintZ <= false; pintZInv <= false; pintL <= false; pintLInv <= false; pintT <= false;
+                     --for i in 0 to 20 loop
+                        --for j in 0 to 10 loop
+                            
+                        --end loop;
+                     --end loop;
                      when others =>
             end case;
         end if;
     end if;
   end process;
-  
-  --Replantear el movimiento entero de la pieza
-  --movPiezaTab:
- -- process(clk)
- -- begin
- --   if rising_edge(clk) then
---        if mover then
-  --          if yPiezaAct + distASuelo < 220 and ... and (xPiezaAct > 0 and xPiezaAct < 11) then --falta la señal colision
- --               --Aqui se manda la señal para borrar la pieza
-  --              if sP then
-   --                 yPiezaAct <= yPiezaAct + 2;
-   --             else
-   --                 yPiezaAct <= yPiezaAct + 1;
-   --             end if;
-    --            if aP then
-   --                 xPiezaAct <= xPiezaAct - 1;
-   --             end if;
-   --             if dP then
-   --                 xPiezaAct <= xPiezaAct + 1;
-   --             end if;
-   --         end if;
-   --     end if;
-   -- end if;
-  --end process;
-
 
   ------------------
 
- 
   regSumX:
   process(clk)
   begin
@@ -346,7 +388,9 @@ BEGIN
 -------------------------------------------
 --Limpiado, dibujado de piezas y colision--
 -------------------------------------------
-
+  
+  colision <= '1' when colCPos1 = '1' or colLinPos1 = '1' or colLinPos2 = '1' or colZPos1 = '1' or colZPos2 = '1' or colZInvPos1 = '1' or colZInvPos2 = '1' or colLPos1 = '1' or colLPos2 = '1' or colLPos3 = '1' or colLPos4 = '1' or colLInvPos1 = '1' or colLInvPos2 = '1' or colLInvPos3 = '1' or colLInvPos4 = '1' or colTPos1 = '1' or colTPos2 = '1' or colTPos3 = '1' or colTPos4 = '1' else '0'; 
+    
   limpiaCuadrado:
   tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when limpC and CPos1 else tablero(to_integer(11*yPiezaAct + xPiezaAct));
   tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= (others => '0') when limpC and CPos1 else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
@@ -359,7 +403,7 @@ BEGIN
   tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) <= to_unsigned(1,3) when pintC and CPos1 else tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct));
   tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) <= to_unsigned(1,3) when pintC and CPos1 else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1)));
   
-  colision <= true when CPos1 and (tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) /= 0 or tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) /= 0) else false;
+  colCPos1 <= '1' when CPos1 and (tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) /= 0 or tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) /= 0) else '0';
 ---------------------------------
    
   limpiaLineaPos1:
@@ -374,10 +418,10 @@ BEGIN
   tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= to_unsigned(2,3) when pintLin and LinPos1 else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
   tablero(to_integer(11*yPiezaAct + (xPiezaAct+3))) <= to_unsigned(2,3) when pintLin and LinPos1 else tablero(to_integer(11*yPiezaAct + (xPiezaAct+3)));
   
-  colision <= true when LinPos1 and (tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) /= 0 or
+  colLinPos1 <= '1' when LinPos1 and (tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) /= 0 or
                                     tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) /= 0 or
                                     tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) /= 0 or
-                                    tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+3))) /= 0) else false;
+                                    tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+3))) /= 0) else '0';
   
   limpiaLineaPos2:
   tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when limpLin and LinPos2 else tablero(to_integer(11*yPiezaAct + xPiezaAct));
@@ -391,7 +435,7 @@ BEGIN
   tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= to_unsigned(2,3) when pintLin and LinPos2 else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
   tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct)) <= to_unsigned(2,3) when pintLin and LinPos2 else tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct));
   
-  colision <= true when LinPos2 and tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct)) /= 0 else false;
+  colLinPos2 <= '1' when LinPos2 and tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct)) /= 0 else '0';
 
 ---------------------------------
 
@@ -409,9 +453,9 @@ BEGIN
   tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) <= to_unsigned(3,3) when pintZ and ZPos1 else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1)));
   tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+2))) <= to_unsigned(3,3) when pintZ and ZPos1 else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+2)));
   
-  colision <= true when ZPos1 and (tablero(to_integer(11*(yPiezaAct+3) + (xPiezaAct+1))) /= 0 or 
+  colZPos1 <= '1' when ZPos1 and (tablero(to_integer(11*(yPiezaAct+3) + (xPiezaAct+1))) /= 0 or 
                                    tablero(to_integer(11*(yPiezaAct+3) + (xPiezaAct+2))) /= 0 or   
-                                   tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) /= 0) else false;
+                                   tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) /= 0) else '0';
   
   limpiaZetaPos2:
   tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when limpZ and ZPos2 else tablero(to_integer(11*yPiezaAct + xPiezaAct));
@@ -427,9 +471,9 @@ BEGIN
   tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= to_unsigned(3,3) when pintZ and ZPos2 else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
   tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+2))) <= to_unsigned(3,3) when pintZ and ZPos2 else tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+2)));
   
-  colision <= true when Zpos2 and (tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) /= 0 or
+  colZPos2 <= '1' when Zpos2 and (tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) /= 0 or
                                    tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) /= 0 or
-                                   tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) /= 0) else false;
+                                   tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) /= 0) else '0';
   
 ---------------------------------
   
@@ -447,9 +491,9 @@ BEGIN
   tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= to_unsigned(4,3) when pintZInv and ZInvPos1 else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
   tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct-1))) <= to_unsigned(4,3) when pintZInv and ZInvPos1 else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct-1)));
   
-  colision <= true when ZInvPos1 and (tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) /= 0 or
+  colZInvPos1 <= '1' when ZInvPos1 and (tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) /= 0 or
                                       tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct)) /= 0 or
-                                      tablero(to_integer(11*(yPiezaAct+3) + (xPiezaAct-1))) /= 0) else false;
+                                      tablero(to_integer(11*(yPiezaAct+3) + (xPiezaAct-1))) /= 0) else '0';
   
   limpiaZetaInvPos2:
   tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when limpZInv and ZInvPos2 else tablero(to_integer(11*yPiezaAct + xPiezaAct));
@@ -465,9 +509,9 @@ BEGIN
   tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) <= to_unsigned(4,3) when pintZInv and ZInvPos2 else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2)));
   tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+2))) <= to_unsigned(4,3) when pintZInv and ZInvPos2 else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+2)));
   
-  colision <= true when ZInvPos2 and (tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) /= 0 or
+  colZInvPos2 <= '1' when ZInvPos2 and (tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) /= 0 or
                                       tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) /= 0 or
-                                      tablero(to_integer(11*(yPiezaAct+3) + (xPiezaAct+2))) /= 0) else false;
+                                      tablero(to_integer(11*(yPiezaAct+3) + (xPiezaAct+2))) /= 0) else '0';
   
 ---------------------------------
   
@@ -483,8 +527,8 @@ BEGIN
   tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= to_unsigned(5,3) when pintL and LPos1 else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
   tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) <= to_unsigned(5,3) when pintL and LPos1 else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1)));
   
-  colision <= true when LPos1 and (tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct)) /= 0 or
-                                   tablero(to_integer(11*(yPiezaAct+3) + (xPiezaAct+1))) /= 0) else false;
+  colLPos1 <= '1' when LPos1 and (tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct)) /= 0 or
+                                   tablero(to_integer(11*(yPiezaAct+3) + (xPiezaAct+1))) /= 0) else '0';
   
   limpiaElePos2:
   tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when limpL and LPos2 else tablero(to_integer(11*yPiezaAct + xPiezaAct));
@@ -498,9 +542,9 @@ BEGIN
   tablero(to_integer(11*yPiezaAct + (xPiezaAct+1))) <= to_unsigned(5,3) when pintL and LPos2 else tablero(to_integer(11*yPiezaAct + (xPiezaAct+1)));
   tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= to_unsigned(5,3) when pintL and LPos2 else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
   
-  colision <= true when LPos2 and (tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) /= 0 or
+  colLPos2 <= '1' when LPos2 and (tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) /= 0 or
                                    tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) /= 0 or
-                                   tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) /= 0) else false;
+                                   tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) /= 0) else '0';
   
   limpiaElePos3:
   tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when limpL and LPos3 else tablero(to_integer(11*yPiezaAct + xPiezaAct));
@@ -514,8 +558,8 @@ BEGIN
   tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) <= to_unsigned(5,3) when pintL and LPos3 else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1)));
   tablero(to_integer(11*(yPiezaAct+3) + (xPiezaAct+1))) <= to_unsigned(5,3) when pintL and LPos3 else tablero(to_integer(11*(yPiezaAct+3) + (xPiezaAct+1)));
   
-  colision <= true when LPos3 and (tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) /= 0 or
-                                   tablero(to_integer(11*(yPiezaAct+4) + (xPiezaAct+1))) /= 0) else false;
+  colLPos3 <= '1' when LPos3 and (tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) /= 0 or
+                                   tablero(to_integer(11*(yPiezaAct+4) + (xPiezaAct+1))) /= 0) else '0';
   
   limpiaElePos4:
   tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when limpL and LPos4 else tablero(to_integer(11*yPiezaAct + xPiezaAct));
@@ -529,10 +573,9 @@ BEGIN
   tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= to_unsigned(5,3) when pintL and LPos4 else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
   tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+2))) <= to_unsigned(5,3) when pintL and LPos4 else tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+2)));
   
-  colision <= true when LPos4 and (tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) /= 0 or
+  colLPos4 <= '1' when LPos4 and (tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) /= 0 or
                                    tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) /= 0 or
-                                   tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) /= 0) else false;
-  
+                                   tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) /= 0) else '0';
 ---------------------------------
   
   limpiaEleInvPos1:
@@ -547,8 +590,8 @@ BEGIN
   tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= to_unsigned(6,3) when pintLInv and LInvPos1 else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
   tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct-1))) <= to_unsigned(6,3) when pintLInv and LInvPos1 else tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct-1)));
   
-  colision <= true when LInvPos1 and (tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct)) /= 0 or
-                                      tablero(to_integer(11*(yPiezaAct+3) + (xPiezaAct-1))) /= 0) else false;
+  colLInvPos1 <= '1' when LInvPos1 and (tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct)) /= 0 or
+                                      tablero(to_integer(11*(yPiezaAct+3) + (xPiezaAct-1))) /= 0) else '0';
   
   limpiaEleInvPos2:
   tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when limpLInv and LInvPos2 else tablero(to_integer(11*yPiezaAct + xPiezaAct));
@@ -562,9 +605,9 @@ BEGIN
   tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) <= to_unsigned(6,3) when pintLInv and LInvPos2 else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1)));
   tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) <= to_unsigned(6,3) when pintLInv and LInvPos2 else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2)));
   
-  colision <= true when LInvPos2 and (tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) /= 0 or
+  colLInvPos2 <= '1' when LInvPos2 and (tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) /= 0 or
                                       tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) /= 0 or
-                                      tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+2))) /= 0) else false;
+                                      tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+2))) /= 0) else '0';
   
   limpiaEleInvPos3:
   tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when limpLInv and LInvPos3 else tablero(to_integer(11*yPiezaAct + xPiezaAct));
@@ -578,8 +621,8 @@ BEGIN
   tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= to_unsigned(6,3) when pintLInv and LInvPos3 else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
   tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct)) <= to_unsigned(6,3) when pintLInv and LInvPos3 else tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct));
   
-  colision <= true when LInvPos3 and (tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) /= 0 or
-                                      tablero(to_integer(11*(yPiezaAct+4) + xPiezaAct)) /= 0) else false;
+  colLInvPos3 <= '1' when LInvPos3 and (tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) /= 0 or
+                                      tablero(to_integer(11*(yPiezaAct+4) + xPiezaAct)) /= 0) else '0';
   
   limpiaEleInvPos4:
   tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when limpLInv and LInvPos4 else tablero(to_integer(11*yPiezaAct + xPiezaAct));
@@ -593,9 +636,9 @@ BEGIN
   tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= to_unsigned(6,3) when pintLInv and LInvPos4 else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
   tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) <= to_unsigned(6,3) when pintLInv and LInvPos4 else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2)));
   
-  colision <= true when LInvPos4 and (tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) /= 0 or
+  colLInvPos4 <= '1' when LInvPos4 and (tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) /= 0 or
                                       tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) /= 0 or
-                                      tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+2))) /= 0) else false;
+                                      tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+2))) /= 0) else '0';
   
 ---------------------------------
   
@@ -611,8 +654,8 @@ BEGIN
   tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= to_unsigned(7,3) when pintT and TPos1 else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
   tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct-1))) <= to_unsigned(7,3) when pintT and TPos1 else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct-1)));
   
-  colision <= true when TPos1 and (tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct-1))) /= 0 or
-                                   tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct)) /= 0) else false;
+  colTPos1 <= '1' when TPos1 and (tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct-1))) /= 0 or
+                                   tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct)) /= 0) else '0';
   
   limpiaTePos2:
   tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when limpT and TPos2 else tablero(to_integer(11*yPiezaAct + xPiezaAct));
@@ -626,9 +669,9 @@ BEGIN
   tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= to_unsigned(7,3) when pintT and TPos2 else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
   tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+1))) <= to_unsigned(7,3) when pintT and TPos2 else tablero(to_integer(11*(yPiezaAct-1) + (xPiezaAct+1)));
   
-  colision <= true when TPos2 and (tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) /= 0 or
+  colTPos2 <= '1' when TPos2 and (tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) /= 0 or
                                    tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) /= 0 or
-                                   tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) /= 0) else false;
+                                   tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) /= 0) else '0';
   
   limpiaTePos3:
   tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when limpT and TPos3 else tablero(to_integer(11*yPiezaAct + xPiezaAct));
@@ -642,8 +685,8 @@ BEGIN
   tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct)) <= to_unsigned(7,3) when pintT and TPos3 else tablero(to_integer(11*(yPiezaAct+2) + xPiezaAct));
   tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) <= to_unsigned(7,3) when pintT and TPos3 else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1)));
   
-  colision <= true when TPos3 and (tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct)) /= 0 or
-                                   tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) /= 0) else false;
+  colTPos3 <= '1' when TPos3 and (tablero(to_integer(11*(yPiezaAct+3) + xPiezaAct)) /= 0 or
+                                   tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) /= 0) else '0';
   
   limpiaTePos4:
   tablero(to_integer(11*yPiezaAct + xPiezaAct)) <= (others => '0') when limpT and TPos4 else tablero(to_integer(11*yPiezaAct + xPiezaAct));
@@ -657,8 +700,8 @@ BEGIN
   tablero(to_integer(11*yPiezaAct + (xPiezaAct+2))) <= to_unsigned(7,3) when pintT and TPos4 else tablero(to_integer(11*yPiezaAct + (xPiezaAct+2)));
   tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1))) <= to_unsigned(7,3) when pintT and TPos4 else tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+1)));
   
-  colision <= true when TPos4 and (tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) /= 0 or
+  colTPos4 <= '1' when TPos4 and (tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) /= 0 or
                                    tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) /= 0 or
-                                   tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) /= 0) else false;
+                                   tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) /= 0) else '0';
   
 END syn;
