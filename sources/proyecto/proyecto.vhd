@@ -9,14 +9,25 @@ ENTITY proyecto IS
     ps2Data : IN STD_LOGIC;
     hSync : OUT STD_LOGIC;
     vSync : OUT STD_LOGIC;
-    RGB : OUT STD_LOGIC_VECTOR(3 * 4 - 1 DOWNTO 0)
+    RGB : OUT STD_LOGIC_VECTOR(3 * 4 - 1 DOWNTO 0);
+    -- parte para IIS y audio
+    sdto     : in  std_logic;
+    mclkAD   : out std_logic;
+    sclkAD   : out std_logic;
+    lrckAD   : out std_logic;
+    mclkDA   : out std_logic;
+    sclkDA   : out std_logic;
+    lrckDA   : out std_logic;
+    sdti     : out std_logic
   );
 END proyecto;
 
 ---------------------------------------------------------------------
 
 LIBRARY ieee;
-USE ieee.numeric_std.ALL;
+use ieee.numeric_std.all;
+use ieee.math_real.all;
+USE ieee.std_logic_1164;
 USE work.common.ALL;
 
 ARCHITECTURE syn OF proyecto IS
@@ -37,13 +48,13 @@ ARCHITECTURE syn OF proyecto IS
   
   signal distASuelo : natural := 2; -- variable que se modifica
   
-  --Señales teclas
+  --Seï¿½ales teclas
   SIGNAL aP, sP, dP, rP, spcP: BOOLEAN := false;
-  --Señales posiciones
+  --Seï¿½ales posiciones
   signal CPos1, LinPos1, LinPos2, ZPos1, ZPos2, ZInvPos1, ZInvPos2, LPos1, LPos2, LPos3, LPos4, LInvPos1, LInvPos2, LInvPos3, LInvPos4, TPos1, TPos2, TPos3, TPos4 : boolean := false;
-  --Señales de limpieza
+  --Seï¿½ales de limpieza
   signal limpC, limpLin, limpZ, limpZInv, limpL, limpLInv, limpT: boolean := false;
-  --Señales de pintado
+  --Seï¿½ales de pintado
   signal pintC, pintLin, pintZ, pintZInv, pintL, pintLInv, pintT: boolean := false;
   --colisiones
   --signal colision, colisionC, colisionLin, colisionZ, colisionZinv, colision
@@ -79,6 +90,31 @@ ARCHITECTURE syn OF proyecto IS
   
   signal x : natural := 14;
   signal y : natural := 54;
+  
+  
+  -- Constants and signals for sound gen
+  
+  constant IIS_KHZ      : natural := 25_000;            -- frecuencia de operacion del interfaz ISS en KHz
+  constant FREQ_DIV_ISS : natural := FREQ_DIV/IIS_KHZ;  -- frecuencia div para el interfaz IIS
+  
+  constant UNDERSAMPLE : natural := 1; 
+  constant FS          : real := real(((IIS_KHZ*1000)/512)/UNDERSAMPLE); 
+
+  constant WL : natural := 16; 
+  constant QM : natural := 14; 
+  constant QN : natural := WL-QM;
+  
+  signal   a0, b1 : signed(WL-1 downto 0); 
+  constant A : real := (2.0**(QN-1))/2.0;               -- amplitud: mitad de la mï¿½xima
+  
+  signal sample, outSample : std_logic_vector (WL-1 downto 0);
+  signal newSample, outSampleRqt, rChannel, stdo : std_logic;
+  
+  signal mclk, sclk, lrck : std_logic;
+
+  signal song : natural range 0 to 12;
+  signal code : std_logic_vector(7 downto 0);
+  signal songPtr : std_logic_vector(3 downto 0) := (others => '0');
   
 BEGIN
 
@@ -295,8 +331,8 @@ BEGIN
  -- begin
  --   if rising_edge(clk) then
 --        if mover then
-  --          if yPiezaAct + distASuelo < 220 and ... and (xPiezaAct > 0 and xPiezaAct < 11) then --falta la señal colision
- --               --Aqui se manda la señal para borrar la pieza
+  --          if yPiezaAct + distASuelo < 220 and ... and (xPiezaAct > 0 and xPiezaAct < 11) then --falta la seï¿½al colision
+ --               --Aqui se manda la seï¿½al para borrar la pieza
   --              if sP then
    --                 yPiezaAct <= yPiezaAct + 2;
    --             else
@@ -660,5 +696,75 @@ BEGIN
   colision <= true when TPos4 and (tablero(to_integer(11*(yPiezaAct+1) + xPiezaAct)) /= 0 or
                                    tablero(to_integer(11*(yPiezaAct+1) + (xPiezaAct+2))) /= 0 or
                                    tablero(to_integer(11*(yPiezaAct+2) + (xPiezaAct+1))) /= 0) else false;
+    
+  -- Sound generation ---------------------------------------
+  
+  songCounter:
+  process(clk)
+
+  begin
+  end process;
+  
+  
+  b1ROM : 
+  with code select -- el code tiene que ser otra cosa
+    b1 <=
+      toFix( A*sin(2.0*MATH_PI*261.6/FS), QN, QM ) when X"1c",  -- A = Do
+      toFix( A*sin(2.0*MATH_PI*277.2/FS), QN, QM ) when X"1d",  -- W = Do#
+      toFix( A*sin(2.0*MATH_PI*293.7/FS), QN, QM ) when X"1b",  -- S = Re
+      toFix( A*sin(2.0*MATH_PI*311.1/FS), QN, QM ) when X"24",  -- E = Re#
+      toFix( A*sin(2.0*MATH_PI*329.6/FS), QN, QM ) when X"23",  -- D = Mi
+      toFix( A*sin(2.0*MATH_PI*349.2/FS), QN, QM ) when X"2b",  -- F = Fa
+      toFix( A*sin(2.0*MATH_PI*370.0/FS), QN, QM ) when X"2c",  -- T = Fa#
+      toFix( A*sin(2.0*MATH_PI*392.0/FS), QN, QM ) when X"34",  -- G = Sol
+      toFix( A*sin(2.0*MATH_PI*415.3/FS), QN, QM ) when X"35",  -- Y = Sol#
+      toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when X"33",  -- H = La
+      toFix( A*sin(2.0*MATH_PI*466.2/FS), QN, QM ) when X"3c",  -- U = La#
+      toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when X"3b",  -- J = Si
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when X"42",  -- K = Do
+      X"0000" when others;  
+     
+  y1ROM :
+  with data select -- Todo esto hay que cambiarlo. no entiendo muy bien porque es data 
+  -- supongo que el data va a ser nuestra "partitura"
+    a0 <=
+      toFix( A*sin(2.0*MATH_PI*261.6/FS), QN, QM ) when X"1c",  -- A = Do
+      toFix( A*sin(2.0*MATH_PI*277.2/FS), QN, QM ) when X"1d",  -- W = Do#
+      toFix( A*sin(2.0*MATH_PI*293.7/FS), QN, QM ) when X"1b",  -- S = Re
+      toFix( A*sin(2.0*MATH_PI*311.1/FS), QN, QM ) when X"24",  -- E = Re#
+      toFix( A*sin(2.0*MATH_PI*329.6/FS), QN, QM ) when X"23",  -- D = Mi
+      toFix( A*sin(2.0*MATH_PI*349.2/FS), QN, QM ) when X"2b",  -- F = Fa
+      toFix( A*sin(2.0*MATH_PI*370.0/FS), QN, QM ) when X"2c",  -- T = Fa#
+      toFix( A*sin(2.0*MATH_PI*392.0/FS), QN, QM ) when X"34",  -- G = Sol
+      toFix( A*sin(2.0*MATH_PI*415.3/FS), QN, QM ) when X"35",  -- Y = Sol#
+      toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when X"33",  -- H = La
+      toFix( A*sin(2.0*MATH_PI*466.2/FS), QN, QM ) when X"3c",  -- U = La#
+      toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when X"3b",  -- J = Si
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when X"42",  -- K = Do
+      X"0000" when others; 
+  
+  --  El new tone seguramente este mal pero no tengo ni idea de que es 
+  soundGen : iirOscillator
+    generic map (WL => WL, QM => QM, FS => FS )
+    port map ( clk => clk, newTone => '1', newSample => newSample, b1 => std_logic_vector(b1), a0 => std_logic_vector(a0), sample => sample );  
+
+    outSample <= sample;
+    
+  -- parte del iis
+  mclkAD <= mclk;
+  sclkAD <= sclk;
+  lrckAD <= lrck;
+  
+  mclkDA <= mclk;
+  sclkDA <= sclk;
+  lrckDA <= lrck;
+  
+  codecInterface : iisInterface
+    generic map( WL => WL,  FREQ_DIV => FREQ_DIV_ISS,  UNDERSAMPLE => UNDERSAMPLE ) 
+    port map( 
+      clk => clk, rChannel => rChannel, newSample => newSample, inSample => open, outSample => outSample,
+      mclk => mclk, sclk => sclk, lrck => lrck, sdti => sdti, sdto => sdto
+    );
+  
   
 END syn;

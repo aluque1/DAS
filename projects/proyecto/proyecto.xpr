@@ -4,7 +4,7 @@
 <!-- Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.                   -->
 <!-- Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.   -->
 
-<Project Product="Vivado" Version="7" Minor="63" Path="C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/projects/proyecto/proyecto.xpr">
+<Project Product="Vivado" Version="7" Minor="63" Path="C:/Users/alv/Desktop/uni/DAS/projects/proyecto/proyecto.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="5f08d77db56d4695b595595a3eb67b10"/>
@@ -97,6 +97,18 @@
         </FileInfo>
       </File>
       <File Path="$PPRDIR/../../sources/common/edgeDetector.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../../sources/common/iirOscillator.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../../sources/common/iisInterface.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>

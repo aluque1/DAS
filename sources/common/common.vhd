@@ -400,6 +400,22 @@ component lsfr
    );
 end component;
 
+component iirOscillator
+  generic(
+    WL : natural;  -- anchura de la muestra
+    QM : natural;  -- número de bits decimales en la muestra
+    FS : real      -- frecuencia de muestreo
+  );
+  port(
+    clk       : in    std_logic;  -- reloj del sistema
+    newTone   : in    std_logic;  --- indica si existe una nueva nota a generar
+    b1        : in    std_logic_vector(WL-1 downto 0);  -- coeficiente
+    a0        : in    std_logic_vector(WL-1 downto 0);  -- coeficiente
+    newSample : in    std_logic;  -- indica si existe una nueva muestra
+    sample    : out   std_logic_vector(WL-1 downto 0)   -- muestra de salida
+  );
+end component;
+
 end package common;
 
 -------------------------------------------------------------------
