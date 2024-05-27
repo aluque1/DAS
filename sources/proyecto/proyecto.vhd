@@ -31,23 +31,13 @@ ARCHITECTURE syn OF proyecto IS
   constant amarilloClaro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "111111110000";
   --constant azulOscuro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "";
   --constant azulClaro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "";
-  
-  signal xPiezaAct : natural := 5;
-  signal yPiezaAct : natural := 1;
-  
-  signal distASuelo : natural := 2;
-  signal distDer : natural := 2;
-  signal distIzq : natural := 0;
-  
+
   --Señales teclas 
   SIGNAL aP, sP, dP, rP, spcP:  BOOLEAN := false;
-  --Señales posiciones
-  signal CPos1, LinPos1, LinPos2, ZPos1, ZPos2, ZInvPos1, ZInvPos2, LPos1, LPos2, LPos3, LPos4, LInvPos1, LInvPos2, LInvPos3, LInvPos4, TPos1, TPos2, TPos3, TPos4 : boolean := false;
   
   signal dataIn, dataOut1, dataOut2, dataOut3, dataOut4: unsigned(2 downto 0) := (others => '0');
   signal addrWr1, addrWr2, addrWr3, addrWr4, addrWr5, addrRd1, addrRd2, addrRd3, addrRd4: unsigned(7 downto 0) := (others => '0'); 
 
-  
   SIGNAL rstSync : STD_LOGIC;
   SIGNAL data : STD_LOGIC_VECTOR(7 DOWNTO 0);
   SIGNAL dataRdy : STD_LOGIC;
@@ -173,12 +163,6 @@ BEGIN
   piezaActualB <= '1' when cuadradoB = '1' else '0'; --piezaActualB <= '1' when cuadradoB = '1' or .... else '0';
   piezaActualI <= '1' when cuadradoI = '1' else '0'; --piezaActualI <= '1' when cuadradoI = '1' or .... else '0';
   
-  cuadradoB <= '1' when ((pixel = xPiezaAct or pixel = (xPiezaAct + 10) or pixel = (xPiezaAct + 5)) and (line >= yPiezaAct and line <= (yPiezaAct + 10))) or
-                         ((line = yPiezaAct or line = (yPiezaAct + 10) or line = (yPiezaAct + 5)) and (pixel >= xPiezaAct and pixel <= (xPiezaAct + 10))) else '0';
-                         --Aqui poner variable que le indique cuando pintarse
-  cuadradoI <= '1' when (pixel > xPiezaAct and pixel < (xPiezaAct + 10)) and (line > yPiezaAct and line < (yPiezaAct + 10)) else '0';
-  
-  
   --Implementar el aumento de velocidad
   pulseGen :
   PROCESS (clk)
@@ -205,6 +189,12 @@ BEGIN
     type states is (S0, S1, S2, S3, S4, S5, S6);
     variable state: states := S0;
     variable colision : boolean := false;
+    variable CPos1, LinPos1, LinPos2, ZPos1, ZPos2, ZInvPos1, ZInvPos2, LPos1, LPos2, LPos3, LPos4, LInvPos1, LInvPos2, LInvPos3, LInvPos4, TPos1, TPos2, TPos3, TPos4 : boolean := false;
+    variable distASuelo : natural := 2;
+    variable distDer : natural := 2;
+    variable distIzq : natural := 0;
+    variable xPiezaAct : natural := 5;
+    variable yPiezaAct : natural := 1;
   begin
     if rising_edge(clk) then
         if rstSync = '1' then 
@@ -215,57 +205,54 @@ BEGIN
                     ld <= '1';
                     state := S1;
                 when S1 =>
-                    CPos1 <= false; LinPos1 <= false; LinPos2 <= false; ZPos1 <= false; ZPos2 <= false; ZInvPos1 <= false; ZInvPos2 <= false;
-                    LPos1 <= false; LPos2 <= false; LPos3 <= false; LPos4 <= false; LInvPos1 <= false; LInvPos2 <= false; LInvPos3 <= false;
-                    LInvPos4 <= false; TPos1 <= false; TPos2 <= false; TPos3 <= false; TPos4 <= false;
-                    xPiezaAct <= 5;
-                    yPiezaAct <= 1;
+                    CPos1 := false; LinPos1 := false; LinPos2 := false; ZPos1 := false; ZPos2 := false; ZInvPos1 := false; ZInvPos2 := false;
+                    LPos1 := false; LPos2 := false; LPos3 := false; LPos4 := false; LInvPos1 := false; LInvPos2 := false; LInvPos3 := false;
+                    LInvPos4 := false; TPos1 := false; TPos2 := false; TPos3 := false; TPos4 := false;
+                    xPiezaAct := 5;
+                    yPiezaAct := 1;
                     ld <= '0';
+                    wr <= '0';
                     ce <= '1';
                     state := S2;
                 when S2 =>
                     ce <= '0';
                     case piezaSig is
                         when "000" =>
-                            CPos1 <= true;
-                            distAsuelo <= 2;
-                            distDer <= 2;
-                            distIzq <= 1; 
+                            CPos1 := true; distAsuelo := 2;
+                            distDer := 2; distIzq := 1; 
                         when "001" =>
-                            CPos1 <= true;
-                            distAsuelo <= 2;
-                            distDer <= 2;
-                            distIzq <= 1; 
+                            CPos1 := true;distAsuelo := 2;
+                            distDer := 2; distIzq := 1;
                         when "010" =>
-                            LinPos1 <= true;
-                            distAsuelo <= 1; 
-                            distDer <= 4;
-                            distIzq <= 1; 
+                            LinPos1 := true;
+                            distAsuelo := 1; 
+                            distDer := 4;
+                            distIzq := 1; 
                         when "011" =>
-                            ZPos1 <= true;
-                            distAsuelo <= 3;
-                            distDer <= 3;
-                            distIzq <= 1; 
+                            ZPos1 := true;
+                            distAsuelo := 3;
+                            distDer := 3;
+                            distIzq := 1; 
                         when "100" =>
-                            ZInvPos1 <= true;
-                            distAsuelo <= 3;
-                            distDer <= 2;
-                            distIzq <= 2;
+                            ZInvPos1 := true;
+                            distAsuelo := 3;
+                            distDer := 2;
+                            distIzq := 2;
                         when "101" =>
-                            LPos1 <= true;
-                            distAsuelo <= 3;
-                            distDer <= 2;
-                            distIzq <= 1;
+                            LPos1 := true;
+                            distAsuelo := 3;
+                            distDer := 2;
+                            distIzq := 1;
                         when "110" =>
-                            LInvPos1 <= true;
-                            distAsuelo <= 3;
-                            distDer <= 1;
-                            distIzq <= 2;
+                            LInvPos1 := true;
+                            distAsuelo := 3;
+                            distDer := 1;
+                            distIzq := 2;
                         when "111" =>
-                            TPos1 <= true;
-                            distAsuelo <= 3;
-                            distDer <= 1;
-                            distIzq <= 2;
+                            TPos1 := true;
+                            distAsuelo := 3;
+                            distDer := 1;
+                            distIzq := 2;
                     end case;
                     state := S3;
                 when S3 =>
@@ -559,16 +546,150 @@ BEGIN
                         if mover then
                             if 11*(yPiezaAct + distASuelo) > 220 then
                                 if sP then
-                                    yPiezaAct <= yPiezaAct + 2;
+                                    yPiezaAct := yPiezaAct + 2;
                                 else
-                                    yPiezaAct <= yPiezaAct + 1;
+                                    yPiezaAct := yPiezaAct + 1;
                                 end if;
                             end if;
                             if xPiezaAct + distDer < 10 and dP then
-                                xPiezaAct <= xPiezaAct + 1;
+                                xPiezaAct := xPiezaAct + 1;
                             end if;
                             if xPiezaAct - distIzq > 0 and aP then
-                                xPiezaAct <= xPiezaAct - 1;
+                                xPiezaAct := xPiezaAct - 1;
+                            end if;
+                            if rP then
+                                case piezaSig is
+                                        when "000" =>
+                                            CPos1 := true;
+                                            distASuelo := 2;
+                                            distDer  := 2;
+                                            distIzq  := 1;
+                                        when "001" =>
+                                            CPos1 := true;
+                                            distASuelo := 2;
+                                            distDer  := 2;
+                                            distIzq  := 1;
+                                        when "010" =>
+                                            if LinPos1 then
+                                                LinPos1 := false;
+                                                LinPos2 := true;
+                                                distASuelo := 1;
+                                                distDer  := 4;
+                                                distIzq  := 1;
+                                            elsif LinPos2 then
+                                                LinPos1 := true;
+                                                LinPos2 := false;
+                                                distASuelo := 4;
+                                                distDer  := 1;
+                                                distIzq  := 1;
+                                            end if;
+                                        when "011" =>
+                                            if ZPos1 then
+                                                ZPos1 := false;
+                                                ZPos2 := true;
+                                                distASuelo := 2;
+                                                distDer  := 3;
+                                                distIzq  := 1;
+                                            elsif ZPos2 then
+                                                ZPos1 := true;
+                                                ZPos2 := false;
+                                                distASuelo := 3;
+                                                distDer  := 3;
+                                                distIzq  := 1;
+                                            end if;
+                                        when "100" =>
+                                            if ZInvPos1 then
+                                                ZInvPos1 := false;
+                                                ZInvPos2 := true;
+                                                distASuelo := 3;
+                                                distDer  := 3;
+                                                distIzq  := 1;
+                                            elsif ZInvPos2 then
+                                                ZInvPos1 := true;
+                                                ZInvPos2 := false;
+                                                distASuelo := 3;
+                                                distDer  := 2;
+                                                distIzq  := 2;
+                                            end if;
+                                        when "101" =>
+                                            if LPos1 then
+                                                LPos1 := false;
+                                                LPos2 := true;
+                                                distASuelo := 2;
+                                                distDer  := 3;
+                                                distIzq  := 1;
+                                            elsif LPos2 then
+                                                LPos2 := false;
+                                                LPos3 := true;
+                                                distASuelo := 3;
+                                                distDer  := 2;
+                                                distIzq  := 1;
+                                            elsif LPos3 then
+                                                LPos3 := false;
+                                                LPos4 := true;
+                                                distASuelo := 1;
+                                                distDer  := 3;
+                                                distIzq  := 1;
+                                            elsif LPos4 then
+                                                LPos4 := false;
+                                                LPos1 := true;
+                                                distASuelo := 3;
+                                                distDer  := 2;
+                                                distIzq  := 1;
+                                            end if;
+                                        when "110" =>
+                                            if LInvPos1 then
+                                                LInvPos1 := false;
+                                                LInvPos2 := true;
+                                                distASuelo := 2;
+                                                distDer  := 3;
+                                                distIzq  := 1;
+                                            elsif LInvPos2 then
+                                                LInvPos2 := false;
+                                                LInvPos3 := true;
+                                                distASuelo := 3;
+                                                distDer  := 2;
+                                                distIzq  := 1;
+                                            elsif LInvPos3 then
+                                                LInvPos3 := false;
+                                                LInvPos4 := true;
+                                                distASuelo := 2;
+                                                distDer  := 3;
+                                                distIzq  := 1;
+                                            elsif LInvPos4 then
+                                                LInvPos4 := false;
+                                                LInvPos1 := true; 
+                                                distASuelo := 3;
+                                                distDer  := 1;
+                                                distIzq  := 2;
+                                            end if;
+                                        when "111" =>
+                                            if TPos1 then
+                                                TPos1 := false;
+                                                TPos2 := true;
+                                                distASuelo := 1;
+                                                distDer  := 3;
+                                                distIzq  := 1;
+                                            elsif TPos2 then
+                                                TPos2 := false;
+                                                TPos3 := true;
+                                                distASuelo := 3;
+                                                distDer  := 2;
+                                                distIzq  := 1;
+                                            elsif TPos3 then
+                                                TPos3 := false;
+                                                TPos4 := true;
+                                                distASuelo := 2;
+                                                distDer  := 3;
+                                                distIzq  := 1;
+                                            elsif TPos4 then
+                                                TPos4 := false;
+                                                TPos1 := true;
+                                                distASuelo := 3;
+                                                distDer  := 1;
+                                                distIzq  := 2;
+                                            end if;
+                                 end case;
                             end if;
                         end if;
                         state := S3;

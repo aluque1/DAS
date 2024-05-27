@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Thu May  9 12:47:01 2024
-| Host         : Jorbis-Zenbook running 64-bit unknown
+| Tool Version : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
+| Date         : Mon May 27 20:37:03 2024
+| Host         : Sobremesa running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file lab6pong_control_sets_placed.rpt
 | Design       : lab6pong
 | Device       : xc7a35t
@@ -76,8 +76,8 @@ Table of Contents
 |  clk_IBUF_BUFG | screenInteface/pixelCnt[9]_i_1_n_0           | screenInteface/hSync_i_1_n_0 |                1 |              1 |         1.00 |
 |  clk_IBUF_BUFG | screenInteface/pixelCnt[9]_i_1_n_0           | screenInteface/vSync_i_1_n_0 |                1 |              1 |         1.00 |
 |  clk_IBUF_BUFG | yRight                                       | rstSynchronizer/SR[0]        |                3 |              8 |         2.67 |
-|  clk_IBUF_BUFG | ps2KeyboardInterface/data[7]_i_1_n_0         | rstSynchronizer/Q[0]         |                1 |              8 |         8.00 |
 |  clk_IBUF_BUFG | yLeft                                        | rstSynchronizer/SR[0]        |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | ps2KeyboardInterface/data[7]_i_1_n_0         | rstSynchronizer/Q[0]         |                1 |              8 |         8.00 |
 |  clk_IBUF_BUFG | screenInteface/lineCnt[9]_i_1_n_0            |                              |                3 |             10 |         3.33 |
 |  clk_IBUF_BUFG | ps2KeyboardInterface/ps2ClkEdgeDetector/E[0] | rstSynchronizer/SS[0]        |                3 |             11 |         3.67 |
 |  clk_IBUF_BUFG | mover_reg_n_0                                | rstSynchronizer/SR[0]        |                6 |             16 |         2.67 |

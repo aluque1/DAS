@@ -17,7 +17,7 @@ proc create_report { reportName command } {
   }
 }
 namespace eval ::optrace {
-  variable script "/home/jorbis/Documentos/GitHub/DAS/projects/lab4/lab4.runs/impl_1/lab4.tcl"
+  variable script "C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/projects/lab4/lab4.runs/impl_1/lab4.tcl"
   variable category "vivado_impl"
 }
 
@@ -123,6 +123,7 @@ set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
   set_param chipscope.maxJobs 1
+  set_param xicom.use_bs_reader 1
   set_param runs.launchOptions { -jobs 1  }
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7a35tcpg236-1
@@ -131,15 +132,15 @@ OPTRACE "create in-memory project" START { }
   set_param project.singleFileAddWarning.threshold 0
 OPTRACE "create in-memory project" END { }
 OPTRACE "set parameters" START { }
-  set_property webtalk.parent_dir /home/jorbis/Documentos/GitHub/DAS/projects/lab4/lab4.cache/wt [current_project]
-  set_property parent.project_path /home/jorbis/Documentos/GitHub/DAS/projects/lab4/lab4.xpr [current_project]
-  set_property ip_output_repo /home/jorbis/Documentos/GitHub/DAS/projects/lab4/lab4.cache/ip [current_project]
+  set_property webtalk.parent_dir {C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/projects/lab4/lab4.cache/wt} [current_project]
+  set_property parent.project_path {C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/projects/lab4/lab4.xpr} [current_project]
+  set_property ip_output_repo {{C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/projects/lab4/lab4.cache/ip}} [current_project]
   set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
-  add_files -quiet /home/jorbis/Documentos/GitHub/DAS/projects/lab4/lab4.runs/synth_1/lab4.dcp
+  add_files -quiet {{C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/projects/lab4/lab4.runs/synth_1/lab4.dcp}}
 OPTRACE "read constraints: implementation" START { }
-  read_xdc /home/jorbis/Documentos/GitHub/DAS/sources/lab4/lab4.xdc
+  read_xdc {{C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/lab4/lab4.xdc}}
 OPTRACE "read constraints: implementation" END { }
 OPTRACE "add files" END { }
 OPTRACE "link_design" START { }

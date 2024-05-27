@@ -1,14 +1,14 @@
 #-----------------------------------------------------------
 # Vivado v2023.1 (64-bit)
-# SW Build 3865809 on Sun May  7 15:04:56 MDT 2023
+# SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
 # IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
 # SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
-# Start of session at: Fri Mar  8 13:31:05 2024
-# Process ID: 80195
-# Current directory: /home/jorbis/Documentos/GitHub/DAS/projects/lab4/lab4.runs/synth_1
-# Command line: vivado -log lab4.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source lab4.tcl
-# Log file: /home/jorbis/Documentos/GitHub/DAS/projects/lab4/lab4.runs/synth_1/lab4.vds
-# Journal file: /home/jorbis/Documentos/GitHub/DAS/projects/lab4/lab4.runs/synth_1/vivado.jou
-# Running On: Jorbis-Zenbook, OS: Linux, CPU Frequency: 3531.783 MHz, CPU Physical cores: 16, Host memory: 16137 MB
+# Start of session at: Mon May 27 20:41:16 2024
+# Process ID: 33076
+# Current directory: C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/projects/lab4/lab4.runs/synth_1
+# Command line: vivado.exe -log lab4.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source lab4.tcl
+# Log file: C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/projects/lab4/lab4.runs/synth_1/lab4.vds
+# Journal file: C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/projects/lab4/lab4.runs/synth_1\vivado.jou
+# Running On: Sobremesa, OS: Windows, CPU Frequency: 3693 MHz, CPU Physical cores: 24, Host memory: 34269 MB
 #-----------------------------------------------------------
 source lab4.tcl -notrace
