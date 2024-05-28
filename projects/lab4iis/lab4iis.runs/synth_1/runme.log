@@ -1,0 +1,354 @@
+
+*** Running vivado
+    with args -log lab4IIS.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source lab4IIS.tcl
+
+
+ECHO is off.
+ECHO is off.
+
+****** Vivado v2023.1 (64-bit)
+  **** SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
+  **** IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+  **** SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source lab4IIS.tcl -notrace
+Command: synth_design -top lab4IIS -part xc7a35tcpg236-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Device 21-403] Loading part xc7a35tcpg236-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 8924
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1247.727 ; gain = 409.332
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-9112] actual for formal port 'bins' is neither a static name nor a globally static expression [C:/Users/alv/Desktop/uni/DAS/sources/lab4iis/lab4IIS.vhd:233]
+INFO: [Synth 8-638] synthesizing module 'lab4IIS' [C:/Users/alv/Desktop/uni/DAS/sources/lab4iis/lab4IIS.vhd:47]
+	Parameter STAGES bound to: 2 - type: integer 
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-3491] module 'synchronizer' declared at 'C:/Users/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd:21' bound to instance 'resetSynchronizer' of component 'synchronizer' [C:/Users/alv/Desktop/uni/DAS/sources/lab4iis/lab4IIS.vhd:92]
+INFO: [Synth 8-638] synthesizing module 'synchronizer' [C:/Users/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd:35]
+	Parameter STAGES bound to: 2 - type: integer 
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-256] done synthesizing module 'synchronizer' (0#1) [C:/Users/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd:35]
+INFO: [Synth 8-3491] module 'ps2receiver' declared at 'C:/Users/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:21' bound to instance 'ps2KeyboardInterface' of component 'ps2receiver' [C:/Users/alv/Desktop/uni/DAS/sources/lab4iis/lab4IIS.vhd:98]
+INFO: [Synth 8-638] synthesizing module 'ps2receiver' [C:/Users/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:38]
+	Parameter STAGES bound to: 4 - type: integer 
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-3491] module 'synchronizer' declared at 'C:/Users/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd:21' bound to instance 'ps2ClkSynchronizer' of component 'synchronizer' [C:/Users/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:48]
+INFO: [Synth 8-638] synthesizing module 'synchronizer__parameterized1' [C:/Users/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd:35]
+	Parameter STAGES bound to: 4 - type: integer 
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-256] done synthesizing module 'synchronizer__parameterized1' (0#1) [C:/Users/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd:35]
+	Parameter STAGES bound to: 2 - type: integer 
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-3491] module 'synchronizer' declared at 'C:/Users/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd:21' bound to instance 'ps2DataSynchronizer' of component 'synchronizer' [C:/Users/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:52]
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-3491] module 'edgeDetector' declared at 'C:/Users/alv/Desktop/uni/DAS/sources/common/edgeDetector.vhd:21' bound to instance 'ps2ClkEdgeDetector' of component 'edgeDetector' [C:/Users/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:56]
+INFO: [Synth 8-638] synthesizing module 'edgeDetector' [C:/Users/alv/Desktop/uni/DAS/sources/common/edgeDetector.vhd:35]
+	Parameter XPOL bound to: 1'b0 
+INFO: [Synth 8-256] done synthesizing module 'edgeDetector' (0#1) [C:/Users/alv/Desktop/uni/DAS/sources/common/edgeDetector.vhd:35]
+INFO: [Synth 8-256] done synthesizing module 'ps2receiver' (0#1) [C:/Users/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd:38]
+	Parameter WL bound to: 16 - type: integer 
+	Parameter QM bound to: 14 - type: integer 
+	Parameter FS bound to: 48828.000000 - type: double 
+INFO: [Synth 8-3491] module 'iirOscillator' declared at 'C:/Users/alv/Desktop/uni/DAS/sources/lab4iis/lab4IIS.vhd:241' bound to instance 'soundGen' of component 'iirOscillator' [C:/Users/alv/Desktop/uni/DAS/sources/lab4iis/lab4IIS.vhd:204]
+INFO: [Synth 8-638] synthesizing module 'iirOscillator' [C:/Users/alv/Desktop/uni/DAS/sources/lab4iis/lab4IIS.vhd:263]
+	Parameter WL bound to: 16 - type: integer 
+	Parameter QM bound to: 14 - type: integer 
+	Parameter FS bound to: 48828.000000 - type: double 
+INFO: [Synth 8-256] done synthesizing module 'iirOscillator' (0#1) [C:/Users/alv/Desktop/uni/DAS/sources/lab4iis/lab4IIS.vhd:263]
+	Parameter WL bound to: 16 - type: integer 
+	Parameter FREQ_DIV bound to: 4 - type: integer 
+	Parameter UNDERSAMPLE bound to: 1 - type: integer 
+INFO: [Synth 8-3491] module 'iisInterface' declared at 'C:/Users/alv/Desktop/uni/DAS/sources/common/iisInterface.vhd:22' bound to instance 'codecInterface' of component 'iisInterface' [C:/Users/alv/Desktop/uni/DAS/sources/lab4iis/lab4IIS.vhd:222]
+INFO: [Synth 8-638] synthesizing module 'iisInterface' [C:/Users/alv/Desktop/uni/DAS/sources/common/iisInterface.vhd:49]
+	Parameter WL bound to: 16 - type: integer 
+	Parameter FREQ_DIV bound to: 4 - type: integer 
+	Parameter UNDERSAMPLE bound to: 1 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'iisInterface' (0#1) [C:/Users/alv/Desktop/uni/DAS/sources/common/iisInterface.vhd:49]
+	Parameter FREQ_KHZ bound to: 100000 - type: integer 
+	Parameter SIZE bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'segsBankRefresher' declared at 'C:/Users/alv/Desktop/uni/DAS/sources/common/segsBankRefresher.vhd:21' bound to instance 'displayInterface' of component 'segsBankRefresher' [C:/Users/alv/Desktop/uni/DAS/sources/lab4iis/lab4IIS.vhd:231]
+INFO: [Synth 8-638] synthesizing module 'segsBankRefresher' [C:/Users/alv/Desktop/uni/DAS/sources/common/segsBankRefresher.vhd:42]
+	Parameter FREQ_KHZ bound to: 100000 - type: integer 
+	Parameter SIZE bound to: 4 - type: integer 
+WARNING: [Synth 8-614] signal 'index' is read in the process but is not in the sensitivity list [C:/Users/alv/Desktop/uni/DAS/sources/common/segsBankRefresher.vhd:59]
+INFO: [Synth 8-3491] module 'bin2segs' declared at 'C:/Users/alv/Desktop/uni/DAS/sources/common/bin2segs.vhd:24' bound to instance 'converter' of component 'bin2segs' [C:/Users/alv/Desktop/uni/DAS/sources/common/segsBankRefresher.vhd:74]
+INFO: [Synth 8-638] synthesizing module 'bin2segs' [C:/Users/alv/Desktop/uni/DAS/sources/common/bin2segs.vhd:37]
+INFO: [Synth 8-226] default block is never used [C:/Users/alv/Desktop/uni/DAS/sources/common/bin2segs.vhd:42]
+INFO: [Synth 8-256] done synthesizing module 'bin2segs' (0#1) [C:/Users/alv/Desktop/uni/DAS/sources/common/bin2segs.vhd:37]
+INFO: [Synth 8-256] done synthesizing module 'segsBankRefresher' (0#1) [C:/Users/alv/Desktop/uni/DAS/sources/common/segsBankRefresher.vhd:42]
+INFO: [Synth 8-256] done synthesizing module 'lab4IIS' (0#1) [C:/Users/alv/Desktop/uni/DAS/sources/lab4iis/lab4IIS.vhd:47]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1339.848 ; gain = 501.453
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1339.848 ; gain = 501.453
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1339.848 ; gain = 501.453
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 1339.848 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [C:/Users/alv/Desktop/uni/DAS/sources/lab4iis/lab4IIS.xdc]
+Finished Parsing XDC File [C:/Users/alv/Desktop/uni/DAS/sources/lab4iis/lab4IIS.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/alv/Desktop/uni/DAS/sources/lab4iis/lab4IIS.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/lab4IIS_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/lab4IIS_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1397.105 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1397.105 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1397.105 ; gain = 558.711
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35tcpg236-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1397.105 ; gain = 558.711
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1397.105 ; gain = 558.711
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'fsm.state_reg' in module 'lab4IIS'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                      s0 |                               00 |                               00
+                      s3 |                               01 |                               11
+                      s1 |                               10 |                               01
+                      s2 |                               11 |                               10
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'fsm.state_reg' using encoding 'sequential' in module 'lab4IIS'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1397.105 ; gain = 558.711
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   19 Bit       Adders := 1     
+	   2 Input    9 Bit       Adders := 1     
+	   2 Input    2 Bit       Adders := 2     
++---XORs : 
+	   9 Input      1 Bit         XORs := 1     
++---Registers : 
+	               24 Bit    Registers := 2     
+	               19 Bit    Registers := 1     
+	               16 Bit    Registers := 4     
+	               11 Bit    Registers := 1     
+	                9 Bit    Registers := 1     
+	                8 Bit    Registers := 2     
+	                4 Bit    Registers := 1     
+	                2 Bit    Registers := 5     
+	                1 Bit    Registers := 1     
++---Muxes : 
+	   2 Input   24 Bit        Muxes := 2     
+	   2 Input   23 Bit        Muxes := 1     
+	   2 Input   16 Bit        Muxes := 3     
+	  14 Input   15 Bit        Muxes := 1     
+	   2 Input   15 Bit        Muxes := 1     
+	  14 Input   11 Bit        Muxes := 1     
+	   2 Input   11 Bit        Muxes := 1     
+	   2 Input    8 Bit        Muxes := 1     
+	   4 Input    4 Bit        Muxes := 1     
+	   4 Input    2 Bit        Muxes := 1     
+	   2 Input    2 Bit        Muxes := 7     
+	   2 Input    1 Bit        Muxes := 5     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+DSP Report: Generating DSP soundGen/acc0, operation Mode is: A*B2.
+DSP Report: register soundGen/y_reg[1] is absorbed into DSP soundGen/acc0.
+DSP Report: operator soundGen/acc0 is absorbed into DSP soundGen/acc0.
+WARNING: [Synth 8-7129] Port sdto in module lab4IIS is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1397.105 ; gain = 558.711
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+DSP: Preliminary Mapping Report (see note below. The ' indicates corresponding REG is set)
++--------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name   | DSP Mapping | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++--------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|iirOscillator | A*B2        | 16     | 16     | -      | -      | 32     | 0    | 1    | -    | -    | -     | 0    | 0    | 
++--------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:19 ; elapsed = 00:00:21 . Memory (MB): peak = 1397.105 ; gain = 558.711
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:19 ; elapsed = 00:00:21 . Memory (MB): peak = 1413.504 ; gain = 575.109
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:19 ; elapsed = 00:00:21 . Memory (MB): peak = 1413.504 ; gain = 575.109
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:22 ; elapsed = 00:00:25 . Memory (MB): peak = 1413.844 ; gain = 575.449
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:22 ; elapsed = 00:00:25 . Memory (MB): peak = 1413.844 ; gain = 575.449
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:22 ; elapsed = 00:00:25 . Memory (MB): peak = 1413.844 ; gain = 575.449
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:22 ; elapsed = 00:00:25 . Memory (MB): peak = 1413.844 ; gain = 575.449
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:22 ; elapsed = 00:00:25 . Memory (MB): peak = 1413.844 ; gain = 575.449
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:22 ; elapsed = 00:00:25 . Memory (MB): peak = 1413.844 ; gain = 575.449
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Static Shift Register Report:
++------------+----------------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|Module Name | RTL Name                                           | Length | Width | Reset Signal | Pull out first Reg | Pull out last Reg | SRL16E | SRLC32E | 
++------------+----------------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|lab4IIS     | ps2KeyboardInterface/ps2ClkEdgeDetector/aux_reg[0] | 5      | 1     | NO           | YES                | YES               | 1      | 0       | 
++------------+----------------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+DSP Final Report (the ' indicates corresponding REG is set)
++--------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name   | DSP Mapping | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++--------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|iirOscillator | A*B'        | 15     | 18     | -      | -      | 32     | 0    | 1    | -    | -    | -     | 0    | 0    | 
++--------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+--------+------+
+|      |Cell    |Count |
++------+--------+------+
+|1     |BUFG    |     1|
+|2     |CARRY4  |    25|
+|3     |DSP48E1 |     1|
+|4     |LUT1    |    42|
+|5     |LUT2    |    35|
+|6     |LUT3    |    28|
+|7     |LUT4    |    18|
+|8     |LUT5    |    16|
+|9     |LUT6    |    66|
+|10    |SRL16E  |     1|
+|11    |FDRE    |   106|
+|12    |FDSE    |    11|
+|13    |IBUF    |     4|
+|14    |OBUF    |    19|
++------+--------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:22 ; elapsed = 00:00:25 . Memory (MB): peak = 1413.844 ; gain = 575.449
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 2 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:17 ; elapsed = 00:00:23 . Memory (MB): peak = 1413.844 ; gain = 518.191
+Synthesis Optimization Complete : Time (s): cpu = 00:00:23 ; elapsed = 00:00:25 . Memory (MB): peak = 1413.844 ; gain = 575.449
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1413.844 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 26 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1413.844 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete | Checksum: 22e22ea9
+INFO: [Common 17-83] Releasing license: Synthesis
+45 Infos, 4 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:25 ; elapsed = 00:00:29 . Memory (MB): peak = 1413.844 ; gain = 979.828
+INFO: [Common 17-1381] The checkpoint 'C:/Users/alv/Desktop/uni/DAS/projects/lab4iis/lab4iis.runs/synth_1/lab4IIS.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file lab4IIS_utilization_synth.rpt -pb lab4IIS_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Mon May 27 23:11:10 2024...
