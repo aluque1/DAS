@@ -3,19 +3,16 @@
     with args -log proyecto.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source proyecto.tcl
 
 
-ECHO est  desactivado.
-ECHO est  desactivado.
-
 ****** Vivado v2023.1 (64-bit)
-  **** SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
+  **** SW Build 3865809 on Sun May  7 15:04:56 MDT 2023
   **** IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
   **** SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
     ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
     ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 
 source proyecto.tcl -notrace
-Command: read_checkpoint -auto_incremental -incremental {C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/projects/proyecto/proyecto.srcs/utils_1/imports/synth_1/lab6pong.dcp}
-INFO: [Vivado 12-5825] Read reference checkpoint from C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/projects/proyecto/proyecto.srcs/utils_1/imports/synth_1/lab6pong.dcp for incremental synthesis
+Command: read_checkpoint -auto_incremental -incremental /home/alv/Desktop/uni/DAS/projects/proyecto/proyecto.srcs/utils_1/imports/synth_1/lab6pong.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from /home/alv/Desktop/uni/DAS/projects/proyecto/proyecto.srcs/utils_1/imports/synth_1/lab6pong.dcp for incremental synthesis
 INFO: [Vivado 12-7989] Please ensure there are no constraint changes
 Command: synth_design -top proyecto -part xc7a35tcpg236-1
 Starting synth_design
@@ -24,155 +21,107 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t
 INFO: [Device 21-403] Loading part xc7a35tcpg236-1
 INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
-INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 38948
+INFO: [Synth 8-7075] Helper process launched with PID 43307
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1250.902 ; gain = 411.277
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 1979.715 ; gain = 378.770 ; free physical = 5873 ; free virtual = 11472
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-638] synthesizing module 'proyecto' [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:22]
+INFO: [Synth 8-638] synthesizing module 'proyecto' [/home/alv/Desktop/uni/DAS/sources/proyecto/proyecto.vhd:27]
 	Parameter STAGES bound to: 2 - type: integer 
 	Parameter XPOL bound to: 1'b0 
-INFO: [Synth 8-3491] module 'synchronizer' declared at 'C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/synchronizer.vhd:21' bound to instance 'rstSynchronizer' of component 'synchronizer' [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:85]
-INFO: [Synth 8-638] synthesizing module 'synchronizer' [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/synchronizer.vhd:35]
+INFO: [Synth 8-3491] module 'synchronizer' declared at '/home/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd:21' bound to instance 'resetSynchronizer' of component 'synchronizer' [/home/alv/Desktop/uni/DAS/sources/proyecto/proyecto.vhd:72]
+INFO: [Synth 8-638] synthesizing module 'synchronizer' [/home/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd:35]
 	Parameter STAGES bound to: 2 - type: integer 
 	Parameter XPOL bound to: 1'b0 
-INFO: [Synth 8-256] done synthesizing module 'synchronizer' (0#1) [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/synchronizer.vhd:35]
-INFO: [Synth 8-3491] module 'ps2receiver' declared at 'C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/ps2receiver.vhd:21' bound to instance 'ps2KeyboardInterface' of component 'ps2receiver' [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:91]
-INFO: [Synth 8-638] synthesizing module 'ps2receiver' [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/ps2receiver.vhd:38]
-	Parameter STAGES bound to: 4 - type: integer 
-	Parameter XPOL bound to: 1'b0 
-INFO: [Synth 8-3491] module 'synchronizer' declared at 'C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/synchronizer.vhd:21' bound to instance 'ps2ClkSynchronizer' of component 'synchronizer' [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/ps2receiver.vhd:48]
-INFO: [Synth 8-638] synthesizing module 'synchronizer__parameterized1' [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/synchronizer.vhd:35]
-	Parameter STAGES bound to: 4 - type: integer 
-	Parameter XPOL bound to: 1'b0 
-INFO: [Synth 8-256] done synthesizing module 'synchronizer__parameterized1' (0#1) [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/synchronizer.vhd:35]
-	Parameter STAGES bound to: 2 - type: integer 
-	Parameter XPOL bound to: 1'b0 
-INFO: [Synth 8-3491] module 'synchronizer' declared at 'C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/synchronizer.vhd:21' bound to instance 'ps2DataSynchronizer' of component 'synchronizer' [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/ps2receiver.vhd:52]
-	Parameter XPOL bound to: 1'b0 
-INFO: [Synth 8-3491] module 'edgeDetector' declared at 'C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/edgeDetector.vhd:21' bound to instance 'ps2ClkEdgeDetector' of component 'edgeDetector' [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/ps2receiver.vhd:56]
-INFO: [Synth 8-638] synthesizing module 'edgeDetector' [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/edgeDetector.vhd:35]
-	Parameter XPOL bound to: 1'b0 
-INFO: [Synth 8-256] done synthesizing module 'edgeDetector' (0#1) [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/edgeDetector.vhd:35]
-INFO: [Synth 8-256] done synthesizing module 'ps2receiver' (0#1) [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/ps2receiver.vhd:38]
-	Parameter WL bound to: 3 - type: integer 
-INFO: [Synth 8-3491] module 'lsfr' declared at 'C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/lsfr.vhd:23' bound to instance 'generaPieza' of component 'lsfr' [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:94]
-INFO: [Synth 8-638] synthesizing module 'lsfr' [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/lsfr.vhd:39]
-	Parameter WL bound to: 3 - type: integer 
-INFO: [Synth 8-256] done synthesizing module 'lsfr' (0#1) [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/lsfr.vhd:39]
+INFO: [Synth 8-256] done synthesizing module 'synchronizer' (0#1) [/home/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd:35]
+	Parameter WL bound to: 16 - type: integer 
+	Parameter QM bound to: 14 - type: integer 
+	Parameter FS bound to: 48828.000000 - type: double 
+INFO: [Synth 8-3491] module 'iirOscillator' declared at '/home/alv/Desktop/uni/DAS/sources/proyecto/proyecto.vhd:148' bound to instance 'soundGen' of component 'iirOscillator' [/home/alv/Desktop/uni/DAS/sources/proyecto/proyecto.vhd:117]
+INFO: [Synth 8-638] synthesizing module 'iirOscillator' [/home/alv/Desktop/uni/DAS/sources/proyecto/proyecto.vhd:170]
+	Parameter WL bound to: 16 - type: integer 
+	Parameter QM bound to: 14 - type: integer 
+	Parameter FS bound to: 48828.000000 - type: double 
+INFO: [Synth 8-256] done synthesizing module 'iirOscillator' (0#1) [/home/alv/Desktop/uni/DAS/sources/proyecto/proyecto.vhd:170]
+	Parameter WL bound to: 16 - type: integer 
 	Parameter FREQ_DIV bound to: 4 - type: integer 
-INFO: [Synth 8-3491] module 'vgaRefresher' declared at 'C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/vgaRefresher.vhd:23' bound to instance 'screenInteface' of component 'vgaRefresher' [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:135]
-INFO: [Synth 8-638] synthesizing module 'vgaRefresher' [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/vgaRefresher.vhd:48]
+	Parameter UNDERSAMPLE bound to: 1 - type: integer 
+INFO: [Synth 8-3491] module 'iisInterface' declared at '/home/alv/Desktop/uni/DAS/sources/common/iisInterface.vhd:22' bound to instance 'codecInterface' of component 'iisInterface' [/home/alv/Desktop/uni/DAS/sources/proyecto/proyecto.vhd:135]
+INFO: [Synth 8-638] synthesizing module 'iisInterface' [/home/alv/Desktop/uni/DAS/sources/common/iisInterface.vhd:49]
+	Parameter WL bound to: 16 - type: integer 
 	Parameter FREQ_DIV bound to: 4 - type: integer 
-INFO: [Synth 8-256] done synthesizing module 'vgaRefresher' (0#1) [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/common/vgaRefresher.vhd:48]
-INFO: [Synth 8-256] done synthesizing module 'proyecto' (0#1) [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:22]
-WARNING: [Synth 8-6014] Unused sequential element aP_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:111]
-WARNING: [Synth 8-6014] Unused sequential element sP_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:112]
-WARNING: [Synth 8-6014] Unused sequential element dP_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:113]
-WARNING: [Synth 8-6014] Unused sequential element rP_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:114]
-WARNING: [Synth 8-6014] Unused sequential element spcP_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:115]
-WARNING: [Synth 8-6014] Unused sequential element mover_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:193]
-WARNING: [Synth 8-6014] Unused sequential element CPos1_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:226]
-WARNING: [Synth 8-6014] Unused sequential element LinPos1_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:230]
-WARNING: [Synth 8-6014] Unused sequential element ZPos1_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:232]
-WARNING: [Synth 8-6014] Unused sequential element ZInvPos1_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:234]
-WARNING: [Synth 8-6014] Unused sequential element LPos1_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:236]
-WARNING: [Synth 8-6014] Unused sequential element LInvPos1_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:238]
-WARNING: [Synth 8-6014] Unused sequential element TPos1_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:240]
-WARNING: [Synth 8-6014] Unused sequential element limpC_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:247]
-WARNING: [Synth 8-6014] Unused sequential element limpLin_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:251]
-WARNING: [Synth 8-6014] Unused sequential element limpZ_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:253]
-WARNING: [Synth 8-6014] Unused sequential element limpZInv_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:255]
-WARNING: [Synth 8-6014] Unused sequential element limpL_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:257]
-WARNING: [Synth 8-6014] Unused sequential element limpLInv_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:259]
-WARNING: [Synth 8-6014] Unused sequential element limpT_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:261]
-WARNING: [Synth 8-6014] Unused sequential element pintC_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:268]
-WARNING: [Synth 8-6014] Unused sequential element pintLin_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:272]
-WARNING: [Synth 8-6014] Unused sequential element pintZ_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:274]
-WARNING: [Synth 8-6014] Unused sequential element pintZInv_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:276]
-WARNING: [Synth 8-6014] Unused sequential element pintL_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:278]
-WARNING: [Synth 8-6014] Unused sequential element pintLInv_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:280]
-WARNING: [Synth 8-6014] Unused sequential element pintT_reg was removed.  [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.vhd:282]
+	Parameter UNDERSAMPLE bound to: 1 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'iisInterface' (0#1) [/home/alv/Desktop/uni/DAS/sources/common/iisInterface.vhd:49]
+INFO: [Synth 8-256] done synthesizing module 'proyecto' (0#1) [/home/alv/Desktop/uni/DAS/sources/proyecto/proyecto.vhd:27]
+WARNING: [Synth 8-3848] Net soundEnable in module/entity proyecto does not have driver. [/home/alv/Desktop/uni/DAS/sources/proyecto/proyecto.vhd:63]
+WARNING: [Synth 8-3848] Net ldCode in module/entity proyecto does not have driver. [/home/alv/Desktop/uni/DAS/sources/proyecto/proyecto.vhd:62]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1345.691 ; gain = 506.066
+Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2046.652 ; gain = 445.707 ; free physical = 5819 ; free virtual = 11418
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1345.691 ; gain = 506.066
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2064.465 ; gain = 463.520 ; free physical = 5807 ; free virtual = 11406
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1345.691 ; gain = 506.066
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2064.465 ; gain = 463.520 ; free physical = 5807 ; free virtual = 11406
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1345.691 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2064.465 ; gain = 0.000 ; free physical = 5807 ; free virtual = 11406
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.xdc]
-Finished Parsing XDC File [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.xdc]
-INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/sources/proyecto/proyecto.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/proyecto_propImpl.xdc].
+Parsing XDC File [/home/alv/Desktop/uni/DAS/sources/proyecto/proyecto.xdc]
+Finished Parsing XDC File [/home/alv/Desktop/uni/DAS/sources/proyecto/proyecto.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/alv/Desktop/uni/DAS/sources/proyecto/proyecto.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/proyecto_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/proyecto_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1439.438 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2209.215 ; gain = 0.000 ; free physical = 5716 ; free virtual = 11315
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1439.438 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2209.215 ; gain = 0.000 ; free physical = 5716 ; free virtual = 11315
 INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1439.438 ; gain = 599.812
+Finished Constraint Validation : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2209.215 ; gain = 608.270 ; free physical = 5714 ; free virtual = 11313
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tcpg236-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1439.438 ; gain = 599.812
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2209.215 ; gain = 608.270 ; free physical = 5714 ; free virtual = 11313
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1439.438 ; gain = 599.812
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2209.215 ; gain = 608.270 ; free physical = 5714 ; free virtual = 11313
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1439.438 ; gain = 599.812
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 2209.215 ; gain = 608.270 ; free physical = 5713 ; free virtual = 11313
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
 Detailed RTL Component Info : 
 +---Adders : 
-	   2 Input   31 Bit       Adders := 4     
-	   2 Input   10 Bit       Adders := 2     
+	   2 Input    9 Bit       Adders := 1     
 	   2 Input    2 Bit       Adders := 1     
-+---XORs : 
-	   9 Input      1 Bit         XORs := 1     
-	   2 Input      1 Bit         XORs := 1     
 +---Registers : 
-	               31 Bit    Registers := 2     
-	               12 Bit    Registers := 1     
-	               11 Bit    Registers := 1     
-	               10 Bit    Registers := 2     
-	                8 Bit    Registers := 1     
-	                4 Bit    Registers := 1     
-	                3 Bit    Registers := 2     
-	                2 Bit    Registers := 4     
-	                1 Bit    Registers := 5     
+	               24 Bit    Registers := 2     
+	               16 Bit    Registers := 4     
+	                9 Bit    Registers := 1     
+	                2 Bit    Registers := 2     
 +---Muxes : 
-	   2 Input   31 Bit        Muxes := 2     
-	   7 Input   12 Bit        Muxes := 1     
-	   2 Input    4 Bit        Muxes := 3     
-	   2 Input    3 Bit        Muxes := 1     
-	   6 Input    3 Bit        Muxes := 1     
-	   2 Input    1 Bit        Muxes := 6     
-	   3 Input    1 Bit        Muxes := 1     
-	   6 Input    1 Bit        Muxes := 5     
+	   2 Input   24 Bit        Muxes := 2     
+	   2 Input   23 Bit        Muxes := 1     
+	   2 Input   16 Bit        Muxes := 3     
+	   2 Input    1 Bit        Muxes := 2     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -189,26 +138,46 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+DSP Report: Generating DSP soundGen/acc0, operation Mode is: (A:0x7fed)*B2.
+DSP Report: register soundGen/y_reg[1] is absorbed into DSP soundGen/acc0.
+DSP Report: operator soundGen/acc0 is absorbed into DSP soundGen/acc0.
+WARNING: [Synth 8-7129] Port rst in module proyecto is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sdto in module proyecto is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 1439.438 ; gain = 599.812
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 2209.215 ; gain = 608.270 ; free physical = 5709 ; free virtual = 11313
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+DSP: Preliminary Mapping Report (see note below. The ' indicates corresponding REG is set)
++--------------+---------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name   | DSP Mapping   | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++--------------+---------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|iirOscillator | (A:0x7fed)*B2 | 16     | 16     | -      | -      | 32     | 1    | 0    | -    | -    | -     | 0    | 0    | 
++--------------+---------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 1439.438 ; gain = 599.812
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 2209.215 ; gain = 608.270 ; free physical = 5708 ; free virtual = 11312
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:17 ; elapsed = 00:00:17 . Memory (MB): peak = 1439.438 ; gain = 599.812
+Finished Timing Optimization : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 2209.215 ; gain = 608.270 ; free physical = 5708 ; free virtual = 11312
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:17 ; elapsed = 00:00:17 . Memory (MB): peak = 1439.438 ; gain = 599.812
+Finished Technology Mapping : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 2209.215 ; gain = 608.270 ; free physical = 5708 ; free virtual = 11312
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -226,37 +195,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 1439.438 ; gain = 599.812
+Finished IO Insertion : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2209.215 ; gain = 608.270 ; free physical = 5708 ; free virtual = 11312
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 1439.438 ; gain = 599.812
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2209.215 ; gain = 608.270 ; free physical = 5708 ; free virtual = 11312
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 1439.438 ; gain = 599.812
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2209.215 ; gain = 608.270 ; free physical = 5708 ; free virtual = 11312
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 1439.438 ; gain = 599.812
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2209.215 ; gain = 608.270 ; free physical = 5708 ; free virtual = 11312
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 1439.438 ; gain = 599.812
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2209.215 ; gain = 608.270 ; free physical = 5708 ; free virtual = 11312
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 1439.438 ; gain = 599.812
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2209.215 ; gain = 608.270 ; free physical = 5708 ; free virtual = 11312
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -269,43 +238,41 @@ Report BlackBoxes:
 +-+--------------+----------+
 
 Report Cell Usage: 
-+------+-------+------+
-|      |Cell   |Count |
-+------+-------+------+
-|1     |BUFG   |     1|
-|2     |CARRY4 |    44|
-|3     |LUT1   |    10|
-|4     |LUT2   |    17|
-|5     |LUT3   |    42|
-|6     |LUT4   |    16|
-|7     |LUT5   |    20|
-|8     |LUT6   |    82|
-|9     |FDRE   |    89|
-|10    |FDSE   |     4|
-|11    |IBUF   |     1|
-|12    |OBUF   |    14|
-+------+-------+------+
++------+-----+------+
+|      |Cell |Count |
++------+-----+------+
+|1     |BUFG |     1|
+|2     |LUT1 |     2|
+|3     |LUT2 |     4|
+|4     |LUT3 |     2|
+|5     |LUT4 |     2|
+|6     |LUT5 |     1|
+|7     |LUT6 |     2|
+|8     |FDRE |    11|
+|9     |IBUF |     1|
+|10    |OBUF |     7|
++------+-----+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 1439.438 ; gain = 599.812
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2209.215 ; gain = 608.270 ; free physical = 5708 ; free virtual = 11312
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:14 ; elapsed = 00:00:19 . Memory (MB): peak = 1439.438 ; gain = 506.066
-Synthesis Optimization Complete : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 1439.438 ; gain = 599.812
+Synthesis finished with 0 errors, 0 critical warnings and 3 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 2209.215 ; gain = 463.520 ; free physical = 5708 ; free virtual = 11312
+Synthesis Optimization Complete : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2209.215 ; gain = 608.270 ; free physical = 5708 ; free virtual = 11312
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1439.438 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 44 Unisim elements for replacement
-INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2209.215 ; gain = 0.000 ; free physical = 5921 ; free virtual = 11525
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1439.438 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2209.215 ; gain = 0.000 ; free physical = 5996 ; free virtual = 11600
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Synth Design complete | Checksum: 981942fb
+Synth Design complete | Checksum: b1d45feb
 INFO: [Common 17-83] Releasing license: Synthesis
-42 Infos, 28 Warnings, 0 Critical Warnings and 0 Errors encountered.
+30 Infos, 5 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:23 ; elapsed = 00:00:37 . Memory (MB): peak = 1439.438 ; gain = 980.281
-INFO: [Common 17-1381] The checkpoint 'C:/Users/Javier Orbis/OneDrive/Documentos/Github/DAS/projects/proyecto/proyecto.runs/synth_1/proyecto.dcp' has been generated.
+synth_design: Time (s): cpu = 00:00:19 ; elapsed = 00:00:17 . Memory (MB): peak = 2209.215 ; gain = 930.371 ; free physical = 5996 ; free virtual = 11600
+INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 1831.645; main = 1502.789; forked = 379.720
+INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 3146.492; main = 2209.215; forked = 969.293
+INFO: [Common 17-1381] The checkpoint '/home/alv/Desktop/uni/DAS/projects/proyecto/proyecto.runs/synth_1/proyecto.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file proyecto_utilization_synth.rpt -pb proyecto_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sun May 26 01:14:33 2024...
+INFO: [Common 17-206] Exiting Vivado at Tue May 28 11:10:24 2024...

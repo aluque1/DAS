@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date         : Sun May 26 01:15:15 2024
-| Host         : Sobremesa running 64-bit major release  (build 9200)
+| Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
+| Date         : Tue May 28 11:10:45 2024
+| Host         : alv-debian running 64-bit Debian GNU/Linux 12 (bookworm)
 | Command      : report_control_sets -verbose -file proyecto_control_sets_placed.rpt
 | Design       : proyecto
 | Device       : xc7a35t
@@ -23,11 +23,11 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |     7 |
-|    Minimum number of control sets                        |     7 |
+| Total control sets                                       |     2 |
+|    Minimum number of control sets                        |     2 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    30 |
+| Unused register locations in slices containing registers |    13 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -39,15 +39,15 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |     7 |
-| >= 0 to < 4        |     2 |
-| >= 4 to < 6        |     1 |
+| Total control sets |     2 |
+| >= 0 to < 4        |     1 |
+| >= 4 to < 6        |     0 |
 | >= 6 to < 8        |     0 |
-| >= 8 to < 10       |     0 |
-| >= 10 to < 12      |     1 |
+| >= 8 to < 10       |     1 |
+| >= 10 to < 12      |     0 |
 | >= 12 to < 14      |     0 |
 | >= 14 to < 16      |     0 |
-| >= 16              |     3 |
+| >= 16              |     0 |
 +--------------------+-------+
 * Control sets can be remapped at either synth_design or opt_design
 
@@ -58,28 +58,23 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |               5 |            2 |
+| No           | No                    | No                     |               2 |            1 |
 | No           | No                    | Yes                    |               0 |            0 |
 | No           | Yes                   | No                     |               0 |            0 |
-| Yes          | No                    | No                     |              32 |           14 |
+| Yes          | No                    | No                     |               9 |            2 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |              61 |           21 |
+| Yes          | Yes                   | No                     |               0 |            0 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
 4. Detailed Control Set Information
 -----------------------------------
 
-+----------------+------------------------------------+------------------------------+------------------+----------------+--------------+
-|  Clock Signal  |            Enable Signal           |       Set/Reset Signal       | Slice Load Count | Bel Load Count | Bels / Slice |
-+----------------+------------------------------------+------------------------------+------------------+----------------+--------------+
-|  clk_IBUF_BUFG | screenInteface/pixelCnt[9]_i_1_n_0 | screenInteface/hSync_i_1_n_0 |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG | screenInteface/pixelCnt[9]_i_1_n_0 | screenInteface/vSync_i_1_n_0 |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG |                                    |                              |                2 |              5 |         2.50 |
-|  clk_IBUF_BUFG | screenInteface/lineCnt0            |                              |                4 |             10 |         2.50 |
-|  clk_IBUF_BUFG | screenInteface/pixelCnt[9]_i_1_n_0 |                              |               10 |             22 |         2.20 |
-|  clk_IBUF_BUFG | screenInteface/x0                  | screenInteface/x_reg[9]      |                9 |             28 |         3.11 |
-|  clk_IBUF_BUFG | screenInteface/y0                  | screenInteface/y_reg[5]      |               10 |             31 |         3.10 |
-+----------------+------------------------------------+------------------------------+------------------+----------------+--------------+
++----------------+----------------------------------+------------------+------------------+----------------+--------------+
+|  Clock Signal  |           Enable Signal          | Set/Reset Signal | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+----------------------------------+------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG |                                  |                  |                1 |              2 |         2.00 |
+|  clk_IBUF_BUFG | codecInterface/clkGen[8]_i_1_n_0 |                  |                2 |              9 |         4.50 |
++----------------+----------------------------------+------------------+------------------+----------------+--------------+
 
 
