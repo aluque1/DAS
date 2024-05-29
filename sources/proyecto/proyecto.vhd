@@ -29,43 +29,55 @@ ARCHITECTURE syn OF proyecto IS
   constant grisClaro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "100110011001";
   constant amarilloOscuro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "110111010000";
   constant amarilloClaro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "111111110000";
-  --constant azulOscuro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "";
-  --constant azulClaro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "";
+  constant azulClaroInt : STD_LOGIC_VECTOR(11 DOWNTO 0) := "000000000100";
+  constant azulClaroB : STD_LOGIC_VECTOR(11 DOWNTO 0) := "000000000011";
+  constant azulOscuroInt : STD_LOGIC_VECTOR(11 DOWNTO 0) := "000000001111";
+  constant azulOscuroB : STD_LOGIC_VECTOR(11 DOWNTO 0) := "000000001101";
+  constant rojoOscuro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "111100000000";
+  constant rojoClaro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "110100000000";
+  constant verdeOscuro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "000011110000";
+  constant verdeClaro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "000011010000";
+  constant naranjaOscuro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "111101000000";
+  constant naranjaClaro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "110100110000"; --Peligro
+  constant moradoOscuro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "111100001111";
+  constant moradoClaro : STD_LOGIC_VECTOR(11 DOWNTO 0) := "110100001101";
 
-  --Señales teclas 
+  --Seï¿½ales teclas 
   SIGNAL aP, sP, dP, rP, spcP:  BOOLEAN := false;
   
-  signal dataIn, dataOut1, dataOut2, dataOut3, dataOut4: unsigned(2 downto 0) := (others => '0');
-  signal addrWr1, addrWr2, addrWr3, addrWr4, addrWr5, addrRd1, addrRd2, addrRd3, addrRd4: unsigned(7 downto 0) := (others => '0'); 
+  --Tablero
+  signal dataIn, doa, dob: unsigned(2 downto 0) := (others => '0');
+  signal addraIn, addrbIn, addraOut, addrbOut: unsigned(7 downto 0) := (others => '0');
+  signal wr, rd, pinta, pintaVga: std_logic := '0';
+  type tablero_t is array (0 to 230) of unsigned(2 downto 0); 
+  signal tablero : tablero_t := (others => (others => '0'));
 
   SIGNAL rstSync : STD_LOGIC;
   SIGNAL data : STD_LOGIC_VECTOR(7 DOWNTO 0);
   SIGNAL dataRdy : STD_LOGIC;
   
+  --Piezas
   signal ce, ld : std_logic := '0';
   signal seed : std_logic_vector(2 downto 0) := "001";
-  signal piezaSig : std_logic_vector(2 downto 0);
+  signal piezaSig, pieza : std_logic_vector(2 downto 0);
+  signal CPos1, LinPos1, LinPos2, ZPos1, ZPos2, ZInvPos1, ZInvPos2, LPos1, LPos2, LPos3, LPos4, LInvPos1, LInvPos2, LInvPos3, LInvPos4, TPos1, TPos2, TPos3, TPos4 : std_logic := '0';
   
   SIGNAL color : STD_LOGIC_VECTOR(11 DOWNTO 0);
-  signal colorPiezaActB : std_logic_vector (11 downto 0) := amarilloClaro;
-  signal colorPiezaActI : std_logic_vector (11 downto 0) := amarilloOscuro;
+  signal colorTablero : std_logic_vector (11 downto 0) := negro;
   
-  signal visual: std_logic_vector(3 downto 0) := (others => '0');--Muy seguramente aumenten los bits
+  signal visual: std_logic_vector(2 downto 0) := (others => '0');--Muy seguramente aumenten los bits
   --visual(0) bordes claritos de los bordes del campo
   --visual(1) interior oscuro
   --visual(2) lineas de las piezas
-  --visual(3) relleno de las piezas
-  --A IMPLEMENTAR
-  --visual(4) lineas piezas en el campo
-  --visual(5) relleno piezas en el campo
-  SIGNAL wr, cuadradoB, cuadradoI, piezaActualB, piezaActualI: STD_LOGIC;
-  SIGNAL mover, finPartida, reiniciar : BOOLEAN;
+  SIGNAL mover, finPartida, reiniciar, colision, finPintadoVga: BOOLEAN;
 
-  type tablero_t is array (0 to 230) of unsigned(2 downto 0); 
-  signal tablero : tablero_t := (others => (others => '0'));
+  
 
   SIGNAL lineAux, pixelAux : STD_LOGIC_VECTOR(9 DOWNTO 0);
   SIGNAL line, pixel : unsigned(7 DOWNTO 0);
+  
+  signal xPiezaAct : natural := 5;
+  signal yPiezaAct : natural := 1;
   
   signal x : natural := 14;
   signal y : natural := 54;
@@ -88,11 +100,11 @@ BEGIN
   keyboardScanner :
   PROCESS (clk)
     TYPE states IS (keyON, keyOFF);
-    VARIABLE state : states := keyON; --Puede estar mal no se
+    VARIABLE state : states := keyON;
   BEGIN
     IF rising_edge(clk) THEN
       IF rstSync = '1' THEN
-        state := keyOFF; --Revisar lo de el estado inicial
+        state := keyOFF; 
       ELSIF dataRdy = '1' THEN
         CASE state IS
           WHEN keyON =>
@@ -131,14 +143,13 @@ BEGIN
 
   with visual select
     color <= 
-    grisClaro when "0001",
-    grisOscuro when "0010",
-    grisClaro when "0011",
-    colorPiezaActB when "0100",
-    colorPiezaActB when "1100",
-    colorPiezaActI when "1000",
+    grisClaro when "001",
+    grisOscuro when "010",
+    grisClaro when "011",
+    colorTablero when "100",
     negro when others;
-    
+  
+  
   ------------------
 
   
@@ -155,18 +166,13 @@ BEGIN
                         
   visual(1) <= '1' when ((pixel > 49 and pixel < 109) and ((line > 9 and line < 14) or (line > 114 and line < 119))) or
                         ((line > 9 and line < 119) and ((pixel > 49 and pixel < 54) or (pixel > 104 and pixel < 109))) else '0';
-  
-  visual(2) <= '1' when piezaActualB = '1' else '0';
-  
-  visual(3) <= '1' when piezaActualI = '1' else '0';
-  
-  piezaActualB <= '1' when cuadradoB = '1' else '0'; --piezaActualB <= '1' when cuadradoB = '1' or .... else '0';
-  piezaActualI <= '1' when cuadradoI = '1' else '0'; --piezaActualI <= '1' when cuadradoI = '1' or .... else '0';
+                        
+             
   
   --Implementar el aumento de velocidad
   pulseGen :
   PROCESS (clk)
-    CONSTANT CYCLES : NATURAL := hz2cycles(FREQ_KHZ, 50);
+    CONSTANT CYCLES : NATURAL := hz2cycles(FREQ_KHZ, 50) * 5;
     VARIABLE count : NATURAL RANGE 0 TO CYCLES - 1 := 0;
   BEGIN
     IF rising_edge(clk) THEN
@@ -184,17 +190,95 @@ BEGIN
 
   ------------------
   
+  pintarTablero:
+  process(clk, pixel, line, pintaVga)
+    variable j : natural := 0;
+    variable i : natural := 0;
+    variable bordeYCnt : natural := 0;
+    variable bordeXCnt : natural := 0;
+    variable dataCasilla : unsigned(2 downto 0);
+  begin
+    if rising_edge(clk) then
+        
+        if pintaVga = '1' and ((pixel > 54 and pixel < 104) and (line > 14 and line < 114)) then
+            visual(2) <= '1';            
+            addraOut <= to_unsigned(11*i + j, 8);
+            dataCasilla := doa;
+            bordeXCnt := (bordeXCnt + 1) mod 5;
+            if bordeXCnt = 4 then
+                j := (j + 1) mod 11;
+                if j = 10 then
+                    bordeYCnt := (bordeYCnt + 1) mod 5;
+                    if bordeYCnt = 4 then
+                        i := (i + 1) mod 21;
+                    end if;
+                end if;
+            end if;
+            if j = 10 and i = 20 then
+                finPintadoVga <= true;
+            else
+                finPintadoVga <= false;
+            end if;
+            case dataCasilla is
+                when "000" =>
+                    colorTablero <= negro;
+                when "001" =>
+                    if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
+                        colorTablero <= amarilloClaro;
+                    else
+                        colorTablero <= amarilloOscuro;
+                    end if;
+                when "010" =>
+                    if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
+                        colorTablero <= azulClaroB;
+                    else
+                        colorTablero <= azulClaroInt;
+                    end if;
+                when "011" =>
+                    if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
+                        colorTablero <= rojoClaro;
+                    else
+                        colorTablero <= rojoOscuro;
+                    end if;
+                when "100" =>
+                    if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
+                        colorTablero <= verdeClaro;
+                    else
+                        colorTablero <= verdeOscuro;
+                    end if;
+                when "101" =>
+                    if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
+                        colorTablero <= naranjaClaro;
+                    else
+                        colorTablero <= naranjaOscuro;
+                    end if;
+                when "110" =>
+                    if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
+                        colorTablero <= azulOscuroB;
+                    else
+                        colorTablero <= azulOscuroInt;
+                    end if;
+                when "111" =>
+                    if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
+                        colorTablero <= moradoClaro;
+                    else
+                        colorTablero <= moradoOscuro;
+                    end if;
+            end case;
+        else
+            visual(2) <= '0';
+        end if;    
+    end if;
+  end process;
+  
   fsm:
-  process(clk, dataOut1, dataOut2, dataOut3, dataOut4)
-    type states is (S0, S1, S2, S3, S4, S5, S6);
+  process(clk)
+    type states is (S0, S1, S2, S3, S4, S5, S6, S7, S8, S9);
     variable state: states := S0;
-    variable colision : boolean := false;
-    variable CPos1, LinPos1, LinPos2, ZPos1, ZPos2, ZInvPos1, ZInvPos2, LPos1, LPos2, LPos3, LPos4, LInvPos1, LInvPos2, LInvPos3, LInvPos4, TPos1, TPos2, TPos3, TPos4 : boolean := false;
     variable distASuelo : natural := 2;
     variable distDer : natural := 2;
     variable distIzq : natural := 0;
-    variable xPiezaAct : natural := 5;
-    variable yPiezaAct : natural := 1;
+    variable cycleCnt : natural := 0;
   begin
     if rising_edge(clk) then
         if rstSync = '1' then 
@@ -205,501 +289,240 @@ BEGIN
                     ld <= '1';
                     state := S1;
                 when S1 =>
-                    CPos1 := false; LinPos1 := false; LinPos2 := false; ZPos1 := false; ZPos2 := false; ZInvPos1 := false; ZInvPos2 := false;
-                    LPos1 := false; LPos2 := false; LPos3 := false; LPos4 := false; LInvPos1 := false; LInvPos2 := false; LInvPos3 := false;
-                    LInvPos4 := false; TPos1 := false; TPos2 := false; TPos3 := false; TPos4 := false;
-                    xPiezaAct := 5;
-                    yPiezaAct := 1;
-                    ld <= '0';
+                    CPos1 <= '0'; LinPos1 <= '0'; LinPos2 <= '0'; ZPos1 <= '0'; ZPos2 <= '0'; ZInvPos1 <= '0'; ZInvPos2 <= '0';
+                    LPos1 <= '0'; LPos2 <= '0'; LPos3 <= '0'; LPos4 <= '0'; LInvPos1 <= '0'; LInvPos2 <= '0'; LInvPos3 <= '0';
+                    LInvPos4 <= '0'; TPos1 <= '0'; TPos2 <= '0'; TPos3 <= '0'; TPos4 <= '0';
+                    pinta <= '0';
                     wr <= '0';
+                    pintaVga <= '0';
+                    rd <= '0';
+                    xPiezaAct <= 5;
+                    yPiezaAct <= 1;
+                    ld <= '0';
                     ce <= '1';
                     state := S2;
                 when S2 =>
                     ce <= '0';
                     case piezaSig is
                         when "000" =>
-                            CPos1 := true; distAsuelo := 2;
+                            CPos1 <= '1'; distAsuelo := 2;
                             distDer := 2; distIzq := 1; 
                         when "001" =>
-                            CPos1 := true;distAsuelo := 2;
+                            CPos1 <= '1';distAsuelo := 2;
                             distDer := 2; distIzq := 1;
                         when "010" =>
-                            LinPos1 := true;
-                            distAsuelo := 1; 
-                            distDer := 4;
-                            distIzq := 1; 
+                            LinPos1 <= '1'; distAsuelo := 1; 
+                            distDer := 4; distIzq := 1; 
                         when "011" =>
-                            ZPos1 := true;
-                            distAsuelo := 3;
-                            distDer := 3;
-                            distIzq := 1; 
+                            ZPos1 <= '1'; distAsuelo := 3;
+                            distDer := 3; distIzq := 1; 
                         when "100" =>
-                            ZInvPos1 := true;
-                            distAsuelo := 3;
-                            distDer := 2;
-                            distIzq := 2;
+                            ZInvPos1 <= '1'; distAsuelo := 3;
+                            distDer := 2; distIzq := 2;
                         when "101" =>
-                            LPos1 := true;
-                            distAsuelo := 3;
-                            distDer := 2;
-                            distIzq := 1;
+                            LPos1 <= '1'; distAsuelo := 3;
+                            distDer := 2; distIzq := 1;
                         when "110" =>
-                            LInvPos1 := true;
-                            distAsuelo := 3;
-                            distDer := 1;
-                            distIzq := 2;
+                            LInvPos1 <= '1'; distAsuelo := 3;
+                            distDer := 1; distIzq := 2;
                         when "111" =>
-                            TPos1 := true;
-                            distAsuelo := 3;
-                            distDer := 1;
-                            distIzq := 2;
+                            TPos1 <= '1'; distAsuelo := 3;
+                            distDer := 1; distIzq := 2;
                     end case;
                     state := S3;
                 when S3 =>
-                     dataIn <= (others => '0');
-                     wr <= '1';
-                     case piezaSig is
-                            when "000" =>
-                                addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct, 8);
-                                addrWr2 <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
-                                addrWr3 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                addrWr4 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                addrWr5 <= (others => '0');
-                            when "001" =>
-                                addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                addrWr2 <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
-                                addrWr3 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                addrWr4 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                addrWr5 <= (others => '0');
-                            when "010" =>
-                                if LinPos1 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
-                                    addrWr3 <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
-                                    addrWr4 <= to_unsigned(11*yPiezaAct + (xPiezaAct+3),8);
-                                    addrWr5 <= (others => '0');
-                                elsif LinPos2 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                    addrWr3 <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
-                                    addrWr4 <= to_unsigned(11*(yPiezaAct+3) + xPiezaAct,8);
-                                    addrWr5 <= (others => '0');
-                                end if;
-                            when "011" =>
-                                if ZPos1 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
-                                    addrWr3 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                    addrWr4 <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
-                                    addrWr5 <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+2),8);
-                                elsif ZPos2 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                    addrWr3 <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
-                                    addrWr4 <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
-                                    addrWr5 <= to_unsigned(11*(yPiezaAct-1) + (xPiezaAct+2),8);
-                                end if;
-                            when "100" =>
-                                if ZInvPos1 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
-                                    addrWr3 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                    addrWr4 <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
-                                    addrWr5 <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct-1),8);
-                                elsif ZInvPos2 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                    addrWr3 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                    addrWr4 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
-                                    addrWr5 <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+2),8);
-                                end if;
-                            when "101" =>
-                                if LPos1 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                    addrWr3 <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
-                                    addrWr4 <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
-                                    addrWr5 <= (others => '0');
-                                elsif LPos2 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                    addrWr3 <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
-                                    addrWr4 <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
-                                    addrWr5 <= (others => '0');
-                                elsif LPos3 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
-                                    addrWr3 <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
-                                    addrWr4 <= to_unsigned(11*(yPiezaAct+3) + (xPiezaAct+1),8);
-                                    addrWr5 <= (others => '0');
-                                elsif LPos4 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
-                                    addrWr3 <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
-                                    addrWr4 <= to_unsigned(11*(yPiezaAct-1) + (xPiezaAct+2),8);
-                                    addrWr5 <= (others => '0');
-                                end if;
-                            when "110" =>
-                                if LInvPos1 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                    addrWr3 <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
-                                    addrWr4 <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct-1),8);
-                                    addrWr5 <= (others => '0');
-                                elsif LInvPos2 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                    addrWr3 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                    addrWr4 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
-                                    addrWr5 <= (others => '0');
-                                elsif LInvPos3 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
-                                    addrWr3 <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
-                                    addrWr4 <= to_unsigned(11*(yPiezaAct+3) + xPiezaAct,8);
-                                    addrWr5 <= (others => '0');
-                                elsif LInvPos4 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
-                                    addrWr3 <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
-                                    addrWr4 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
-                                    addrWr5 <= (others => '0');
-                                end if;
-                            when "111" =>
-                                if TPos1 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                    addrWr3 <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
-                                    addrWr4 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct-1),8);
-                                    addrWr5 <= (others => '0');
-                                elsif TPos2 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
-                                    addrWr3 <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
-                                    addrWr4 <= to_unsigned(11*(yPiezaAct-1) + (xPiezaAct+1),8);
-                                    addrWr5 <= (others => '0');
-                                elsif TPos3 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                    addrWr3 <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
-                                    addrWr4 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                    addrWr5 <= (others => '0');
-                                elsif TPos4 then
-                                    addrWr1 <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
-                                    addrWr2 <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
-                                    addrWr3 <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
-                                    addrWr4 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                    addrWr5 <= (others => '0');
-                                end if;
-                      end case;
-                      state := S4;
-                when S4 =>
-                    colision := false;
-                    if piezaSig = "000" then
-                        dataIn <= to_unsigned(1, 3);
-                    else
-                        dataIn <= unsigned(piezaSig);
+                    --Limpiar pieza 2 ciclos
+                    pinta <= '0';
+                    wr <= '1';
+                    if cycleCnt = 1 then
+                        state := S4;
                     end if;
-                    case piezaSig is
-                            when "000" =>
-                                addrRd1 <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
-                                addrRd2 <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
-                                addrRd3 <= (others => '0');
-                                addrRd4 <= (others => '0');
-                                colision := (dataOut1 /= 0 or dataOut2 /= 0);
-                            when "001" =>
-                                addrRd1 <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
-                                addrRd2 <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
-                                addrRd3 <= (others => '0');
-                                addrRd4 <= (others => '0');
-                                colision := (dataOut1 /= 0 or dataOut2 /= 0);
-                            when "010" =>
-                                if LinPos1 then
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                    addrRd2 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                    addrRd3 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
-                                    addrRd4 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+3),8);
-                                    colision := (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0 or dataOut4 /= 0);
-                                elsif LinPos2 then
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+3) + xPiezaAct,8);
-                                    addrRd2 <= (others => '0');
-                                    addrRd3 <= (others => '0');
-                                    addrRd4 <= (others => '0');
-                                    colision := dataOut1 /= 0;
-                                end if;
-                            when "011" =>
-                                if ZPos1 then
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+3) + (xPiezaAct+1),8);
-                                    addrRd2 <= to_unsigned(11*(yPiezaAct+3) + (xPiezaAct+2),8);
-                                    addrRd3 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                    addrRd4 <= (others => '0');
-                                    colision := (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
-                                elsif ZPos2 then
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
-                                    addrRd2 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                    addrRd3 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
-                                    addrRd4 <= (others => '0');
-                                    colision := (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
-                                end if;
-                            when "100" =>
-                                if ZInvPos1 then
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                    addrRd2 <= to_unsigned(11*(yPiezaAct+3) + xPiezaAct,8);
-                                    addrRd3 <= to_unsigned(11*(yPiezaAct+3) + (xPiezaAct-1),8);
-                                    addrRd4 <= (others => '0');
-                                    colision := (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
-                                elsif ZInvPos2 then
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
-                                    addrRd2 <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
-                                    addrRd3 <= to_unsigned(11*(yPiezaAct+3) + (xPiezaAct+2),8);
-                                    addrRd4 <= (others => '0');
-                                    colision := (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
-                                end if;
-                            when "101" =>
-                                if LPos1 then
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+3) + xPiezaAct,8);
-                                    addrRd2 <= to_unsigned(11*(yPiezaAct+3) + (xPiezaAct+1),8);
-                                    addrRd3 <= (others => '0');
-                                    addrRd4 <= (others => '0');
-                                    colision := (dataOut1 /= 0 or dataOut2 /= 0);
-                                elsif LPos2 then
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
-                                    addrRd2 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                    addrRd3 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
-                                    addrRd4 <= (others => '0');
-                                    colision := (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
-                                elsif LPos3 then
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                    addrRd2 <= to_unsigned(11*(yPiezaAct+4) + (xPiezaAct+1),8);
-                                    addrRd3 <= (others => '0');
-                                    addrRd4 <= (others => '0');
-                                    colision := (dataOut1 /= 0 or dataOut2 /= 0);
-                                elsif LPos4 then
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                    addrRd2 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                    addrRd3 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
-                                    addrRd4 <= (others => '0');
-                                    colision := (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
-                                end if;
-                            when "110" =>
-                                if LInvPos1 then
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+3) + xPiezaAct,8);
-                                    addrRd2 <= to_unsigned(11*(yPiezaAct+3) + (xPiezaAct-1),8);
-                                    addrRd3 <= (others => '0');
-                                    addrRd4 <= (others => '0');
-                                    colision := (dataOut1 /= 0 or dataOut2 /= 0);
-                                elsif LInvPos2 then
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
-                                    addrRd2 <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
-                                    addrRd3 <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+2),8);
-                                    addrRd4 <= (others => '0');
-                                    colision := (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
-                                elsif LInvPos3 then
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                    addrRd2 <= to_unsigned(11*(yPiezaAct+4) + xPiezaAct,8);
-                                    addrRd3 <= (others => '0');
-                                    addrRd4 <= (others => '0');
-                                    colision := (dataOut1 /= 0 or dataOut2 /= 0);
-                                elsif LInvPos4 then 
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                    addrRd2 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                    addrRd3 <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+2),8);
-                                    addrRd4 <= (others => '0');
-                                    colision := (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
-                                end if;
-                            when "111" =>
-                                if TPos1 then
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct-1),8);
-                                    addrRd2 <= to_unsigned(11*(yPiezaAct+3) + xPiezaAct,8);
-                                    addrRd3 <= (others => '0');
-                                    addrRd4 <= (others => '0');
-                                    colision := (dataOut1 /= 0 or dataOut2 /= 0);
-                                elsif TPos2 then
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                    addrRd2 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                    addrRd3 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
-                                    addrRd4 <= (others => '0');
-                                    colision := (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
-                                elsif TPos3 then
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+3) + xPiezaAct,8);
-                                    addrRd2 <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
-                                    addrRd3 <= (others => '0');
-                                    addrRd4 <= (others => '0');
-                                    colision := (dataOut1 /= 0 or dataOut2 /= 0);
-                                elsif TPos4 then
-                                    addrRd1 <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
-                                    addrRd2 <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
-                                    addrRd3 <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
-                                    addrRd4 <= (others => '0');
-                                    colision := (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
-                                end if;
-                     end case;
-                     if colision then
-                        state := S6;
-                     elsif 11*(yPiezaAct + distASuelo) = 220 then
-                        state := S1;
-                     else
-                        state := S5;
-                     end if;
-                     when S5 =>
-                        wr <= '0';
-                        if mover then
-                            if 11*(yPiezaAct + distASuelo) > 220 then
-                                if sP then
-                                    yPiezaAct := yPiezaAct + 2;
-                                else
-                                    yPiezaAct := yPiezaAct + 1;
-                                end if;
-                            end if;
-                            if xPiezaAct + distDer < 10 and dP then
-                                xPiezaAct := xPiezaAct + 1;
-                            end if;
-                            if xPiezaAct - distIzq > 0 and aP then
-                                xPiezaAct := xPiezaAct - 1;
-                            end if;
-                            if rP then
-                                case piezaSig is
-                                        when "000" =>
-                                            CPos1 := true;
-                                            distASuelo := 2;
-                                            distDer  := 2;
-                                            distIzq  := 1;
-                                        when "001" =>
-                                            CPos1 := true;
-                                            distASuelo := 2;
-                                            distDer  := 2;
-                                            distIzq  := 1;
-                                        when "010" =>
-                                            if LinPos1 then
-                                                LinPos1 := false;
-                                                LinPos2 := true;
-                                                distASuelo := 1;
-                                                distDer  := 4;
-                                                distIzq  := 1;
-                                            elsif LinPos2 then
-                                                LinPos1 := true;
-                                                LinPos2 := false;
-                                                distASuelo := 4;
-                                                distDer  := 1;
-                                                distIzq  := 1;
-                                            end if;
-                                        when "011" =>
-                                            if ZPos1 then
-                                                ZPos1 := false;
-                                                ZPos2 := true;
-                                                distASuelo := 2;
-                                                distDer  := 3;
-                                                distIzq  := 1;
-                                            elsif ZPos2 then
-                                                ZPos1 := true;
-                                                ZPos2 := false;
-                                                distASuelo := 3;
-                                                distDer  := 3;
-                                                distIzq  := 1;
-                                            end if;
-                                        when "100" =>
-                                            if ZInvPos1 then
-                                                ZInvPos1 := false;
-                                                ZInvPos2 := true;
-                                                distASuelo := 3;
-                                                distDer  := 3;
-                                                distIzq  := 1;
-                                            elsif ZInvPos2 then
-                                                ZInvPos1 := true;
-                                                ZInvPos2 := false;
-                                                distASuelo := 3;
-                                                distDer  := 2;
-                                                distIzq  := 2;
-                                            end if;
-                                        when "101" =>
-                                            if LPos1 then
-                                                LPos1 := false;
-                                                LPos2 := true;
-                                                distASuelo := 2;
-                                                distDer  := 3;
-                                                distIzq  := 1;
-                                            elsif LPos2 then
-                                                LPos2 := false;
-                                                LPos3 := true;
-                                                distASuelo := 3;
-                                                distDer  := 2;
-                                                distIzq  := 1;
-                                            elsif LPos3 then
-                                                LPos3 := false;
-                                                LPos4 := true;
-                                                distASuelo := 1;
-                                                distDer  := 3;
-                                                distIzq  := 1;
-                                            elsif LPos4 then
-                                                LPos4 := false;
-                                                LPos1 := true;
-                                                distASuelo := 3;
-                                                distDer  := 2;
-                                                distIzq  := 1;
-                                            end if;
-                                        when "110" =>
-                                            if LInvPos1 then
-                                                LInvPos1 := false;
-                                                LInvPos2 := true;
-                                                distASuelo := 2;
-                                                distDer  := 3;
-                                                distIzq  := 1;
-                                            elsif LInvPos2 then
-                                                LInvPos2 := false;
-                                                LInvPos3 := true;
-                                                distASuelo := 3;
-                                                distDer  := 2;
-                                                distIzq  := 1;
-                                            elsif LInvPos3 then
-                                                LInvPos3 := false;
-                                                LInvPos4 := true;
-                                                distASuelo := 2;
-                                                distDer  := 3;
-                                                distIzq  := 1;
-                                            elsif LInvPos4 then
-                                                LInvPos4 := false;
-                                                LInvPos1 := true; 
-                                                distASuelo := 3;
-                                                distDer  := 1;
-                                                distIzq  := 2;
-                                            end if;
-                                        when "111" =>
-                                            if TPos1 then
-                                                TPos1 := false;
-                                                TPos2 := true;
-                                                distASuelo := 1;
-                                                distDer  := 3;
-                                                distIzq  := 1;
-                                            elsif TPos2 then
-                                                TPos2 := false;
-                                                TPos3 := true;
-                                                distASuelo := 3;
-                                                distDer  := 2;
-                                                distIzq  := 1;
-                                            elsif TPos3 then
-                                                TPos3 := false;
-                                                TPos4 := true;
-                                                distASuelo := 2;
-                                                distDer  := 3;
-                                                distIzq  := 1;
-                                            elsif TPos4 then
-                                                TPos4 := false;
-                                                TPos1 := true;
-                                                distASuelo := 3;
-                                                distDer  := 1;
-                                                distIzq  := 2;
-                                            end if;
-                                 end case;
+                    cycleCnt := (cycleCnt + 1) mod 2;
+                when S4 =>
+                     --Pinta pieza 2 ciclos
+                    pinta <= '1';
+                    wr <= '1';
+                    if cycleCnt = 1 then
+                        state := S4;
+                    end if;
+                    cycleCnt := (cycleCnt + 1) mod 2;
+                when S5 =>
+                   --Se comprueba colision 2 ciclos
+                    wr <= '0';
+                    pinta <= '0';
+                    rd <= '1';
+                    if cycleCnt = 1 then
+                        if colision or 11*(yPiezaAct + distASuelo) = 220 then
+                            state := S8;
+                        else
+                            state := S6;
+                        end if;
+                    end if;
+                    cycleCnt := (cycleCnt + 1) mod 2;
+                when S6 =>
+                    --Se pinta en la VGA
+                    rd <= '0';
+                    pintaVga <= '1';
+                    if finPintadoVga then
+                        state := S7;
+                    end if;
+                when S7 =>
+                    --Se hace el movimiento
+                    pintaVga <= '0';
+                    if mover then
+                        if 11*(yPiezaAct + distASuelo) > 220 then
+                            if sP then
+                                yPiezaAct <= yPiezaAct + 2;
+                            else
+                                yPiezaAct <= yPiezaAct + 1;
                             end if;
                         end if;
-                        state := S3;
-                     when S6 =>
-                     --for i in 0 to 20 loop
-                        --for j in 0 to 10 loop
-                            
-                        --end loop;
-                     --end loop;
-                     when others =>
+                        if xPiezaAct + distDer < 10 and dP then
+                            xPiezaAct <= xPiezaAct + 1;
+                        end if;
+                        if xPiezaAct - distIzq > 0 and aP then
+                            xPiezaAct <= xPiezaAct - 1;
+                        end if;
+                        if rP then
+                            case piezaSig is
+                                when "000" =>
+                                    CPos1 <= '1';
+                                    distASuelo := 2;
+                                    distDer  := 2;
+                                    distIzq  := 1;
+                                when "001" =>
+                                    CPos1 <= '1';
+                                    distASuelo := 2;
+                                    distDer  := 2;
+                                    distIzq  := 1;
+                                when "010" =>
+                                    if LinPos1 = '1' then
+                                        LinPos1 <= '0';
+                                        LinPos2 <= '1';
+                                        distASuelo := 1;
+                                        distDer  := 4;
+                                        distIzq  := 1;
+                                    elsif LinPos2 = '1' then
+                                        LinPos1 <= '1';
+                                        LinPos2 <= '0';
+                                        distASuelo := 4;
+                                        distDer  := 1;
+                                        distIzq  := 1;
+                                    end if;
+                                when "011" =>
+                                    if ZPos1 = '1' then
+                                        ZPos1 <= '0';
+                                        ZPos2 <= '1';
+                                        distASuelo := 2;
+                                        distDer  := 3;
+                                        distIzq  := 1;
+                                    elsif ZPos2 = '1' then
+                                        ZPos1 <= '1';
+                                        ZPos2 <= '0';
+                                        distASuelo := 3;
+                                        distDer  := 1;
+                                        distIzq  := 2;
+                                    end if;
+                                when "100" =>
+                                    if ZInvPos1 = '1' then
+                                        ZInvPos1 <= '0';
+                                        ZInvPos2 <= '1';
+                                        distASuelo := 1;
+                                        distDer  := 3;
+                                        distIzq  := 1;
+                                    elsif ZInvPos2 = '1' then
+                                        ZInvPos1 <= '1';
+                                        ZInvPos2 <= '0';
+                                        distASuelo := 3;
+                                        distDer  := 2;
+                                        distIzq  := 1;
+                                    end if;
+                                when "101" =>
+                                    if LPos1 = '1' then
+                                        LPos1 <= '0';
+                                        LPos2 <= '1';
+                                        distASuelo := 2;
+                                        distDer  := 3;
+                                        distIzq  := 1;
+                                    elsif LPos2 = '1' then
+                                        LPos2 <= '0';
+                                        LPos3 <= '1';
+                                        distASuelo := 3;
+                                        distDer  := 2;
+                                        distIzq  := 1;
+                                    elsif LPos3 = '1' then
+                                        LPos3 <= '0';
+                                        LPos4 <= '1';
+                                        distASuelo := 1;
+                                        distDer  := 3;
+                                        distIzq  := 1;
+                                    elsif LPos4 = '1' then
+                                        LPos4 <= '0';
+                                        LPos1 <= '1';
+                                        distASuelo := 3;
+                                        distDer  := 2;
+                                        distIzq  := 1;
+                                    end if;
+                                when "110" =>
+                                    if LInvPos1 = '1' then
+                                        LInvPos1 <= '0';
+                                        LInvPos2 <= '1';
+                                        distASuelo := 2;
+                                        distDer  := 3;
+                                        distIzq  := 1;
+                                    elsif LInvPos2 = '1' then
+                                        LInvPos2 <= '0';
+                                        LInvPos3 <= '1';
+                                        distASuelo := 3;
+                                        distDer  := 2;
+                                        distIzq  := 1;
+                                    elsif LInvPos3 = '1' then
+                                        LInvPos3 <= '0';
+                                        LInvPos4 <= '1';
+                                        distASuelo := 2;
+                                        distDer  := 3;
+                                        distIzq  := 1;
+                                    elsif LInvPos4 = '1' then
+                                        LInvPos4 <= '0';
+                                        LInvPos1 <= '1'; 
+                                        distASuelo := 3;
+                                        distDer  := 1;
+                                        distIzq  := 2;
+                                    end if;
+                                when "111" =>
+                                    if TPos1 = '1' then
+                                        TPos1 <= '0';
+                                        TPos2 <= '1';
+                                        distASuelo := 1;
+                                        distDer  := 3;
+                                        distIzq  := 1;
+                                    elsif TPos2 = '1' then
+                                        TPos2 <= '0';
+                                        TPos3 <= '1';
+                                        distASuelo := 3;
+                                        distDer  := 2;
+                                        distIzq  := 1;
+                                    elsif TPos3 = '1' then
+                                        TPos3 <= '0';
+                                        TPos4 <= '1';
+                                        distASuelo := 2;
+                                        distDer  := 3;
+                                        distIzq  := 1;
+                                    elsif TPos4 = '1' then
+                                        TPos4 <= '0';
+                                        TPos1 <= '1';
+                                        distASuelo := 3;
+                                        distDer  := 1;
+                                        distIzq  := 2;
+                                    end if;
+                             end case;
+                        end if;
+                    end if;
+                    state := S3;
+                when S8 =>
+                    rd <= '0';
+                    --Se hace la comprobacion de la linea
+                when others =>
             end case;
         end if;
     end if;
@@ -732,24 +555,469 @@ BEGIN
         end if;
     end if;
   end process;
-
-  escrituraRam:
-  process(clk)
+  
+  T:
+  process(clk, wr, rd)
+    variable x : natural := 0;
+    variable dataOut1 : unsigned(2 downto 0);
+    variable dataOut2 : unsigned(2 downto 0);
+    variable dataOut3 : unsigned(2 downto 0);
   begin
     if rising_edge(clk) then
-        if wr = '1' then
-            tablero(to_integer(addrWr1)) <= dataIn;
-            tablero(to_integer(addrWr2)) <= dataIn;
-            tablero(to_integer(addrWr3)) <= dataIn;
-            tablero(to_integer(addrWr4)) <= dataIn;
-            tablero(to_integer(addrWr5)) <= dataIn;
+        if pieza = "111" and wr = '1' then
+            if TPos1 = '1' then
+                if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                else
+                    addraIn <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct-1),8); 
+                end if;
+                x := (x + 1) mod 2;
+            elsif TPos2 = '1' then
+                if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
+                else
+                    addraIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct-1) + (xPiezaAct+1),8);
+                end if;
+                x := (x + 1) mod 2;
+            elsif TPos3 = '1' then
+                if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                else
+                    addraIn <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
+                end if;
+                x := (x + 1) mod 2;
+             elsif TPos4 = '1' then
+                if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
+                else
+                    addraIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
+                end if;
+                x := (x + 1) mod 2;
+            end if;
+        elsif pieza = "111" and rd = '1' then
+            if TPos1 = '1' then
+                addraOut <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct-1),8);
+                addrbOut <= to_unsigned(11*(yPiezaAct+3) + xPiezaAct,8);
+                dataOut1 := doa;
+                dataOut2 := dob;
+                colision <= (dataOut1 /= 0 or dataOut2 /= 0);
+            elsif TPos2 = '1' then
+                if x = 0 then
+                    addraOut <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                    addrbOut <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
+                    dataOut1 := doa;
+                    dataOut2 := dob;
+                else
+                    addraOut <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
+                    dataOut3 := doa; 
+                    colision <= (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
+                end if;
+                x := (x + 1) mod 2;
+            elsif TPos3 = '1' then
+                addraOut <= to_unsigned(11*(yPiezaAct+3) + xPiezaAct,8);
+                addrbOut <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
+                dataOut1 := doa;
+                dataOut2 := dob;
+                colision <= (dataOut1 /= 0 or dataOut2 /= 0);
+            elsif TPos4 = '1' then
+                if x = 0 then
+                    addraOut <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                    addrbOut <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
+                    dataOut1 := doa;
+                    dataOut2 := dob;
+                else
+                    addraOut <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
+                    dataOut3 := doa; 
+                    colision <= (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
+                end if;
+                x := (x + 1) mod 2;
+            end if;
         end if;
     end if;
   end process;
   
-  lecturaRam:
-  dataOut1 <= tablero(to_integer(addrRd1));
-  dataOut2 <= tablero(to_integer(addrRd2));
-  dataOut3 <= tablero(to_integer(addrRd3));
-  dataOut4 <= tablero(to_integer(addrRd4));
+  LInv:
+  process(clk, wr, rd)
+    variable x : natural := 0;
+    variable dataOut1 : unsigned(2 downto 0);
+    variable dataOut2 : unsigned(2 downto 0);
+    variable dataOut3 : unsigned(2 downto 0);
+  begin
+    if rising_edge(clk) then
+        if pieza = "110" and wr = '1' then
+            if LInvPos1 = '1' then
+                if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                else
+                    addraIn <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct-1),8); 
+                end if;
+                x := (x + 1) mod 2;
+            elsif LInvPos2 = '1' then
+                if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                else
+                    addraIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
+                end if;
+                x := (x + 1) mod 2;
+            elsif LInvPos3 = '1' then
+                if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
+                else
+                    addraIn <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+3) + xPiezaAct,8);
+                end if;
+                x := (x + 1) mod 2;
+             elsif LInvPos4 = '1' then
+                if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
+                else
+                    addraIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
+                end if;
+                x := (x + 1) mod 2;
+            end if;
+        elsif pieza = "110" and rd = '1' then
+            if LInvPos1 = '1' then
+                addraOut <= to_unsigned(11*(yPiezaAct+3) + xPiezaAct,8);
+                addrbOut <= to_unsigned(11*(yPiezaAct+3) + (xPiezaAct-1),8);
+                dataOut1 := doa;
+                dataOut2 := dob;
+                colision <= (dataOut1 /= 0 or dataOut2 /= 0);
+            elsif LInvPos2 = '1' then
+                if x = 0 then
+                    addraOut <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
+                    addrbOut <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
+                    dataOut1 := doa;
+                    dataOut2 := dob;
+                else
+                    addraOut <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+2),8);
+                    dataOut3 := doa; 
+                    colision <= (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
+                end if;
+                x := (x + 1) mod 2;
+            elsif LInvPos3 = '1' then
+                addraOut <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
+                addrbOut <= to_unsigned(11*(yPiezaAct+4) + xPiezaAct,8);
+                dataOut1 := doa;
+                dataOut2 := dob;
+                colision <= (dataOut1 /= 0 or dataOut2 /= 0);
+            elsif LInvPos4 = '1' then
+                if x = 0 then
+                    addraOut <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                    addrbOut <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
+                    dataOut1 := doa;
+                    dataOut2 := dob;
+                else
+                    addraOut <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+2),8);
+                    dataOut3 := doa; 
+                    colision <= (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
+                end if;
+                x := (x + 1) mod 2;
+            end if;
+        end if;
+    end if;
+  end process;
+  
+  L:
+  process(clk, wr, rd)
+    variable x : natural := 0;
+    variable dataOut1 : unsigned(2 downto 0);
+    variable dataOut2 : unsigned(2 downto 0);
+    variable dataOut3 : unsigned(2 downto 0);
+  begin
+    if rising_edge(clk) then
+        if pieza = "101" and wr = '1' then
+            if LPos1 = '1' then
+                if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                else
+                    addraIn <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8); 
+                end if;
+                x := (x + 1) mod 2;
+            elsif LPos2 = '1' then
+                if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                else
+                    addraIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
+                    addrbIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
+                end if;
+                x := (x + 1) mod 2;
+            elsif LPos3 = '1' then
+                if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
+                else
+                    addraIn <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+3) + (xPiezaAct+1),8);
+                end if;
+                x := (x + 1) mod 2;
+             elsif LPos4 = '1' then
+                if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
+                else
+                    addraIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct-1) + (xPiezaAct+2),8);
+                end if;
+                x := (x + 1) mod 2;
+            end if;
+        elsif pieza = "101" and rd = '1' then
+            if LPos1 = '1' then
+                addraOut <= to_unsigned(11*(yPiezaAct+3) + xPiezaAct,8);
+                addrbOut <= to_unsigned(11*(yPiezaAct+3) + (xPiezaAct+1),8);
+                dataOut1 := doa;
+                dataOut2 := dob;
+                colision <= (dataOut1 /= 0 or dataOut2 /= 0);
+            elsif LPos2 = '1' then
+                if x = 0 then
+                    addraOut <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
+                    addrbOut <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
+                    dataOut1 := doa;
+                    dataOut2 := dob;
+                else
+                    addraOut <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
+                    dataOut3 := doa; 
+                    colision <= (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
+                end if;
+                x := (x + 1) mod 2;
+            elsif LPos3 = '1' then
+                addraOut <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                addrbOut <= to_unsigned(11*(yPiezaAct+4) + (xPiezaAct+1),8);
+                dataOut1 := doa;
+                dataOut2 := dob;
+                colision <= (dataOut1 /= 0 or dataOut2 /= 0);
+            elsif LPos4 = '1' then
+                if x = 0 then
+                    addraOut <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                    addrbOut <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
+                    dataOut1 := doa;
+                    dataOut2 := dob;
+                else
+                    addraOut <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
+                    dataOut3 := doa; 
+                    colision <= (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
+                end if;
+                x := (x + 1) mod 2;
+            end if;
+        end if;
+    end if;
+  end process;
+  
+  ZetaInv:
+  process(clk, wr, rd)
+    variable x : natural := 0;
+    variable dataOut1 : unsigned(2 downto 0);
+    variable dataOut2 : unsigned(2 downto 0);
+    variable dataOut3 : unsigned(2 downto 0);
+  begin
+    if rising_edge(clk) then
+        if pieza = "100" and wr = '1' then
+            if ZInvPos1 = '1' then
+                if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
+                else
+                    addraIn <= to_unsigned(11*(yPiezaAct-1) + (xPiezaAct+1),8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct-1) + (xPiezaAct+2),8);
+                end if;
+                x := (x + 1) mod 2;
+            elsif ZInvPos2 = '1' then
+                if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                else
+                    addraIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
+                end if;
+                x := (x + 1) mod 2;
+            end if;
+        elsif pieza = "100" and rd = '1' then
+            if ZInvPos1 = '1' then
+                if x = 0 then
+                    addraOut <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
+                    addrbOut <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                    dataOut1 := doa;
+                    dataOut2 := dob;
+                else
+                    addraOut <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
+                    dataOut3 := doa; 
+                    colision <= (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
+                end if;
+                x := (x + 1) mod 2;
+            elsif ZInvPos2 = '1' then
+                addraOut <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
+                addrbOut <= to_unsigned(11*(yPiezaAct+3) + (xPiezaAct+1),8);
+                dataOut1 := doa;
+                dataOut2 := dob;
+                colision <= (dataOut1 /= 0 or dataOut2 /= 0);
+            end if;
+        end if;
+    end if;
+  end process;
+  
+  Zeta:
+  process(clk, wr, rd)
+    variable x : natural := 0;
+    variable dataOut1 : unsigned(2 downto 0);
+    variable dataOut2 : unsigned(2 downto 0);
+    variable dataOut3 : unsigned(2 downto 0);
+  begin
+    if rising_edge(clk) then
+        if pieza = "011" and wr = '1' then
+            if ZPos1 = '1' then
+                if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
+                else
+                    addraIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
+                end if;
+                x := (x + 1) mod 2;
+            elsif ZPos2 = '1' then
+                if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                else
+                    addraIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct-1),8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct-1),8);
+                end if;
+                x := (x + 1) mod 2;
+            end if;
+        elsif pieza = "011" and rd = '1' then
+            if ZPos1 = '1' then
+                if x = 0 then
+                    addraOut <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
+                    addrbOut <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+2),8);
+                    dataOut1 := doa;
+                    dataOut2 := dob;
+                else
+                    addraOut <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                    dataOut3 := doa; 
+                    colision <= (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0);
+                end if;
+                x := (x + 1) mod 2;
+            elsif ZPos2 = '1' then
+                addraOut <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
+                addrbOut <= to_unsigned(11*(yPiezaAct+3) + (xPiezaAct-1),8);
+                dataOut1 := doa;
+                dataOut2 := dob;
+                colision <= (dataOut1 /= 0 or dataOut2 /= 0);
+            end if;
+        end if;    
+    end if;
+  end process;
+  
+  Linea:
+  process(clk, wr, rd)
+    variable x : natural := 0;
+    variable dataOut1 : unsigned(2 downto 0);
+    variable dataOut2 : unsigned(2 downto 0);
+    variable dataOut3 : unsigned(2 downto 0);
+    variable dataOut4 : unsigned(2 downto 0); 
+  begin
+    if rising_edge(clk) then
+        if pieza = "010" and wr = '1' then
+            if LinPos1 = '1' then
+                if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
+                else
+                    addraIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
+                    addrbIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+3),8);
+                end if;
+                x := (x + 1) mod 2;
+            elsif LinPos2 = '1' then
+                    if x = 0 then
+                    addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                else
+                    addraIn <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
+                    addrbIn <= to_unsigned(11*(yPiezaAct+3) + xPiezaAct,8);
+                end if;
+                x := (x + 1) mod 2;
+            end if;
+        elsif pieza = "010" and rd = '1' then
+            if LinPos1 = '1' then
+                if x = 0 then
+                    addraOut <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                    addrbOut <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
+                    dataOut1 := doa;
+                    dataOut2 := dob;
+                else
+                    addraOut <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
+                    addrbOut <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+3),8);
+                    dataOut3 := doa;
+                    dataOut4 := dob;
+                    colision <= (dataOut1 /= 0 or dataOut2 /= 0 or dataOut3 /= 0 or dataOut4 /= 0);
+                end if;
+                x := (x + 1) mod 2;
+            elsif LinPos2 = '1' then
+                addraOut <= to_unsigned(11*(yPiezaAct+3) + xPiezaAct,8);
+                dataOut1 := doa;
+                colision <= dataOut1 /= 0;
+            end if;
+        end if;
+    end if;
+  end process;
+  
+  Cuadrado:
+  process(clk, wr, rd)
+    variable x : natural := 0; 
+    variable dataOut1 : unsigned(2 downto 0);
+    variable dataOut2 : unsigned(2 downto 0);
+  begin
+    if rising_edge(clk) then
+        if pieza = "001" and wr = '1' then
+            if x = 0 then
+                addraIn <= to_unsigned(11*yPiezaAct + xPiezaAct, 8);
+                addrbIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
+            else
+                addraIn <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
+                addrbIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
+            end if;
+            x := (x + 1) mod 2;
+        elsif pieza = "001" and rd = '1' then
+            addraOut <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
+            addrbOut <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
+            dataOut1 := doa;
+            dataOut2 := dob;
+            colision <= (dataOut1 /= 0 or dataOut2 /= 0);
+        end if;
+    end if;
+  end process;
+  
+  pieza <= "001" when piezaSig = "000" else piezaSig;
+  dataIn <= unsigned(pieza) when pinta = '1' else (others => '0');
+  Ram:
+  process(clk)
+  begin
+    if rising_edge(clk) then    
+        if wr = '1' then
+            tablero(to_integer(addraIn)) <= dataIn;
+            tablero(to_integer(addrbIn)) <= dataIn;
+        end if;
+        doa <= tablero(to_integer(addraOut));
+        dob <= tablero(to_integer(addrbOut));
+    end if;
+  end process;
+
+        
+  
 END syn;
