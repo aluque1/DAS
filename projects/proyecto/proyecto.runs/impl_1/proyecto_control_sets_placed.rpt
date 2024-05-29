@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Tue May 28 11:10:45 2024
-| Host         : alv-debian running 64-bit Debian GNU/Linux 12 (bookworm)
+| Tool Version : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
+| Date         : Wed May 29 10:10:21 2024
+| Host         : ALV-WIN11-DT running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file proyecto_control_sets_placed.rpt
 | Design       : proyecto
 | Device       : xc7a35t
@@ -23,11 +23,11 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |     2 |
-|    Minimum number of control sets                        |     2 |
+| Total control sets                                       |     7 |
+|    Minimum number of control sets                        |     7 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    13 |
+| Unused register locations in slices containing registers |    27 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -39,15 +39,15 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |     2 |
-| >= 0 to < 4        |     1 |
-| >= 4 to < 6        |     0 |
-| >= 6 to < 8        |     0 |
+| Total control sets |     7 |
+| >= 0 to < 4        |     0 |
+| >= 4 to < 6        |     1 |
+| >= 6 to < 8        |     1 |
 | >= 8 to < 10       |     1 |
 | >= 10 to < 12      |     0 |
 | >= 12 to < 14      |     0 |
 | >= 14 to < 16      |     0 |
-| >= 16              |     0 |
+| >= 16              |     4 |
 +--------------------+-------+
 * Control sets can be remapped at either synth_design or opt_design
 
@@ -58,23 +58,28 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |               2 |            1 |
+| No           | No                    | No                     |               4 |            2 |
 | No           | No                    | Yes                    |               0 |            0 |
-| No           | Yes                   | No                     |               0 |            0 |
-| Yes          | No                    | No                     |               9 |            2 |
+| No           | Yes                   | No                     |              26 |            9 |
+| Yes          | No                    | No                     |              52 |           18 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |               0 |            0 |
+| Yes          | Yes                   | No                     |              27 |           13 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
 4. Detailed Control Set Information
 -----------------------------------
 
-+----------------+----------------------------------+------------------+------------------+----------------+--------------+
-|  Clock Signal  |           Enable Signal          | Set/Reset Signal | Slice Load Count | Bel Load Count | Bels / Slice |
-+----------------+----------------------------------+------------------+------------------+----------------+--------------+
-|  clk_IBUF_BUFG |                                  |                  |                1 |              2 |         2.00 |
-|  clk_IBUF_BUFG | codecInterface/clkGen[8]_i_1_n_0 |                  |                2 |              9 |         4.50 |
-+----------------+----------------------------------+------------------+------------------+----------------+--------------+
++----------------+----------------------------------------------------+------------------------+------------------+----------------+--------------+
+|  Clock Signal  |                    Enable Signal                   |    Set/Reset Signal    | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+----------------------------------------------------+------------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG |                                                    |                        |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | songPtr                                            | resetSynchronizer/Q[0] |                5 |              6 |         1.20 |
+|  clk_IBUF_BUFG | codecInterface/sel                                 |                        |                2 |              9 |         4.50 |
+|  clk_IBUF_BUFG | codecInterface/outSampleShifter.sample[23]_i_1_n_0 |                        |                5 |             16 |         3.20 |
+|  clk_IBUF_BUFG | codecInterface/newSample                           | ldSound_reg_n_0        |                8 |             21 |         2.62 |
+|  clk_IBUF_BUFG |                                                    | resetSynchronizer/Q[0] |                9 |             26 |         2.89 |
+|  clk_IBUF_BUFG | codecInterface/E[0]                                |                        |               11 |             27 |         2.45 |
++----------------+----------------------------------------------------+------------------------+------------------+----------------+--------------+
 
 

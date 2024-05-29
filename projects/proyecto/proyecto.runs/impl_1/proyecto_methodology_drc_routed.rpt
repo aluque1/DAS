@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Tue May 28 11:10:57 2024
-| Host         : alv-debian running 64-bit Debian GNU/Linux 12 (bookworm)
+| Tool Version : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
+| Date         : Wed May 29 10:10:38 2024
+| Host         : ALV-WIN11-DT running 64-bit major release  (build 9200)
 | Command      : report_methodology -file proyecto_methodology_drc_routed.rpt -pb proyecto_methodology_drc_routed.pb -rpx proyecto_methodology_drc_routed.rpx
 | Design       : proyecto
 | Device       : xc7a35tcpg236-1
@@ -23,43 +23,53 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 6
+             Violations found: 8
 +-----------+----------+-------------------------------+------------+
 | Rule      | Severity | Description                   | Violations |
 +-----------+----------+-------------------------------+------------+
-| TIMING-18 | Warning  | Missing input or output delay | 6          |
+| TIMING-18 | Warning  | Missing input or output delay | 8          |
 +-----------+----------+-------------------------------+------------+
 
 2. REPORT DETAILS
 -----------------
 TIMING-18#1 Warning
 Missing input or output delay  
-An output delay is missing on lrckAD relative to the rising and/or falling clock edge(s) of sysClk.
+An input delay is missing on rst relative to the rising and/or falling clock edge(s) of sysClk.
 Related violations: <none>
 
 TIMING-18#2 Warning
 Missing input or output delay  
-An output delay is missing on lrckDA relative to the rising and/or falling clock edge(s) of sysClk.
+An output delay is missing on lrckAD relative to the rising and/or falling clock edge(s) of sysClk.
 Related violations: <none>
 
 TIMING-18#3 Warning
 Missing input or output delay  
-An output delay is missing on mclkAD relative to the rising and/or falling clock edge(s) of sysClk.
+An output delay is missing on lrckDA relative to the rising and/or falling clock edge(s) of sysClk.
 Related violations: <none>
 
 TIMING-18#4 Warning
 Missing input or output delay  
-An output delay is missing on mclkDA relative to the rising and/or falling clock edge(s) of sysClk.
+An output delay is missing on mclkAD relative to the rising and/or falling clock edge(s) of sysClk.
 Related violations: <none>
 
 TIMING-18#5 Warning
 Missing input or output delay  
-An output delay is missing on sclkAD relative to the rising and/or falling clock edge(s) of sysClk.
+An output delay is missing on mclkDA relative to the rising and/or falling clock edge(s) of sysClk.
 Related violations: <none>
 
 TIMING-18#6 Warning
 Missing input or output delay  
+An output delay is missing on sclkAD relative to the rising and/or falling clock edge(s) of sysClk.
+Related violations: <none>
+
+TIMING-18#7 Warning
+Missing input or output delay  
 An output delay is missing on sclkDA relative to the rising and/or falling clock edge(s) of sysClk.
+Related violations: <none>
+
+TIMING-18#8 Warning
+Missing input or output delay  
+An output delay is missing on sdti relative to the rising and/or falling clock edge(s) of sysClk.
 Related violations: <none>
 
 

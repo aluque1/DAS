@@ -1,38 +1,38 @@
 #####################################################################
 ##
 ##  Fichero:
-##    lab6.xdc  12/09/2023
+##    lab4.xdc  12/09/2023
 ##
 ##    (c) J.M. Mendias
-##    Diseï¿½o Automï¿½tico de Sistemas
-##    Facultad de Informï¿½tica. Universidad Complutense de Madrid
+##    Diseño Automático de Sistemas
+##    Facultad de Informática. Universidad Complutense de Madrid
 ##
-##  Propï¿½sito:
-##    Configuraciï¿½n del laboratorio 6: Pong
+##  Propósito:
+##    Configuración del laboratorio 4
 ##
-##  Notas de diseï¿½o:
+##  Notas de diseño:
 ##
 #####################################################################
 
 #
-# Voltaje del interfaz de configuraciï¿½n de la FPGA
+# Voltaje del interfaz de configuración de la FPGA
 #
-set_property CFGBVS VCCO [current_design];
-set_property CONFIG_VOLTAGE 3.3 [current_design];
+set_property CFGBVS VCCO [current_design]
+set_property CONFIG_VOLTAGE 3.3 [current_design]
 
 #
 # Reloj del sistema: 100 MHz
 #
-set_property -dict { PACKAGE_PIN W5 IOSTANDARD LVCMOS33 } [get_ports clk];
-create_clock -name sysClk -period 10.0 -waveform {0 5} [get_ports clk];
+set_property -dict {PACKAGE_PIN W5 IOSTANDARD LVCMOS33} [get_ports clk]
+create_clock -period 10.000 -name sysClk -waveform {0.000 5.000} [get_ports clk]
 
 #
 # Pines conectados a los pulsadores
 #
-set_property -dict { PACKAGE_PIN T18 IOSTANDARD LVCMOS33 } [get_ports rst];    # btnU
+set_property -dict {PACKAGE_PIN T18 IOSTANDARD LVCMOS33} [get_ports rst]
 
-#
-# Pines conectados al PMOD JB (Audio CÃ³dec ISS)
+
+# Pines conectados al PMOD JB (Audio Códec ISS)
 #
 set_property -dict { PACKAGE_PIN A14 IOSTANDARD LVCMOS33 } [get_ports mclkAD];    # JB1
 set_property -dict { PACKAGE_PIN A16 IOSTANDARD LVCMOS33 } [get_ports lrckAD];    # JB2

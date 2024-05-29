@@ -71,6 +71,7 @@ proc create_report { reportName command } {
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param chipscope.maxJobs 4
+set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35tcpg236-1
 
@@ -87,12 +88,8 @@ set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_vhdl -library xil_defaultlib {
-  C:/Users/alv/Desktop/uni/DAS/sources/common/bin2segs.vhd
   C:/Users/alv/Desktop/uni/DAS/sources/common/common.vhd
-  C:/Users/alv/Desktop/uni/DAS/sources/common/edgeDetector.vhd
   C:/Users/alv/Desktop/uni/DAS/sources/common/iisInterface.vhd
-  C:/Users/alv/Desktop/uni/DAS/sources/common/ps2receiver.vhd
-  C:/Users/alv/Desktop/uni/DAS/sources/common/segsBankRefresher.vhd
   C:/Users/alv/Desktop/uni/DAS/sources/common/synchronizer.vhd
   C:/Users/alv/Desktop/uni/DAS/sources/lab4iis/lab4IIS.vhd
 }
@@ -109,6 +106,8 @@ read_xdc C:/Users/alv/Desktop/uni/DAS/sources/lab4iis/lab4IIS.xdc
 set_property used_in_implementation false [get_files C:/Users/alv/Desktop/uni/DAS/sources/lab4iis/lab4IIS.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
+
+read_checkpoint -auto_incremental -incremental C:/Users/alv/Desktop/uni/DAS/projects/lab4iis/lab4iis.srcs/utils_1/imports/synth_1/lab4IIS.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }

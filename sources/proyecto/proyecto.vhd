@@ -1,3 +1,19 @@
+---------------------------------------------------------------------
+--
+--  Fichero:
+--    proyecto.vhd  12/09/2023
+--
+--    Alejandro Luque Villegas, Javier Orbis Ramirez
+--    Dise�o Autom�tico de Sistemas
+--    Facultad de Inform�tica. Universidad Complutense de Madrid
+--
+--  Prop�sito:
+--    Proyecto 
+--
+--  Notas de dise�o:
+--
+---------------------------------------------------------------------
+
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -29,7 +45,7 @@ architecture syn of proyecto is
   component iirOscillator is
   generic (
     WL : natural;  -- anchura de la muestra
-    QM : natural;  -- número de bits decimales en la muestra
+    QM : natural;  -- n�mero de bits decimales en la muestra
     FS : real      -- frecuencia de muestreo
   );
   port(
@@ -43,7 +59,7 @@ architecture syn of proyecto is
   end component;
 
   constant FREQ_KHZ : natural := 100_000;  -- frecuencia de operacion en KHz
-  constant ISS_KHZ  : natural := 25_000;   -- frecuencia de operación del interfaz ISS en KHz
+  constant ISS_KHZ  : natural := 25_000;   -- frecuencia de operaci�n del interfaz ISS en KHz
   constant FREQ_DIV : natural := FREQ_KHZ/ISS_KHZ; 
 
   constant UNDERSAMPLE : natural := 1; 
@@ -54,16 +70,17 @@ architecture syn of proyecto is
   constant QN : natural := WL-QM;
   
   signal   a0, b1 : signed(WL-1 downto 0); 
-  constant A : real := (2.0**(QN-1))/2.0;  -- amplitud: mitad de la máxima
+  constant A : real := (2.0**(QN-1))/2.0;  -- amplitud: mitad de la m�xima
   
   signal rstSync     : std_logic;
-  signal code, data  : std_logic_vector(7 downto 0);
+  signal ldSound     : std_logic;
+  signal songPtr     : natural range 0 to 38 := 0;
+  signal soundEnable : std_logic;
   
+  signal countCnt : natural := 0;
 
   signal sample, outSample : std_logic_vector (WL-1 downto 0);
   signal newSample, outSampleRqt, rChannel, stdo : std_logic;
-  
-  signal loadSample: std_logic;
   
   signal mclk, sclk, lrck : std_logic;
   
@@ -72,54 +89,120 @@ begin
   resetSynchronizer : synchronizer
     generic map ( STAGES => 2, XPOL => '0' )
     port map ( clk => clk, x => rst, xSync => rstSync );
-  
-  ------------------
-  
-  code <= X"1C";
-  data <= X"1d";
-  
-  b1ROM : 
-  with code select
-    b1 <=
-      toFix( 2.0*cos(2.0*MATH_PI*261.6/FS), QN, QM ) when X"1c",  -- A = Do
-      toFix( 2.0*cos(2.0*MATH_PI*277.2/FS), QN, QM ) when X"1d",  -- W = Do#
-      toFix( 2.0*cos(2.0*MATH_PI*293.7/FS), QN, QM ) when X"1b",  -- S = Re
-      toFix( 2.0*cos(2.0*MATH_PI*311.1/FS), QN, QM ) when X"24",  -- E = Re#
-      toFix( 2.0*cos(2.0*MATH_PI*329.6/FS), QN, QM ) when X"23",  -- D = Mi
-      toFix( 2.0*cos(2.0*MATH_PI*349.2/FS), QN, QM ) when X"2b",  -- F = Fa
-      toFix( 2.0*cos(2.0*MATH_PI*370.0/FS), QN, QM ) when X"2c",  -- T = Fa#
-      toFix( 2.0*cos(2.0*MATH_PI*392.0/FS), QN, QM ) when X"34",  -- G = Sol
-      toFix( 2.0*cos(2.0*MATH_PI*415.3/FS), QN, QM ) when X"35",  -- Y = Sol#
-      toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when X"33",  -- H = La
-      toFix( 2.0*cos(2.0*MATH_PI*466.2/FS), QN, QM ) when X"3c",  -- U = La#
-      toFix( 2.0*cos(2.0*MATH_PI*493.9/FS), QN, QM ) when X"3b",  -- J = Si
-      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when X"42",  -- K = Do
-      X"0000" when others;   
-      
-  y1ROM :
-  with data select
+
+  a1SongRom:
+  with songPtr select
     a0 <=
-      toFix( A*sin(2.0*MATH_PI*261.6/FS), QN, QM ) when X"1c",  -- A = Do
-      toFix( A*sin(2.0*MATH_PI*277.2/FS), QN, QM ) when X"1d",  -- W = Do#
-      toFix( A*sin(2.0*MATH_PI*293.7/FS), QN, QM ) when X"1b",  -- S = Re
-      toFix( A*sin(2.0*MATH_PI*311.1/FS), QN, QM ) when X"24",  -- E = Re#
-      toFix( A*sin(2.0*MATH_PI*329.6/FS), QN, QM ) when X"23",  -- D = Mi
-      toFix( A*sin(2.0*MATH_PI*349.2/FS), QN, QM ) when X"2b",  -- F = Fa
-      toFix( A*sin(2.0*MATH_PI*370.0/FS), QN, QM ) when X"2c",  -- T = Fa#
-      toFix( A*sin(2.0*MATH_PI*392.0/FS), QN, QM ) when X"34",  -- G = Sol
-      toFix( A*sin(2.0*MATH_PI*415.3/FS), QN, QM ) when X"35",  -- Y = Sol#
-      toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when X"33",  -- H = La
-      toFix( A*sin(2.0*MATH_PI*466.2/FS), QN, QM ) when X"3c",  -- U = La#
-      toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when X"3b",  -- J = Si
-      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when X"42",  -- K = Do
-      X"0000" when others;    
+      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 0,  -- E5
+      toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when 1,  -- B4
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 2,  -- C5
+      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 3,  -- D5
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 4,  -- C5 
+      toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when 5,  -- B4
+      toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when 6,  -- A4
+      toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when 7,  -- A4
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 8,  -- C5
+      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 9,  -- E5
+      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 10,  -- D5
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 11,  -- C5
+      toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when 12,  -- B4
+      toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when 13,  -- B4
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 14,  -- C5
+      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 15,  -- D5
+      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 16,  -- E5
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 17,  -- C5
+      toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when 18,  -- A4
+      toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when 19,  -- A4
+      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 20,  -- D5
+      toFix( A*sin(2.0*MATH_PI*698.5/FS), QN, QM ) when 21,  -- F5
+      toFix( A*sin(2.0*MATH_PI*880.0/FS), QN, QM ) when 22,  -- A5
+      toFix( A*sin(2.0*MATH_PI*783.9/FS), QN, QM ) when 23,  -- G5
+      toFix( A*sin(2.0*MATH_PI*698.5/FS), QN, QM ) when 24,  -- F5
+      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 25,  -- E5
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 26,  -- C5
+      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 27,  -- E5
+      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 28,  -- D5
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 29,  -- C5
+      toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when 30,  -- B4
+      toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when 31,  -- B4
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 32,  -- C5
+      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 33,  -- D5
+      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 34,  -- E5
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 35,  -- C5
+      toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when 36,  -- A4
+      toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when 37,  -- A4
+      X"0000" when others;  
+    
+  b1SongRom:
+  with songPtr select
+    b1 <=
+      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 0,  -- E5
+      toFix( 2.0*cos(2.0*MATH_PI*493.9/FS), QN, QM ) when 1,  -- B4
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 2,  -- C5
+      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 3,  -- D5
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 4,  -- C5 
+      toFix( 2.0*cos(2.0*MATH_PI*493.9/FS), QN, QM ) when 5,  -- B4
+      toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when 6,  -- A4
+      toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when 7,  -- A4
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 8,  -- C5
+      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 9,  -- E5
+      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 10,  -- D5
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 11,  -- C5
+      toFix( 2.0*cos(2.0*MATH_PI*493.9/FS), QN, QM ) when 12,  -- B4
+      toFix( 2.0*cos(2.0*MATH_PI*493.9/FS), QN, QM ) when 13,  -- B4
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 14,  -- C5
+      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 15,  -- D5
+      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 16,  -- E5
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 17,  -- C5
+      toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when 18,  -- A4
+      toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when 19,  -- A4
+      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 20,  -- D5
+      toFix( 2.0*cos(2.0*MATH_PI*698.5/FS), QN, QM ) when 21,  -- F5
+      toFix( 2.0*cos(2.0*MATH_PI*880.0/FS), QN, QM ) when 22,  -- A5
+      toFix( 2.0*cos(2.0*MATH_PI*783.9/FS), QN, QM ) when 23,  -- G5
+      toFix( 2.0*cos(2.0*MATH_PI*698.5/FS), QN, QM ) when 24,  -- F5
+      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 25,  -- E5
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 26,  -- C5
+      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 27,  -- E5
+      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 28,  -- D5
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 29,  -- C5
+      toFix( 2.0*cos(2.0*MATH_PI*493.9/FS), QN, QM ) when 30,  -- B4
+      toFix( 2.0*cos(2.0*MATH_PI*493.9/FS), QN, QM ) when 31,  -- B4
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 32,  -- C5
+      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 33,  -- D5  
+      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 34,  -- E5
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 35,  -- C5
+      toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when 36,  -- A4
+      toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when 37,  -- A4
+      X"0000" when others;
+  
+  songPulse :
+  PROCESS (clk)
+    CONSTANT CYCLES : NATURAL := ms2cycles(FREQ_KHZ, 250);
+    VARIABLE count : NATURAL RANGE 0 TO CYCLES - 1 := 0;
+  BEGIN
+    IF rising_edge(clk) THEN
+      IF rstSync = '1' THEN
+        count := 0;
+        ldSound <= '0';
+        songPtr <= 0;  
+      else
+        count := (count + 1) MOD CYCLES;
+        IF count = (CYCLES - 1) THEN
+          ldSound <= not ldSound;
+          if ldSound = '0' then
+            songPtr <= songPtr mod 38 + 1;
+          end if;
+        END IF;
+      END IF;
+    END IF;
+  END PROCESS;
      
   soundGen : iirOscillator
     generic map ( WL => WL, QM => QM, FS => FS )
-    port map ( clk => clk, newTone => loadSample, newSample => newSample, b1 => std_logic_vector(b1), a0 => std_logic_vector(a0), sample => sample );  
+    port map ( clk => clk, newTone => ldSound, newSample => newSample, b1 => std_logic_vector(b1), a0 => std_logic_vector(a0), sample => sample );  
 
-  outSample <= 
-    sample;
+  outSample <= sample ;
     
   ------------------ 
 
@@ -131,24 +214,6 @@ begin
   sclkDA <= sclk;
   lrckDA <= lrck;
 
-  newToneCnt:
-  PROCESS (clk)
-    CONSTANT CYCLES : NATURAL := hz2cycles(FREQ_KHZ, 50);
-    VARIABLE count : NATURAL RANGE 0 TO CYCLES - 1 := 0;
-  BEGIN
-    IF rising_edge(clk) THEN
-      IF rstSync = '1' THEN
-        count := 0;
-      ELSE
-        count := (count + 1) MOD CYCLES;
-        loadSample <= '0';
-        IF count = (CYCLES - 1) THEN
-          loadSample <= '1';
-        END IF;
-      END IF;
-    END IF;
-  END PROCESS;
-  
   codecInterface : iisInterface
     generic map( WL => WL,  FREQ_DIV => FREQ_DIV,  UNDERSAMPLE => UNDERSAMPLE ) 
     port map( 
@@ -165,7 +230,7 @@ use ieee.std_logic_1164.all;
 entity iirOscillator is
   generic (
     WL : natural;  -- anchura de la muestra
-    QM : natural;  -- número de bits decimales en la muestra
+    QM : natural;  -- n�mero de bits decimales en la muestra
     FS : real      -- frecuencia de muestreo
   );
   port(
