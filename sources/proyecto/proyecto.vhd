@@ -76,8 +76,7 @@ architecture syn of proyecto is
   signal ldSound     : std_logic;
   signal songPtr     : natural range 0 to 38 := 0;
   signal soundEnable : std_logic;
-  
-  signal countCnt : natural := 0;
+  signal longNote    : boolean := false;
 
   signal sample, outSample : std_logic_vector (WL-1 downto 0);
   signal newSample, outSampleRqt, rChannel, stdo : std_logic;
@@ -175,6 +174,31 @@ begin
       toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when 36,  -- A4
       toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when 37,  -- A4
       X"0000" when others;
+      
+ 
+  longNote <= true when 
+    songPtr = 0 or
+    songPtr = 3 or
+    songPtr = 6 or
+    songPtr = 9 or
+    songPtr = 12 or
+    songPtr = 15 or
+    songPtr = 16 or
+    songPtr = 17 or
+    songPtr = 18 or
+    songPtr = 19 or
+    songPtr = 20 or
+    songPtr = 21 or
+    songPtr = 22 or
+    songPtr = 25 or
+    songPtr = 27 or
+    songPtr = 30 or
+    songPtr = 33 or
+    songPtr = 34 or
+    songPtr = 35 or
+    songPtr = 36
+    else false;
+  
   
   songPulse :
   PROCESS (clk)
@@ -189,7 +213,11 @@ begin
       else
         count := (count + 1) MOD CYCLES;
         IF count = (CYCLES - 1) THEN
-          ldSound <= not ldSound;
+          if ldSound = '1' and not longNote then -- not completaly right but nearly there
+            ldSound <= '0';
+          elsif ldSound = '0' then
+            ldSound <= '1';
+          end if;
           if ldSound = '0' then
             songPtr <= songPtr mod 38 + 1;
           end if;
