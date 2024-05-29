@@ -1,3 +1,10 @@
-version:1
-6d6f64655f636f756e7465727c4755494d6f6465:7
-eof:
+IF count = (CYCLES - 1) THEN
+          if ldSound = '1' and not longNote then -- not completaly right but nearly there
+            ldSound <= '0';
+          elsif ldSound = '0' then
+            ldSound <= '1';
+          end if;
+          if ldSound = '0' then
+            songPtr <= songPtr mod 38 + 1;
+          end if;
+        END IF;

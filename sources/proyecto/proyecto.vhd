@@ -196,7 +196,8 @@ begin
     songPtr = 33 or
     songPtr = 34 or
     songPtr = 35 or
-    songPtr = 36
+    songPtr = 36 or
+    songPtr = 37
     else false;
   
   
@@ -213,13 +214,14 @@ begin
       else
         count := (count + 1) MOD CYCLES;
         IF count = (CYCLES - 1) THEN
-          if ldSound = '1' and not longNote then -- not completaly right but nearly there
-            ldSound <= '0';
-          elsif ldSound = '0' then
-            ldSound <= '1';
-          end if;
+          ldSound <= not ldSound;
           if ldSound = '0' then
-            songPtr <= songPtr mod 38 + 1;
+            songPtr <= (songPtr + 1) mod 38;
+          end if;
+        elsif count = (CYCLES / 2) and not longNote then
+          if ldSound = '0' then
+            songPtr <= (songPtr + 1) mod 38;
+            ldSound <= '1';
           end if;
         END IF;
       END IF;

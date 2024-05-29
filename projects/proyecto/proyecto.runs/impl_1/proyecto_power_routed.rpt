@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
-| Tool Version     : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date             : Wed May 29 12:06:28 2024
-| Host             : ALV-WIN11-DT running 64-bit major release  (build 9200)
+| Tool Version     : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
+| Date             : Wed May 29 15:40:37 2024
+| Host             : alv-debian running 64-bit Debian GNU/Linux 12 (bookworm)
 | Command          : report_power -file proyecto_power_routed.rpt -pb proyecto_power_summary_routed.pb -rpx proyecto_power_routed.rpx
 | Design           : proyecto
 | Device           : xc7a35tcpg236-1
@@ -52,13 +52,13 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
-| Clocks         |     0.002 |        3 |       --- |             --- |
-| Slice Logic    |    <0.001 |      325 |       --- |             --- |
-|   LUT as Logic |    <0.001 |      152 |     20800 |            0.73 |
+| Clocks         |     0.001 |        3 |       --- |             --- |
+| Slice Logic    |    <0.001 |      331 |       --- |             --- |
+|   LUT as Logic |    <0.001 |      161 |     20800 |            0.77 |
 |   CARRY4       |    <0.001 |       28 |      8150 |            0.34 |
 |   Register     |    <0.001 |      109 |     41600 |            0.26 |
 |   Others       |     0.000 |       10 |       --- |             --- |
-| Signals        |     0.001 |      312 |       --- |             --- |
+| Signals        |     0.002 |      319 |       --- |             --- |
 | DSPs           |     0.001 |        1 |        90 |            1.11 |
 | I/O            |     0.004 |        9 |       106 |            8.49 |
 | Static Power   |     0.072 |          |           |                 |
@@ -72,7 +72,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.015 |       0.005 |      0.010 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.014 |       0.005 |      0.010 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.013 |       0.000 |      0.013 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.002 |       0.001 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -138,12 +138,11 @@ Table of Contents
 3.1 By Hierarchy
 ----------------
 
-+---------------------+-----------+
-| Name                | Power (W) |
-+---------------------+-----------+
-| proyecto            |     0.009 |
-|   resetSynchronizer |     0.001 |
-|   soundGen          |     0.002 |
-+---------------------+-----------+
++------------+-----------+
+| Name       | Power (W) |
++------------+-----------+
+| proyecto   |     0.009 |
+|   soundGen |     0.002 |
++------------+-----------+
 
 

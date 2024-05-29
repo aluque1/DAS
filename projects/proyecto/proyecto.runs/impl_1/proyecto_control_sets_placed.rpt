@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date         : Wed May 29 12:06:10 2024
-| Host         : ALV-WIN11-DT running 64-bit major release  (build 9200)
+| Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
+| Date         : Wed May 29 15:40:21 2024
+| Host         : alv-debian running 64-bit Debian GNU/Linux 12 (bookworm)
 | Command      : report_control_sets -verbose -file proyecto_control_sets_placed.rpt
 | Design       : proyecto
 | Device       : xc7a35t
@@ -58,10 +58,10 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |               5 |            3 |
+| No           | No                    | No                     |               4 |            2 |
 | No           | No                    | Yes                    |               0 |            0 |
-| No           | Yes                   | No                     |              25 |            8 |
-| Yes          | No                    | No                     |              52 |           16 |
+| No           | Yes                   | No                     |              26 |            9 |
+| Yes          | No                    | No                     |              52 |           20 |
 | Yes          | No                    | Yes                    |               0 |            0 |
 | Yes          | Yes                   | No                     |              27 |           12 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
@@ -70,17 +70,17 @@ Table of Contents
 4. Detailed Control Set Information
 -----------------------------------
 
-+----------------+----------------------------------------------------+-----------------------------------+------------------+----------------+--------------+
-|  Clock Signal  |                    Enable Signal                   |          Set/Reset Signal         | Slice Load Count | Bel Load Count | Bels / Slice |
-+----------------+----------------------------------------------------+-----------------------------------+------------------+----------------+--------------+
-|  clk_IBUF_BUFG |                                                    |                                   |                3 |              5 |         1.67 |
-|  clk_IBUF_BUFG | codecInterface/ldSound_reg                         | ldSound_reg_n_0                   |                2 |              5 |         2.50 |
-|  clk_IBUF_BUFG | ldSound                                            | resetSynchronizer/aux_reg[1]_1[0] |                4 |              6 |         1.50 |
-|  clk_IBUF_BUFG | codecInterface/sel                                 |                                   |                3 |              9 |         3.00 |
-|  clk_IBUF_BUFG | codecInterface/outSampleShifter.sample[23]_i_1_n_0 |                                   |                5 |             16 |         3.20 |
-|  clk_IBUF_BUFG | codecInterface/E[0]                                | ldSound_reg_n_0                   |                6 |             16 |         2.67 |
-|  clk_IBUF_BUFG |                                                    | resetSynchronizer/aux_reg[1]_1[0] |                8 |             25 |         3.12 |
-|  clk_IBUF_BUFG | codecInterface/ldSound_reg                         |                                   |                8 |             27 |         3.38 |
-+----------------+----------------------------------------------------+-----------------------------------+------------------+----------------+--------------+
++----------------+----------------------------------------------------+------------------------+------------------+----------------+--------------+
+|  Clock Signal  |                    Enable Signal                   |    Set/Reset Signal    | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+----------------------------------------------------+------------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG |                                                    |                        |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | codecInterface/ldSound_reg                         | ldSound_reg_n_0        |                2 |              5 |         2.50 |
+|  clk_IBUF_BUFG | songPtr                                            | resetSynchronizer/Q[0] |                3 |              6 |         2.00 |
+|  clk_IBUF_BUFG | codecInterface/sel                                 |                        |                3 |              9 |         3.00 |
+|  clk_IBUF_BUFG | codecInterface/outSampleShifter.sample[23]_i_1_n_0 |                        |                5 |             16 |         3.20 |
+|  clk_IBUF_BUFG | codecInterface/E[0]                                | ldSound_reg_n_0        |                7 |             16 |         2.29 |
+|  clk_IBUF_BUFG |                                                    | resetSynchronizer/Q[0] |                9 |             26 |         2.89 |
+|  clk_IBUF_BUFG | codecInterface/ldSound_reg                         |                        |               12 |             27 |         2.25 |
++----------------+----------------------------------------------------+------------------------+------------------+----------------+--------------+
 
 
