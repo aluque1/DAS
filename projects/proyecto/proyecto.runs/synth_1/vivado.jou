@@ -3,12 +3,12 @@
 # SW Build 3865809 on Sun May  7 15:04:56 MDT 2023
 # IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
 # SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
-# Start of session at: Thu May 30 09:10:20 2024
-# Process ID: 25904
+# Start of session at: Thu May 30 10:10:44 2024
+# Process ID: 133435
 # Current directory: /home/alv/Desktop/uni/DAS/projects/proyecto/proyecto.runs/synth_1
 # Command line: vivado -log proyecto.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source proyecto.tcl
 # Log file: /home/alv/Desktop/uni/DAS/projects/proyecto/proyecto.runs/synth_1/proyecto.vds
 # Journal file: /home/alv/Desktop/uni/DAS/projects/proyecto/proyecto.runs/synth_1/vivado.jou
-# Running On: alv-debian, OS: Linux, CPU Frequency: 400.000 MHz, CPU Physical cores: 4, Host memory: 16450 MB
+# Running On: alv-debian, OS: Linux, CPU Frequency: 4577.105 MHz, CPU Physical cores: 4, Host memory: 16450 MB
 #-----------------------------------------------------------
 source proyecto.tcl -notrace

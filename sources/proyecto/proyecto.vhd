@@ -216,7 +216,7 @@ BEGIN
   --Implementar el aumento de velocidad
   pulseGen :
   PROCESS (clk)
-    CONSTANT CYCLES : NATURAL := hz2cycles(FREQ_KHZ, 50) * 5;
+    CONSTANT CYCLES : NATURAL := hz2cycles(FREQ_KHZ, 50) * 5;-- posible cambio a ms
     VARIABLE count : NATURAL RANGE 0 TO CYCLES - 1 := 0;
   BEGIN
     IF rising_edge(clk) THEN
@@ -237,7 +237,7 @@ BEGIN
   
   fsm:
   process(clk)
-    type states is (S0, S1, S2, S3, S4, S5, S6, S7, S8, S9);
+    type states is (S0, S1, S2, S3, S4, S5, S6, S7, S8);
     variable state: states := S0;
     variable distASuelo : natural := 2;
     variable distDer : natural := 2;
@@ -255,15 +255,15 @@ BEGIN
     variable xPiezaAct : natural := 5;
     variable yPiezaAct : natural := 1;
   begin
-    if rising_edge(clk) then
+  if rising_edge(clk) then
         if rstSync = '1' then 
             state := S0;
         else
             case state is
-                when S0 =>
+                when S0 => -- ini
                     ld <= '1';
                     state := S1;
-                when S1 =>
+                when S1 => -- ponemos a 0 y generamos pieza
                     CPos1 <= '0'; LinPos1 <= '0'; LinPos2 <= '0'; ZPos1 <= '0'; ZPos2 <= '0'; ZInvPos1 <= '0'; ZInvPos2 <= '0';
                     LPos1 <= '0'; LPos2 <= '0'; LPos3 <= '0'; LPos4 <= '0'; LInvPos1 <= '0'; LInvPos2 <= '0'; LInvPos3 <= '0';
                     LInvPos4 <= '0'; TPos1 <= '0'; TPos2 <= '0'; TPos3 <= '0'; TPos4 <= '0';
@@ -274,7 +274,7 @@ BEGIN
                     ld <= '0';
                     ce <= '1';
                     state := S2;
-                when S2 =>
+                when S2 => -- ponemos posicion iniciales dependiendo de la pieza
                     ce <= '0';
                     case piezaSig is
                         when "000" =>
@@ -303,8 +303,7 @@ BEGIN
                             distDer := 1; distIzq := 2;
                     end case;
                     state := S3;
-                when S3 =>
-                    --Limpiar pieza 2 ciclos
+                when S3 => -- Limpiar
                     wr <= '1';
                     dataIn <= (others => '0');
                     case piezaSig is
@@ -520,10 +519,160 @@ BEGIN
                                 end if;
                                 x := (x + 1) mod 2;
                             end if;
-                    end case;
-                when S4 =>
-                     --Pinta pieza 2 ciclos
-                    --pinta <= '1';
+                    end case;    
+                when S4 => -- Act pos "movimiento"
+                    --Se hace el movimiento
+                    if mover then
+                        if 11*(yPiezaAct + distASuelo) > 220 then
+                            if sP then
+                                yPiezaAct := yPiezaAct + 2;
+                            else
+                                yPiezaAct := yPiezaAct + 1;
+                            end if;
+                        end if;
+                        if xPiezaAct + distDer < 10 and dP then
+                            xPiezaAct := xPiezaAct + 1;
+                        end if;
+                        if xPiezaAct - distIzq > 0 and aP then
+                            xPiezaAct := xPiezaAct - 1;
+                        end if;
+                        if rP then
+                            case pieza is
+                                when "000" =>
+                                    CPos1 <= '1';
+                                    distASuelo := 2;
+                                    distDer  := 2;
+                                    distIzq  := 1;
+                                when "001" =>
+                                    CPos1 <= '1';
+                                    distASuelo := 2;
+                                    distDer  := 2;
+                                    distIzq  := 1;
+                                when "010" =>
+                                    if LinPos1 = '1' then
+                                        LinPos1 <= '0';
+                                        LinPos2 <= '1';
+                                        distASuelo := 1;
+                                        distDer  := 4;
+                                        distIzq  := 1;
+                                    elsif LinPos2 = '1' then
+                                        LinPos1 <= '1';
+                                        LinPos2 <= '0';
+                                        distASuelo := 4;
+                                        distDer  := 1;
+                                        distIzq  := 1;
+                                    end if;
+                                when "011" =>
+                                    if ZPos1 = '1' then
+                                        ZPos1 <= '0';
+                                        ZPos2 <= '1';
+                                        distASuelo := 2;
+                                        distDer  := 3;
+                                        distIzq  := 1;
+                                    elsif ZPos2 = '1' then
+                                        ZPos1 <= '1';
+                                        ZPos2 <= '0';
+                                        distASuelo := 3;
+                                        distDer  := 1;
+                                        distIzq  := 2;
+                                    end if;
+                                when "100" =>
+                                    if ZInvPos1 = '1' then
+                                        ZInvPos1 <= '0';
+                                        ZInvPos2 <= '1';
+                                        distASuelo := 1;
+                                        distDer  := 3;
+                                        distIzq  := 1;
+                                    elsif ZInvPos2 = '1' then
+                                        ZInvPos1 <= '1';
+                                        ZInvPos2 <= '0';
+                                        distASuelo := 3;
+                                        distDer  := 2;
+                                        distIzq  := 1;
+                                    end if;
+                                when "101" =>
+                                    if LPos1 = '1' then
+                                        LPos1 <= '0';
+                                        LPos2 <= '1';
+                                        distASuelo := 2;
+                                        distDer  := 3;
+                                        distIzq  := 1;
+                                    elsif LPos2 = '1' then
+                                        LPos2 <= '0';
+                                        LPos3 <= '1';
+                                        distASuelo := 3;
+                                        distDer  := 2;
+                                        distIzq  := 1;
+                                    elsif LPos3 = '1' then
+                                        LPos3 <= '0';
+                                        LPos4 <= '1';
+                                        distASuelo := 1;
+                                        distDer  := 3;
+                                        distIzq  := 1;
+                                    elsif LPos4 = '1' then
+                                        LPos4 <= '0';
+                                        LPos1 <= '1';
+                                        distASuelo := 3;
+                                        distDer  := 2;
+                                        distIzq  := 1;
+                                    end if;
+                                when "110" =>
+                                    if LInvPos1 = '1' then
+                                        LInvPos1 <= '0';
+                                        LInvPos2 <= '1';
+                                        distASuelo := 2;
+                                        distDer  := 3;
+                                        distIzq  := 1;
+                                    elsif LInvPos2 = '1' then
+                                        LInvPos2 <= '0';
+                                        LInvPos3 <= '1';
+                                        distASuelo := 3;
+                                        distDer  := 2;
+                                        distIzq  := 1;
+                                    elsif LInvPos3 = '1' then
+                                        LInvPos3 <= '0';
+                                        LInvPos4 <= '1';
+                                        distASuelo := 2;
+                                        distDer  := 3;
+                                        distIzq  := 1;
+                                    elsif LInvPos4 = '1' then
+                                        LInvPos4 <= '0';
+                                        LInvPos1 <= '1'; 
+                                        distASuelo := 3;
+                                        distDer  := 1;
+                                        distIzq  := 2;
+                                    end if;
+                                when "111" =>
+                                    if TPos1 = '1' then
+                                        TPos1 <= '0';
+                                        TPos2 <= '1';
+                                        distASuelo := 1;
+                                        distDer  := 3;
+                                        distIzq  := 1;
+                                    elsif TPos2 = '1' then
+                                        TPos2 <= '0';
+                                        TPos3 <= '1';
+                                        distASuelo := 3;
+                                        distDer  := 2;
+                                        distIzq  := 1;
+                                    elsif TPos3 = '1' then
+                                        TPos3 <= '0';
+                                        TPos4 <= '1';
+                                        distASuelo := 2;
+                                        distDer  := 3;
+                                        distIzq  := 1;
+                                    elsif TPos4 = '1' then
+                                        TPos4 <= '0';
+                                        TPos1 <= '1';
+                                        distASuelo := 3;
+                                        distDer  := 1;
+                                        distIzq  := 2;
+                                    end if;
+                             end case;
+                        end if;
+                    end if;
+                    state := S5;
+                when S5 =>  -- Pintamos la pieza
                     dataIn <= unsigned(piezaSig);
                     case piezaSig is
                         when "000" =>
@@ -533,7 +682,7 @@ BEGIN
                             else
                                 addraIn <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
                                 addrbIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                state := S5;
+                                state := S6;
                             end if;
                             x := (x + 1) mod 2;
                         when "001" =>
@@ -543,7 +692,7 @@ BEGIN
                             else
                                 addraIn <= to_unsigned(11*(yPiezaAct+1) + xPiezaAct,8);
                                 addrbIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                state := S5;
+                                state := S6;
                             end if;
                             x := (x + 1) mod 2;
                         when "010" =>
@@ -554,7 +703,7 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
                                     addrbIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+3),8);
-                                    state := S5;
+                                    state := S6;
                                 end if;
                                 x := (x + 1) mod 2;
                             elsif LinPos2 = '1' then
@@ -564,7 +713,7 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
                                     addrbIn <= to_unsigned(11*(yPiezaAct+3) + xPiezaAct,8);
-                                    state := S5;
+                                    state := S6;
                                 end if;
                                 x := (x + 1) mod 2;
                             end if;
@@ -576,7 +725,7 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
                                     addrbIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
-                                    state := S5;
+                                    state := S6;
                                 end if;
                                 x := (x + 1) mod 2;
                             elsif ZPos2 = '1' then
@@ -586,7 +735,7 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct-1),8);
                                     addrbIn <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct-1),8);
-                                    state := S5;
+                                    state := S6;
                                 end if;
                                 x := (x + 1) mod 2;
                             end if;
@@ -598,7 +747,7 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*(yPiezaAct-1) + (xPiezaAct+1),8);
                                     addrbIn <= to_unsigned(11*(yPiezaAct-1) + (xPiezaAct+2),8);
-                                    state := S5;
+                                    state := S6;
                                 end if;
                                 x := (x + 1) mod 2;
                             elsif ZInvPos2 = '1' then
@@ -608,7 +757,7 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
                                     addrbIn <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
-                                    state := S5;
+                                    state := S6;
                                 end if;
                                 x := (x + 1) mod 2;
                             end if;
@@ -620,7 +769,7 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
                                     addrbIn <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
-                                    state := S5;
+                                    state := S6;
                                 end if;
                                 x := (x + 1) mod 2;
                             elsif LPos2 = '1' then
@@ -630,7 +779,7 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+1),8);
                                     addrbIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
-                                    state := S5;
+                                    state := S6;
                                 end if;
                                 x := (x + 1) mod 2;
                             elsif LPos3 = '1' then
@@ -640,7 +789,7 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct+1),8);
                                     addrbIn <= to_unsigned(11*(yPiezaAct+3) + (xPiezaAct+1),8);
-                                    state := S5;
+                                    state := S6;
                                 end if;
                                 x := (x + 1) mod 2;
                              elsif LPos4 = '1' then
@@ -650,7 +799,7 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
                                     addrbIn <= to_unsigned(11*(yPiezaAct-1) + (xPiezaAct+2),8);
-                                    state := S5;
+                                    state := S6;
                                 end if;
                                 x := (x + 1) mod 2;
                             end if;
@@ -662,7 +811,7 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
                                     addrbIn <= to_unsigned(11*(yPiezaAct+2) + (xPiezaAct-1),8);
-                                    state := S5; 
+                                    state := S6; 
                                 end if;
                                 x := (x + 1) mod 2;
                             elsif LInvPos2 = '1' then
@@ -672,7 +821,7 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
                                     addrbIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
-                                    state := S5;
+                                    state := S6;
                                 end if;
                                 x := (x + 1) mod 2;
                             elsif LInvPos3 = '1' then
@@ -682,7 +831,7 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
                                     addrbIn <= to_unsigned(11*(yPiezaAct+3) + xPiezaAct,8);
-                                    state := S5;
+                                    state := S6;
                                 end if;
                                 x := (x + 1) mod 2;
                              elsif LInvPos4 = '1' then
@@ -692,7 +841,7 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
                                     addrbIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+2),8);
-                                    state := S5;
+                                    state := S6;
                                 end if;
                                 x := (x + 1) mod 2;
                             end if;
@@ -704,7 +853,7 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
                                     addrbIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct-1),8); 
-                                    state := S5;
+                                    state := S6;
                                 end if;
                                 x := (x + 1) mod 2;
                             elsif TPos2 = '1' then
@@ -714,7 +863,7 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
                                     addrbIn <= to_unsigned(11*(yPiezaAct-1) + (xPiezaAct+1),8);
-                                    state := S5;
+                                    state := S6;
                                 end if;
                                 x := (x + 1) mod 2;
                             elsif TPos3 = '1' then
@@ -724,7 +873,7 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
                                     addrbIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                    state := S5;
+                                    state := S6;
                                 end if;
                                 x := (x + 1) mod 2;
                              elsif TPos4 = '1' then
@@ -734,14 +883,87 @@ BEGIN
                                 else
                                     addraIn <= to_unsigned(11*yPiezaAct + (xPiezaAct+2),8);
                                     addrbIn <= to_unsigned(11*(yPiezaAct+1) + (xPiezaAct+1),8);
-                                    state := S5;
+                                    state := S6;
                                 end if;
                                 x := (x + 1) mod 2;
                             end if;
                     end case;
-                when S5 =>
-                   --Se comprueba colision 2 ciclos
-                   wr <= '0';
+                when S6 => -- Pintamos en la VGA
+                    if ((pixel > 54 and pixel < 104) and (line > 14 and line < 114)) then
+                        visual(2) <= '1';            
+                        addraOut <= to_unsigned(11*i + j, 8);
+                        dataCasilla := doa;
+                        bordeXCnt := (bordeXCnt + 1) mod 5;
+                        if bordeXCnt = 4 then
+                            j := (j + 1) mod 11;
+                            if j = 10 then
+                                bordeYCnt := (bordeYCnt + 1) mod 5;
+                                if bordeYCnt = 4 then
+                                    i := (i + 1) mod 21;
+                                end if;
+                            end if;
+                        end if;
+                        case dataCasilla is
+                            when "000" =>
+                                colorTablero <= negro;
+                            when "001" =>
+                                if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
+                                    colorTablero <= amarilloClaro;
+                                else
+                                    colorTablero <= amarilloOscuro;
+                                end if;
+                            when "010" =>
+                                if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
+                                    colorTablero <= azulClaroB;
+                                else
+                                    colorTablero <= azulClaroInt;
+                                end if;
+                            when "011" =>
+                                if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
+                                    colorTablero <= rojoClaro;
+                                else
+                                    colorTablero <= rojoOscuro;
+                                end if;
+                            when "100" =>
+                                if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
+                                    colorTablero <= verdeClaro;
+                                else
+                                    colorTablero <= verdeOscuro;
+                                end if;
+                            when "101" =>
+                                if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
+                                    colorTablero <= naranjaClaro;
+                                else
+                                    colorTablero <= naranjaOscuro;
+                                end if;
+                            when "110" =>
+                                if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
+                                    colorTablero <= azulOscuroB;
+                                else
+                                    colorTablero <= azulOscuroInt;
+                                end if;
+                            when "111" =>
+                                if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
+                                    colorTablero <= moradoClaro;
+                                else
+                                    colorTablero <= moradoOscuro;
+                                end if;
+                        end case;
+                        if j = 10 and i = 20 then
+                            state := S7;
+                        end if;
+                    else
+                        visual(2) <= '0';
+                    end if;
+                    -- Si existe una colision generamos una pieza nueva
+                    if colision then
+                        colision <= false;
+                        state := S1;
+                    else
+                        state := S7;
+                    end if;
+                when S7 => -- comprobamos las colisiones
+                    wr <= '0';
                     case piezaSig is
                         when "000" =>
                             addraOut <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
@@ -932,239 +1154,20 @@ BEGIN
                     end case;
                     wr <= '0';
                     pinta <= '0';
-                    --if colision or 11*(yPiezaAct + distASuelo) = 220 then
-                        --state := S8;
-                    --else
-                        state := S6;
-                    --end if;
-                when S6 =>
-                    --Se pinta en la VGA
-                    if ((pixel > 54 and pixel < 104) and (line > 14 and line < 114)) then
-                        visual(2) <= '1';            
-                        addraOut <= to_unsigned(11*i + j, 8);
-                        dataCasilla := doa;
-                        bordeXCnt := (bordeXCnt + 1) mod 5;
-                        if bordeXCnt = 4 then
-                            j := (j + 1) mod 11;
-                            if j = 10 then
-                                bordeYCnt := (bordeYCnt + 1) mod 5;
-                                if bordeYCnt = 4 then
-                                    i := (i + 1) mod 21;
-                                end if;
-                            end if;
-                        end if;
-                        if j = 10 and i = 20 then
-                            state := S7;
-                        end if;
-                        case dataCasilla is
-                            when "000" =>
-                                colorTablero <= negro;
-                            when "001" =>
-                                if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
-                                    colorTablero <= amarilloClaro;
-                                else
-                                    colorTablero <= amarilloOscuro;
-                                end if;
-                            when "010" =>
-                                if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
-                                    colorTablero <= azulClaroB;
-                                else
-                                    colorTablero <= azulClaroInt;
-                                end if;
-                            when "011" =>
-                                if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
-                                    colorTablero <= rojoClaro;
-                                else
-                                    colorTablero <= rojoOscuro;
-                                end if;
-                            when "100" =>
-                                if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
-                                    colorTablero <= verdeClaro;
-                                else
-                                    colorTablero <= verdeOscuro;
-                                end if;
-                            when "101" =>
-                                if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
-                                    colorTablero <= naranjaClaro;
-                                else
-                                    colorTablero <= naranjaOscuro;
-                                end if;
-                            when "110" =>
-                                if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
-                                    colorTablero <= azulOscuroB;
-                                else
-                                    colorTablero <= azulOscuroInt;
-                                end if;
-                            when "111" =>
-                                if bordeYCnt = 0 or bordeYCnt = 4 or bordeXCnt = 0 or bordeYCnt = 4 then
-                                    colorTablero <= moradoClaro;
-                                else
-                                    colorTablero <= moradoOscuro;
-                                end if;
-                        end case;
+                    if colision or 11*(yPiezaAct + distASuelo) = 220 then
+                        state := S8;
                     else
-                        visual(2) <= '0';
+                        state := S3;
                     end if;
-                        
-                when S7 =>
-                    --Se hace el movimiento
-                    if mover then
-                        if 11*(yPiezaAct + distASuelo) > 220 then
-                            if sP then
-                                yPiezaAct := yPiezaAct + 2;
-                            else
-                                yPiezaAct := yPiezaAct + 1;
-                            end if;
-                        end if;
-                        if xPiezaAct + distDer < 10 and dP then
-                            xPiezaAct := xPiezaAct + 1;
-                        end if;
-                        if xPiezaAct - distIzq > 0 and aP then
-                            xPiezaAct := xPiezaAct - 1;
-                        end if;
-                        if rP then
-                            case pieza is
-                                when "000" =>
-                                    CPos1 <= '1';
-                                    distASuelo := 2;
-                                    distDer  := 2;
-                                    distIzq  := 1;
-                                when "001" =>
-                                    CPos1 <= '1';
-                                    distASuelo := 2;
-                                    distDer  := 2;
-                                    distIzq  := 1;
-                                when "010" =>
-                                    if LinPos1 = '1' then
-                                        LinPos1 <= '0';
-                                        LinPos2 <= '1';
-                                        distASuelo := 1;
-                                        distDer  := 4;
-                                        distIzq  := 1;
-                                    elsif LinPos2 = '1' then
-                                        LinPos1 <= '1';
-                                        LinPos2 <= '0';
-                                        distASuelo := 4;
-                                        distDer  := 1;
-                                        distIzq  := 1;
-                                    end if;
-                                when "011" =>
-                                    if ZPos1 = '1' then
-                                        ZPos1 <= '0';
-                                        ZPos2 <= '1';
-                                        distASuelo := 2;
-                                        distDer  := 3;
-                                        distIzq  := 1;
-                                    elsif ZPos2 = '1' then
-                                        ZPos1 <= '1';
-                                        ZPos2 <= '0';
-                                        distASuelo := 3;
-                                        distDer  := 1;
-                                        distIzq  := 2;
-                                    end if;
-                                when "100" =>
-                                    if ZInvPos1 = '1' then
-                                        ZInvPos1 <= '0';
-                                        ZInvPos2 <= '1';
-                                        distASuelo := 1;
-                                        distDer  := 3;
-                                        distIzq  := 1;
-                                    elsif ZInvPos2 = '1' then
-                                        ZInvPos1 <= '1';
-                                        ZInvPos2 <= '0';
-                                        distASuelo := 3;
-                                        distDer  := 2;
-                                        distIzq  := 1;
-                                    end if;
-                                when "101" =>
-                                    if LPos1 = '1' then
-                                        LPos1 <= '0';
-                                        LPos2 <= '1';
-                                        distASuelo := 2;
-                                        distDer  := 3;
-                                        distIzq  := 1;
-                                    elsif LPos2 = '1' then
-                                        LPos2 <= '0';
-                                        LPos3 <= '1';
-                                        distASuelo := 3;
-                                        distDer  := 2;
-                                        distIzq  := 1;
-                                    elsif LPos3 = '1' then
-                                        LPos3 <= '0';
-                                        LPos4 <= '1';
-                                        distASuelo := 1;
-                                        distDer  := 3;
-                                        distIzq  := 1;
-                                    elsif LPos4 = '1' then
-                                        LPos4 <= '0';
-                                        LPos1 <= '1';
-                                        distASuelo := 3;
-                                        distDer  := 2;
-                                        distIzq  := 1;
-                                    end if;
-                                when "110" =>
-                                    if LInvPos1 = '1' then
-                                        LInvPos1 <= '0';
-                                        LInvPos2 <= '1';
-                                        distASuelo := 2;
-                                        distDer  := 3;
-                                        distIzq  := 1;
-                                    elsif LInvPos2 = '1' then
-                                        LInvPos2 <= '0';
-                                        LInvPos3 <= '1';
-                                        distASuelo := 3;
-                                        distDer  := 2;
-                                        distIzq  := 1;
-                                    elsif LInvPos3 = '1' then
-                                        LInvPos3 <= '0';
-                                        LInvPos4 <= '1';
-                                        distASuelo := 2;
-                                        distDer  := 3;
-                                        distIzq  := 1;
-                                    elsif LInvPos4 = '1' then
-                                        LInvPos4 <= '0';
-                                        LInvPos1 <= '1'; 
-                                        distASuelo := 3;
-                                        distDer  := 1;
-                                        distIzq  := 2;
-                                    end if;
-                                when "111" =>
-                                    if TPos1 = '1' then
-                                        TPos1 <= '0';
-                                        TPos2 <= '1';
-                                        distASuelo := 1;
-                                        distDer  := 3;
-                                        distIzq  := 1;
-                                    elsif TPos2 = '1' then
-                                        TPos2 <= '0';
-                                        TPos3 <= '1';
-                                        distASuelo := 3;
-                                        distDer  := 2;
-                                        distIzq  := 1;
-                                    elsif TPos3 = '1' then
-                                        TPos3 <= '0';
-                                        TPos4 <= '1';
-                                        distASuelo := 2;
-                                        distDer  := 3;
-                                        distIzq  := 1;
-                                    elsif TPos4 = '1' then
-                                        TPos4 <= '0';
-                                        TPos1 <= '1';
-                                        distASuelo := 3;
-                                        distDer  := 1;
-                                        distIzq  := 2;
-                                    end if;
-                             end case;
-                        end if;
-                    end if;
-                    state := S3;
                 when S8 =>
-                    rd <= '0';
-                    --Se hace la comprobacion de la linea
-                when others =>
+                
+                    
+                    
             end case;
         end if;
-    end if;
+  end if;
+  
+    
   end process;
 
   ------------------
@@ -1214,97 +1217,96 @@ BEGIN
   a1SongRom:
   with songPtr select
     a0 <=
-      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 0,  -- E5
-      toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when 1,  -- B4
-      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 2,  -- C5
-      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 3,  -- D5
-      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 4,  -- C5 
-      toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when 5,  -- B4
-      toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when 6,  -- A4
+      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 1,  -- E5
+      toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when 2,  -- B4
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 3,  -- C5
+      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 4,  -- D5
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 5,  -- C5 
+      toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when 6,  -- B4
       toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when 7,  -- A4
-      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 8,  -- C5
-      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 9,  -- E5
-      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 10,  -- D5
-      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 11,  -- C5
-      toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when 12,  -- B4
+      toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when 8,  -- A4
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 9,  -- C5
+      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 10,  -- E5
+      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 11,  -- D5
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 12,  -- C5
       toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when 13,  -- B4
-      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 14,  -- C5
-      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 15,  -- D5
-      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 16,  -- E5
-      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 17,  -- C5
-      toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when 18,  -- A4
+      toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when 14,  -- B4
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 15,  -- C5
+      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 16,  -- D5
+      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 17,  -- E5
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 18,  -- C5
       toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when 19,  -- A4
-      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 20,  -- D5
-      toFix( A*sin(2.0*MATH_PI*698.5/FS), QN, QM ) when 21,  -- F5
-      toFix( A*sin(2.0*MATH_PI*880.0/FS), QN, QM ) when 22,  -- A5
-      toFix( A*sin(2.0*MATH_PI*783.9/FS), QN, QM ) when 23,  -- G5
-      toFix( A*sin(2.0*MATH_PI*698.5/FS), QN, QM ) when 24,  -- F5
-      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 25,  -- E5
-      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 26,  -- C5
-      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 27,  -- E5
-      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 28,  -- D5
-      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 29,  -- C5
-      toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when 30,  -- B4
+      toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when 20,  -- A4
+      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 21,  -- D5
+      toFix( A*sin(2.0*MATH_PI*698.5/FS), QN, QM ) when 22,  -- F5
+      toFix( A*sin(2.0*MATH_PI*880.0/FS), QN, QM ) when 23,  -- A5
+      toFix( A*sin(2.0*MATH_PI*783.9/FS), QN, QM ) when 24,  -- G5
+      toFix( A*sin(2.0*MATH_PI*698.5/FS), QN, QM ) when 25,  -- F5
+      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 26,  -- E5
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 27,  -- C5
+      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 28,  -- E5
+      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 29,  -- D5
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 30,  -- C5
       toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when 31,  -- B4
-      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 32,  -- C5
-      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 33,  -- D5
-      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 34,  -- E5
-      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 35,  -- C5
-      toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when 36,  -- A4
+      toFix( A*sin(2.0*MATH_PI*493.9/FS), QN, QM ) when 32,  -- B4
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 33,  -- C5
+      toFix( A*sin(2.0*MATH_PI*587.3/FS), QN, QM ) when 34,  -- D5
+      toFix( A*sin(2.0*MATH_PI*659.3/FS), QN, QM ) when 35,  -- E5
+      toFix( A*sin(2.0*MATH_PI*523.3/FS), QN, QM ) when 36,  -- C5
       toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when 37,  -- A4
+      toFix( A*sin(2.0*MATH_PI*440.0/FS), QN, QM ) when 38,  -- A4
       X"0000" when others;  
     
   b1SongRom:
   with songPtr select
     b1 <=
-      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 0,  -- E5
-      toFix( 2.0*cos(2.0*MATH_PI*493.9/FS), QN, QM ) when 1,  -- B4
-      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 2,  -- C5
-      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 3,  -- D5
-      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 4,  -- C5 
-      toFix( 2.0*cos(2.0*MATH_PI*493.9/FS), QN, QM ) when 5,  -- B4
-      toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when 6,  -- A4
+      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 1,  -- E5
+      toFix( 2.0*cos(2.0*MATH_PI*493.9/FS), QN, QM ) when 2,  -- B4
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 3,  -- C5
+      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 4,  -- D5
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 5,  -- C5 
+      toFix( 2.0*cos(2.0*MATH_PI*493.9/FS), QN, QM ) when 6,  -- B4
       toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when 7,  -- A4
-      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 8,  -- C5
-      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 9,  -- E5
-      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 10,  -- D5
-      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 11,  -- C5
-      toFix( 2.0*cos(2.0*MATH_PI*493.9/FS), QN, QM ) when 12,  -- B4
+      toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when 8,  -- A4
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 9,  -- C5
+      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 10,  -- E5
+      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 11,  -- D5
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 12,  -- C5
       toFix( 2.0*cos(2.0*MATH_PI*493.9/FS), QN, QM ) when 13,  -- B4
-      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 14,  -- C5
-      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 15,  -- D5
-      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 16,  -- E5
-      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 17,  -- C5
-      toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when 18,  -- A4
+      toFix( 2.0*cos(2.0*MATH_PI*493.9/FS), QN, QM ) when 14,  -- B4
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 15,  -- C5
+      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 16,  -- D5
+      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 17,  -- E5
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 18,  -- C5
       toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when 19,  -- A4
-      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 20,  -- D5
-      toFix( 2.0*cos(2.0*MATH_PI*698.5/FS), QN, QM ) when 21,  -- F5
-      toFix( 2.0*cos(2.0*MATH_PI*880.0/FS), QN, QM ) when 22,  -- A5
-      toFix( 2.0*cos(2.0*MATH_PI*783.9/FS), QN, QM ) when 23,  -- G5
-      toFix( 2.0*cos(2.0*MATH_PI*698.5/FS), QN, QM ) when 24,  -- F5
-      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 25,  -- E5
-      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 26,  -- C5
-      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 27,  -- E5
-      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 28,  -- D5
-      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 29,  -- C5
-      toFix( 2.0*cos(2.0*MATH_PI*493.9/FS), QN, QM ) when 30,  -- B4
+      toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when 20,  -- A4
+      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 21,  -- D5
+      toFix( 2.0*cos(2.0*MATH_PI*698.5/FS), QN, QM ) when 22,  -- F5
+      toFix( 2.0*cos(2.0*MATH_PI*880.0/FS), QN, QM ) when 23,  -- A5
+      toFix( 2.0*cos(2.0*MATH_PI*783.9/FS), QN, QM ) when 24,  -- G5
+      toFix( 2.0*cos(2.0*MATH_PI*698.5/FS), QN, QM ) when 25,  -- F5
+      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 26,  -- E5
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 27,  -- C5
+      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 28,  -- E5
+      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 29,  -- D5
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 30,  -- C5
       toFix( 2.0*cos(2.0*MATH_PI*493.9/FS), QN, QM ) when 31,  -- B4
-      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 32,  -- C5
-      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 33,  -- D5  
-      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 34,  -- E5
-      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 35,  -- C5
-      toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when 36,  -- A4
+      toFix( 2.0*cos(2.0*MATH_PI*493.9/FS), QN, QM ) when 32,  -- B4
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 33,  -- C5
+      toFix( 2.0*cos(2.0*MATH_PI*587.3/FS), QN, QM ) when 34,  -- D5  
+      toFix( 2.0*cos(2.0*MATH_PI*659.3/FS), QN, QM ) when 35,  -- E5
+      toFix( 2.0*cos(2.0*MATH_PI*523.3/FS), QN, QM ) when 36,  -- C5
       toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when 37,  -- A4
+      toFix( 2.0*cos(2.0*MATH_PI*440.0/FS), QN, QM ) when 38,  -- A4
       X"0000" when others;
       
  
   longNote <= true when 
-    songPtr = 0 or
-    songPtr = 3 or
-    songPtr = 6 or
-    songPtr = 9 or
-    songPtr = 12 or
-    songPtr = 15 or
+    songPtr = 1 or
+    songPtr = 4 or
+    songPtr = 7 or
+    songPtr = 10 or
+    songPtr = 13 or
     songPtr = 16 or
     songPtr = 17 or
     songPtr = 18 or
@@ -1312,14 +1314,15 @@ BEGIN
     songPtr = 20 or
     songPtr = 21 or
     songPtr = 22 or
-    songPtr = 25 or
-    songPtr = 27 or
-    songPtr = 30 or
-    songPtr = 33 or
+    songPtr = 23 or
+    songPtr = 24 or
+    songPtr = 28 or
+    songPtr = 31 or
     songPtr = 34 or
     songPtr = 35 or
     songPtr = 36 or
-    songPtr = 37
+    songPtr = 37 or
+    songPtr = 38
     else false;
   
   
@@ -1338,11 +1341,11 @@ BEGIN
         IF count = (CYCLES - 1) THEN
           ldSound <= not ldSound;
           if ldSound = '0' then
-            songPtr <= (songPtr + 1) mod 38;
+            songPtr <= (songPtr + 1) mod 39;
           end if;
         elsif count = (CYCLES / 2) and not longNote then
           if ldSound = '0' then
-            songPtr <= (songPtr + 1) mod 38;
+            songPtr <= (songPtr + 1) mod 39;
             ldSound <= '1';
           end if;
         END IF;
