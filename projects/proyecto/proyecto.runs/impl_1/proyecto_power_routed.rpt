@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date             : Thu May 30 00:31:30 2024
+| Date             : Thu May 30 02:13:28 2024
 | Host             : Sobremesa running 64-bit major release  (build 9200)
 | Command          : report_power -file proyecto_power_routed.rpt -pb proyecto_power_summary_routed.pb -rpx proyecto_power_routed.rpx
 | Design           : proyecto
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.082        |
+| Total On-Chip Power (W)  | 0.101        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.011        |
+| Dynamic (W)              | 0.029        |
 | Device Static (W)        | 0.072        |
 | Effective TJA (C/W)      | 5.0          |
-| Max Ambient (C)          | 84.6         |
-| Junction Temperature (C) | 25.4         |
+| Max Ambient (C)          | 84.5         |
+| Junction Temperature (C) | 25.5         |
 | Confidence Level         | Medium       |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -49,20 +49,22 @@ Table of Contents
 1.1 On-Chip Components
 ----------------------
 
-+----------------+-----------+----------+-----------+-----------------+
-| On-Chip        | Power (W) | Used     | Available | Utilization (%) |
-+----------------+-----------+----------+-----------+-----------------+
-| Clocks         |     0.001 |        3 |       --- |             --- |
-| Slice Logic    |     0.004 |      979 |       --- |             --- |
-|   LUT as Logic |     0.003 |      532 |     20800 |            2.56 |
-|   CARRY4       |    <0.001 |      165 |      8150 |            2.02 |
-|   Register     |    <0.001 |      145 |     41600 |            0.35 |
-|   Others       |     0.000 |       18 |       --- |             --- |
-| Signals        |     0.004 |      916 |       --- |             --- |
-| I/O            |     0.002 |       16 |       106 |           15.09 |
-| Static Power   |     0.072 |          |           |                 |
-| Total          |     0.082 |          |           |                 |
-+----------------+-----------+----------+-----------+-----------------+
++-------------------------+-----------+----------+-----------+-----------------+
+| On-Chip                 | Power (W) | Used     | Available | Utilization (%) |
++-------------------------+-----------+----------+-----------+-----------------+
+| Clocks                  |     0.006 |        3 |       --- |             --- |
+| Slice Logic             |     0.009 |     4095 |       --- |             --- |
+|   LUT as Logic          |     0.008 |     2283 |     20800 |           10.98 |
+|   CARRY4                |     0.001 |      312 |      8150 |            3.83 |
+|   Register              |    <0.001 |     1014 |     41600 |            2.44 |
+|   F7/F8 Muxes           |    <0.001 |      138 |     32600 |            0.42 |
+|   LUT as Shift Register |    <0.001 |        1 |      9600 |            0.01 |
+|   Others                |     0.000 |       24 |       --- |             --- |
+| Signals                 |     0.010 |     2930 |       --- |             --- |
+| I/O                     |     0.005 |       18 |       106 |           16.98 |
+| Static Power            |     0.072 |          |           |                 |
+| Total                   |     0.101 |          |           |                 |
++-------------------------+-----------+----------+-----------+-----------------+
 
 
 1.2 Power Supply Summary
@@ -71,9 +73,9 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.019 |       0.009 |      0.010 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.034 |       0.025 |      0.010 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.013 |       0.000 |      0.013 |       NA    | Unspecified | NA         |
-| Vcco33    |       3.300 |     0.001 |       0.000 |      0.001 |       NA    | Unspecified | NA         |
+| Vcco33    |       3.300 |     0.002 |       0.001 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -137,12 +139,13 @@ Table of Contents
 3.1 By Hierarchy
 ----------------
 
-+------------------+-----------+
-| Name             | Power (W) |
-+------------------+-----------+
-| proyecto         |     0.011 |
-|   generaPieza    |     0.002 |
-|   screenInteface |     0.006 |
-+------------------+-----------+
++-------------------+-----------+
+| Name              | Power (W) |
++-------------------+-----------+
+| proyecto          |     0.029 |
+|   generaPieza     |     0.010 |
+|   rstSynchronizer |     0.002 |
+|   screenInteface  |     0.003 |
++-------------------+-----------+
 
 

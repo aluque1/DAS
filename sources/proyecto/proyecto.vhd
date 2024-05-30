@@ -58,7 +58,7 @@ ARCHITECTURE syn OF proyecto IS
   
   --Piezas
   signal ce, ld : std_logic := '0';
-  signal seed : std_logic_vector(2 downto 0) := "001";
+  signal seed : std_logic_vector(2 downto 0) := "011";
   signal piezaSig, pieza : std_logic_vector(2 downto 0);
   signal CPos1, LinPos1, LinPos2, ZPos1, ZPos2, ZInvPos1, ZInvPos2, LPos1, LPos2, LPos3, LPos4, LInvPos1, LInvPos2, LInvPos3, LInvPos4, TPos1, TPos2, TPos3, TPos4 : std_logic := '0';
   
@@ -75,9 +75,6 @@ ARCHITECTURE syn OF proyecto IS
 
   SIGNAL lineAux, pixelAux : STD_LOGIC_VECTOR(9 DOWNTO 0);
   SIGNAL line, pixel : unsigned(7 DOWNTO 0);
-  
-  signal xPiezaAct : natural := 5;
-  signal yPiezaAct : natural := 1;
   
   signal x : natural := 14;
   signal y : natural := 54;
@@ -208,6 +205,8 @@ BEGIN
     variable dataOut2 : unsigned(2 downto 0);
     variable dataOut3 : unsigned(2 downto 0);
     variable dataOut4 : unsigned(2 downto 0);
+    variable xPiezaAct : natural := 5;
+    variable yPiezaAct : natural := 1;
   begin
     if rising_edge(clk) then
         if rstSync = '1' then 
@@ -223,8 +222,8 @@ BEGIN
                     LInvPos4 <= '0'; TPos1 <= '0'; TPos2 <= '0'; TPos3 <= '0'; TPos4 <= '0';
                     pinta <= '0';
                     wr <= '0';
-                    xPiezaAct <= 5;
-                    yPiezaAct <= 1;
+                    xPiezaAct := 5;
+                    yPiezaAct := 1;
                     ld <= '0';
                     ce <= '1';
                     state := S2;
@@ -259,6 +258,7 @@ BEGIN
                     state := S3;
                 when S3 =>
                     --Limpiar pieza 2 ciclos
+                    wr <= '1';
                     dataIn <= (others => '0');
                     case piezaSig is
                         when "000" =>
@@ -694,6 +694,7 @@ BEGIN
                     end case;
                 when S5 =>
                    --Se comprueba colision 2 ciclos
+                   wr <= '0';
                     case piezaSig is
                         when "000" =>
                             addraOut <= to_unsigned(11*(yPiezaAct+2) + xPiezaAct,8);
@@ -960,20 +961,19 @@ BEGIN
                         
                 when S7 =>
                     --Se hace el movimiento
-                    pintaVga <= '0';
                     if mover then
                         if 11*(yPiezaAct + distASuelo) > 220 then
                             if sP then
-                                yPiezaAct <= yPiezaAct + 2;
+                                yPiezaAct := yPiezaAct + 2;
                             else
-                                yPiezaAct <= yPiezaAct + 1;
+                                yPiezaAct := yPiezaAct + 1;
                             end if;
                         end if;
                         if xPiezaAct + distDer < 10 and dP then
-                            xPiezaAct <= xPiezaAct + 1;
+                            xPiezaAct := xPiezaAct + 1;
                         end if;
                         if xPiezaAct - distIzq > 0 and aP then
-                            xPiezaAct <= xPiezaAct - 1;
+                            xPiezaAct := xPiezaAct - 1;
                         end if;
                         if rP then
                             case pieza is
