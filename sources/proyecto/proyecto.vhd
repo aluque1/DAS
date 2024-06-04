@@ -276,6 +276,8 @@ BEGIN
                     state := S2;
                 when S2 => -- ponemos posicion iniciales dependiendo de la pieza
                     ce <= '0';
+                    dataIn <= to_unsigned(3, 3);
+                    addraIn <= to_unsigned(11*5 + 5, 8);
                     case piezaSig is
                         when "000" =>
                             CPos1 <= '1'; distAsuelo := 2;
@@ -522,6 +524,7 @@ BEGIN
                     end case;    
                 when S4 => -- Act pos "movimiento"
                     --Se hace el movimiento
+                    wr <= '0';
                     if mover then
                         if 11*(yPiezaAct + distASuelo) > 220 then
                             if sP then
@@ -673,6 +676,7 @@ BEGIN
                     end if;
                     state := S5;
                 when S5 =>  -- Pintamos la pieza
+                    wr <= '1';
                     dataIn <= unsigned(piezaSig);
                     case piezaSig is
                         when "000" =>
@@ -888,7 +892,8 @@ BEGIN
                                 x := (x + 1) mod 2;
                             end if;
                     end case;
-                when S6 => -- Pintamos en la VGA
+                when S6 => -- Pintamos en la VGA TODO ESTÁ MAL
+                    wr <= '0';
                     if ((pixel > 54 and pixel < 104) and (line > 14 and line < 114)) then
                         visual(2) <= '1';            
                         addraOut <= to_unsigned(11*i + j, 8);
@@ -1159,8 +1164,8 @@ BEGIN
                     else
                         state := S3;
                     end if;
-                when S8 =>
-                
+                when S8 => -- Actualiza tablero
+                    state := S3;
                     
                     
             end case;
