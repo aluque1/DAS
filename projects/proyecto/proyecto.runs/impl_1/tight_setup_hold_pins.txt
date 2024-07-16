@@ -1,0 +1,11 @@
++====================+===================+========================+
+| Launch Setup Clock | Launch Hold Clock | Pin                    |
++====================+===================+========================+
+| sysClk             | sysClk            | fsm.j_reg[1]/D         |
+| sysClk             | sysClk            | fsm.j_reg[2]/D         |
+| sysClk             | sysClk            | fsm.j_reg[3]/D         |
+| sysClk             | sysClk            | fsm.i_reg[0]/D         |
+| sysClk             | sysClk            | fsm.i_reg[4]/D         |
+| sysClk             | sysClk            | fsm.i_reg[3]/D         |
+| sysClk             | sysClk            | fsm.xPiezaAct_reg[0]/D |
++--------------------+-------------------+------------------------+

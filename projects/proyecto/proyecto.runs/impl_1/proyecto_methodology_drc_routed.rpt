@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Thu May 30 11:30:37 2024
-| Host         : alv-debian running 64-bit Debian GNU/Linux 12 (bookworm)
+| Tool Version : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
+| Date         : Wed Jun 19 11:13:13 2024
+| Host         : Sobremesa running 64-bit major release  (build 9200)
 | Command      : report_methodology -file proyecto_methodology_drc_routed.rpt -pb proyecto_methodology_drc_routed.pb -rpx proyecto_methodology_drc_routed.rpx
 | Design       : proyecto
 | Device       : xc7a35tcpg236-1
@@ -23,11 +23,11 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 39
+             Violations found: 37
 +-----------+----------+-------------------------------+------------+
 | Rule      | Severity | Description                   | Violations |
 +-----------+----------+-------------------------------+------------+
-| TIMING-16 | Warning  | Large setup violation         | 15         |
+| TIMING-16 | Warning  | Large setup violation         | 13         |
 | TIMING-18 | Warning  | Missing input or output delay | 24         |
 +-----------+----------+-------------------------------+------------+
 
@@ -35,77 +35,67 @@ Table of Contents
 -----------------
 TIMING-16#1 Warning
 Large setup violation  
-There is a large setup violation of -1.906 ns between fsm.bordeYCnt_reg[0]/C (clocked by sysClk) and fsm.bordeYCnt_reg[2]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.473 ns between fsm.i_reg[1]_replica/C (clocked by sysClk) and fsm.i_reg[3]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#2 Warning
 Large setup violation  
-There is a large setup violation of -1.914 ns between fsm.bordeYCnt_reg[1]/C (clocked by sysClk) and fsm.i_reg[2]__0/CE (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.595 ns between fsm.i_reg[1]_replica/C (clocked by sysClk) and fsm.i_reg[4]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#3 Warning
 Large setup violation  
-There is a large setup violation of -1.914 ns between fsm.bordeYCnt_reg[1]/C (clocked by sysClk) and fsm.i_reg[3]__0/CE (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.856 ns between fsm.i_reg[1]_replica/C (clocked by sysClk) and fsm.i_reg[2]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#4 Warning
 Large setup violation  
-There is a large setup violation of -1.914 ns between fsm.bordeYCnt_reg[1]/C (clocked by sysClk) and fsm.i_reg[4]__0/CE (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.864 ns between fsm.i_reg[1]_replica/C (clocked by sysClk) and fsm.i_reg[0]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#5 Warning
 Large setup violation  
-There is a large setup violation of -2.055 ns between fsm.bordeYCnt_reg[1]/C (clocked by sysClk) and fsm.i_reg[0]__0/CE (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -1.977 ns between fsm.j_reg[0]_replica_1/C (clocked by sysClk) and fsm.j_reg[3]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#6 Warning
 Large setup violation  
-There is a large setup violation of -2.055 ns between fsm.bordeYCnt_reg[1]/C (clocked by sysClk) and fsm.i_reg[1]__0/CE (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.222 ns between fsm.j_reg[0]_replica_1/C (clocked by sysClk) and fsm.j_reg[2]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#7 Warning
 Large setup violation  
-There is a large setup violation of -2.073 ns between fsm.bordeYCnt_reg[1]/C (clocked by sysClk) and colorTablero_reg[1]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.340 ns between fsm.j_reg[0]_replica_1/C (clocked by sysClk) and fsm.j_reg[1]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#8 Warning
 Large setup violation  
-There is a large setup violation of -2.156 ns between fsm.bordeYCnt_reg[1]/C (clocked by sysClk) and colorTablero_reg[9]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.398 ns between fsm.i_reg[1]_replica/C (clocked by sysClk) and fsm.i_reg[1]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#9 Warning
 Large setup violation  
-There is a large setup violation of -2.195 ns between fsm.bordeYCnt_reg[0]/C (clocked by sysClk) and fsm.bordeYCnt_reg[1]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.433 ns between fsm.i_reg[0]/C (clocked by sysClk) and fsm.i_reg[1]_replica/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#10 Warning
 Large setup violation  
-There is a large setup violation of -2.285 ns between fsm.bordeYCnt_reg[1]/C (clocked by sysClk) and colorTablero_reg[4]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.573 ns between fsm.j_reg[1]/C (clocked by sysClk) and fsm.j_reg[0]_replica/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#11 Warning
 Large setup violation  
-There is a large setup violation of -2.339 ns between fsm.bordeYCnt_reg[1]/C (clocked by sysClk) and colorTablero_reg[6]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.772 ns between fsm.j_reg[1]/C (clocked by sysClk) and fsm.j_reg[0]_replica_1/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#12 Warning
 Large setup violation  
-There is a large setup violation of -2.443 ns between fsm.bordeYCnt_reg[1]/C (clocked by sysClk) and fsm.bordeYCnt_reg[0]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -2.791 ns between fsm.j_reg[0]_replica_1/C (clocked by sysClk) and fsm.j_reg[0]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-16#13 Warning
 Large setup violation  
-There is a large setup violation of -2.446 ns between fsm.bordeYCnt_reg[1]/C (clocked by sysClk) and colorTablero_reg[0]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#14 Warning
-Large setup violation  
-There is a large setup violation of -2.457 ns between fsm.bordeYCnt_reg[1]/C (clocked by sysClk) and colorTablero_reg[2]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
-Related violations: <none>
-
-TIMING-16#15 Warning
-Large setup violation  
-There is a large setup violation of -2.492 ns between fsm.bordeYCnt_reg[1]/C (clocked by sysClk) and colorTablero_reg[5]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
+There is a large setup violation of -3.201 ns between fsm.j_reg[1]/C (clocked by sysClk) and fsm.state_reg[0]/D (clocked by sysClk). Large setup violations at the end of those stages might be difficult to fix during the post-placement implementation flow and could be the result of non-optimal XDC constraints or non-optimal design architecture
 Related violations: <none>
 
 TIMING-18#1 Warning

@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
-| Tool Version     : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date             : Thu May 30 11:30:37 2024
-| Host             : alv-debian running 64-bit Debian GNU/Linux 12 (bookworm)
+| Tool Version     : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
+| Date             : Wed Jun 19 11:13:14 2024
+| Host             : Sobremesa running 64-bit major release  (build 9200)
 | Command          : report_power -file proyecto_power_routed.rpt -pb proyecto_power_summary_routed.pb -rpx proyecto_power_routed.rpx
 | Design           : proyecto
 | Device           : xc7a35tcpg236-1
@@ -53,14 +53,14 @@ Table of Contents
 | On-Chip                 | Power (W) | Used     | Available | Utilization (%) |
 +-------------------------+-----------+----------+-----------+-----------------+
 | Clocks                  |     0.007 |        3 |       --- |             --- |
-| Slice Logic             |     0.014 |     4506 |       --- |             --- |
-|   LUT as Logic          |     0.012 |     2505 |     20800 |           12.04 |
-|   CARRY4                |     0.001 |      276 |      8150 |            3.39 |
-|   Register              |    <0.001 |     1140 |     41600 |            2.74 |
-|   F7/F8 Muxes           |    <0.001 |      258 |     32600 |            0.79 |
+| Slice Logic             |     0.014 |     4995 |       --- |             --- |
+|   LUT as Logic          |     0.013 |     2758 |     20800 |           13.26 |
+|   CARRY4                |     0.001 |      341 |      8150 |            4.18 |
+|   Register              |    <0.001 |     1177 |     41600 |            2.83 |
+|   F7/F8 Muxes           |    <0.001 |      283 |     32600 |            0.87 |
 |   LUT as Shift Register |    <0.001 |        1 |      9600 |            0.01 |
-|   Others                |     0.000 |       23 |       --- |             --- |
-| Signals                 |     0.014 |     3051 |       --- |             --- |
+|   Others                |     0.000 |       29 |       --- |             --- |
+| Signals                 |     0.015 |     3414 |       --- |             --- |
 | DSPs                    |     0.001 |        1 |        90 |            1.11 |
 | I/O                     |     0.009 |       25 |       106 |           23.58 |
 | Static Power            |     0.072 |          |           |                 |
@@ -74,7 +74,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.046 |       0.036 |      0.010 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.046 |       0.037 |      0.010 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.013 |       0.000 |      0.013 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.003 |       0.002 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -144,8 +144,9 @@ Table of Contents
 | Name              | Power (W) |
 +-------------------+-----------+
 | proyecto          |     0.045 |
-|   generaPieza     |     0.009 |
-|   rstSynchronizer |     0.005 |
+|   generaPieza     |     0.011 |
+|   rstSynchronizer |     0.004 |
+|   screenInteface  |     0.002 |
 |   soundGen        |     0.002 |
 +-------------------+-----------+
 
